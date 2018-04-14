@@ -26,10 +26,10 @@
       <!-- <api-security-documentation amf-model="{{amfModel}}" security="[[_computeSecurityModel(declares, selected)]]"></api-security-documentation> -->
     </template>
     <template is="dom-if" if="[[isEndpoint]]" restamp="true">
-      <api-endpoint-documentation amf-model="{{amfModel}}" endpoint="[[_computeEndpointModel(webApi, selected)]]" base-uri="[[baseUri]]"></api-endpoint-documentation>
+      <api-endpoint-documentation amf-model="{{amfModel}}" endpoint="[[_computeEndpointModel(webApi, selected)]]" base-uri="[[baseUri]]" narrow="[[narrow]]"></api-endpoint-documentation>
     </template>
     <template is="dom-if" if="[[isMethod]]" restamp="true">
-      <api-method-documentation amf-model="{{amfModel}}" endpoint="[[_computeMethodEndpointModel(webApi, selected)]]" method="[[_computeMethodModel(webApi, selected)]]" base-uri="[[baseUri]]"></api-method-documentation>
+      <api-method-documentation amf-model="{{amfModel}}" endpoint="[[_computeMethodEndpointModel(webApi, selected)]]" method="[[_computeMethodModel(webApi, selected)]]" base-uri="[[baseUri]]" no-try-it="[[noTryIt]]" narrow="[[narrow]]"></api-method-documentation>
     </template>
     <template is="dom-if" if="[[isDoc]]" restamp="true">
       <api-documentation-document api-document="[[_computeDocument(webApi, selected)]]"></api-documentation-document>
@@ -200,7 +200,22 @@
         /**
          * A property to set to override AMF's model base URI information.
          */
-        baseUri: String
+        baseUri: String,
+        /**
+         * Passing value of `noTryIt` to the method documentation.
+         * Hiddes "Try it" button.
+         */
+        noTryIt: {
+          type: Boolean,
+          value: false
+        },
+        /**
+         * If set it will renders the view in the narrow layout.
+         */
+        narrow: {
+          type: Boolean,
+          reflectToAttribute: true
+        }
       };
     }
 
