@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+  <title>api-documentation test</title>
+  <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+  <script src="amf-loader.js"></script>
+  <link rel="import" href="../api-documentation.html">
+</head>
+
+<body>
+  <test-fixture id="Basic">
+    <template>
+      <api-documentation></api-documentation>
+    </template>
+  </test-fixture>
+  <test-fixture id="Aware">
+    <template>
+      <api-documentation aware="test"></api-documentation>
+    </template>
+  </test-fixture>
+  <script>
+  suite('Basic', () => {
+    test('Adds raml-aware to the DOM if aware is set', (done) => {
+      const element = fixture('Aware');
+      flush(() => {
+        const node = element.shadowRoot.querySelector('raml-aware');
+        assert.ok(node);
+        done();
+      });
+    });
+    test('raml-aware is not in the DOM by default', (done) => {
+      const element = fixture('Basic');
+      flush(() => {
+        const node = element.shadowRoot.querySelector('raml-aware');
+        assert.notOk(node);
+        done();
+      });
+    });
+
+    function testNotPresent(item) {
+      test(item + ' is not in the DOM', (done) => {
+        const element = fixture('Basic');
+        flush(() => {
+          const node = element.shadowRoot.querySelector(item);
+          assert.notOk(node);
+          done();
+        });
+      });
+    }
+
+    [
+      'api-summary',
+      'api-endpoint-documentation',
+      'api-method-documentation',
+      'api-documentation-document',
+      'api-type-documentation',
+      'api-security-documentation'
+    ].forEach((item) => testNotPresent(item));
+  });
+
+  /* global AmfLoader */
+  suite('Full AMF model', () => {
+    let element;
+    let amf;
+    suiteSetup(() => {
+      return AmfLoader.load()
+        .then((data) => {
+          amf = data[0];
+        });
+    });
+    suite('Computations', () => {
+      suiteSetup((done) => {
+        element = fixture('Basic');
+        element.amfModel = amf;
+        flush(() => done());
+      });
+
+      test('webApi is computed', () => {
+        assert.typeOf(element.webApi, 'object');
+      });
+
+      test('declares is computed', () => {
+        assert.typeOf(element.declares, 'array');
+      });
+
+      function testVarState(item) {
+        test(item[0] + ' is ' + String(item[1] + ' for type ' + item[2]), () => {
+          const element = fixture('Basic');
+          element.amfModel = amf;
+          element.selectedType = item[2];
+          assert.equal(element[item[0]], item[1]);
+        });
+      }
+
+      [
+        ['isEndpoint', false, 'summary'],
+        ['isMethod', false, 'summary'],
+        ['isDoc', false, 'summary'],
+        ['isType', false, 'summary'],
+        ['isSecurity', false, 'summary'],
+        ['isSummary', true, 'summary'],
+
+        ['isEndpoint', true, 'endpoint'],
+        ['isMethod', false, 'endpoint'],
+        ['isDoc', false, 'endpoint'],
+        ['isType', false, 'endpoint'],
+        ['isSecurity', false, 'endpoint'],
+        ['isSummary', false, 'endpoint'],
+
+        ['isEndpoint', false, 'method'],
+        ['isMethod', true, 'method'],
+        ['isDoc', false, 'method'],
+        ['isType', false, 'method'],
+        ['isSecurity', false, 'method'],
+        ['isSummary', false, 'method'],
+
+        ['isEndpoint', false, 'documentation'],
+        ['isMethod', false, 'documentation'],
+        ['isDoc', true, 'documentation'],
+        ['isType', false, 'documentation'],
+        ['isSecurity', false, 'documentation'],
+        ['isSummary', false, 'documentation'],
+
+        ['isEndpoint', false, 'type'],
+        ['isMethod', false, 'type'],
+        ['isDoc', false, 'type'],
+        ['isType', true, 'type'],
+        ['isSecurity', false, 'type'],
+        ['isSummary', false, 'type'],
+
+        ['isEndpoint', false, 'security'],
+        ['isMethod', false, 'security'],
+        ['isDoc', false, 'security'],
+        ['isType', false, 'security'],
+        ['isSecurity', true, 'security'],
+        ['isSummary', false, 'security'],
+      ].forEach((item) => testVarState(item));
+
+    });
+    suite('DOM content', () => {
+      function testPresent(item) {
+        test(item[0] + ' is in the DOM', (done) => {
+          const element = fixture('Basic');
+          element.amfModel = amf;
+          element.selectedType = item[1];
+          flush(() => {
+            const node = element.shadowRoot.querySelector(item[0]);
+            assert.ok(node);
+            done();
+          });
+        });
+      }
+
+      [
+        ['api-summary', 'summary'],
+        ['api-endpoint-documentation', 'endpoint'],
+        ['api-method-documentation', 'method'],
+        ['api-documentation-document', 'documentation'],
+        ['api-type-documentation', 'type'],
+        // ['api-security-documentation', 'security']
+      ].forEach((item) => testPresent(item));
+    });
+  });
+
+  suite('Data computation', () => {
+    let element;
+    let amf;
+    suiteSetup(() => {
+      return AmfLoader.load()
+      .then((data) => {
+        amf = data[0];
+        element = fixture('Basic');
+        element.amfModel = amf;
+      });
+    });
+
+    suite('_computeEndpointModel()', () => {
+      suiteSetup(() => {
+        element = fixture('Basic');
+        element.amfModel = amf;
+      });
+
+      const id = 'file://demo/demo-api/demo-api.raml#/web-api/end-points/%2Ftest-parameters%2F%7Bfeature%7D';
+      test('Computes model for selection', () => {
+        const result = element._computeEndpointModel(element.webApi, id);
+        assert.typeOf(result, 'object');
+        assert.equal(result['@id'], id);
+      });
+
+      test('Returns undefined when no model', () => {
+        const result = element._computeEndpointModel(undefined, id);
+        assert.isUndefined(result);
+      });
+
+      test('Returns undefined when no selection', () => {
+        const result = element._computeEndpointModel(element.webApi);
+        assert.isUndefined(result);
+      });
+    });
+
+    suite('_computeMethodEndpointModel()', () => {
+      suiteSetup(() => {
+        element = fixture('Basic');
+        element.amfModel = amf;
+      });
+      const endpointId = 'file://demo/demo-api/demo-api.raml#/web-api/end-points/%2Ftest-parameters%2F%7Bfeature%7D';
+      const id = endpointId + '/get';
+
+      test('Computes model for selection', () => {
+        const result = element._computeMethodEndpointModel(element.webApi, id);
+        assert.typeOf(result, 'object');
+        assert.equal(result['@id'], endpointId);
+      });
+
+      test('Returns undefined when no model', () => {
+        const result = element._computeMethodEndpointModel(undefined, id);
+        assert.isUndefined(result);
+      });
+
+      test('Returns undefined when no selection', () => {
+        const result = element._computeMethodEndpointModel(element.webApi);
+        assert.isUndefined(result);
+      });
+    });
+
+    suite('_computeMethodModel()', () => {
+      suiteSetup(() => {
+        element = fixture('Basic');
+        element.amfModel = amf;
+      });
+      const id = 'file://demo/demo-api/demo-api.raml#/web-api/end-points/%2Ftest-parameters%2F%7Bfeature%7D/get';
+
+      test('Computes model for selection', () => {
+        const result = element._computeMethodModel(element.webApi, id);
+        assert.typeOf(result, 'object');
+        assert.equal(result['@id'], id);
+      });
+
+      test('Returns undefined when no model', () => {
+        const result = element._computeMethodModel(undefined, id);
+        assert.isUndefined(result);
+      });
+
+      test('Returns undefined when no selection', () => {
+        const result = element._computeMethodModel(element.webApi);
+        assert.isUndefined(result);
+      });
+    });
+
+    suite('_computeDocument()', () => {
+      suiteSetup(() => {
+        element = fixture('Basic');
+        element.amfModel = amf;
+      });
+      const id = 'file://demo/demo-api/demo-api.raml#/web-api/creative-work/Test%20doc';
+
+      test('Computes model for selection', () => {
+        const result = element._computeDocument(element.webApi, id);
+        assert.typeOf(result, 'object');
+        assert.equal(result['@id'], id);
+      });
+
+      test('Returns undefined when no model', () => {
+        const result = element._computeDocument(undefined, id);
+        assert.isUndefined(result);
+      });
+
+      test('Returns undefined when no selection', () => {
+        const result = element._computeDocument(element.webApi);
+        assert.isUndefined(result);
+      });
+    });
+
+    suite('_computeType()', () => {
+      suiteSetup(() => {
+        element = fixture('Basic');
+        element.amfModel = amf;
+      });
+      const id = 'file://demo/demo-api/demo-api.raml#/web-api/end-points/%2Fpeople/get/200/application/json/schema/property/items/array/items/type';
+
+      test('Computes model for selection', () => {
+        const result = element._computeType(element.declares, id);
+        assert.typeOf(result, 'object');
+        assert.equal(result['@id'], id);
+      });
+
+      test('Returns undefined when no model', () => {
+        const result = element._computeType(undefined, id);
+        assert.isUndefined(result);
+      });
+
+      test('Returns undefined when no selection', () => {
+        const result = element._computeType(element.declares);
+        assert.isUndefined(result);
+      });
+    });
+
+    suite('_computeSecurityModel()', () => {
+      suiteSetup(() => {
+        element = fixture('Basic');
+        element.amfModel = amf;
+      });
+      const id = 'file://demo/demo-api/securitySchemes/oauth_2_0.raml#fragment';
+
+      test('Computes model for selection', () => {
+        const result = element._computeSecurityModel(element.declares, id);
+        assert.typeOf(result, 'object');
+        assert.equal(result['@id'], id);
+      });
+
+      test('Returns undefined when no model', () => {
+        const result = element._computeSecurityModel(undefined, id);
+        assert.isUndefined(result);
+      });
+
+      test('Returns undefined when no selection', () => {
+        const result = element._computeSecurityModel(element.declares);
+        assert.isUndefined(result);
+      });
+    });
+  });
+  </script>
+</body>
+
+</html>

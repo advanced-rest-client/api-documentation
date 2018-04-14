@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+    <title>api-request-editor demo</title>
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+    <link rel="import" href="../../shadycss/apply-shim.html">
+    <link rel="import" href="../../polymer/lib/elements/custom-style.html">
+    <link rel="import" href="../../polymer/lib/elements/dom-bind.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="../../paper-styles/typography.html">
+    <link rel="import" href="../../raml-aware/raml-aware.html">
+    <link rel="import" href="../../api-navigation/api-navigation.html">
+    <link rel="import" href="../../paper-dropdown-menu/paper-dropdown-menu.html">
+    <link rel="import" href="../../paper-item/paper-item.html">
+    <link rel="import" href="../../paper-listbox/paper-listbox.html">
+    <link rel="import" href="../../neon-animation/web-animations.html">
+    <link rel="import" href="../api-documentation.html">
+    <custom-style>
+      <style is="custom-style" include="demo-pages-shared-styles">
+      :root {
+        --arc-font-display1: {
+          @apply --paper-font-display1;
+        };
+        --arc-font-headline: {
+          @apply --paper-font-headline;
+        };
+        --arc-font-title: {
+          @apply --paper-font-title;
+        };
+        --arc-font-subhead: {
+          @apply --paper-font-subhead;
+        };
+        --arc-font-body1: {
+          @apply --paper-font-body1;
+          word-break: break-word;
+        };
+        --arc-font-common-code: {
+          @apply --paper-font-common-code;
+          word-break: break-word !important;
+          overflow: auto;
+          white-space: pre-wrap !important;
+        };
+        --arc-font-code1: {
+          @apply --paper-font-code1;
+          word-wrap: break-word;
+          word-break: break-all;
+          overflow: auto;
+        };
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      [role="main"] {
+        max-width: 1100px;
+        @apply --layout-horizontal;
+        @apply --layout-start;
+      }
+
+      api-navigation {
+        width: 320px;
+        min-width: 320px;
+        overflow: auto;
+      }
+
+      api-documentation {
+        margin-left: 40px;
+        @apply --layout-flex;
+      }
+
+      header {
+        padding: 12px 24px;
+        background-color: #C5E1A5;
+        --iron-icon-fill-color: #3E2723;
+        --paper-input-container-focus-color: #33691E;
+        --paper-input-container-label: {
+          color: #3E2723;
+        };
+      }
+      </style>
+    </custom-style>
+  </head>
+  <body>
+    <dom-bind id="demo">
+      <template is="dom-bind">
+        <header>
+          <paper-dropdown-menu label="Select demo API">
+            <paper-listbox slot="dropdown-content" id="enpointsList" on-selected-changed="_apiChanged">
+              <paper-item data-src="demo-api.json">Demo api</paper-item>
+              <paper-item data-src="array-body.json">Body with array</paper-item>
+              <paper-item data-src="nexmo-sms-api.json">Nexmo SMS API</paper-item>
+              <paper-item data-src="appian-api.json">Appian API</paper-item>
+              <paper-item data-src="github-api.json">☠ GitHub API ☠</paper-item>
+            </paper-listbox>
+          </paper-dropdown-menu>
+        </header>
+        <div class="vertical-section-container centered" role="main">
+          <raml-aware raml="{{amfModel}}" scope="model"></raml-aware>
+          <api-navigation aware="model" summary endpoints-opened></api-navigation>
+          <api-documentation aware="model" handle-navigation-events></api-documentation>
+        </div>
+      </template>
+    </dom-bind>
+    <script>
+    (function(app) {
+      app._apiChanged = function(e) {
+        const file = e.target.selectedItem.dataset.src;
+        app._loadFile(file);
+      };
+      app._load = function() {
+        document.getElementById('enpointsList').selected = 0;
+      };
+      app._loadFile = function(file) {
+        fetch('./' + file)
+        .then((response) => response.json())
+        .then((data) => {
+          app.amfModel = data;
+        });
+      };
+      window.addEventListener('WebComponentsReady', () => app._load());
+    })(document.getElementById('demo'));
+  </script>
+  </body>
+</html>

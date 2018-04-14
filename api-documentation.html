@@ -1,0 +1,414 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../polymer/lib/elements/dom-if.html">
+<link rel="import" href="../raml-aware/raml-aware.html">
+<link rel="import" href="../api-method-documentation/api-method-documentation.html">
+<link rel="import" href="../api-endpoint-documentation/api-endpoint-documentation.html">
+<link rel="import" href="../api-type-documentation/api-type-documentation.html">
+<link rel="import" href="../api-documentation-document/api-documentation-document.html">
+<link rel="import" href="../api-summary/api-summary.html">
+
+<dom-module id="api-documentation">
+  <template>
+    <style>
+    :host {
+      display: block;
+      @apply --api-documentation;
+    }
+    </style>
+    <template is="dom-if" if="[[aware]]">
+      <raml-aware raml="{{amfModel}}" scope="[[aware]]"></raml-aware>
+    </template>
+    <template is="dom-if" if="[[isSummary]]" restamp="true">
+      <api-summary amf-model="[[amfModel]]" base-uri="[[baseUri]]"></api-summary>
+    </template>
+    <template is="dom-if" if="[[isSecurity]]" restamp="true">
+      <p>This view is not yet supported</p>
+      <!-- <api-security-documentation amf-model="{{amfModel}}" security="[[_computeSecurityModel(declares, selected)]]"></api-security-documentation> -->
+    </template>
+    <template is="dom-if" if="[[isEndpoint]]" restamp="true">
+      <api-endpoint-documentation amf-model="{{amfModel}}" endpoint="[[_computeEndpointModel(webApi, selected)]]" base-uri="[[baseUri]]"></api-endpoint-documentation>
+    </template>
+    <template is="dom-if" if="[[isMethod]]" restamp="true">
+      <api-method-documentation amf-model="{{amfModel}}" endpoint="[[_computeMethodEndpointModel(webApi, selected)]]" method="[[_computeMethodModel(webApi, selected)]]" base-uri="[[baseUri]]"></api-method-documentation>
+    </template>
+    <template is="dom-if" if="[[isDoc]]" restamp="true">
+      <api-documentation-document api-document="[[_computeDocument(webApi, selected)]]"></api-documentation-document>
+    </template>
+    <template is="dom-if" if="[[isType]]" restamp="true">
+      <api-type-documentation amf-model="{{amfModel}}" type="[[_computeType(declares, selected)]]"></api-type-documentation>
+    </template>
+  </template>
+  <script>
+  /**
+   * `api-documentation`
+   *
+   * A main documentation view for AMF model.
+   *
+   * This element works with [AMF](https://github.com/mulesoft/amf) data model.
+   *
+   * It works well with `api-navigation` component. When `handle-navigation-events`
+   * is set it listens for selection events dispatched by the navigation.
+   *
+   * To manually steare the behavior of the component you have to set both:
+   * - selected
+   * - selectedType
+   *
+   * Selected is an `@id` of the AMF data model in json/ld representation.
+   * Selected type tells the component where to look for the data and which
+   * view to render.
+   *
+   * The component handles data computation on selection change.
+   *
+   * ## Updating API's base URI
+   *
+   * By default the component render the documentation as it is defined
+   * in the AMF model. Sometimes, however, you may need to replace the base URI
+   * of the API with something else. It is useful when the API does not
+   * have base URI property defined (therefore this component render relative
+   * paths instead of URIs) or when you want to manage different environments.
+   *
+   * To update base URI value either update `baseUri` property or use
+   * `iron-meta` with key `ApiBaseUri`. First method is easier but the second
+   * gives much more flexibility since it use a [monostate pattern](http://wiki.c2.com/?MonostatePattern)
+   * to manage base URI property.
+   *
+   * When the component constructs the funal URI for the endpoint it does the following:
+   * - if `baseUri` is set it uses this value as a base uri for the endpoint
+   * - else if `iron-meta` with key `ApiBaseUri` exists and contains a value
+   * it uses it uses this value as a base uri for the endpoint
+   * - else if `amfModel` is set then it computes base uri value from main
+   * model document
+   * Then it concatenates computed base URI with `endpoint`'s path property.
+   *
+   * ### Example
+   *
+   * ```html
+   * <iron-meta key="ApiBaseUri" value="https://domain.com"></iron-meta>
+   * ```
+   *
+   * To update value of the `iron-meta`:
+   * ```javascript
+   * new Polymer.IronMeta({key: 'ApiBaseUri'}).value = 'https://other.domain';
+   * ```
+   *
+   * Note: The element will not get notified about the change in `iron-meta`.
+   * The change will be reflected whehn `amfModel` or `endpoint` property chnage.
+   *
+   * ## Styling
+   *
+   * `<api-documentation>` provides the following custom properties and mixins for styling:
+   *
+   * Custom property | Description | Default
+   * ----------------|-------------|----------
+   * `--api-documentation` | Mixin applied to this elment | `{}`
+   *
+   * @customElement
+   * @polymer
+   * @demo demo/index.html
+   * @memberof ApiElements
+   */
+  class ApiDocumentation extends Polymer.Element {
+    static get is() { return 'api-documentation'; }
+    static get properties() {
+      return {
+        /**
+         * `raml-aware` scope property to use.
+         */
+        aware: String,
+        /**
+         * Generated AMF json/ld model form the API spec.
+         * The element assumes the object of the first array item to be a
+         * type of `"http://raml.org/vocabularies/document#Document`
+         * on AMF vocabulary.
+         *
+         * It is only usefult for the element to resolve references.
+         *
+         * @type {Object|Array}
+         */
+        amfModel: Object,
+        /**
+         * A model's `@id` of selected documentation part.
+         * Special case is for `summary` view. It's not part of an API
+         * but most applications has some kind of summary view for the
+         * API.
+         */
+        selected: String,
+        /**
+         * Type of the selected item.
+         * One of `documentation`, `type`, `security`, `endpoint`, `method`
+         * or `summary`.
+         */
+        selectedType: String,
+        /**
+         * By default application hosting the element must set `selected` and
+         * `selectedType` properties. When using `api-navigation` element
+         * by setting this property the element listens for navigation events
+         * and updates the state
+         */
+        handleNavigationEvents: {
+          type: Boolean,
+          observer: '_handleNavChanged'
+        },
+        // True if currently selection is endpoint
+        isEndpoint: {
+          type: Boolean,
+          readOnly: true
+        },
+        // True if currently selection is method
+        isMethod: {
+          type: Boolean,
+          readOnly: true
+        },
+        // True if currently selection is documentation
+        isDoc: {
+          type: Boolean,
+          readOnly: true
+        },
+        // True if currently selection is type
+        isType: {
+          type: Boolean,
+          readOnly: true
+        },
+        // True if currently selection is security
+        isSecurity: {
+          type: Boolean,
+          readOnly: true
+        },
+        // True if currently selection is summary
+        isSummary: {
+          type: Boolean,
+          readOnly: true
+        },
+        /**
+         * Computed value of AMF model of a type of `http://schema.org/WebAPI`
+         *
+         * @type {Object}
+         */
+        webApi: {
+          type: Object,
+          computed: '_computeWebApi(amfModel)'
+        },
+        /**
+         * Computed value of `declares` part of the AMF model
+         *
+         * @type {Array<Object>}
+         */
+        declares: {
+          type: Array,
+          computed: '_computeDeclares(amfModel)'
+        },
+        /**
+         * A property to set to override AMF's model base URI information.
+         */
+        baseUri: String
+      };
+    }
+
+    static get observers() {
+      return [
+        '_navigationOccured(selectedType)'
+      ];
+    }
+
+    constructor() {
+      super();
+      this._navigationHandler = this._navigationHandler.bind(this);
+    }
+
+    disconnectedCallback() {
+      if (this.__eventsRegistered) {
+        this._unregisterNavigationEvents();
+      }
+    }
+    /**
+     * Registers `api-navigation-selection-changed` event listener handler
+     * on window object.
+     */
+    _registerNavigationEvents() {
+      this.__eventsRegistered = true;
+      window.addEventListener('api-navigation-selection-changed', this._navigationHandler);
+    }
+    /**
+     * Removes event listener from window object for
+     * `api-navigation-selection-changed` event.
+     */
+    _unregisterNavigationEvents() {
+      this.__eventsRegistered = false;
+      window.removeEventListener('api-navigation-selection-changed', this._navigationHandler);
+    }
+    /**
+     * Registers / unregisters event listeners depending on `state`
+     *
+     * @param {Boolean} state
+     */
+    _handleNavChanged(state) {
+      if (state) {
+        this._registerNavigationEvents();
+      } else {
+        this._unregisterNavigationEvents();
+      }
+    }
+    /**
+     * Handler for `api-navigation-selection-changed` event.
+     *
+     * @param {CustomEvent} e
+     */
+    _navigationHandler(e) {
+      this.selected = e.detail.selected;
+      this.selectedType = e.detail.type;
+    }
+    /**
+     * Handles navigation change, computes model for the view and finally
+     * renders the view.
+     * @param {String} selectedType
+     */
+    _navigationOccured(selectedType) {
+      this._setIsEndpoint(selectedType === 'endpoint');
+      this._setIsMethod(selectedType === 'method');
+      this._setIsDoc(selectedType === 'documentation');
+      this._setIsType(selectedType === 'type');
+      this._setIsSecurity(selectedType === 'security');
+      this._setIsSummary(selectedType === 'summary');
+    }
+
+    /**
+     * Checks if property item has a type.
+     * @param {Object} model Model item.
+     * @param {String} type A type to lookup
+     * @return {Boolean}
+     */
+    _hasType(model, type) {
+      if (!model) {
+        return false;
+      }
+      const types = model['@type'] || [];
+      return types.findIndex((item) => item === type) !== -1;
+    }
+    /**
+     * Computes AMF's `http://schema.org/WebAPI` model
+     *
+     * @param {Array|Object} amf AMF json/ld model for an API
+     * @return {Object} Web API declaration.
+     */
+    _computeWebApi(amf) {
+      if (amf instanceof Array) {
+        amf = amf[0];
+      }
+      if (!amf) {
+        return;
+      }
+      const enc = amf['http://raml.org/vocabularies/document#encodes'];
+      if (!(enc instanceof Array)) {
+        return;
+      }
+      return enc.find((item) => this._hasType(item, 'http://schema.org/WebAPI'));
+    }
+    /**
+     * Computes list of declarations in the AMF api model.
+     *
+     * @param {Array|Object} amf AMF json/ld model for an API
+     * @return {Array} List of declarations
+     */
+    _computeDeclares(amf) {
+      if (amf instanceof Array) {
+        amf = amf[0];
+      }
+      if (!amf) {
+        return;
+      }
+      return amf['http://raml.org/vocabularies/document#declares'];
+    }
+    /**
+     * Computes model for an endpoint documentation.
+     *
+     * @param {Object} webApi Current value of `webApi` property
+     * @param {String} selected Selected shape
+     * @return {Object} An endponit definition
+     */
+    _computeEndpointModel(webApi, selected) {
+      if (!webApi || !selected) {
+        return;
+      }
+      const endpoints = webApi['http://raml.org/vocabularies/http#endpoint'];
+      return endpoints.find((item) => item['@id'] === selected);
+    }
+    /**
+     * Computes model for endpoint for method documentation.
+     *
+     * @param {Object} webApi Current value of `webApi` property
+     * @param {String} selected Selected shape
+     * @return {Object} An endponit definition
+     */
+    _computeMethodEndpointModel(webApi, selected) {
+      if (!webApi || !selected) {
+        return;
+      }
+      const endpointId = selected.substr(0, selected.lastIndexOf('/'));
+      return this._computeEndpointModel(webApi, endpointId);
+    }
+    /**
+     * Computes method for the method documentation.
+     *
+     * @param {Object} webApi Current value of `webApi` property
+     * @param {String} selected Selected shape
+     * @return {Object} A method definition
+     */
+    _computeMethodModel(webApi, selected) {
+      if (!webApi || !selected) {
+        return;
+      }
+      const endpointId = selected.substr(0, selected.lastIndexOf('/'));
+      const endpoint = this._computeEndpointModel(webApi, endpointId);
+      if (!endpoint) {
+        return;
+      }
+      const methods = endpoint['http://www.w3.org/ns/hydra/core#supportedOperation'];
+      if (!(methods instanceof Array)) {
+        return;
+      }
+      return methods.find((item) => item['@id'] === selected);
+    }
+    /**
+     * Computes a documentation model.
+     *
+     * @param {Object} webApi Current value of `webApi` property
+     * @param {String} selected Selected shape
+     * @return {Object} A method definition
+     */
+    _computeDocument(webApi, selected) {
+      if (!webApi || !selected) {
+        return;
+      }
+      const docs = webApi['http://schema.org/documentation'];
+      return docs && docs.find((item) => item['@id'] === selected);
+    }
+    /**
+     * Computes a type documentation model.
+     *
+     * @param {Array} declares Current value of `declares` property
+     * @param {String} selected Selected shape
+     * @return {Object} A type definition
+     */
+    _computeType(declares, selected) {
+      if (!declares || !selected) {
+        return;
+      }
+      return declares.find((item) => item['@id'] === selected);
+    }
+    /**
+     * Computes model for selected security definition.
+     *
+     * @param {Array} declares Current value of `declares` property
+     * @param {String} selected Selected shape
+     * @return {Object} A security definition
+     */
+    _computeSecurityModel(declares, selected) {
+      if (!declares || !selected) {
+        return;
+      }
+      return declares.find((item) => item['@id'] === selected);
+    }
+  }
+  window.customElements.define(ApiDocumentation.is, ApiDocumentation);
+  </script>
+</dom-module>
