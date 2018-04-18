@@ -241,7 +241,7 @@
     ],
     "http://raml.org/vocabularies/document#declares": [
       {
-        "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody/post/request/application/json/array/schema/array/null/unresolved",
+        "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody/post/request/application/json/array/schema/array/default-array/unresolved",
         "@type": [
           "http://raml.org/vocabularies/shapes#RecursiveShape",
           "http://www.w3.org/ns/shacl#Shape",
@@ -249,7 +249,7 @@
         ],
         "http://raml.org/vocabularies/shapes#fixPoint": [
           {
-            "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%252FarrayBody/post/request/application/json/array/schema/array/null/unresolved"
+            "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%252FarrayBody/post/request/application/json/array/schema/array/default-array/unresolved"
           }
         ],
         "http://raml.org/vocabularies/document#link-target": [

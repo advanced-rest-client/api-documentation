@@ -438,3 +438,17 @@ documentation:
         description: |
           This demonstrates a body as an Array
         type: AppPerson[]
+/multipleTypeInheritance:
+  get:
+    description: |
+      The response body inherits the following types:
+
+      - AppPerson
+      - AlertableAdmin
+    responses:
+      200:
+        body:
+          application/json:
+            type:
+              - AppPerson
+              - ExampleType.AlertableAdmin
