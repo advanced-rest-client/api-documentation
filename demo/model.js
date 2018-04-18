@@ -11,6 +11,7 @@ files.set('array-body/array-body.raml', 'RAML 1.0');
 files.set('appian-api/appian-api.raml', 'RAML 1.0');
 // files.set('github-api/github-api.raml', 'RAML 0.8');
 files.set('nexmo-sms-api/nexmo-sms-api.raml', 'RAML 1.0');
+files.set('APIC-15/APIC-15.raml', 'RAML 1.0');
 /**
  * Generates json/ld file from parsed document.
  *
