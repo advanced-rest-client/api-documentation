@@ -26,10 +26,10 @@
       <!-- <api-security-documentation amf-model="{{amfModel}}" security="[[_computeSecurityModel(declares, selected)]]"></api-security-documentation> -->
     </template>
     <template is="dom-if" if="[[isEndpoint]]" restamp="true">
-      <api-endpoint-documentation amf-model="{{amfModel}}" endpoint="[[_computeEndpointModel(webApi, selected)]]" base-uri="[[baseUri]]" narrow="[[narrow]]"></api-endpoint-documentation>
+      <api-endpoint-documentation amf-model="{{amfModel}}" endpoint="[[_computeEndpointModel(webApi, selected)]]" previous="[[_computeEndpointPrevious(webApi, selected)]]" next="[[_computeEndpointNext(webApi, selected)]]" base-uri="[[baseUri]]" narrow="[[narrow]]"></api-endpoint-documentation>
     </template>
     <template is="dom-if" if="[[isMethod]]" restamp="true">
-      <api-method-documentation amf-model="{{amfModel}}" endpoint="[[_computeMethodEndpointModel(webApi, selected)]]" method="[[_computeMethodModel(webApi, selected)]]" base-uri="[[baseUri]]" no-try-it="[[noTryIt]]" narrow="[[narrow]]"></api-method-documentation>
+      <api-method-documentation amf-model="{{amfModel}}" endpoint="[[_computeMethodEndpointModel(webApi, selected)]]" method="[[_computeMethodModel(webApi, selected)]]" previous="[[_computeMethodPrevious(webApi, selected)]]" next="[[_computeMethodNext(webApi, selected)]]" base-uri="[[baseUri]]" no-try-it="[[noTryIt]]" narrow="[[narrow]]"></api-method-documentation>
     </template>
     <template is="dom-if" if="[[isDoc]]" restamp="true">
       <api-documentation-document api-document="[[_computeDocument(webApi, selected)]]"></api-documentation-document>
@@ -285,7 +285,23 @@
       this._setIsSecurity(selectedType === 'security');
       this._setIsSummary(selectedType === 'summary');
     }
-
+    /**
+     * Gets a signle scalar value from a model.
+     * @param {Object} model Amf model to extract the value from.
+     * @param {String} key Model key to search for the value
+     * @return {any} Value for key
+     */
+    _getValue(model, key) {
+      let data = (model && model[key]);
+      if (!data || !(data instanceof Array)) {
+        return;
+      }
+      data = data[0];
+      if (!data) {
+        return;
+      }
+      return data['@value'];
+    }
     /**
      * Checks if property item has a type.
      * @param {Object} model Model item.
@@ -347,6 +363,44 @@
       const endpoints = webApi['http://raml.org/vocabularies/http#endpoint'];
       return endpoints.find((item) => item['@id'] === selected);
     }
+
+    _computeEndpointLink(item) {
+      if (!item) {
+        return;
+      }
+      let name = this._getValue(item, 'http://schema.org/name');
+      if (!name) {
+        name = this._getValue(item, 'http://raml.org/vocabularies/http#path');
+      }
+      return {
+        id: item['@id'],
+        label: name
+      };
+    }
+
+    _computeEndpointPrevious(webApi, selected) {
+      if (!webApi || !selected) {
+        return;
+      }
+      const endpoints = webApi['http://raml.org/vocabularies/http#endpoint'];
+      for (var i = 0; i < endpoints.length; i++) {
+        if (endpoints[i]['@id'] === selected) {
+          return this._computeEndpointLink(endpoints[i - 1]);
+        }
+      }
+    }
+
+    _computeEndpointNext(webApi, selected) {
+      if (!webApi || !selected) {
+        return;
+      }
+      const endpoints = webApi['http://raml.org/vocabularies/http#endpoint'];
+      for (var i = 0; i < endpoints.length; i++) {
+        if (endpoints[i]['@id'] === selected) {
+          return this._computeEndpointLink(endpoints[i + 1]);
+        }
+      }
+    }
     /**
      * Computes model for endpoint for method documentation.
      *
@@ -361,14 +415,8 @@
       const endpointId = selected.substr(0, selected.lastIndexOf('/'));
       return this._computeEndpointModel(webApi, endpointId);
     }
-    /**
-     * Computes method for the method documentation.
-     *
-     * @param {Object} webApi Current value of `webApi` property
-     * @param {String} selected Selected shape
-     * @return {Object} A method definition
-     */
-    _computeMethodModel(webApi, selected) {
+
+    __computeMethodsListForMethod(webApi, selected) {
       if (!webApi || !selected) {
         return;
       }
@@ -381,7 +429,59 @@
       if (!(methods instanceof Array)) {
         return;
       }
+      return methods;
+    }
+    /**
+     * Computes method for the method documentation.
+     *
+     * @param {Object} webApi Current value of `webApi` property
+     * @param {String} selected Selected shape
+     * @return {Object} A method definition
+     */
+    _computeMethodModel(webApi, selected) {
+      const methods = this.__computeMethodsListForMethod(webApi, selected);
+      if (!methods) {
+        return;
+      }
       return methods.find((item) => item['@id'] === selected);
+    }
+
+    _computeMethodLink(item) {
+      if (!item) {
+        return;
+      }
+      let name = this._getValue(item, 'http://schema.org/name');
+      if (!name) {
+        name = this._getValue(item, 'http://www.w3.org/ns/hydra/core#method');
+      }
+      return {
+        id: item['@id'],
+        label: name
+      };
+    }
+
+    _computeMethodPrevious(webApi, selected) {
+      const methods = this.__computeMethodsListForMethod(webApi, selected);
+      if (!methods) {
+        return;
+      }
+      for (var i = 0; i < methods.length; i++) {
+        if (methods[i]['@id'] === selected) {
+          return this._computeMethodLink(methods[i - 1]);
+        }
+      }
+    }
+
+    _computeMethodNext(webApi, selected) {
+      const methods = this.__computeMethodsListForMethod(webApi, selected);
+      if (!methods) {
+        return;
+      }
+      for (var i = 0; i < methods.length; i++) {
+        if (methods[i]['@id'] === selected) {
+          return this._computeMethodLink(methods[i + 1]);
+        }
+      }
     }
     /**
      * Computes a documentation model.
