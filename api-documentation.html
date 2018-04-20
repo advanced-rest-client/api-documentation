@@ -6,6 +6,7 @@
 <link rel="import" href="../api-type-documentation/api-type-documentation.html">
 <link rel="import" href="../api-documentation-document/api-documentation-document.html">
 <link rel="import" href="../api-summary/api-summary.html">
+<link rel="import" href="../api-security-documentation/api-security-documentation.html">
 
 <dom-module id="api-documentation">
   <template>
@@ -22,8 +23,7 @@
       <api-summary amf-model="[[amfModel]]" base-uri="[[baseUri]]"></api-summary>
     </template>
     <template is="dom-if" if="[[isSecurity]]" restamp="true">
-      <p>This view is not yet supported</p>
-      <!-- <api-security-documentation amf-model="{{amfModel}}" security="[[_computeSecurityModel(declares, selected)]]"></api-security-documentation> -->
+      <api-security-documentation amf-model="{{amfModel}}" security="[[_computeSecurityModel(declares, selected)]]"></api-security-documentation>
     </template>
     <template is="dom-if" if="[[isEndpoint]]" restamp="true">
       <api-endpoint-documentation amf-model="{{amfModel}}" endpoint="[[_computeEndpointModel(webApi, selected)]]" previous="[[_computeEndpointPrevious(webApi, selected)]]" next="[[_computeEndpointNext(webApi, selected)]]" base-uri="[[baseUri]]" narrow="[[narrow]]"></api-endpoint-documentation>
