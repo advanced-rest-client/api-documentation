@@ -274,6 +274,9 @@
      * @param {CustomEvent} e
      */
     _navigationHandler(e) {
+      if (e.detail.passive === true) {
+        return;
+      }
       this.selected = e.detail.selected;
       this.selectedType = e.detail.type;
     }
