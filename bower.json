@@ -19,7 +19,8 @@
     "api-documentation-document": "advanced-rest-client/api-documentation-document#2.0.0-preview",
     "api-method-documentation": "advanced-rest-client/api-method-documentation#2.0.0-preview",
     "api-summary": "advanced-rest-client/api-summary#2.0.0-preview",
-    "api-security-documentation": "advanced-rest-client/api-security-documentation#2.0.0-preview"
+    "api-security-documentation": "advanced-rest-client/api-security-documentation#2.0.0-preview",
+    "amf-helper-mixin": "advanced-rest-client/amf-helper-mixin#2.0.0-preview"
   },
   "devDependencies": {
     "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",
