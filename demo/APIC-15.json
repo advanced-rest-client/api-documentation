@@ -96,7 +96,7 @@
                                     ],
                                     "http://www.w3.org/ns/shacl#path": [
                                       {
-                                        "@id": "http://raml.org/vocabularies/data#alternate_id?"
+                                        "@id": "http://raml.org/vocabularies/data#alternate_id"
                                       }
                                     ],
                                     "http://raml.org/vocabularies/shapes#range": [
@@ -118,7 +118,7 @@
                                             ],
                                             "http://www.w3.org/ns/shacl#datatype": [
                                               {
-                                                "@id": "http://www.w3.org/2001/XMLSchema#float"
+                                                "@id": "http://raml.org/vocabularies/shapes#number"
                                               }
                                             ]
                                           },
@@ -362,14 +362,14 @@
                             ],
                             "http://raml.org/vocabularies/document#examples": [
                               {
-                                "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/example/default-example",
+                                "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/example/value",
                                 "@type": [
                                   "http://raml.org/vocabularies/document#Example",
                                   "http://raml.org/vocabularies/document#DomainElement"
                                 ],
-                                "http://raml.org/vocabularies/document#value": [
+                                "http://schema.org/name": [
                                   {
-                                    "@value": "examples/organization/organization-array-response.raml"
+                                    "@value": "value"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document#strict": [
@@ -379,15 +379,140 @@
                                 ],
                                 "http://raml.org/vocabularies/document#structuredValue": [
                                   {
-                                    "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/example/default-example/included",
+                                    "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml/example/value/array_1",
                                     "@type": [
-                                      "http://raml.org/vocabularies/data#Link"
+                                      "http://raml.org/vocabularies/data#Array",
+                                      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq"
                                     ],
-                                    "http://raml.org/vocabularies/data#value": [
+                                    "http://www.w3.org/1999/02/22-rdf-syntax-ns#member": [
                                       {
-                                        "@value": "file://demo/APIC-15/examples/organization/organization-array-response.raml"
+                                        "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml/example/value/array_1/object_2",
+                                        "@type": [
+                                          "http://raml.org/vocabularies/data#Object"
+                                        ],
+                                        "http://raml.org/vocabularies/data#category": [
+                                          {
+                                            "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml/example/value/array_1/object_2/object_3",
+                                            "@type": [
+                                              "http://raml.org/vocabularies/data#Object"
+                                            ],
+                                            "http://raml.org/vocabularies/data#id": [
+                                              {
+                                                "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml/example/value/array_1/object_2/object_3/scalar_4",
+                                                "@type": [
+                                                  "http://raml.org/vocabularies/data#Scalar"
+                                                ],
+                                                "http://raml.org/vocabularies/data#value": [
+                                                  {
+                                                    "@value": "39691",
+                                                    "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                                                  }
+                                                ]
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/data#name": [
+                                              {
+                                                "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml/example/value/array_1/object_2/object_3/scalar_5",
+                                                "@type": [
+                                                  "http://raml.org/vocabularies/data#Scalar"
+                                                ],
+                                                "http://raml.org/vocabularies/data#value": [
+                                                  {
+                                                    "@value": "Religious and Spiritual",
+                                                    "@type": "http://www.w3.org/2001/XMLSchema#string"
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/data#created_at": [
+                                          {
+                                            "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml/example/value/array_1/object_2/scalar_6",
+                                            "@type": [
+                                              "http://raml.org/vocabularies/data#Scalar"
+                                            ],
+                                            "http://raml.org/vocabularies/data#value": [
+                                              {
+                                                "@value": "2013-01-02T22:21:34Z",
+                                                "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml/example/value/array_1/object_7",
+                                        "@type": [
+                                          "http://raml.org/vocabularies/data#Object"
+                                        ],
+                                        "http://raml.org/vocabularies/data#category": [
+                                          {
+                                            "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml/example/value/array_1/object_7/object_8",
+                                            "@type": [
+                                              "http://raml.org/vocabularies/data#Object"
+                                            ],
+                                            "http://raml.org/vocabularies/data#id": [
+                                              {
+                                                "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml/example/value/array_1/object_7/object_8/scalar_9",
+                                                "@type": [
+                                                  "http://raml.org/vocabularies/data#Scalar"
+                                                ],
+                                                "http://raml.org/vocabularies/data#value": [
+                                                  {
+                                                    "@value": "61111",
+                                                    "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                                                  }
+                                                ]
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/data#name": [
+                                              {
+                                                "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml/example/value/array_1/object_7/object_8/scalar_10",
+                                                "@type": [
+                                                  "http://raml.org/vocabularies/data#Scalar"
+                                                ],
+                                                "http://raml.org/vocabularies/data#value": [
+                                                  {
+                                                    "@value": "Service",
+                                                    "@type": "http://www.w3.org/2001/XMLSchema#string"
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/data#created_at": [
+                                          {
+                                            "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml/example/value/array_1/object_7/scalar_11",
+                                            "@type": [
+                                              "http://raml.org/vocabularies/data#Scalar"
+                                            ],
+                                            "http://raml.org/vocabularies/data#value": [
+                                              {
+                                                "@value": "2016-02-01T16:37:02Z",
+                                                "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    "http://raml.org/vocabularies/data#pos0": [
+                                      {
+                                        "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml/example/value/array_1/object_2"
+                                      }
+                                    ],
+                                    "http://raml.org/vocabularies/data#pos1": [
+                                      {
+                                        "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml/example/value/array_1/object_7"
                                       }
                                     ]
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#raw": [
+                                  {
+                                    "@value": "\n  -\n   \n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n    \n  -\n    category: \n      id: 61111   \n      name: Service\n    created_at: 2016-02-01T16:37:02Z\n   "
                                   }
                                 ]
                               }
@@ -477,7 +602,7 @@
                                     ],
                                     "http://www.w3.org/ns/shacl#path": [
                                       {
-                                        "@id": "http://raml.org/vocabularies/data#alternate_id?"
+                                        "@id": "http://raml.org/vocabularies/data#alternate_id"
                                       }
                                     ],
                                     "http://raml.org/vocabularies/shapes#range": [
@@ -499,7 +624,7 @@
                                             ],
                                             "http://www.w3.org/ns/shacl#datatype": [
                                               {
-                                                "@id": "http://www.w3.org/2001/XMLSchema#float"
+                                                "@id": "http://raml.org/vocabularies/shapes#number"
                                               }
                                             ]
                                           },
@@ -743,14 +868,14 @@
                             ],
                             "http://raml.org/vocabularies/document#examples": [
                               {
-                                "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/example/default-example",
+                                "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/example/value",
                                 "@type": [
                                   "http://raml.org/vocabularies/document#Example",
                                   "http://raml.org/vocabularies/document#DomainElement"
                                 ],
-                                "http://raml.org/vocabularies/document#value": [
+                                "http://schema.org/name": [
                                   {
-                                    "@value": "examples/organization/organization-array-response.raml"
+                                    "@value": "value"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document#strict": [
@@ -760,15 +885,140 @@
                                 ],
                                 "http://raml.org/vocabularies/document#structuredValue": [
                                   {
-                                    "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/example/default-example/included",
+                                    "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml/example/value/array_1",
                                     "@type": [
-                                      "http://raml.org/vocabularies/data#Link"
+                                      "http://raml.org/vocabularies/data#Array",
+                                      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq"
                                     ],
-                                    "http://raml.org/vocabularies/data#value": [
+                                    "http://www.w3.org/1999/02/22-rdf-syntax-ns#member": [
                                       {
-                                        "@value": "file://demo/APIC-15/examples/organization/organization-array-response.raml"
+                                        "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml/example/value/array_1/object_2",
+                                        "@type": [
+                                          "http://raml.org/vocabularies/data#Object"
+                                        ],
+                                        "http://raml.org/vocabularies/data#category": [
+                                          {
+                                            "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml/example/value/array_1/object_2/object_3",
+                                            "@type": [
+                                              "http://raml.org/vocabularies/data#Object"
+                                            ],
+                                            "http://raml.org/vocabularies/data#id": [
+                                              {
+                                                "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml/example/value/array_1/object_2/object_3/scalar_4",
+                                                "@type": [
+                                                  "http://raml.org/vocabularies/data#Scalar"
+                                                ],
+                                                "http://raml.org/vocabularies/data#value": [
+                                                  {
+                                                    "@value": "39691",
+                                                    "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                                                  }
+                                                ]
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/data#name": [
+                                              {
+                                                "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml/example/value/array_1/object_2/object_3/scalar_5",
+                                                "@type": [
+                                                  "http://raml.org/vocabularies/data#Scalar"
+                                                ],
+                                                "http://raml.org/vocabularies/data#value": [
+                                                  {
+                                                    "@value": "Religious and Spiritual",
+                                                    "@type": "http://www.w3.org/2001/XMLSchema#string"
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/data#created_at": [
+                                          {
+                                            "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml/example/value/array_1/object_2/scalar_6",
+                                            "@type": [
+                                              "http://raml.org/vocabularies/data#Scalar"
+                                            ],
+                                            "http://raml.org/vocabularies/data#value": [
+                                              {
+                                                "@value": "2013-01-02T22:21:34Z",
+                                                "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml/example/value/array_1/object_7",
+                                        "@type": [
+                                          "http://raml.org/vocabularies/data#Object"
+                                        ],
+                                        "http://raml.org/vocabularies/data#category": [
+                                          {
+                                            "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml/example/value/array_1/object_7/object_8",
+                                            "@type": [
+                                              "http://raml.org/vocabularies/data#Object"
+                                            ],
+                                            "http://raml.org/vocabularies/data#id": [
+                                              {
+                                                "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml/example/value/array_1/object_7/object_8/scalar_9",
+                                                "@type": [
+                                                  "http://raml.org/vocabularies/data#Scalar"
+                                                ],
+                                                "http://raml.org/vocabularies/data#value": [
+                                                  {
+                                                    "@value": "61111",
+                                                    "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                                                  }
+                                                ]
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/data#name": [
+                                              {
+                                                "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml/example/value/array_1/object_7/object_8/scalar_10",
+                                                "@type": [
+                                                  "http://raml.org/vocabularies/data#Scalar"
+                                                ],
+                                                "http://raml.org/vocabularies/data#value": [
+                                                  {
+                                                    "@value": "Service",
+                                                    "@type": "http://www.w3.org/2001/XMLSchema#string"
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/data#created_at": [
+                                          {
+                                            "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml/example/value/array_1/object_7/scalar_11",
+                                            "@type": [
+                                              "http://raml.org/vocabularies/data#Scalar"
+                                            ],
+                                            "http://raml.org/vocabularies/data#value": [
+                                              {
+                                                "@value": "2016-02-01T16:37:02Z",
+                                                "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    "http://raml.org/vocabularies/data#pos0": [
+                                      {
+                                        "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml/example/value/array_1/object_2"
+                                      }
+                                    ],
+                                    "http://raml.org/vocabularies/data#pos1": [
+                                      {
+                                        "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml/example/value/array_1/object_7"
                                       }
                                     ]
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#raw": [
+                                  {
+                                    "@value": "\n  -\n   \n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n    \n  -\n    category: \n      id: 61111   \n      name: Service\n    created_at: 2016-02-01T16:37:02Z\n   "
                                   }
                                 ]
                               }
@@ -854,6 +1104,68 @@
                               }
                             ],
                             "http://www.w3.org/ns/shacl#property": [
+                              {
+                                "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/alternate_id",
+                                "@type": [
+                                  "http://www.w3.org/ns/shacl#PropertyShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://raml.org/vocabularies/shapes#Shape"
+                                ],
+                                "http://www.w3.org/ns/shacl#path": [
+                                  {
+                                    "@id": "http://raml.org/vocabularies/data#alternate_id"
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/shapes#range": [
+                                  {
+                                    "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/alternate_id/union/default-union",
+                                    "@type": [
+                                      "http://raml.org/vocabularies/shapes#UnionShape",
+                                      "http://www.w3.org/ns/shacl#Shape",
+                                      "http://raml.org/vocabularies/shapes#Shape"
+                                    ],
+                                    "http://raml.org/vocabularies/shapes#anyOf": [
+                                      {
+                                        "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#shape/property/alternate_id?/union/default-union/union/default-union/scalar/default-scalar",
+                                        "@type": [
+                                          "http://raml.org/vocabularies/shapes#ScalarShape",
+                                          "http://www.w3.org/ns/shacl#Shape",
+                                          "http://raml.org/vocabularies/shapes#Shape",
+                                          "http://raml.org/vocabularies/document#DomainElement"
+                                        ],
+                                        "http://www.w3.org/ns/shacl#datatype": [
+                                          {
+                                            "@id": "http://raml.org/vocabularies/shapes#number"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#shape/property/alternate_id?/union/default-union/nil/default-nil",
+                                        "@type": [
+                                          "http://raml.org/vocabularies/shapes#NilShape",
+                                          "http://www.w3.org/ns/shacl#Shape",
+                                          "http://raml.org/vocabularies/shapes#Shape"
+                                        ]
+                                      }
+                                    ],
+                                    "http://schema.org/description": [
+                                      {
+                                        "@value": "The alternate ID of the organization"
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#minCount": [
+                                  {
+                                    "@value": 0
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#name": [
+                                  {
+                                    "@value": "alternate_id"
+                                  }
+                                ]
+                              },
                               {
                                 "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/category",
                                 "@type": [
@@ -1051,68 +1363,6 @@
                                     "@value": "created_at"
                                   }
                                 ]
-                              },
-                              {
-                                "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/alternate_id",
-                                "@type": [
-                                  "http://www.w3.org/ns/shacl#PropertyShape",
-                                  "http://www.w3.org/ns/shacl#Shape",
-                                  "http://raml.org/vocabularies/shapes#Shape"
-                                ],
-                                "http://www.w3.org/ns/shacl#path": [
-                                  {
-                                    "@id": "http://raml.org/vocabularies/data#alternate_id?"
-                                  }
-                                ],
-                                "http://raml.org/vocabularies/shapes#range": [
-                                  {
-                                    "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/alternate_id/union/default-union",
-                                    "@type": [
-                                      "http://raml.org/vocabularies/shapes#UnionShape",
-                                      "http://www.w3.org/ns/shacl#Shape",
-                                      "http://raml.org/vocabularies/shapes#Shape"
-                                    ],
-                                    "http://raml.org/vocabularies/shapes#anyOf": [
-                                      {
-                                        "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#shape/property/alternate_id?/union/default-union/union/default-union/scalar/default-scalar",
-                                        "@type": [
-                                          "http://raml.org/vocabularies/shapes#ScalarShape",
-                                          "http://www.w3.org/ns/shacl#Shape",
-                                          "http://raml.org/vocabularies/shapes#Shape",
-                                          "http://raml.org/vocabularies/document#DomainElement"
-                                        ],
-                                        "http://www.w3.org/ns/shacl#datatype": [
-                                          {
-                                            "@id": "http://www.w3.org/2001/XMLSchema#float"
-                                          }
-                                        ]
-                                      },
-                                      {
-                                        "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#shape/property/alternate_id?/union/default-union/nil/default-nil",
-                                        "@type": [
-                                          "http://raml.org/vocabularies/shapes#NilShape",
-                                          "http://www.w3.org/ns/shacl#Shape",
-                                          "http://raml.org/vocabularies/shapes#Shape"
-                                        ]
-                                      }
-                                    ],
-                                    "http://schema.org/description": [
-                                      {
-                                        "@value": "The alternate ID of the organization"
-                                      }
-                                    ]
-                                  }
-                                ],
-                                "http://www.w3.org/ns/shacl#minCount": [
-                                  {
-                                    "@value": 0
-                                  }
-                                ],
-                                "http://www.w3.org/ns/shacl#name": [
-                                  {
-                                    "@value": "alternate_id"
-                                  }
-                                ]
                               }
                             ],
                             "http://www.w3.org/ns/shacl#name": [
@@ -1122,14 +1372,14 @@
                             ],
                             "http://raml.org/vocabularies/document#examples": [
                               {
-                                "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/example/default-example",
+                                "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml/example/value",
                                 "@type": [
                                   "http://raml.org/vocabularies/document#Example",
                                   "http://raml.org/vocabularies/document#DomainElement"
                                 ],
-                                "http://raml.org/vocabularies/document#value": [
+                                "http://schema.org/name": [
                                   {
-                                    "@value": "examples/organization/organization-individual-response.raml"
+                                    "@value": "value"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document#strict": [
@@ -1139,15 +1389,79 @@
                                 ],
                                 "http://raml.org/vocabularies/document#structuredValue": [
                                   {
-                                    "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/example/default-example/included",
+                                    "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml/example/value/object_1",
                                     "@type": [
-                                      "http://raml.org/vocabularies/data#Link"
+                                      "http://raml.org/vocabularies/data#Object"
                                     ],
-                                    "http://raml.org/vocabularies/data#value": [
+                                    "http://raml.org/vocabularies/data#alternate_id": [
                                       {
-                                        "@value": "file://demo/APIC-15/examples/organization/organization-individual-response.raml"
+                                        "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml/example/value/object_1/scalar_2",
+                                        "@type": [
+                                          "http://raml.org/vocabularies/data#Scalar"
+                                        ],
+                                        "http://raml.org/vocabularies/data#value": [
+                                          {
+                                            "@value": "1",
+                                            "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    "http://raml.org/vocabularies/data#category": [
+                                      {
+                                        "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml/example/value/object_1/object_3",
+                                        "@type": [
+                                          "http://raml.org/vocabularies/data#Object"
+                                        ],
+                                        "http://raml.org/vocabularies/data#id": [
+                                          {
+                                            "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml/example/value/object_1/object_3/scalar_4",
+                                            "@type": [
+                                              "http://raml.org/vocabularies/data#Scalar"
+                                            ],
+                                            "http://raml.org/vocabularies/data#value": [
+                                              {
+                                                "@value": "39691",
+                                                "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/data#name": [
+                                          {
+                                            "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml/example/value/object_1/object_3/scalar_5",
+                                            "@type": [
+                                              "http://raml.org/vocabularies/data#Scalar"
+                                            ],
+                                            "http://raml.org/vocabularies/data#value": [
+                                              {
+                                                "@value": "Religious and Spiritual",
+                                                "@type": "http://www.w3.org/2001/XMLSchema#string"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    "http://raml.org/vocabularies/data#created_at": [
+                                      {
+                                        "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml/example/value/object_1/scalar_6",
+                                        "@type": [
+                                          "http://raml.org/vocabularies/data#Scalar"
+                                        ],
+                                        "http://raml.org/vocabularies/data#value": [
+                                          {
+                                            "@value": "2013-01-02T22:21:34Z",
+                                            "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+                                          }
+                                        ]
                                       }
                                     ]
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#raw": [
+                                  {
+                                    "@value": "\n    alternate_id: 1\n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n   \n"
                                   }
                                 ]
                               }
@@ -1248,7 +1562,7 @@
             ],
             "http://www.w3.org/ns/shacl#path": [
               {
-                "@id": "http://raml.org/vocabularies/data#alternate_id?"
+                "@id": "http://raml.org/vocabularies/data#alternate_id"
               }
             ],
             "http://raml.org/vocabularies/shapes#range": [
@@ -1270,7 +1584,7 @@
                     ],
                     "http://www.w3.org/ns/shacl#datatype": [
                       {
-                        "@id": "http://www.w3.org/2001/XMLSchema#float"
+                        "@id": "http://raml.org/vocabularies/shapes#number"
                       }
                     ]
                   },
@@ -1527,11 +1841,6 @@
                 "@value": "value"
               }
             ],
-            "http://raml.org/vocabularies/document#value": [
-              {
-                "@value": "\n    alternate_id: 1\n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n   \n"
-              }
-            ],
             "http://raml.org/vocabularies/document#strict": [
               {
                 "@value": true
@@ -1608,6 +1917,11 @@
                   }
                 ]
               }
+            ],
+            "http://www.w3.org/ns/shacl#raw": [
+              {
+                "@value": "\n    alternate_id: 1\n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n   \n"
+              }
             ]
           }
         ]
@@ -1643,7 +1957,7 @@
                 ],
                 "http://www.w3.org/ns/shacl#path": [
                   {
-                    "@id": "http://raml.org/vocabularies/data#alternate_id?"
+                    "@id": "http://raml.org/vocabularies/data#alternate_id"
                   }
                 ],
                 "http://raml.org/vocabularies/shapes#range": [
@@ -1665,7 +1979,7 @@
                         ],
                         "http://www.w3.org/ns/shacl#datatype": [
                           {
-                            "@id": "http://www.w3.org/2001/XMLSchema#float"
+                            "@id": "http://raml.org/vocabularies/shapes#number"
                           }
                         ]
                       },
@@ -1912,7 +2226,7 @@
         ],
         "http://raml.org/vocabularies/document#encodes": [
           {
-            "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml/example/value",
+            "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/example/value",
             "@type": [
               "http://raml.org/vocabularies/document#Example",
               "http://raml.org/vocabularies/document#DomainElement"
@@ -1920,11 +2234,6 @@
             "http://schema.org/name": [
               {
                 "@value": "value"
-              }
-            ],
-            "http://raml.org/vocabularies/document#value": [
-              {
-                "@value": "\n  -\n   \n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n    \n  -\n    category: \n      id: 61111   \n      name: Service\n    created_at: 2016-02-01T16:37:02Z\n   "
               }
             ],
             "http://raml.org/vocabularies/document#strict": [
@@ -2052,7 +2361,22 @@
                       }
                     ]
                   }
+                ],
+                "http://raml.org/vocabularies/data#pos0": [
+                  {
+                    "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml/example/value/array_1/object_2"
+                  }
+                ],
+                "http://raml.org/vocabularies/data#pos1": [
+                  {
+                    "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml/example/value/array_1/object_7"
+                  }
                 ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#raw": [
+              {
+                "@value": "\n  -\n   \n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n    \n  -\n    category: \n      id: 61111   \n      name: Service\n    created_at: 2016-02-01T16:37:02Z\n   "
               }
             ]
           }

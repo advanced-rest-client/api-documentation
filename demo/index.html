@@ -114,8 +114,8 @@
         </header>
         <div class="vertical-section-container centered" role="main">
           <raml-aware raml="{{amfModel}}" scope="model"></raml-aware>
-          <api-navigation aware="model" summary endpoints-opened></api-navigation>
-          <api-documentation aware="model" handle-navigation-events></api-documentation>
+          <api-navigation aware="model" summary endpoints-opened selected="{{selected}}" selected-type="{{selectedType}}"></api-navigation>
+          <api-documentation aware="model" selected="[[selected]]" selected-type="[[selectedType]]"></api-documentation>
         </div>
       </template>
     </dom-bind>
