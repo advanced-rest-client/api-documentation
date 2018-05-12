@@ -281,16 +281,16 @@
         element = fixture('Basic');
         element.amfModel = amf;
       });
-      const id = 'file://demo/demo-api/demo-api.raml#/web-api/end-points/%2Fpeople/get/200/application/json/schema/property/items/array/items/AppPerson';
+      const id = 'file://demo/demo-api/demo-api.raml#/web-api/end-points/%2Fpeople/get/200/application%2Fjson/schema/property/items/array/items/AppPerson';
 
       test('Computes model for selection', () => {
-        const result = element._computeType(element.declares, id);
+        const result = element._computeType(element.declares, undefined, id);
         assert.typeOf(result, 'object');
         assert.equal(result['@id'], id);
       });
 
       test('Returns undefined when no model', () => {
-        const result = element._computeType(undefined, id);
+        const result = element._computeType(undefined, undefined, id);
         assert.isUndefined(result);
       });
 
