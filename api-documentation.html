@@ -36,7 +36,7 @@
       <api-documentation-document api-document="[[_computeDocument(webApi, selected)]]"></api-documentation-document>
     </template>
     <template is="dom-if" if="[[isType]]" restamp="true">
-      <api-type-documentation amf-model="{{amfModel}}" type="[[_computeType(declares, selected)]]"></api-type-documentation>
+      <api-type-documentation amf-model="{{amfModel}}" type="[[_computeType(declares, references, selected)]]"></api-type-documentation>
     </template>
   </template>
   <script>
@@ -187,6 +187,15 @@
         declares: {
           type: Array,
           computed: '_computeDeclares(amfModel)'
+        },
+        /**
+         * Computed value of `references` part of the AMF model
+         *
+         * @type {Array<Object>}
+         */
+        references: {
+          type: Array,
+          computed: '_computeReferences(amfModel)'
         },
         /**
          * A property to set to override AMF's model base URI information.
