@@ -53,7 +53,7 @@
                     ],
                     "http://raml.org/vocabularies/http#payload": [
                       {
-                        "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/put/request/application/json",
+                        "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/put/request/application%2Fjson",
                         "@type": [
                           "http://raml.org/vocabularies/http#Payload",
                           "http://raml.org/vocabularies/document#DomainElement"
@@ -65,7 +65,7 @@
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
-                            "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema",
+                            "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema",
                             "@type": [
                               "http://raml.org/vocabularies/shapes#ArrayShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -74,7 +74,7 @@
                             ],
                             "http://raml.org/vocabularies/shapes#items": [
                               {
-                                "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization",
+                                "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#NodeShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -88,7 +88,7 @@
                                 ],
                                 "http://www.w3.org/ns/shacl#property": [
                                   {
-                                    "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/alternate_id",
+                                    "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/alternate_id",
                                     "@type": [
                                       "http://www.w3.org/ns/shacl#PropertyShape",
                                       "http://www.w3.org/ns/shacl#Shape",
@@ -101,7 +101,7 @@
                                     ],
                                     "http://raml.org/vocabularies/shapes#range": [
                                       {
-                                        "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/alternate_id/union/default-union",
+                                        "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/alternate_id/union/default-union",
                                         "@type": [
                                           "http://raml.org/vocabularies/shapes#UnionShape",
                                           "http://www.w3.org/ns/shacl#Shape",
@@ -109,7 +109,7 @@
                                         ],
                                         "http://raml.org/vocabularies/shapes#anyOf": [
                                           {
-                                            "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#shape/property/alternate_id?/union/default-union/union/default-union/scalar/default-scalar",
+                                            "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#shape/property/alternate_id%3F/union/default-union/union/default-union/scalar/default-scalar",
                                             "@type": [
                                               "http://raml.org/vocabularies/shapes#ScalarShape",
                                               "http://www.w3.org/ns/shacl#Shape",
@@ -123,7 +123,7 @@
                                             ]
                                           },
                                           {
-                                            "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#shape/property/alternate_id?/union/default-union/nil/default-nil",
+                                            "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#shape/property/alternate_id%3F/union/default-union/nil/default-nil",
                                             "@type": [
                                               "http://raml.org/vocabularies/shapes#NilShape",
                                               "http://www.w3.org/ns/shacl#Shape",
@@ -150,7 +150,7 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/category",
+                                    "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/category",
                                     "@type": [
                                       "http://www.w3.org/ns/shacl#PropertyShape",
                                       "http://www.w3.org/ns/shacl#Shape",
@@ -163,7 +163,7 @@
                                     ],
                                     "http://raml.org/vocabularies/shapes#range": [
                                       {
-                                        "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/category/category",
+                                        "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/category/category",
                                         "@type": [
                                           "http://www.w3.org/ns/shacl#NodeShape",
                                           "http://www.w3.org/ns/shacl#Shape",
@@ -177,7 +177,7 @@
                                         ],
                                         "http://www.w3.org/ns/shacl#property": [
                                           {
-                                            "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/category/category/property/id",
+                                            "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/category/category/property/id",
                                             "@type": [
                                               "http://www.w3.org/ns/shacl#PropertyShape",
                                               "http://www.w3.org/ns/shacl#Shape",
@@ -190,7 +190,7 @@
                                             ],
                                             "http://raml.org/vocabularies/shapes#range": [
                                               {
-                                                "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/category/category/property/id/scalar/id",
+                                                "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/category/category/property/id/scalar/id",
                                                 "@type": [
                                                   "http://raml.org/vocabularies/shapes#ScalarShape",
                                                   "http://www.w3.org/ns/shacl#Shape",
@@ -226,7 +226,7 @@
                                             ]
                                           },
                                           {
-                                            "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/category/category/property/name",
+                                            "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/category/category/property/name",
                                             "@type": [
                                               "http://www.w3.org/ns/shacl#PropertyShape",
                                               "http://www.w3.org/ns/shacl#Shape",
@@ -239,7 +239,7 @@
                                             ],
                                             "http://raml.org/vocabularies/shapes#range": [
                                               {
-                                                "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/category/category/property/name/scalar/name",
+                                                "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/category/category/property/name/scalar/name",
                                                 "@type": [
                                                   "http://raml.org/vocabularies/shapes#ScalarShape",
                                                   "http://www.w3.org/ns/shacl#Shape",
@@ -299,7 +299,7 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/created_at",
+                                    "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/created_at",
                                     "@type": [
                                       "http://www.w3.org/ns/shacl#PropertyShape",
                                       "http://www.w3.org/ns/shacl#Shape",
@@ -312,7 +312,7 @@
                                     ],
                                     "http://raml.org/vocabularies/shapes#range": [
                                       {
-                                        "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/created_at/scalar/created_at",
+                                        "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/created_at/scalar/created_at",
                                         "@type": [
                                           "http://raml.org/vocabularies/shapes#ScalarShape",
                                           "http://www.w3.org/ns/shacl#Shape",
@@ -362,7 +362,7 @@
                             ],
                             "http://raml.org/vocabularies/document#examples": [
                               {
-                                "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/example/value",
+                                "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/example/value",
                                 "@type": [
                                   "http://raml.org/vocabularies/document#Example",
                                   "http://raml.org/vocabularies/document#DomainElement"
@@ -559,7 +559,7 @@
                     ],
                     "http://raml.org/vocabularies/http#payload": [
                       {
-                        "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application/json",
+                        "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application%2Fjson",
                         "@type": [
                           "http://raml.org/vocabularies/http#Payload",
                           "http://raml.org/vocabularies/document#DomainElement"
@@ -571,7 +571,7 @@
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
-                            "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema",
+                            "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema",
                             "@type": [
                               "http://raml.org/vocabularies/shapes#ArrayShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -580,7 +580,7 @@
                             ],
                             "http://raml.org/vocabularies/shapes#items": [
                               {
-                                "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization",
+                                "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#NodeShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -594,7 +594,7 @@
                                 ],
                                 "http://www.w3.org/ns/shacl#property": [
                                   {
-                                    "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/alternate_id",
+                                    "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/alternate_id",
                                     "@type": [
                                       "http://www.w3.org/ns/shacl#PropertyShape",
                                       "http://www.w3.org/ns/shacl#Shape",
@@ -607,7 +607,7 @@
                                     ],
                                     "http://raml.org/vocabularies/shapes#range": [
                                       {
-                                        "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/alternate_id/union/default-union",
+                                        "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/alternate_id/union/default-union",
                                         "@type": [
                                           "http://raml.org/vocabularies/shapes#UnionShape",
                                           "http://www.w3.org/ns/shacl#Shape",
@@ -615,7 +615,7 @@
                                         ],
                                         "http://raml.org/vocabularies/shapes#anyOf": [
                                           {
-                                            "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#shape/property/alternate_id?/union/default-union/union/default-union/scalar/default-scalar",
+                                            "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#shape/property/alternate_id%3F/union/default-union/union/default-union/scalar/default-scalar",
                                             "@type": [
                                               "http://raml.org/vocabularies/shapes#ScalarShape",
                                               "http://www.w3.org/ns/shacl#Shape",
@@ -629,7 +629,7 @@
                                             ]
                                           },
                                           {
-                                            "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#shape/property/alternate_id?/union/default-union/nil/default-nil",
+                                            "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#shape/property/alternate_id%3F/union/default-union/nil/default-nil",
                                             "@type": [
                                               "http://raml.org/vocabularies/shapes#NilShape",
                                               "http://www.w3.org/ns/shacl#Shape",
@@ -656,7 +656,7 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/category",
+                                    "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/category",
                                     "@type": [
                                       "http://www.w3.org/ns/shacl#PropertyShape",
                                       "http://www.w3.org/ns/shacl#Shape",
@@ -669,7 +669,7 @@
                                     ],
                                     "http://raml.org/vocabularies/shapes#range": [
                                       {
-                                        "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/category/category",
+                                        "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/category/category",
                                         "@type": [
                                           "http://www.w3.org/ns/shacl#NodeShape",
                                           "http://www.w3.org/ns/shacl#Shape",
@@ -683,7 +683,7 @@
                                         ],
                                         "http://www.w3.org/ns/shacl#property": [
                                           {
-                                            "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/category/category/property/id",
+                                            "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/category/category/property/id",
                                             "@type": [
                                               "http://www.w3.org/ns/shacl#PropertyShape",
                                               "http://www.w3.org/ns/shacl#Shape",
@@ -696,7 +696,7 @@
                                             ],
                                             "http://raml.org/vocabularies/shapes#range": [
                                               {
-                                                "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/category/category/property/id/scalar/id",
+                                                "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/category/category/property/id/scalar/id",
                                                 "@type": [
                                                   "http://raml.org/vocabularies/shapes#ScalarShape",
                                                   "http://www.w3.org/ns/shacl#Shape",
@@ -732,7 +732,7 @@
                                             ]
                                           },
                                           {
-                                            "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/category/category/property/name",
+                                            "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/category/category/property/name",
                                             "@type": [
                                               "http://www.w3.org/ns/shacl#PropertyShape",
                                               "http://www.w3.org/ns/shacl#Shape",
@@ -745,7 +745,7 @@
                                             ],
                                             "http://raml.org/vocabularies/shapes#range": [
                                               {
-                                                "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/category/category/property/name/scalar/name",
+                                                "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/category/category/property/name/scalar/name",
                                                 "@type": [
                                                   "http://raml.org/vocabularies/shapes#ScalarShape",
                                                   "http://www.w3.org/ns/shacl#Shape",
@@ -805,7 +805,7 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/created_at",
+                                    "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/created_at",
                                     "@type": [
                                       "http://www.w3.org/ns/shacl#PropertyShape",
                                       "http://www.w3.org/ns/shacl#Shape",
@@ -818,7 +818,7 @@
                                     ],
                                     "http://raml.org/vocabularies/shapes#range": [
                                       {
-                                        "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/created_at/scalar/created_at",
+                                        "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/created_at/scalar/created_at",
                                         "@type": [
                                           "http://raml.org/vocabularies/shapes#ScalarShape",
                                           "http://www.w3.org/ns/shacl#Shape",
@@ -868,7 +868,7 @@
                             ],
                             "http://raml.org/vocabularies/document#examples": [
                               {
-                                "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/example/value",
+                                "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/example/value",
                                 "@type": [
                                   "http://raml.org/vocabularies/document#Example",
                                   "http://raml.org/vocabularies/document#DomainElement"
@@ -1079,7 +1079,7 @@
                     ],
                     "http://raml.org/vocabularies/http#payload": [
                       {
-                        "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json",
+                        "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson",
                         "@type": [
                           "http://raml.org/vocabularies/http#Payload",
                           "http://raml.org/vocabularies/document#DomainElement"
@@ -1091,7 +1091,7 @@
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
-                            "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema",
+                            "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -1105,7 +1105,7 @@
                             ],
                             "http://www.w3.org/ns/shacl#property": [
                               {
-                                "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/alternate_id",
+                                "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/alternate_id",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#PropertyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -1118,7 +1118,7 @@
                                 ],
                                 "http://raml.org/vocabularies/shapes#range": [
                                   {
-                                    "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/alternate_id/union/default-union",
+                                    "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/alternate_id/union/default-union",
                                     "@type": [
                                       "http://raml.org/vocabularies/shapes#UnionShape",
                                       "http://www.w3.org/ns/shacl#Shape",
@@ -1126,7 +1126,7 @@
                                     ],
                                     "http://raml.org/vocabularies/shapes#anyOf": [
                                       {
-                                        "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#shape/property/alternate_id?/union/default-union/union/default-union/scalar/default-scalar",
+                                        "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#shape/property/alternate_id%3F/union/default-union/union/default-union/scalar/default-scalar",
                                         "@type": [
                                           "http://raml.org/vocabularies/shapes#ScalarShape",
                                           "http://www.w3.org/ns/shacl#Shape",
@@ -1140,7 +1140,7 @@
                                         ]
                                       },
                                       {
-                                        "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#shape/property/alternate_id?/union/default-union/nil/default-nil",
+                                        "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#shape/property/alternate_id%3F/union/default-union/nil/default-nil",
                                         "@type": [
                                           "http://raml.org/vocabularies/shapes#NilShape",
                                           "http://www.w3.org/ns/shacl#Shape",
@@ -1167,7 +1167,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/category",
+                                "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#PropertyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -1180,7 +1180,7 @@
                                 ],
                                 "http://raml.org/vocabularies/shapes#range": [
                                   {
-                                    "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/category/category",
+                                    "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category/category",
                                     "@type": [
                                       "http://www.w3.org/ns/shacl#NodeShape",
                                       "http://www.w3.org/ns/shacl#Shape",
@@ -1194,7 +1194,7 @@
                                     ],
                                     "http://www.w3.org/ns/shacl#property": [
                                       {
-                                        "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/category/category/property/id",
+                                        "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category/category/property/id",
                                         "@type": [
                                           "http://www.w3.org/ns/shacl#PropertyShape",
                                           "http://www.w3.org/ns/shacl#Shape",
@@ -1207,7 +1207,7 @@
                                         ],
                                         "http://raml.org/vocabularies/shapes#range": [
                                           {
-                                            "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/category/category/property/id/scalar/id",
+                                            "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category/category/property/id/scalar/id",
                                             "@type": [
                                               "http://raml.org/vocabularies/shapes#ScalarShape",
                                               "http://www.w3.org/ns/shacl#Shape",
@@ -1243,7 +1243,7 @@
                                         ]
                                       },
                                       {
-                                        "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/category/category/property/name",
+                                        "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category/category/property/name",
                                         "@type": [
                                           "http://www.w3.org/ns/shacl#PropertyShape",
                                           "http://www.w3.org/ns/shacl#Shape",
@@ -1256,7 +1256,7 @@
                                         ],
                                         "http://raml.org/vocabularies/shapes#range": [
                                           {
-                                            "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/category/category/property/name/scalar/name",
+                                            "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category/category/property/name/scalar/name",
                                             "@type": [
                                               "http://raml.org/vocabularies/shapes#ScalarShape",
                                               "http://www.w3.org/ns/shacl#Shape",
@@ -1316,7 +1316,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/created_at",
+                                "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/created_at",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#PropertyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -1329,7 +1329,7 @@
                                 ],
                                 "http://raml.org/vocabularies/shapes#range": [
                                   {
-                                    "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/created_at/scalar/created_at",
+                                    "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/created_at/scalar/created_at",
                                     "@type": [
                                       "http://raml.org/vocabularies/shapes#ScalarShape",
                                       "http://www.w3.org/ns/shacl#Shape",
@@ -1575,7 +1575,7 @@
                 ],
                 "http://raml.org/vocabularies/shapes#anyOf": [
                   {
-                    "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#shape/property/alternate_id?/union/default-union/union/default-union/scalar/default-scalar",
+                    "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#shape/property/alternate_id%3F/union/default-union/union/default-union/scalar/default-scalar",
                     "@type": [
                       "http://raml.org/vocabularies/shapes#ScalarShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -1589,7 +1589,7 @@
                     ]
                   },
                   {
-                    "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#shape/property/alternate_id?/union/default-union/nil/default-nil",
+                    "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#shape/property/alternate_id%3F/union/default-union/nil/default-nil",
                     "@type": [
                       "http://raml.org/vocabularies/shapes#NilShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -1970,7 +1970,7 @@
                     ],
                     "http://raml.org/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#shape/property/alternate_id?/union/default-union/union/default-union/scalar/default-scalar",
+                        "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#shape/property/alternate_id%3F/union/default-union/union/default-union/scalar/default-scalar",
                         "@type": [
                           "http://raml.org/vocabularies/shapes#ScalarShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -1984,7 +1984,7 @@
                         ]
                       },
                       {
-                        "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#shape/property/alternate_id?/union/default-union/nil/default-nil",
+                        "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#shape/property/alternate_id%3F/union/default-union/nil/default-nil",
                         "@type": [
                           "http://raml.org/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -2226,7 +2226,7 @@
         ],
         "http://raml.org/vocabularies/document#encodes": [
           {
-            "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/example/value",
+            "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/example/value",
             "@type": [
               "http://raml.org/vocabularies/document#Example",
               "http://raml.org/vocabularies/document#DomainElement"

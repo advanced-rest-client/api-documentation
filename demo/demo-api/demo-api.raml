@@ -36,6 +36,7 @@ annotationTypes:
         required: true
 uses:
   ExampleType: resourceTypes/example-types.raml
+  myLib: library.raml
 types:
   Image: !include resourceTypes/image.raml
   Resource: !include resourceTypes/resource.raml
@@ -452,3 +453,9 @@ documentation:
             type:
               - AppPerson
               - ExampleType.AlertableAdmin
+/typeFromLibraryEndpoint:
+  post:
+    body:
+      type: myLib.TypeFromLibray
+    responses:
+      200:

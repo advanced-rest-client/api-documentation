@@ -10,7 +10,7 @@
   ],
   "devDependencies": {
     "@polymer/gen-typescript-declarations": "^1.1.1",
-    "amf-client-js": "^1.4.0-20"
+    "amf-client-js": "^1.4.0-28"
   },
   "private": false,
   "scripts": {
