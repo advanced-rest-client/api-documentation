@@ -194,6 +194,11 @@
                                   {
                                     "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody/post/request/application%2Fjson/array/schema/array/default-array"
                                   }
+                                ],
+                                "http://raml.org/vocabularies/document#recursive": [
+                                  {
+                                    "@value": false
+                                  }
                                 ]
                               }
                             ],

@@ -281,7 +281,7 @@
         element = fixture('Basic');
         element.amfModel = amf;
       });
-      const id = 'file://demo/demo-api/demo-api.raml#/web-api/end-points/%2Fpeople/get/200/application%2Fjson/schema/property/items/array/items/AppPerson';
+      const id = 'file://demo/demo-api/resourceTypes/app-person.raml/type';
 
       test('Computes model for selection', () => {
         const result = element._computeType(element.declares, undefined, id);
@@ -297,7 +297,7 @@
       test('Returns undefined when no selection', () => {
         const result = element._computeType(element.declares);
         assert.isUndefined(result);
-      });
+      });``
     });
 
     suite('_computeSecurityModel()', () => {

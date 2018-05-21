@@ -16,6 +16,8 @@
 /// <reference path="../api-type-documentation/api-type-documentation.d.ts" />
 /// <reference path="../api-documentation-document/api-documentation-document.d.ts" />
 /// <reference path="../api-summary/api-summary.d.ts" />
+/// <reference path="../api-security-documentation/api-security-documentation.d.ts" />
+/// <reference path="../amf-helper-mixin/amf-helper-mixin.d.ts" />
 
 declare namespace ApiElements {
 
@@ -82,22 +84,14 @@ declare namespace ApiElements {
    * ----------------|-------------|----------
    * `--api-documentation` | Mixin applied to this elment | `{}`
    */
-  class ApiDocumentation extends Polymer.Element {
+  class ApiDocumentation extends
+    ApiElements.AmfHelperMixin(
+    Polymer.Element) {
 
     /**
      * `raml-aware` scope property to use.
      */
     aware: string|null|undefined;
-
-    /**
-     * Generated AMF json/ld model form the API spec.
-     * The element assumes the object of the first array item to be a
-     * type of `"http://raml.org/vocabularies/document#Document`
-     * on AMF vocabulary.
-     *
-     * It is only usefult for the element to resolve references.
-     */
-    amfModel: object|any[]|null;
 
     /**
      * A model's `@id` of selected documentation part.
@@ -163,9 +157,31 @@ declare namespace ApiElements {
     readonly declares: Array<object|null>|null;
 
     /**
+     * Computed value of `references` part of the AMF model
+     */
+    readonly references: Array<object|null>|null;
+
+    /**
      * A property to set to override AMF's model base URI information.
      */
     baseUri: string|null|undefined;
+
+    /**
+     * Passing value of `noTryIt` to the method documentation.
+     * Hiddes "Try it" button.
+     */
+    noTryIt: boolean|null|undefined;
+
+    /**
+     * If set it will renders the view in the narrow layout.
+     */
+    narrow: boolean|null|undefined;
+
+    /**
+     * Scroll target used to observe `scroll` event.
+     * It is passed to `api-endpoint-documentation` element.
+     */
+    scrollTarget: object|null|undefined;
     disconnectedCallback(): void;
 
     /**
@@ -195,39 +211,9 @@ declare namespace ApiElements {
      * renders the view.
      */
     _navigationOccured(selectedType: String|null): void;
-
-    /**
-     * Checks if property item has a type.
-     *
-     * @param model Model item.
-     * @param type A type to lookup
-     */
-    _hasType(model: object|null, type: String|null): Boolean|null;
-
-    /**
-     * Computes AMF's `http://schema.org/WebAPI` model
-     *
-     * @param amf AMF json/ld model for an API
-     * @returns Web API declaration.
-     */
-    _computeWebApi(amf: any[]|object|null): object|null;
-
-    /**
-     * Computes list of declarations in the AMF api model.
-     *
-     * @param amf AMF json/ld model for an API
-     * @returns List of declarations
-     */
-    _computeDeclares(amf: any[]|object|null): any[]|null;
-
-    /**
-     * Computes model for an endpoint documentation.
-     *
-     * @param webApi Current value of `webApi` property
-     * @param selected Selected shape
-     * @returns An endponit definition
-     */
-    _computeEndpointModel(webApi: object|null, selected: String|null): object|null;
+    _computeEndpointLink(item: any): any;
+    _computeEndpointPrevious(webApi: any, selected: any): any;
+    _computeEndpointNext(webApi: any, selected: any): any;
 
     /**
      * Computes model for endpoint for method documentation.
@@ -237,42 +223,9 @@ declare namespace ApiElements {
      * @returns An endponit definition
      */
     _computeMethodEndpointModel(webApi: object|null, selected: String|null): object|null;
-
-    /**
-     * Computes method for the method documentation.
-     *
-     * @param webApi Current value of `webApi` property
-     * @param selected Selected shape
-     * @returns A method definition
-     */
-    _computeMethodModel(webApi: object|null, selected: String|null): object|null;
-
-    /**
-     * Computes a documentation model.
-     *
-     * @param webApi Current value of `webApi` property
-     * @param selected Selected shape
-     * @returns A method definition
-     */
-    _computeDocument(webApi: object|null, selected: String|null): object|null;
-
-    /**
-     * Computes a type documentation model.
-     *
-     * @param declares Current value of `declares` property
-     * @param selected Selected shape
-     * @returns A type definition
-     */
-    _computeType(declares: any[]|null, selected: String|null): object|null;
-
-    /**
-     * Computes model for selected security definition.
-     *
-     * @param declares Current value of `declares` property
-     * @param selected Selected shape
-     * @returns A security definition
-     */
-    _computeSecurityModel(declares: any[]|null, selected: String|null): object|null;
+    _computeMethodLink(item: any): any;
+    _computeMethodPrevious(webApi: any, selected: any): any;
+    _computeMethodNext(webApi: any, selected: any): any;
   }
 }
 
