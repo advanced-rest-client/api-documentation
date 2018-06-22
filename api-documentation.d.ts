@@ -10,8 +10,8 @@
 
 /// <reference path="../polymer/types/polymer-element.d.ts" />
 /// <reference path="../polymer/types/lib/elements/dom-if.d.ts" />
+/// <reference path="../polymer/types/lib/utils/render-status.d.ts" />
 /// <reference path="../raml-aware/raml-aware.d.ts" />
-/// <reference path="../api-method-documentation/api-method-documentation.d.ts" />
 /// <reference path="../api-endpoint-documentation/api-endpoint-documentation.d.ts" />
 /// <reference path="../api-type-documentation/api-type-documentation.d.ts" />
 /// <reference path="../api-documentation-document/api-documentation-document.d.ts" />
@@ -40,6 +40,28 @@ declare namespace ApiElements {
    * view to render.
    *
    * The component handles data computation on selection change.
+   *
+   * ## Setting `scrollTarget`
+   *
+   * Endpoint (and therefore method) documentation to have all UI support enabled
+   * requires the `scrollTarget` to be set. It defaults to `window` object.
+   *
+   * When the user scrolls through methods documentation list it dispatches
+   * a naviagtion event with `passive` flag to indicate a change ocurred. If
+   * the scroll element is different than window element then `scrollTarget`
+   * should be set.
+   *
+   * ```html
+   * <body>
+   *  <div style="height: 600px; overflow: auto;" id="scrollable">
+   *    <api-documentation id="doc"></api-documentation>
+   *  </div>
+   *  <script>
+   *    document.getElementById('doc').scrollTarget
+   *      = document.getElementById('scrollable');
+   *  &lt;/script>
+   * </body>
+   * ```
    *
    * ## Updating API's base URI
    *
@@ -226,6 +248,7 @@ declare namespace ApiElements {
     _computeMethodLink(item: any): any;
     _computeMethodPrevious(webApi: any, selected: any): any;
     _computeMethodNext(webApi: any, selected: any): any;
+    _isEndpointChanged(is: any): void;
   }
 }
 
