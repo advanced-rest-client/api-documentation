@@ -94,6 +94,12 @@
           color: #3E2723;
         };
       }
+
+      .scrollable {
+        height: 100%;
+        max-height: 700px;
+        overflow: auto;
+      }
       </style>
     </custom-style>
   </head>
@@ -115,7 +121,9 @@
         <div class="vertical-section-container centered" role="main">
           <raml-aware raml="{{amfModel}}" scope="model"></raml-aware>
           <api-navigation aware="model" summary endpoints-opened selected="{{selected}}" selected-type="{{selectedType}}"></api-navigation>
-          <api-documentation aware="model" selected="[[selected]]" selected-type="[[selectedType]]"></api-documentation>
+          <div class="scrollable">
+            <api-documentation id="docs" aware="model" selected="[[selected]]" selected-type="[[selectedType]]"></api-documentation>
+          </div>
         </div>
       </template>
     </dom-bind>
@@ -127,6 +135,7 @@
       };
       app._load = function() {
         document.getElementById('enpointsList').selected = 0;
+        document.getElementById('docs').scrollTarget = document.querySelector('.scrollable');
       };
       app._loadFile = function(file) {
         fetch('./' + file)
