@@ -56,7 +56,7 @@
     [
       'api-summary',
       'api-endpoint-documentation',
-      // 'api-method-documentation',
+      'api-method-documentation',
       'api-documentation-document',
       'api-type-documentation',
       'api-security-documentation'
@@ -159,8 +159,7 @@
       [
         ['api-summary', 'summary'],
         ['api-endpoint-documentation', 'endpoint'],
-        ['api-endpoint-documentation', 'method'],
-        // ['api-method-documentation', 'method'],
+        ['api-method-documentation', 'method'],
         ['api-documentation-document', 'documentation'],
         ['api-type-documentation', 'type'],
         ['api-security-documentation', 'security']
@@ -282,7 +281,7 @@
         element = fixture('Basic');
         element.amfModel = amf;
       });
-      const id = 'file://demo/demo-api/resourceTypes/app-person.raml/type';
+      const id = 'file://demo/demo-api/demo-api.raml#/web-api/end-points/%2FarrayBody/post/request/application%2Fjson/array/schema/AppPerson';
 
       test('Computes model for selection', () => {
         const result = element._computeType(element.declares, undefined, id);
@@ -298,7 +297,7 @@
       test('Returns undefined when no selection', () => {
         const result = element._computeType(element.declares);
         assert.isUndefined(result);
-      });``
+      });
     });
 
     suite('_computeSecurityModel()', () => {
