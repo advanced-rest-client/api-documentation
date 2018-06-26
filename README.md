@@ -6,17 +6,6 @@
 
 A main documentation view for AMF model
 
-<!---
-```
-<custom-element-demo>
-  <template>
-    <link rel="import" href="api-documentation.html">
-    <next-code-block></next-code-block>
-  </template>
-</custom-element-demo>
-```
--->
-
 ```html
 <api-documentation></api-documentation>
 ```
