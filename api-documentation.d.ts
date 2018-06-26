@@ -15,6 +15,7 @@
 /// <reference path="../api-endpoint-documentation/api-endpoint-documentation.d.ts" />
 /// <reference path="../api-type-documentation/api-type-documentation.d.ts" />
 /// <reference path="../api-documentation-document/api-documentation-document.d.ts" />
+/// <reference path="../api-method-documentation/api-method-documentation.d.ts" />
 /// <reference path="../api-summary/api-summary.d.ts" />
 /// <reference path="../api-security-documentation/api-security-documentation.d.ts" />
 /// <reference path="../amf-helper-mixin/amf-helper-mixin.d.ts" />
