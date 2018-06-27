@@ -25,7 +25,7 @@
       <api-summary amf-model="[[amfModel]]" base-uri="[[baseUri]]"></api-summary>
     </template>
     <template is="dom-if" if="[[isSecurity]]" restamp="true">
-      <api-security-documentation amf-model="{{amfModel}}" security="[[_computeSecurityModel(declares, selected)]]"></api-security-documentation>
+      <api-security-documentation amf-model="{{amfModel}}" security="[[_computeSecurityModel(declares, selected)]]" narrow="[[narrow]]"></api-security-documentation>
     </template>
     <template is="dom-if" if="[[isEndpoint]]" restamp="true">
       <api-endpoint-documentation amf-model="{{amfModel}}" endpoint="[[_computeEndpointModel(webApi, selected)]]" previous="[[_computeEndpointPrevious(webApi, selected)]]" next="[[_computeEndpointNext(webApi, selected)]]" base-uri="[[baseUri]]" narrow="[[narrow]]" narrow="[[narrow]]"></api-endpoint-documentation>
@@ -37,7 +37,7 @@
       <api-documentation-document api-document="[[_computeDocument(webApi, selected)]]"></api-documentation-document>
     </template>
     <template is="dom-if" if="[[isType]]" restamp="true">
-      <api-type-documentation amf-model="{{amfModel}}" type="[[_computeType(declares, references, selected)]]"></api-type-documentation>
+      <api-type-documentation amf-model="{{amfModel}}" type="[[_computeType(declares, references, selected)]]" narrow="[[narrow]]"></api-type-documentation>
     </template>
   </template>
   <script>
@@ -211,10 +211,7 @@
         /**
          * If set it will renders the view in the narrow layout.
          */
-        narrow: {
-          type: Boolean,
-          reflectToAttribute: true
-        }
+        narrow: Boolean
       };
     }
 
