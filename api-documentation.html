@@ -28,7 +28,7 @@
       <api-security-documentation amf-model="{{amfModel}}" security="[[_computeSecurityModel(declares, selected)]]"></api-security-documentation>
     </template>
     <template is="dom-if" if="[[isEndpoint]]" restamp="true">
-      <api-endpoint-documentation amf-model="{{amfModel}}" endpoint="[[_computeEndpointModel(webApi, selected)]]" previous="[[_computeEndpointPrevious(webApi, selected)]]" next="[[_computeEndpointNext(webApi, selected)]]" base-uri="[[baseUri]]" narrow="[[narrow]]" scroll-target="[[scrollTarget]]"  narrow="[[narrow]]"></api-endpoint-documentation>
+      <api-endpoint-documentation amf-model="{{amfModel}}" endpoint="[[_computeEndpointModel(webApi, selected)]]" previous="[[_computeEndpointPrevious(webApi, selected)]]" next="[[_computeEndpointNext(webApi, selected)]]" base-uri="[[baseUri]]" narrow="[[narrow]]" narrow="[[narrow]]"></api-endpoint-documentation>
     </template>
     <template is="dom-if" if="[[isMethod]]" restamp="true">
       <api-method-documentation amf-model="{{amfModel}}" endpoint="[[_computeMethodEndpointModel(webApi, selected)]]" method="[[_computeMethodModel(webApi, selected)]]" previous="[[_computeMethodPrevious(webApi, selected)]]" next="[[_computeMethodNext(webApi, selected)]]" base-uri="[[baseUri]]" no-try-it="[[noTryIt]]" narrow="[[narrow]]"></api-method-documentation>
@@ -60,28 +60,6 @@
    * view to render.
    *
    * The component handles data computation on selection change.
-   *
-   * ## Setting `scrollTarget`
-   *
-   * Endpoint (and therefore method) documentation to have all UI support enabled
-   * requires the `scrollTarget` to be set. It defaults to `window` object.
-   *
-   * When the user scrolls through methods documentation list it dispatches
-   * a naviagtion event with `passive` flag to indicate a change ocurred. If
-   * the scroll element is different than window element then `scrollTarget`
-   * should be set.
-   *
-   * ```html
-   * <body>
-   *  <div style="height: 600px; overflow: auto;" id="scrollable">
-   *    <api-documentation id="doc"></api-documentation>
-   *  </div>
-   *  <script>
-   *    document.getElementById('doc').scrollTarget
-   *      = document.getElementById('scrollable');
-   *  &lt;/script>
-   * </body>
-   * ```
    *
    * ## Updating API's base URI
    *
@@ -236,16 +214,6 @@
         narrow: {
           type: Boolean,
           reflectToAttribute: true
-        },
-        /**
-         * Scroll target used to observe `scroll` event.
-         * It is passed to `api-endpoint-documentation` element.
-         */
-        scrollTarget: {
-          type: Object,
-          value: function() {
-            return window;
-          }
         }
       };
     }
@@ -312,7 +280,6 @@
      * @param {String} selectedType
      */
     _navigationOccured(selectedType) {
-      console.log(selectedType);
       this._setIsEndpoint(selectedType === 'endpoint');
       this._setIsMethod(selectedType === 'method');
       this._setIsDoc(selectedType === 'documentation');
