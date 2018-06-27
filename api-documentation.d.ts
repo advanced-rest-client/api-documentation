@@ -42,28 +42,6 @@ declare namespace ApiElements {
    *
    * The component handles data computation on selection change.
    *
-   * ## Setting `scrollTarget`
-   *
-   * Endpoint (and therefore method) documentation to have all UI support enabled
-   * requires the `scrollTarget` to be set. It defaults to `window` object.
-   *
-   * When the user scrolls through methods documentation list it dispatches
-   * a naviagtion event with `passive` flag to indicate a change ocurred. If
-   * the scroll element is different than window element then `scrollTarget`
-   * should be set.
-   *
-   * ```html
-   * <body>
-   *  <div style="height: 600px; overflow: auto;" id="scrollable">
-   *    <api-documentation id="doc"></api-documentation>
-   *  </div>
-   *  <script>
-   *    document.getElementById('doc').scrollTarget
-   *      = document.getElementById('scrollable');
-   *  &lt;/script>
-   * </body>
-   * ```
-   *
    * ## Updating API's base URI
    *
    * By default the component render the documentation as it is defined
@@ -199,12 +177,6 @@ declare namespace ApiElements {
      * If set it will renders the view in the narrow layout.
      */
     narrow: boolean|null|undefined;
-
-    /**
-     * Scroll target used to observe `scroll` event.
-     * It is passed to `api-endpoint-documentation` element.
-     */
-    scrollTarget: object|null|undefined;
     disconnectedCallback(): void;
 
     /**
