@@ -1,0 +1,2925 @@
+{
+  "@context": {
+    "declares": "http://a.ml/vocabularies/document#declares",
+    "encodes": "http://a.ml/vocabularies/document#encodes",
+    "references": "http://a.ml/vocabularies/document#references",
+    "name": "http://schema.org/name",
+    "desc": "http://schema.org/description",
+    "srv": "http://a.ml/vocabularies/http#server",
+    "url": "http://a.ml/vocabularies/http#url",
+    "var": "http://a.ml/vocabularies/http#variable",
+    "pname": "http://a.ml/vocabularies/http#paramName",
+    "required": "http://www.w3.org/ns/hydra/core#required",
+    "binding": "http://a.ml/vocabularies/http#binding",
+    "schema": "http://a.ml/vocabularies/http#schema",
+    "scheme": "http://a.ml/vocabularies/http#scheme",
+    "dt": "http://www.w3.org/ns/shacl#datatype",
+    "pattern": "http://www.w3.org/ns/shacl#pattern",
+    "w3name": "http://www.w3.org/ns/shacl#name",
+    "def": "http://www.w3.org/ns/shacl#defaultValue",
+    "dvalue": "http://a.ml/vocabularies/data#value",
+    "in": "http://www.w3.org/ns/shacl#in",
+    "v": "http://schema.org/version",
+    "doc": "http://schema.org/documentation",
+    "title": "http://schema.org/title",
+    "ep": "http://a.ml/vocabularies/http#endpoint",
+    "path": "http://a.ml/vocabularies/http#path",
+    "op": "http://www.w3.org/ns/hydra/core#supportedOperation",
+    "method": "http://www.w3.org/ns/hydra/core#method",
+    "exp": "http://www.w3.org/ns/hydra/core#expect",
+    "par": "http://a.ml/vocabularies/http#parameter",
+    "items": "http://a.ml/vocabularies/shapes#items",
+    "ex": "http://a.ml/vocabularies/document#examples",
+    "strict": "http://a.ml/vocabularies/document#strict",
+    "svalue": "http://a.ml/vocabularies/document#structuredValue",
+    "rdfNumber": "http://www.w3.org/1999/02/22-rdf-syntax-ns#member",
+    "raw": "http://www.w3.org/ns/shacl#raw",
+    "vdocname": "http://a.ml/vocabularies/document#name",
+    "cdip": "http://a.ml/vocabularies/document#customDomainProperties",
+    "dp": "http://a.ml/vocabularies/document#DomainProperty",
+    "de": "http://a.ml/vocabularies/document#DomainElement",
+    "shapesShape": "http://a.ml/vocabularies/shapes#Shape",
+    "shape": "http://www.w3.org/ns/shacl#Shape",
+    "scalar": "http://a.ml/vocabularies/shapes#ScalarShape",
+    "shapesSchema": "http://a.ml/vocabularies/shapes#schema",
+    "prop": "http://www.w3.org/ns/shacl#property",
+    "range": "http://a.ml/vocabularies/shapes#range",
+    "mc": "http://www.w3.org/ns/shacl#minCount",
+    "mac": "http://www.w3.org/ns/shacl#maxCount"
+  },
+  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml",
+  "@type": [
+    "http://a.ml/vocabularies/document#Document",
+    "http://a.ml/vocabularies/document#Fragment",
+    "http://a.ml/vocabularies/document#Module",
+    "http://a.ml/vocabularies/document#Unit"
+  ],
+  "declares": [
+    {
+      "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/InvalidParameters",
+      "@type": [
+        "http://www.w3.org/ns/shacl#NodeShape",
+        "shape",
+        "shapesShape",
+        "de"
+      ],
+      "name": "InvalidParameters",
+      "http://www.w3.org/ns/shacl#closed": false,
+      "w3name": "InvalidParameters",
+      "prop": {
+        "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/InvalidParameters/property/type",
+        "@type": [
+          "http://www.w3.org/ns/shacl#PropertyShape",
+          "shape",
+          "shapesShape"
+        ],
+        "range": {
+          "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/InvalidParameters/property/type/type",
+          "@type": [
+            "http://www.w3.org/ns/shacl#NodeShape",
+            "shape",
+            "shapesShape",
+            "de"
+          ],
+          "desc": "error string",
+          "name": "type",
+          "http://www.w3.org/ns/shacl#closed": false,
+          "w3name": "type",
+          "prop": []
+        },
+        "mc": 0,
+        "w3name": "type",
+        "http://www.w3.org/ns/shacl#path": {
+          "@id": "http://a.ml/vocabularies/data#type"
+        }
+      }
+    },
+    {
+      "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Number",
+      "@type": [
+        "http://www.w3.org/ns/shacl#NodeShape",
+        "shape",
+        "shapesShape",
+        "de"
+      ],
+      "name": "Number",
+      "http://www.w3.org/ns/shacl#closed": false,
+      "w3name": "Number",
+      "prop": [
+        {
+          "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Number/property/cost",
+          "@type": [
+            "http://www.w3.org/ns/shacl#PropertyShape",
+            "shape",
+            "shapesShape"
+          ],
+          "range": {
+            "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Number/property/cost/scalar/cost",
+            "@type": [
+              "scalar",
+              "shape",
+              "shapesShape",
+              "de"
+            ],
+            "desc": "Number cost.",
+            "name": "cost",
+            "dt": {
+              "@id": "http://www.w3.org/2001/XMLSchema#string"
+            },
+            "w3name": "cost"
+          },
+          "mc": 0,
+          "w3name": "cost",
+          "http://www.w3.org/ns/shacl#path": {
+            "@id": "http://a.ml/vocabularies/data#cost"
+          }
+        },
+        {
+          "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Number/property/country",
+          "@type": [
+            "http://www.w3.org/ns/shacl#PropertyShape",
+            "shape",
+            "shapesShape"
+          ],
+          "range": {
+            "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Number/property/country/scalar/country",
+            "@type": [
+              "scalar",
+              "shape",
+              "shapesShape",
+              "de"
+            ],
+            "desc": "ISO 3166-1 alpha-2 format.",
+            "name": "country",
+            "dt": {
+              "@id": "http://www.w3.org/2001/XMLSchema#string"
+            },
+            "w3name": "country"
+          },
+          "mc": 0,
+          "w3name": "country",
+          "http://www.w3.org/ns/shacl#path": {
+            "@id": "http://a.ml/vocabularies/data#country"
+          }
+        },
+        {
+          "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Number/property/msisdn",
+          "@type": [
+            "http://www.w3.org/ns/shacl#PropertyShape",
+            "shape",
+            "shapesShape"
+          ],
+          "range": {
+            "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Number/property/msisdn/scalar/msisdn",
+            "@type": [
+              "scalar",
+              "shape",
+              "shapesShape",
+              "de"
+            ],
+            "desc": "Inbound virtual number.",
+            "name": "msisdn",
+            "dt": {
+              "@id": "http://www.w3.org/2001/XMLSchema#string"
+            },
+            "w3name": "msisdn"
+          },
+          "mc": 0,
+          "w3name": "msisdn",
+          "http://www.w3.org/ns/shacl#path": {
+            "@id": "http://a.ml/vocabularies/data#msisdn"
+          }
+        },
+        {
+          "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Number/property/type",
+          "@type": [
+            "http://www.w3.org/ns/shacl#PropertyShape",
+            "shape",
+            "shapesShape"
+          ],
+          "range": {
+            "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Number/property/type/scalar/type",
+            "@type": [
+              "scalar",
+              "shape",
+              "shapesShape",
+              "de"
+            ],
+            "desc": "Type of number.",
+            "name": "type",
+            "dt": {
+              "@id": "http://www.w3.org/2001/XMLSchema#string"
+            },
+            "w3name": "type"
+          },
+          "mc": 0,
+          "w3name": "type",
+          "http://www.w3.org/ns/shacl#path": {
+            "@id": "http://a.ml/vocabularies/data#type"
+          }
+        }
+      ]
+    },
+    {
+      "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/SmsresponseError",
+      "@type": [
+        "http://www.w3.org/ns/shacl#NodeShape",
+        "shape",
+        "shapesShape",
+        "de"
+      ],
+      "name": "smsResponse_Error",
+      "http://www.w3.org/ns/shacl#closed": false,
+      "w3name": "SmsresponseError",
+      "prop": [
+        {
+          "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/SmsresponseError/property/message-count",
+          "@type": [
+            "http://www.w3.org/ns/shacl#PropertyShape",
+            "shape",
+            "shapesShape"
+          ],
+          "range": {
+            "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/SmsresponseError/property/message-count/scalar/message-count",
+            "@type": [
+              "scalar",
+              "shape",
+              "shapesShape",
+              "de"
+            ],
+            "http://a.ml/vocabularies/shapes#format": "double",
+            "desc": "Number of parts the message was split into.",
+            "name": "message-count",
+            "dt": {
+              "@id": "http://www.w3.org/2001/XMLSchema#double"
+            },
+            "w3name": "message-count"
+          },
+          "mc": 0,
+          "w3name": "message-count",
+          "http://www.w3.org/ns/shacl#path": {
+            "@id": "http://a.ml/vocabularies/data#message-count"
+          }
+        },
+        {
+          "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/SmsresponseError/property/messages",
+          "@type": [
+            "http://www.w3.org/ns/shacl#PropertyShape",
+            "shape",
+            "shapesShape"
+          ],
+          "range": {
+            "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/SmsresponseError/property/messages/array/messages",
+            "@type": [
+              "http://a.ml/vocabularies/shapes#ArrayShape",
+              "shape",
+              "shapesShape",
+              "de"
+            ],
+            "items": {
+              "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message",
+              "@type": [
+                "http://www.w3.org/ns/shacl#NodeShape",
+                "shape",
+                "shapesShape",
+                "de"
+              ],
+              "name": "Message",
+              "http://www.w3.org/ns/shacl#closed": false,
+              "w3name": "Message",
+              "prop": [
+                {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message/property/status",
+                  "@type": [
+                    "http://www.w3.org/ns/shacl#PropertyShape",
+                    "shape",
+                    "shapesShape"
+                  ],
+                  "range": {
+                    "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message/property/status/scalar/status",
+                    "@type": [
+                      "scalar",
+                      "shape",
+                      "shapesShape",
+                      "de"
+                    ],
+                    "http://a.ml/vocabularies/shapes#format": "double",
+                    "desc": "Shows how the SMS send is processing.",
+                    "name": "status",
+                    "dt": {
+                      "@id": "http://www.w3.org/2001/XMLSchema#double"
+                    },
+                    "w3name": "status"
+                  },
+                  "mc": 0,
+                  "w3name": "status",
+                  "http://www.w3.org/ns/shacl#path": {
+                    "@id": "http://a.ml/vocabularies/data#status"
+                  }
+                },
+                {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message/property/message-id",
+                  "@type": [
+                    "http://www.w3.org/ns/shacl#PropertyShape",
+                    "shape",
+                    "shapesShape"
+                  ],
+                  "range": {
+                    "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message/property/message-id/scalar/message-id",
+                    "@type": [
+                      "scalar",
+                      "shape",
+                      "shapesShape",
+                      "de"
+                    ],
+                    "desc": "Id of the SMS that was submitted (8 to 16 characters).",
+                    "name": "message-id",
+                    "dt": {
+                      "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    },
+                    "w3name": "message-id"
+                  },
+                  "mc": 0,
+                  "w3name": "message-id",
+                  "http://www.w3.org/ns/shacl#path": {
+                    "@id": "http://a.ml/vocabularies/data#message-id"
+                  }
+                },
+                {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message/property/to",
+                  "@type": [
+                    "http://www.w3.org/ns/shacl#PropertyShape",
+                    "shape",
+                    "shapesShape"
+                  ],
+                  "range": {
+                    "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message/property/to/scalar/to",
+                    "@type": [
+                      "scalar",
+                      "shape",
+                      "shapesShape",
+                      "de"
+                    ],
+                    "desc": "Number your request was sent to.",
+                    "name": "to",
+                    "dt": {
+                      "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    },
+                    "w3name": "to"
+                  },
+                  "mc": 0,
+                  "w3name": "to",
+                  "http://www.w3.org/ns/shacl#path": {
+                    "@id": "http://a.ml/vocabularies/data#to"
+                  }
+                },
+                {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message/property/client-ref",
+                  "@type": [
+                    "http://www.w3.org/ns/shacl#PropertyShape",
+                    "shape",
+                    "shapesShape"
+                  ],
+                  "range": {
+                    "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message/property/client-ref/scalar/client-ref",
+                    "@type": [
+                      "scalar",
+                      "shape",
+                      "shapesShape",
+                      "de"
+                    ],
+                    "desc": "The client-ref you set in the request.",
+                    "name": "client-ref",
+                    "dt": {
+                      "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    },
+                    "w3name": "client-ref"
+                  },
+                  "mc": 0,
+                  "w3name": "client-ref",
+                  "http://www.w3.org/ns/shacl#path": {
+                    "@id": "http://a.ml/vocabularies/data#client-ref"
+                  }
+                },
+                {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message/property/remaining-balance",
+                  "@type": [
+                    "http://www.w3.org/ns/shacl#PropertyShape",
+                    "shape",
+                    "shapesShape"
+                  ],
+                  "range": {
+                    "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message/property/remaining-balance/scalar/remaining-balance",
+                    "@type": [
+                      "scalar",
+                      "shape",
+                      "shapesShape",
+                      "de"
+                    ],
+                    "desc": "Balance in your account. The value is in EUR.",
+                    "name": "remaining-balance",
+                    "dt": {
+                      "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    },
+                    "w3name": "remaining-balance"
+                  },
+                  "mc": 0,
+                  "w3name": "remaining-balance",
+                  "http://www.w3.org/ns/shacl#path": {
+                    "@id": "http://a.ml/vocabularies/data#remaining-balance"
+                  }
+                },
+                {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message/property/message-price",
+                  "@type": [
+                    "http://www.w3.org/ns/shacl#PropertyShape",
+                    "shape",
+                    "shapesShape"
+                  ],
+                  "range": {
+                    "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message/property/message-price/scalar/message-price",
+                    "@type": [
+                      "scalar",
+                      "shape",
+                      "shapesShape",
+                      "de"
+                    ],
+                    "desc": "Amount charged for your request. The value is in EUR.",
+                    "name": "message-price",
+                    "dt": {
+                      "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    },
+                    "w3name": "message-price"
+                  },
+                  "mc": 0,
+                  "w3name": "message-price",
+                  "http://www.w3.org/ns/shacl#path": {
+                    "@id": "http://a.ml/vocabularies/data#message-price"
+                  }
+                },
+                {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message/property/network",
+                  "@type": [
+                    "http://www.w3.org/ns/shacl#PropertyShape",
+                    "shape",
+                    "shapesShape"
+                  ],
+                  "range": {
+                    "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message/property/network/scalar/network",
+                    "@type": [
+                      "scalar",
+                      "shape",
+                      "shapesShape",
+                      "de"
+                    ],
+                    "desc": "Mobile Country Code Mobile Network Code (MCCMNC) for the carrier that to is registered with.",
+                    "name": "network",
+                    "dt": {
+                      "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    },
+                    "w3name": "network"
+                  },
+                  "mc": 0,
+                  "w3name": "network",
+                  "http://www.w3.org/ns/shacl#path": {
+                    "@id": "http://a.ml/vocabularies/data#network"
+                  }
+                },
+                {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message/property/error-text",
+                  "@type": [
+                    "http://www.w3.org/ns/shacl#PropertyShape",
+                    "shape",
+                    "shapesShape"
+                  ],
+                  "range": {
+                    "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message/property/error-text/scalar/error-text",
+                    "@type": [
+                      "scalar",
+                      "shape",
+                      "shapesShape",
+                      "de"
+                    ],
+                    "desc": "If an error occurred, this explains what happened.",
+                    "name": "error-text",
+                    "dt": {
+                      "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    },
+                    "w3name": "error-text"
+                  },
+                  "mc": 0,
+                  "w3name": "error-text",
+                  "http://www.w3.org/ns/shacl#path": {
+                    "@id": "http://a.ml/vocabularies/data#error-text"
+                  }
+                }
+              ]
+            },
+            "desc": "Contains each message part.",
+            "name": "messages",
+            "w3name": "messages"
+          },
+          "mc": 0,
+          "w3name": "messages",
+          "http://www.w3.org/ns/shacl#path": {
+            "@id": "http://a.ml/vocabularies/data#messages"
+          }
+        }
+      ]
+    },
+    {
+      "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Common",
+      "@type": [
+        "http://www.w3.org/ns/shacl#NodeShape",
+        "shape",
+        "shapesShape",
+        "de"
+      ],
+      "name": "common",
+      "http://www.w3.org/ns/shacl#closed": false,
+      "w3name": "Common",
+      "prop": [
+        {
+          "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Common/property/type",
+          "@type": [
+            "http://www.w3.org/ns/shacl#PropertyShape",
+            "shape",
+            "shapesShape"
+          ],
+          "range": {
+            "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Common/property/type/scalar/type",
+            "@type": [
+              "scalar",
+              "shape",
+              "shapesShape",
+              "de"
+            ],
+            "desc": "Human readable message.",
+            "name": "type",
+            "dt": {
+              "@id": "http://www.w3.org/2001/XMLSchema#string"
+            },
+            "w3name": "type"
+          },
+          "mc": 0,
+          "w3name": "type",
+          "http://www.w3.org/ns/shacl#path": {
+            "@id": "http://a.ml/vocabularies/data#type"
+          }
+        },
+        {
+          "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Common/property/error_title",
+          "@type": [
+            "http://www.w3.org/ns/shacl#PropertyShape",
+            "shape",
+            "shapesShape"
+          ],
+          "range": {
+            "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Common/property/error_title/scalar/error_title",
+            "@type": [
+              "scalar",
+              "shape",
+              "shapesShape",
+              "de"
+            ],
+            "desc": "Title of error returned if failed.",
+            "name": "error_title",
+            "dt": {
+              "@id": "http://www.w3.org/2001/XMLSchema#string"
+            },
+            "w3name": "error_title"
+          },
+          "mc": 0,
+          "w3name": "error_title",
+          "http://www.w3.org/ns/shacl#path": {
+            "@id": "http://a.ml/vocabularies/data#error_title"
+          }
+        },
+        {
+          "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Common/property/invalid_parameters",
+          "@type": [
+            "http://www.w3.org/ns/shacl#PropertyShape",
+            "shape",
+            "shapesShape"
+          ],
+          "range": {
+            "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Common/property/invalid_parameters/any/invalid_parameters",
+            "@type": [
+              "http://www.w3.org/ns/shacl#NodeShape",
+              "shape",
+              "shapesShape",
+              "de"
+            ],
+            "desc": "message for invalid parameters",
+            "name": "invalid_parameters",
+            "http://www.w3.org/ns/shacl#closed": false,
+            "w3name": "invalid_parameters",
+            "prop": {
+              "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/InvalidParameters/property/type",
+              "@type": [
+                "http://www.w3.org/ns/shacl#PropertyShape",
+                "shape",
+                "shapesShape"
+              ],
+              "range": {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/InvalidParameters/property/type/type",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#NodeShape",
+                  "shape",
+                  "shapesShape",
+                  "de"
+                ],
+                "desc": "error string",
+                "name": "type",
+                "http://www.w3.org/ns/shacl#closed": false,
+                "w3name": "type",
+                "prop": []
+              },
+              "mc": 0,
+              "w3name": "type",
+              "http://www.w3.org/ns/shacl#path": {
+                "@id": "http://a.ml/vocabularies/data#type"
+              }
+            }
+          },
+          "mc": 0,
+          "w3name": "invalid_parameters",
+          "http://www.w3.org/ns/shacl#path": {
+            "@id": "http://a.ml/vocabularies/data#invalid_parameters"
+          }
+        }
+      ]
+    },
+    {
+      "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message",
+      "@type": [
+        "http://www.w3.org/ns/shacl#NodeShape",
+        "shape",
+        "shapesShape",
+        "de"
+      ],
+      "name": "Message",
+      "http://www.w3.org/ns/shacl#closed": false,
+      "w3name": "Message",
+      "prop": [
+        {
+          "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message/property/status",
+          "@type": [
+            "http://www.w3.org/ns/shacl#PropertyShape",
+            "shape",
+            "shapesShape"
+          ],
+          "range": {
+            "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message/property/status/scalar/status",
+            "@type": [
+              "scalar",
+              "shape",
+              "shapesShape",
+              "de"
+            ],
+            "http://a.ml/vocabularies/shapes#format": "double",
+            "desc": "Shows how the SMS send is processing.",
+            "name": "status",
+            "dt": {
+              "@id": "http://www.w3.org/2001/XMLSchema#double"
+            },
+            "w3name": "status"
+          },
+          "mc": 0,
+          "w3name": "status",
+          "http://www.w3.org/ns/shacl#path": {
+            "@id": "http://a.ml/vocabularies/data#status"
+          }
+        },
+        {
+          "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message/property/message-id",
+          "@type": [
+            "http://www.w3.org/ns/shacl#PropertyShape",
+            "shape",
+            "shapesShape"
+          ],
+          "range": {
+            "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message/property/message-id/scalar/message-id",
+            "@type": [
+              "scalar",
+              "shape",
+              "shapesShape",
+              "de"
+            ],
+            "desc": "Id of the SMS that was submitted (8 to 16 characters).",
+            "name": "message-id",
+            "dt": {
+              "@id": "http://www.w3.org/2001/XMLSchema#string"
+            },
+            "w3name": "message-id"
+          },
+          "mc": 0,
+          "w3name": "message-id",
+          "http://www.w3.org/ns/shacl#path": {
+            "@id": "http://a.ml/vocabularies/data#message-id"
+          }
+        },
+        {
+          "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message/property/to",
+          "@type": [
+            "http://www.w3.org/ns/shacl#PropertyShape",
+            "shape",
+            "shapesShape"
+          ],
+          "range": {
+            "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message/property/to/scalar/to",
+            "@type": [
+              "scalar",
+              "shape",
+              "shapesShape",
+              "de"
+            ],
+            "desc": "Number your request was sent to.",
+            "name": "to",
+            "dt": {
+              "@id": "http://www.w3.org/2001/XMLSchema#string"
+            },
+            "w3name": "to"
+          },
+          "mc": 0,
+          "w3name": "to",
+          "http://www.w3.org/ns/shacl#path": {
+            "@id": "http://a.ml/vocabularies/data#to"
+          }
+        },
+        {
+          "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message/property/client-ref",
+          "@type": [
+            "http://www.w3.org/ns/shacl#PropertyShape",
+            "shape",
+            "shapesShape"
+          ],
+          "range": {
+            "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message/property/client-ref/scalar/client-ref",
+            "@type": [
+              "scalar",
+              "shape",
+              "shapesShape",
+              "de"
+            ],
+            "desc": "The client-ref you set in the request.",
+            "name": "client-ref",
+            "dt": {
+              "@id": "http://www.w3.org/2001/XMLSchema#string"
+            },
+            "w3name": "client-ref"
+          },
+          "mc": 0,
+          "w3name": "client-ref",
+          "http://www.w3.org/ns/shacl#path": {
+            "@id": "http://a.ml/vocabularies/data#client-ref"
+          }
+        },
+        {
+          "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message/property/remaining-balance",
+          "@type": [
+            "http://www.w3.org/ns/shacl#PropertyShape",
+            "shape",
+            "shapesShape"
+          ],
+          "range": {
+            "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message/property/remaining-balance/scalar/remaining-balance",
+            "@type": [
+              "scalar",
+              "shape",
+              "shapesShape",
+              "de"
+            ],
+            "desc": "Balance in your account. The value is in EUR.",
+            "name": "remaining-balance",
+            "dt": {
+              "@id": "http://www.w3.org/2001/XMLSchema#string"
+            },
+            "w3name": "remaining-balance"
+          },
+          "mc": 0,
+          "w3name": "remaining-balance",
+          "http://www.w3.org/ns/shacl#path": {
+            "@id": "http://a.ml/vocabularies/data#remaining-balance"
+          }
+        },
+        {
+          "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message/property/message-price",
+          "@type": [
+            "http://www.w3.org/ns/shacl#PropertyShape",
+            "shape",
+            "shapesShape"
+          ],
+          "range": {
+            "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message/property/message-price/scalar/message-price",
+            "@type": [
+              "scalar",
+              "shape",
+              "shapesShape",
+              "de"
+            ],
+            "desc": "Amount charged for your request. The value is in EUR.",
+            "name": "message-price",
+            "dt": {
+              "@id": "http://www.w3.org/2001/XMLSchema#string"
+            },
+            "w3name": "message-price"
+          },
+          "mc": 0,
+          "w3name": "message-price",
+          "http://www.w3.org/ns/shacl#path": {
+            "@id": "http://a.ml/vocabularies/data#message-price"
+          }
+        },
+        {
+          "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message/property/network",
+          "@type": [
+            "http://www.w3.org/ns/shacl#PropertyShape",
+            "shape",
+            "shapesShape"
+          ],
+          "range": {
+            "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message/property/network/scalar/network",
+            "@type": [
+              "scalar",
+              "shape",
+              "shapesShape",
+              "de"
+            ],
+            "desc": "Mobile Country Code Mobile Network Code (MCCMNC) for the carrier that to is registered with.",
+            "name": "network",
+            "dt": {
+              "@id": "http://www.w3.org/2001/XMLSchema#string"
+            },
+            "w3name": "network"
+          },
+          "mc": 0,
+          "w3name": "network",
+          "http://www.w3.org/ns/shacl#path": {
+            "@id": "http://a.ml/vocabularies/data#network"
+          }
+        },
+        {
+          "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message/property/error-text",
+          "@type": [
+            "http://www.w3.org/ns/shacl#PropertyShape",
+            "shape",
+            "shapesShape"
+          ],
+          "range": {
+            "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message/property/error-text/scalar/error-text",
+            "@type": [
+              "scalar",
+              "shape",
+              "shapesShape",
+              "de"
+            ],
+            "desc": "If an error occurred, this explains what happened.",
+            "name": "error-text",
+            "dt": {
+              "@id": "http://www.w3.org/2001/XMLSchema#string"
+            },
+            "w3name": "error-text"
+          },
+          "mc": 0,
+          "w3name": "error-text",
+          "http://www.w3.org/ns/shacl#path": {
+            "@id": "http://a.ml/vocabularies/data#error-text"
+          }
+        }
+      ]
+    },
+    {
+      "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/ListnumbersresponseError",
+      "@type": [
+        "http://www.w3.org/ns/shacl#NodeShape",
+        "shape",
+        "shapesShape",
+        "de"
+      ],
+      "name": "ListNumbersResponse_Error",
+      "http://www.w3.org/ns/shacl#closed": false,
+      "w3name": "ListnumbersresponseError",
+      "prop": [
+        {
+          "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/ListnumbersresponseError/property/count",
+          "@type": [
+            "http://www.w3.org/ns/shacl#PropertyShape",
+            "shape",
+            "shapesShape"
+          ],
+          "range": {
+            "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/ListnumbersresponseError/property/count/scalar/count",
+            "@type": [
+              "scalar",
+              "shape",
+              "shapesShape",
+              "de"
+            ],
+            "http://a.ml/vocabularies/shapes#format": "int32",
+            "desc": "Result count.",
+            "name": "count",
+            "dt": {
+              "@id": "http://www.w3.org/2001/XMLSchema#integer"
+            },
+            "w3name": "count"
+          },
+          "mc": 0,
+          "w3name": "count",
+          "http://www.w3.org/ns/shacl#path": {
+            "@id": "http://a.ml/vocabularies/data#count"
+          }
+        },
+        {
+          "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/ListnumbersresponseError/property/numbers",
+          "@type": [
+            "http://www.w3.org/ns/shacl#PropertyShape",
+            "shape",
+            "shapesShape"
+          ],
+          "range": {
+            "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/ListnumbersresponseError/property/numbers/array/numbers",
+            "@type": [
+              "http://a.ml/vocabularies/shapes#ArrayShape",
+              "shape",
+              "shapesShape",
+              "de"
+            ],
+            "items": {
+              "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Number",
+              "@type": [
+                "http://www.w3.org/ns/shacl#NodeShape",
+                "shape",
+                "shapesShape",
+                "de"
+              ],
+              "name": "Number",
+              "http://www.w3.org/ns/shacl#closed": false,
+              "w3name": "Number",
+              "prop": [
+                {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Number/property/cost",
+                  "@type": [
+                    "http://www.w3.org/ns/shacl#PropertyShape",
+                    "shape",
+                    "shapesShape"
+                  ],
+                  "range": {
+                    "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Number/property/cost/scalar/cost",
+                    "@type": [
+                      "scalar",
+                      "shape",
+                      "shapesShape",
+                      "de"
+                    ],
+                    "desc": "Number cost.",
+                    "name": "cost",
+                    "dt": {
+                      "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    },
+                    "w3name": "cost"
+                  },
+                  "mc": 0,
+                  "w3name": "cost",
+                  "http://www.w3.org/ns/shacl#path": {
+                    "@id": "http://a.ml/vocabularies/data#cost"
+                  }
+                },
+                {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Number/property/country",
+                  "@type": [
+                    "http://www.w3.org/ns/shacl#PropertyShape",
+                    "shape",
+                    "shapesShape"
+                  ],
+                  "range": {
+                    "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Number/property/country/scalar/country",
+                    "@type": [
+                      "scalar",
+                      "shape",
+                      "shapesShape",
+                      "de"
+                    ],
+                    "desc": "ISO 3166-1 alpha-2 format.",
+                    "name": "country",
+                    "dt": {
+                      "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    },
+                    "w3name": "country"
+                  },
+                  "mc": 0,
+                  "w3name": "country",
+                  "http://www.w3.org/ns/shacl#path": {
+                    "@id": "http://a.ml/vocabularies/data#country"
+                  }
+                },
+                {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Number/property/msisdn",
+                  "@type": [
+                    "http://www.w3.org/ns/shacl#PropertyShape",
+                    "shape",
+                    "shapesShape"
+                  ],
+                  "range": {
+                    "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Number/property/msisdn/scalar/msisdn",
+                    "@type": [
+                      "scalar",
+                      "shape",
+                      "shapesShape",
+                      "de"
+                    ],
+                    "desc": "Inbound virtual number.",
+                    "name": "msisdn",
+                    "dt": {
+                      "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    },
+                    "w3name": "msisdn"
+                  },
+                  "mc": 0,
+                  "w3name": "msisdn",
+                  "http://www.w3.org/ns/shacl#path": {
+                    "@id": "http://a.ml/vocabularies/data#msisdn"
+                  }
+                },
+                {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Number/property/type",
+                  "@type": [
+                    "http://www.w3.org/ns/shacl#PropertyShape",
+                    "shape",
+                    "shapesShape"
+                  ],
+                  "range": {
+                    "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Number/property/type/scalar/type",
+                    "@type": [
+                      "scalar",
+                      "shape",
+                      "shapesShape",
+                      "de"
+                    ],
+                    "desc": "Type of number.",
+                    "name": "type",
+                    "dt": {
+                      "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    },
+                    "w3name": "type"
+                  },
+                  "mc": 0,
+                  "w3name": "type",
+                  "http://www.w3.org/ns/shacl#path": {
+                    "@id": "http://a.ml/vocabularies/data#type"
+                  }
+                }
+              ]
+            },
+            "desc": "List of all numbers.",
+            "name": "numbers",
+            "w3name": "numbers"
+          },
+          "mc": 0,
+          "w3name": "numbers",
+          "http://www.w3.org/ns/shacl#path": {
+            "@id": "http://a.ml/vocabularies/data#numbers"
+          }
+        }
+      ]
+    }
+  ],
+  "encodes": {
+    "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api",
+    "@type": [
+      "http://schema.org/WebAPI",
+      "http://a.ml/vocabularies/document#RootDomainElement",
+      "de"
+    ],
+    "ep": [
+      {
+        "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson",
+        "@type": [
+          "http://a.ml/vocabularies/http#EndPoint",
+          "de"
+        ],
+        "path": "/sms/json",
+        "op": {
+          "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post",
+          "@type": [
+            "http://www.w3.org/ns/hydra/core#Operation",
+            "de"
+          ],
+          "desc": "Send an SMS",
+          "name": "Send an SMS",
+          "http://www.w3.org/ns/hydra/core#expects": {
+            "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request",
+            "@type": [
+              "http://a.ml/vocabularies/http#Request",
+              "de"
+            ],
+            "par": [
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/api_key",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "api_key",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/api_key/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "Your Nexmo account API key",
+                  "name": "API Key",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "Your Nexmo account API key",
+                "name": "api_key",
+                "required": true
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/api_secret",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "api_secret",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/api_secret/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "The API Key's secret",
+                  "name": "API Secret",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "The API Key's secret",
+                "name": "api_secret",
+                "required": true
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/from",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "from",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/from/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "An alphanumeric string.",
+                  "name": "from",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "An alphanumeric string.",
+                "name": "from",
+                "required": true
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/to",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "to",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/to/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "International format E.164.",
+                  "name": "to",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "International format E.164.",
+                "name": "to",
+                "required": true
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/text",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "text",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/text/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "SMS body.",
+                  "name": "text",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "SMS body.",
+                "name": "text",
+                "required": true
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/type",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "type",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/type/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "Defaults to text.",
+                  "name": "type",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "in": {
+                    "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/type/scalar/schema/list",
+                    "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
+                    "http://www.w3.org/2000/01/rdf-schema#_1": "text",
+                    "http://www.w3.org/2000/01/rdf-schema#_2": "binary",
+                    "http://www.w3.org/2000/01/rdf-schema#_3": "wappush",
+                    "http://www.w3.org/2000/01/rdf-schema#_4": "unicode",
+                    "http://www.w3.org/2000/01/rdf-schema#_5": "vcal",
+                    "http://www.w3.org/2000/01/rdf-schema#_6": "vcard"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "Defaults to text.",
+                "name": "type",
+                "required": false
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/status-report-req",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "status-report-req",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/status-report-req/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "http://a.ml/vocabularies/shapes#format": "double",
+                  "desc": "Set to 1 to enable.",
+                  "name": "status-report-req",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#double"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "Set to 1 to enable.",
+                "name": "status-report-req",
+                "required": false
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/client-ref",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "client-ref",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/client-ref/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "For internal reporting.",
+                  "name": "client-ref",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "For internal reporting.",
+                "name": "client-ref",
+                "required": false
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/vcard",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "vcard",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/vcard/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "vCard format.",
+                  "name": "vcard",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "vCard format.",
+                "name": "vcard",
+                "required": false
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/vcal",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "vcal",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/vcal/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "vCal format.",
+                  "name": "vcal",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "vCal format.",
+                "name": "vcal",
+                "required": false
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/ttl",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "ttl",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/ttl/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "http://a.ml/vocabularies/shapes#format": "double",
+                  "desc": "In milliseconds.",
+                  "name": "ttl",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#double"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "In milliseconds.",
+                "name": "ttl",
+                "required": false
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/callback",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "callback",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/callback/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "Delivery receipt endpoint.",
+                  "name": "callback",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "Delivery receipt endpoint.",
+                "name": "callback",
+                "required": false
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/message-class",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "message-class",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/message-class/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "http://a.ml/vocabularies/shapes#format": "int32",
+                  "desc": "Pick a class.",
+                  "name": "message-class",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                  },
+                  "in": {
+                    "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/message-class/scalar/schema/list",
+                    "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
+                    "http://www.w3.org/2000/01/rdf-schema#_1": "0",
+                    "http://www.w3.org/2000/01/rdf-schema#_2": "1",
+                    "http://www.w3.org/2000/01/rdf-schema#_3": "2",
+                    "http://www.w3.org/2000/01/rdf-schema#_4": "3"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "Pick a class.",
+                "name": "message-class",
+                "required": false
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/udh",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "udh",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/udh/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "Hex encoded UDH.",
+                  "name": "udh",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "Hex encoded UDH.",
+                "name": "udh",
+                "required": false
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/protocol-id",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "protocol-id",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/protocol-id/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "Protocol id.",
+                  "name": "protocol-id",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "Protocol id.",
+                "name": "protocol-id",
+                "required": false
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/body",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "body",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/body/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "Hex encoded binary data.",
+                  "name": "body",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "Hex encoded binary data.",
+                "name": "body",
+                "required": false
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/title",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "title",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/title/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "name": "title",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "name": "title",
+                "required": false
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/url",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "url",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/url/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "Website Url.",
+                  "name": "url",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "Website Url.",
+                "name": "url",
+                "required": false
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/validity",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "validity",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/request/parameter/validity/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "In milliseconds.",
+                  "name": "validity",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "In milliseconds.",
+                "name": "validity",
+                "required": false
+              }
+            ]
+          },
+          "method": "post",
+          "http://www.w3.org/ns/hydra/core#returns": {
+            "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/200",
+            "@type": [
+              "http://a.ml/vocabularies/http#Response",
+              "de"
+            ],
+            "http://a.ml/vocabularies/http#payload": {
+              "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/200/text%2Fplain",
+              "@type": [
+                "http://a.ml/vocabularies/http#Payload",
+                "de"
+              ],
+              "http://a.ml/vocabularies/http#mediaType": "text/plain",
+              "schema": {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fsms%2Fjson/post/200/text%2Fplain/schema",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#NodeShape",
+                  "shape",
+                  "shapesShape",
+                  "de"
+                ],
+                "desc": "The status and price of your request to Nexmo.",
+                "name": "smsResponse_Error",
+                "http://www.w3.org/ns/shacl#closed": false,
+                "w3name": "SmsresponseError",
+                "prop": [
+                  {
+                    "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/SmsresponseError/property/messages",
+                    "@type": [
+                      "http://www.w3.org/ns/shacl#PropertyShape",
+                      "shape",
+                      "shapesShape"
+                    ],
+                    "range": {
+                      "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/SmsresponseError/property/messages/array/messages",
+                      "@type": [
+                        "http://a.ml/vocabularies/shapes#ArrayShape",
+                        "shape",
+                        "shapesShape",
+                        "de"
+                      ],
+                      "items": {
+                        "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message/linked_2",
+                        "@type": [
+                          "http://www.w3.org/ns/shacl#NodeShape",
+                          "shape",
+                          "shapesShape",
+                          "de"
+                        ],
+                        "http://a.ml/vocabularies/document#link-label": "Message",
+                        "http://a.ml/vocabularies/document#link-target": {
+                          "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/Message"
+                        }
+                      },
+                      "desc": "Contains each message part.",
+                      "name": "messages",
+                      "w3name": "messages"
+                    },
+                    "mc": 0,
+                    "w3name": "messages",
+                    "http://www.w3.org/ns/shacl#path": {
+                      "@id": "http://a.ml/vocabularies/data#messages"
+                    }
+                  },
+                  {
+                    "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/SmsresponseError/property/message-count",
+                    "@type": [
+                      "http://www.w3.org/ns/shacl#PropertyShape",
+                      "shape",
+                      "shapesShape"
+                    ],
+                    "range": {
+                      "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/SmsresponseError/property/message-count/scalar/message-count",
+                      "@type": [
+                        "scalar",
+                        "shape",
+                        "shapesShape",
+                        "de"
+                      ],
+                      "http://a.ml/vocabularies/shapes#format": "double",
+                      "desc": "Number of parts the message was split into.",
+                      "name": "message-count",
+                      "dt": {
+                        "@id": "http://www.w3.org/2001/XMLSchema#double"
+                      },
+                      "w3name": "message-count"
+                    },
+                    "mc": 0,
+                    "w3name": "message-count",
+                    "http://www.w3.org/ns/shacl#path": {
+                      "@id": "http://a.ml/vocabularies/data#message-count"
+                    }
+                  }
+                ]
+              }
+            },
+            "desc": "The status and price of your request to Nexmo.",
+            "name": "200",
+            "http://www.w3.org/ns/hydra/core#statusCode": "200"
+          }
+        }
+      },
+      {
+        "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Faccount%2Fnumbers",
+        "@type": [
+          "http://a.ml/vocabularies/http#EndPoint",
+          "de"
+        ],
+        "path": "/account/numbers",
+        "op": {
+          "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Faccount%2Fnumbers/get",
+          "@type": [
+            "http://www.w3.org/ns/hydra/core#Operation",
+            "de"
+          ],
+          "desc": "Retrieve all the inbound numbers associated with your Nexmo account.",
+          "name": "List rented numbers",
+          "http://www.w3.org/ns/hydra/core#expects": {
+            "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Faccount%2Fnumbers/get/request",
+            "@type": [
+              "http://a.ml/vocabularies/http#Request",
+              "de"
+            ],
+            "par": [
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Faccount%2Fnumbers/get/request/parameter/api_key",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "api_key",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Faccount%2Fnumbers/get/request/parameter/api_key/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "Your Nexmo account API key",
+                  "name": "API Key",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "Your Nexmo account API key",
+                "name": "api_key",
+                "required": true
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Faccount%2Fnumbers/get/request/parameter/api_secret",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "api_secret",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Faccount%2Fnumbers/get/request/parameter/api_secret/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "The API Key's secret",
+                  "name": "API Secret",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "The API Key's secret",
+                "name": "api_secret",
+                "required": true
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Faccount%2Fnumbers/get/request/parameter/pattern",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "pattern",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Faccount%2Fnumbers/get/request/parameter/pattern/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "http://a.ml/vocabularies/shapes#format": "double",
+                  "desc": "Number pattern to search for.",
+                  "name": "pattern",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#double"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "Number pattern to search for.",
+                "name": "pattern",
+                "required": false
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Faccount%2Fnumbers/get/request/parameter/search_pattern",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "search_pattern",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Faccount%2Fnumbers/get/request/parameter/search_pattern/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "http://a.ml/vocabularies/shapes#format": "int32",
+                  "desc": "Strategy for matching pattern. Expected values 0 = starts with (default), 1 = anywhere, 2 = ends with.",
+                  "name": "Search Pattern",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                  },
+                  "in": {
+                    "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Faccount%2Fnumbers/get/request/parameter/search_pattern/scalar/schema/list",
+                    "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
+                    "http://www.w3.org/2000/01/rdf-schema#_1": "0",
+                    "http://www.w3.org/2000/01/rdf-schema#_2": "1",
+                    "http://www.w3.org/2000/01/rdf-schema#_3": "2"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "Strategy for matching pattern. Expected values 0 = starts with (default), 1 = anywhere, 2 = ends with.",
+                "name": "search_pattern",
+                "required": false
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Faccount%2Fnumbers/get/request/parameter/index",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "index",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Faccount%2Fnumbers/get/request/parameter/index/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "http://a.ml/vocabularies/shapes#format": "double",
+                  "desc": "The page index. Defaut is 1",
+                  "name": "index",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#double"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "The page index. Defaut is 1",
+                "name": "index",
+                "required": false
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Faccount%2Fnumbers/get/request/parameter/size",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "size",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Faccount%2Fnumbers/get/request/parameter/size/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "http://a.ml/vocabularies/shapes#format": "double",
+                  "desc": "Default 10 Max 100.",
+                  "name": "size",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#double"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "Default 10 Max 100.",
+                "name": "size",
+                "required": false
+              }
+            ]
+          },
+          "method": "get",
+          "http://www.w3.org/ns/hydra/core#returns": {
+            "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Faccount%2Fnumbers/get/200",
+            "@type": [
+              "http://a.ml/vocabularies/http#Response",
+              "de"
+            ],
+            "http://a.ml/vocabularies/http#payload": {
+              "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Faccount%2Fnumbers/get/200/application%2Fjson",
+              "@type": [
+                "http://a.ml/vocabularies/http#Payload",
+                "de"
+              ],
+              "http://a.ml/vocabularies/http#mediaType": "application/json",
+              "schema": {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/ListnumbersresponseError/linked_6",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#NodeShape",
+                  "shape",
+                  "shapesShape",
+                  "de"
+                ],
+                "http://a.ml/vocabularies/document#link-label": "ListnumbersresponseError",
+                "http://a.ml/vocabularies/document#link-target": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/ListnumbersresponseError"
+                }
+              }
+            },
+            "desc": "",
+            "name": "200",
+            "http://www.w3.org/ns/hydra/core#statusCode": "200"
+          }
+        }
+      },
+      {
+        "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fsearch",
+        "@type": [
+          "http://a.ml/vocabularies/http#EndPoint",
+          "de"
+        ],
+        "path": "/number/search",
+        "op": {
+          "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fsearch/get",
+          "@type": [
+            "http://www.w3.org/ns/hydra/core#Operation",
+            "de"
+          ],
+          "desc": "Retrieve inbound numbers that are available for a given country.",
+          "name": "Search for outbound number",
+          "http://www.w3.org/ns/hydra/core#expects": {
+            "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fsearch/get/request",
+            "@type": [
+              "http://a.ml/vocabularies/http#Request",
+              "de"
+            ],
+            "par": [
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fsearch/get/request/parameter/api_key",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "api_key",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fsearch/get/request/parameter/api_key/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "Your Nexmo account API key",
+                  "name": "API Key",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "Your Nexmo account API key",
+                "name": "api_key",
+                "required": true
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fsearch/get/request/parameter/api_secret",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "api_secret",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fsearch/get/request/parameter/api_secret/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "The API Key's secret",
+                  "name": "API Secret",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "The API Key's secret",
+                "name": "api_secret",
+                "required": true
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fsearch/get/request/parameter/country",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "country",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fsearch/get/request/parameter/country/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "Code in ISO 3166-1 alpha-2 format.",
+                  "name": "country",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "Code in ISO 3166-1 alpha-2 format.",
+                "name": "country",
+                "required": true
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fsearch/get/request/parameter/pattern",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "pattern",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fsearch/get/request/parameter/pattern/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "http://a.ml/vocabularies/shapes#format": "double",
+                  "desc": "Number pattern to search for.",
+                  "name": "pattern",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#double"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "Number pattern to search for.",
+                "name": "pattern",
+                "required": false
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fsearch/get/request/parameter/search_pattern",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "search_pattern",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fsearch/get/request/parameter/search_pattern/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "http://a.ml/vocabularies/shapes#format": "int32",
+                  "desc": "Strategy for matching pattern. Expected values 0 = starts with (default), 1 = anywhere, 2 = ends with.",
+                  "name": "Search Pattern",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                  },
+                  "in": {
+                    "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fsearch/get/request/parameter/search_pattern/scalar/schema/list",
+                    "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
+                    "http://www.w3.org/2000/01/rdf-schema#_1": "0",
+                    "http://www.w3.org/2000/01/rdf-schema#_2": "1",
+                    "http://www.w3.org/2000/01/rdf-schema#_3": "2"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "Strategy for matching pattern. Expected values 0 = starts with (default), 1 = anywhere, 2 = ends with.",
+                "name": "search_pattern",
+                "required": false
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fsearch/get/request/parameter/features",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "features",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fsearch/get/request/parameter/features/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "Available features are SMS and VOICE. For both features, use a comma-separated value SMS,VOICE.",
+                  "name": "features",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "Available features are SMS and VOICE. For both features, use a comma-separated value SMS,VOICE.",
+                "name": "features",
+                "required": false
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fsearch/get/request/parameter/size",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "size",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fsearch/get/request/parameter/size/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "http://a.ml/vocabularies/shapes#format": "double",
+                  "desc": "Default 10.",
+                  "name": "size",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#double"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "Default 10.",
+                "name": "size",
+                "required": false
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fsearch/get/request/parameter/index",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "index",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fsearch/get/request/parameter/index/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "http://a.ml/vocabularies/shapes#format": "double",
+                  "desc": "The page index. Defaut is 1",
+                  "name": "index",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#double"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "The page index. Defaut is 1",
+                "name": "index",
+                "required": false
+              }
+            ]
+          },
+          "method": "get",
+          "http://www.w3.org/ns/hydra/core#returns": {
+            "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fsearch/get/200",
+            "@type": [
+              "http://a.ml/vocabularies/http#Response",
+              "de"
+            ],
+            "http://a.ml/vocabularies/http#payload": {
+              "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fsearch/get/200/application%2Fjson",
+              "@type": [
+                "http://a.ml/vocabularies/http#Payload",
+                "de"
+              ],
+              "http://a.ml/vocabularies/http#mediaType": "application/json",
+              "schema": {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/ListnumbersresponseError/linked_7",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#NodeShape",
+                  "shape",
+                  "shapesShape",
+                  "de"
+                ],
+                "http://a.ml/vocabularies/document#link-label": "ListnumbersresponseError",
+                "http://a.ml/vocabularies/document#link-target": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/ListnumbersresponseError"
+                }
+              }
+            },
+            "desc": "",
+            "name": "200",
+            "http://www.w3.org/ns/hydra/core#statusCode": "200"
+          }
+        }
+      },
+      {
+        "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fbuy",
+        "@type": [
+          "http://a.ml/vocabularies/http#EndPoint",
+          "de"
+        ],
+        "path": "/number/buy",
+        "op": {
+          "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fbuy/post",
+          "@type": [
+            "http://www.w3.org/ns/hydra/core#Operation",
+            "de"
+          ],
+          "desc": "Request to purchase a specific inbound number.",
+          "name": "Buy an inbound number",
+          "http://www.w3.org/ns/hydra/core#expects": {
+            "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fbuy/post/request",
+            "@type": [
+              "http://a.ml/vocabularies/http#Request",
+              "de"
+            ],
+            "par": [
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fbuy/post/request/parameter/api_key",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "api_key",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fbuy/post/request/parameter/api_key/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "Your Nexmo account API key",
+                  "name": "API Key",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "Your Nexmo account API key",
+                "name": "api_key",
+                "required": true
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fbuy/post/request/parameter/api_secret",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "api_secret",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fbuy/post/request/parameter/api_secret/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "The API Key's secret",
+                  "name": "API Secret",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "The API Key's secret",
+                "name": "api_secret",
+                "required": true
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fbuy/post/request/parameter/country",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "country",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fbuy/post/request/parameter/country/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "Code in ISO 3166-1 alpha-2 format.",
+                  "name": "country",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "Code in ISO 3166-1 alpha-2 format.",
+                "name": "country",
+                "required": true
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fbuy/post/request/parameter/msisdn",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "msisdn",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fbuy/post/request/parameter/msisdn/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "An available inbound virtual number. For example, 447700900000",
+                  "name": "msisdn",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "An available inbound virtual number. For example, 447700900000",
+                "name": "msisdn",
+                "required": true
+              }
+            ]
+          },
+          "method": "post",
+          "http://www.w3.org/ns/hydra/core#returns": {
+            "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fbuy/post/200",
+            "@type": [
+              "http://a.ml/vocabularies/http#Response",
+              "de"
+            ],
+            "http://a.ml/vocabularies/http#payload": {
+              "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fbuy/post/200/application%2Fjson",
+              "@type": [
+                "http://a.ml/vocabularies/http#Payload",
+                "de"
+              ],
+              "http://a.ml/vocabularies/http#mediaType": "application/json",
+              "schema": {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/ListnumbersresponseError/linked_8",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#NodeShape",
+                  "shape",
+                  "shapesShape",
+                  "de"
+                ],
+                "http://a.ml/vocabularies/document#link-label": "ListnumbersresponseError",
+                "http://a.ml/vocabularies/document#link-target": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/ListnumbersresponseError"
+                }
+              }
+            },
+            "desc": "",
+            "name": "200",
+            "http://www.w3.org/ns/hydra/core#statusCode": "200"
+          }
+        }
+      },
+      {
+        "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fupdate",
+        "@type": [
+          "http://a.ml/vocabularies/http#EndPoint",
+          "de"
+        ],
+        "path": "/number/update",
+        "op": {
+          "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fupdate/post",
+          "@type": [
+            "http://www.w3.org/ns/hydra/core#Operation",
+            "de"
+          ],
+          "desc": "Change the behaviour of a number that you've rented.",
+          "name": "Update an inbound number",
+          "http://www.w3.org/ns/hydra/core#expects": {
+            "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fupdate/post/request",
+            "@type": [
+              "http://a.ml/vocabularies/http#Request",
+              "de"
+            ],
+            "par": [
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fupdate/post/request/parameter/api_key",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "api_key",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fupdate/post/request/parameter/api_key/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "Your Nexmo account API key",
+                  "name": "API Key",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "Your Nexmo account API key",
+                "name": "api_key",
+                "required": true
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fupdate/post/request/parameter/api_secret",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "api_secret",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fupdate/post/request/parameter/api_secret/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "The API Key's secret",
+                  "name": "API Secret",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "The API Key's secret",
+                "name": "api_secret",
+                "required": true
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fupdate/post/request/parameter/country",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "country",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fupdate/post/request/parameter/country/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "Code in ISO 3166-1 alpha-2 format.",
+                  "name": "country",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "Code in ISO 3166-1 alpha-2 format.",
+                "name": "country",
+                "required": true
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fupdate/post/request/parameter/msisdn",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "msisdn",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fupdate/post/request/parameter/msisdn/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "An available inbound virtual number. For example, 447700900000",
+                  "name": "msisdn",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "An available inbound virtual number. For example, 447700900000",
+                "name": "msisdn",
+                "required": true
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fupdate/post/request/parameter/moHttpUrl",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "moHttpUrl",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fupdate/post/request/parameter/moHttpUrl/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "An URL encoded URI to the webhook endpoint endpoint that handles inbound messages. Your webhook endpoint must be active before you make this request, Nexmo makes a GET request to your endpoint and checks that it returns a 200 OK response. Set to empty string to clear.",
+                  "name": "moHttpUrl",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "An URL encoded URI to the webhook endpoint endpoint that handles inbound messages. Your webhook endpoint must be active before you make this request, Nexmo makes a GET request to your endpoint and checks that it returns a 200 OK response. Set to empty string to clear.",
+                "name": "moHttpUrl",
+                "required": false
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fupdate/post/request/parameter/moSmppSysType",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "moSmppSysType",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fupdate/post/request/parameter/moSmppSysType/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "The associated system type for your SMPP client. For example inbound",
+                  "name": "moSmppSysType",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "The associated system type for your SMPP client. For example inbound",
+                "name": "moSmppSysType",
+                "required": false
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fupdate/post/request/parameter/voiceCallbackType",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "voiceCallbackType",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fupdate/post/request/parameter/voiceCallbackType/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "The voice webhook type. Possible values are sip, tel, vxml (VoiceXML) or app",
+                  "name": "voiceCallbackType",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "The voice webhook type. Possible values are sip, tel, vxml (VoiceXML) or app",
+                "name": "voiceCallbackType",
+                "required": false
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fupdate/post/request/parameter/voiceCallbackValue",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "voiceCallbackValue",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fupdate/post/request/parameter/voiceCallbackValue/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "A URI for your voiceCallbackType or an Application ID",
+                  "name": "voiceCallbackValue",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "A URI for your voiceCallbackType or an Application ID",
+                "name": "voiceCallbackValue",
+                "required": false
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fupdate/post/request/parameter/voiceStatusCallback",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "voiceStatusCallback",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fupdate/post/request/parameter/voiceStatusCallback/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "Nexmo sends a request to this webhook endpoint when a call ends.",
+                  "name": "voiceStatusCallback",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "Nexmo sends a request to this webhook endpoint when a call ends.",
+                "name": "voiceStatusCallback",
+                "required": false
+              }
+            ]
+          },
+          "method": "post",
+          "http://www.w3.org/ns/hydra/core#returns": {
+            "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fupdate/post/200",
+            "@type": [
+              "http://a.ml/vocabularies/http#Response",
+              "de"
+            ],
+            "http://a.ml/vocabularies/http#payload": {
+              "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fupdate/post/200/application%2Fjson",
+              "@type": [
+                "http://a.ml/vocabularies/http#Payload",
+                "de"
+              ],
+              "http://a.ml/vocabularies/http#mediaType": "application/json",
+              "schema": {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/ListnumbersresponseError/linked_9",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#NodeShape",
+                  "shape",
+                  "shapesShape",
+                  "de"
+                ],
+                "http://a.ml/vocabularies/document#link-label": "ListnumbersresponseError",
+                "http://a.ml/vocabularies/document#link-target": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/ListnumbersresponseError"
+                }
+              }
+            },
+            "desc": "",
+            "name": "200",
+            "http://www.w3.org/ns/hydra/core#statusCode": "200"
+          }
+        }
+      },
+      {
+        "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fcancel",
+        "@type": [
+          "http://a.ml/vocabularies/http#EndPoint",
+          "de"
+        ],
+        "path": "/number/cancel",
+        "op": {
+          "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fcancel/post",
+          "@type": [
+            "http://www.w3.org/ns/hydra/core#Operation",
+            "de"
+          ],
+          "desc": "Cancel your subscription for a specific inbound number.",
+          "name": "Cancel an inbound number",
+          "http://www.w3.org/ns/hydra/core#expects": {
+            "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fcancel/post/request",
+            "@type": [
+              "http://a.ml/vocabularies/http#Request",
+              "de"
+            ],
+            "par": [
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fcancel/post/request/parameter/api_key",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "api_key",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fcancel/post/request/parameter/api_key/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "Your Nexmo account API key",
+                  "name": "API Key",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "Your Nexmo account API key",
+                "name": "api_key",
+                "required": true
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fcancel/post/request/parameter/api_secret",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "api_secret",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fcancel/post/request/parameter/api_secret/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "The API Key's secret",
+                  "name": "API Secret",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "The API Key's secret",
+                "name": "api_secret",
+                "required": true
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fcancel/post/request/parameter/country",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "country",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fcancel/post/request/parameter/country/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "Code in ISO 3166-1 alpha-2 format.",
+                  "name": "country",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "Code in ISO 3166-1 alpha-2 format.",
+                "name": "country",
+                "required": true
+              },
+              {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fcancel/post/request/parameter/msisdn",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "de"
+                ],
+                "binding": "query",
+                "pname": "msisdn",
+                "schema": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fcancel/post/request/parameter/msisdn/scalar/schema",
+                  "@type": [
+                    "scalar",
+                    "shape",
+                    "shapesShape",
+                    "de"
+                  ],
+                  "desc": "The invound virtual number to cancel. For example, 447700900000",
+                  "name": "msisdn",
+                  "dt": {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "w3name": "schema"
+                },
+                "desc": "The invound virtual number to cancel. For example, 447700900000",
+                "name": "msisdn",
+                "required": true
+              }
+            ]
+          },
+          "method": "post",
+          "http://www.w3.org/ns/hydra/core#returns": {
+            "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fcancel/post/200",
+            "@type": [
+              "http://a.ml/vocabularies/http#Response",
+              "de"
+            ],
+            "http://a.ml/vocabularies/http#payload": {
+              "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/end-points/%2Fnumber%2Fcancel/post/200/application%2Fjson",
+              "@type": [
+                "http://a.ml/vocabularies/http#Payload",
+                "de"
+              ],
+              "http://a.ml/vocabularies/http#mediaType": "application/json",
+              "schema": {
+                "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/ListnumbersresponseError/linked_10",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#NodeShape",
+                  "shape",
+                  "shapesShape",
+                  "de"
+                ],
+                "http://a.ml/vocabularies/document#link-label": "ListnumbersresponseError",
+                "http://a.ml/vocabularies/document#link-target": {
+                  "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/declarations/types/ListnumbersresponseError"
+                }
+              }
+            },
+            "desc": "",
+            "name": "200",
+            "http://www.w3.org/ns/hydra/core#statusCode": "200"
+          }
+        }
+      }
+    ],
+    "srv": {
+      "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/https%3A%2F%2Frest.nexmo.com",
+      "@type": [
+        "http://a.ml/vocabularies/http#Server",
+        "de"
+      ],
+      "url": "https://rest.nexmo.com",
+      "var": []
+    },
+    "doc": {
+      "@id": "file://demo/nexmo-sms-api/nexmo-sms-api.raml#/web-api/creative-work/Nexmo",
+      "@type": [
+        "http://schema.org/CreativeWork",
+        "de"
+      ],
+      "desc": "Nexmo, the Vonage API Platform, enables you to add communications within the context of your applications, including SMS, Voice and Chat.",
+      "title": "Nexmo"
+    },
+    "name": "Nexmo SMS API",
+    "v": "2.0"
+  }
+}
