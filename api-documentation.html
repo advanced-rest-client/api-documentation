@@ -31,7 +31,7 @@
       <api-endpoint-documentation amf-model="{{amfModel}}" endpoint="[[_computeEndpointModel(webApi, selected)]]" previous="[[_computeEndpointPrevious(webApi, selected)]]" next="[[_computeEndpointNext(webApi, selected)]]" base-uri="[[baseUri]]" narrow="[[narrow]]" narrow="[[narrow]]"></api-endpoint-documentation>
     </template>
     <template is="dom-if" if="[[isMethod]]" restamp="true">
-      <api-method-documentation amf-model="{{amfModel}}" endpoint="[[_computeMethodEndpointModel(webApi, selected)]]" method="[[_computeMethodModel(webApi, selected)]]" previous="[[_computeMethodPrevious(webApi, selected)]]" next="[[_computeMethodNext(webApi, selected)]]" base-uri="[[baseUri]]" no-try-it="[[noTryIt]]" narrow="[[narrow]]"></api-method-documentation>
+      <api-method-documentation amf-model="{{amfModel}}" endpoint="[[_computeMethodEndpoint(webApi, selected)]]" method="[[_computeMethodModel(webApi, selected)]]" previous="[[_computeMethodPrevious(webApi, selected)]]" next="[[_computeMethodNext(webApi, selected)]]" base-uri="[[baseUri]]" no-try-it="[[noTryIt]]" narrow="[[narrow]]"></api-method-documentation>
     </template>
     <template is="dom-if" if="[[isDoc]]" restamp="true">
       <api-documentation-document api-document="[[_computeDocument(webApi, selected)]]"></api-documentation-document>
@@ -71,7 +71,8 @@
    *
    * To update base URI value either update `baseUri` property or use
    * `iron-meta` with key `ApiBaseUri`. First method is easier but the second
-   * gives much more flexibility since it use a [monostate pattern](http://wiki.c2.com/?MonostatePattern)
+   * gives much more flexibility since it use a
+   * [monostate pattern](http://wiki.c2.com/?MonostatePattern)
    * to manage base URI property.
    *
    * When the component constructs the funal URI for the endpoint it does the following:
@@ -111,7 +112,7 @@
    * @appliesMixin ApiElements.AmfHelperMixin
    */
   class ApiDocumentation extends ApiElements.AmfHelperMixin(Polymer.Element) {
-    static get is() { return 'api-documentation'; }
+    static get is() {return 'api-documentation';}
     static get properties() {
       return {
         /**
@@ -144,8 +145,7 @@
         // True if currently selection is endpoint
         isEndpoint: {
           type: Boolean,
-          readOnly: true,
-          observer: '_isEndpointChanged'
+          readOnly: true
         },
         // True if currently selection is method
         isMethod: {
@@ -303,7 +303,11 @@
       if (!webApi || !selected) {
         return;
       }
-      const endpoints = webApi[this.ns.raml.vocabularies.http + 'endpoint'];
+      const ekey = this._getAmfKey(this.ns.raml.vocabularies.http + 'endpoint');
+      const endpoints = this._ensureArray(webApi[ekey]);
+      if (!endpoints) {
+        return;
+      }
       for (let i = 0; i < endpoints.length; i++) {
         if (endpoints[i]['@id'] === selected) {
           return this._computeEndpointLink(endpoints[i - 1]);
@@ -315,26 +319,16 @@
       if (!webApi || !selected) {
         return;
       }
-      const endpoints = webApi[this.ns.raml.vocabularies.http + 'endpoint'];
+      const ekey = this._getAmfKey(this.ns.raml.vocabularies.http + 'endpoint');
+      const endpoints = this._ensureArray(webApi[ekey]);
+      if (!endpoints) {
+        return;
+      }
       for (let i = 0; i < endpoints.length; i++) {
         if (endpoints[i]['@id'] === selected) {
           return this._computeEndpointLink(endpoints[i + 1]);
         }
       }
-    }
-    /**
-     * Computes model for endpoint for method documentation.
-     *
-     * @param {Object} webApi Current value of `webApi` property
-     * @param {String} selected Selected shape
-     * @return {Object} An endponit definition
-     */
-    _computeMethodEndpointModel(webApi, selected) {
-      if (!webApi || !selected) {
-        return;
-      }
-      const endpointId = selected.substr(0, selected.lastIndexOf('/'));
-      return this._computeEndpointModel(webApi, endpointId);
     }
 
     _computeMethodLink(item) {

@@ -203,31 +203,6 @@
       });
     });
 
-    suite('_computeMethodEndpointModel()', () => {
-      suiteSetup(() => {
-        element = fixture('Basic');
-        element.amfModel = amf;
-      });
-      const endpointId = 'file://demo/demo-api/demo-api.raml#/web-api/end-points/%2Ftest-parameters%2F%7Bfeature%7D';
-      const id = endpointId + '/get';
-
-      test('Computes model for selection', () => {
-        const result = element._computeMethodEndpointModel(element.webApi, id);
-        assert.typeOf(result, 'object');
-        assert.equal(result['@id'], endpointId);
-      });
-
-      test('Returns undefined when no model', () => {
-        const result = element._computeMethodEndpointModel(undefined, id);
-        assert.isUndefined(result);
-      });
-
-      test('Returns undefined when no selection', () => {
-        const result = element._computeMethodEndpointModel(element.webApi);
-        assert.isUndefined(result);
-      });
-    });
-
     suite('_computeMethodModel()', () => {
       suiteSetup(() => {
         element = fixture('Basic');
@@ -272,30 +247,6 @@
 
       test('Returns undefined when no selection', () => {
         const result = element._computeDocument(element.webApi);
-        assert.isUndefined(result);
-      });
-    });
-
-    suite('_computeType()', () => {
-      suiteSetup(() => {
-        element = fixture('Basic');
-        element.amfModel = amf;
-      });
-      const id = 'file://demo/demo-api/demo-api.raml#/web-api/end-points/%2FarrayBody/post/request/application%2Fjson/array/schema/AppPerson';
-
-      test('Computes model for selection', () => {
-        const result = element._computeType(element.declares, undefined, id);
-        assert.typeOf(result, 'object');
-        assert.equal(result['@id'], id);
-      });
-
-      test('Returns undefined when no model', () => {
-        const result = element._computeType(undefined, undefined, id);
-        assert.isUndefined(result);
-      });
-
-      test('Returns undefined when no selection', () => {
-        const result = element._computeType(element.declares);
         assert.isUndefined(result);
       });
     });
