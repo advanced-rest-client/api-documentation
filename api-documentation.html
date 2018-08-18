@@ -374,28 +374,6 @@
         }
       }
     }
-
-    _isEndpointChanged(is) {
-      if (!is) {
-        return;
-      }
-      Polymer.RenderStatus.afterNextRender(this, () => {
-        const node = this.shadowRoot.querySelector('api-endpoint-documentation');
-        if (!node) {
-          return;
-        }
-        let options;
-        if ('scrollBehavior' in document.documentElement.style) {
-          options = {
-            block: 'start',
-            inline: 'nearest'
-          };
-        } else {
-          options = true;
-        }
-        node.scrollIntoView(options);
-      });
-    }
   }
   window.customElements.define(ApiDocumentation.is, ApiDocumentation);
   </script>
