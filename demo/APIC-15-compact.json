@@ -1,0 +1,1415 @@
+{
+  "@context": {
+    "raml-http": "http://a.ml/vocabularies/http#",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "security": "http://a.ml/vocabularies/security#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "data": "http://a.ml/vocabularies/data#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "schema-org": "http://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "hydra": "http://www.w3.org/ns/hydra/core#"
+  },
+  "@id": "amf://id",
+  "@type": [
+    "doc:Document",
+    "doc:Fragment",
+    "doc:Module",
+    "doc:Unit"
+  ],
+  "doc:declares": [
+    {
+      "@id": "amf://id#1",
+      "@type": [
+        "shacl:NodeShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "doc:examples": {
+        "@id": "amf://id#15",
+        "@type": [
+          "doc:Example",
+          "doc:DomainElement"
+        ],
+        "doc:strict": true,
+        "doc:structuredValue": {
+          "@id": "amf://id#16",
+          "@type": "data:Object",
+          "data:alternate_id": {
+            "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_2",
+            "@type": "data:Scalar",
+            "data:value": {
+              "@type": "xsd:integer",
+              "@value": "1"
+            }
+          },
+          "data:category": {
+            "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3",
+            "@type": "data:Object",
+            "data:id": {
+              "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_4",
+              "@type": "data:Scalar",
+              "data:value": {
+                "@type": "xsd:integer",
+                "@value": "39691"
+              }
+            },
+            "data:name": {
+              "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_5",
+              "@type": "data:Scalar",
+              "data:value": {
+                "@type": "xsd:string",
+                "@value": "Religious and Spiritual"
+              }
+            }
+          },
+          "data:created_at": {
+            "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_6",
+            "@type": "data:Scalar",
+            "data:value": {
+              "@type": "xsd:dateTime",
+              "@value": "2013-01-02T22:21:34Z"
+            }
+          }
+        },
+        "schema-org:name": "value",
+        "shacl:raw": "\n    alternate_id: 1\n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n   \n"
+      },
+      "shacl:closed": false,
+      "shacl:name": "Organization",
+      "shacl:property": [
+        {
+          "@id": "amf://id#2",
+          "@type": [
+            "shacl:PropertyShape",
+            "shacl:Shape",
+            "raml-shapes:Shape"
+          ],
+          "raml-shapes:range": {
+            "@id": "amf://id#3",
+            "@type": [
+              "raml-shapes:UnionShape",
+              "shacl:Shape",
+              "raml-shapes:Shape"
+            ],
+            "raml-shapes:anyOf": [
+              {
+                "@id": "amf://id#4",
+                "@type": [
+                  "raml-shapes:ScalarShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:datatype": {
+                  "@id": "raml-shapes:number"
+                }
+              },
+              {
+                "@id": "amf://id#5",
+                "@type": [
+                  "raml-shapes:NilShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape"
+                ]
+              }
+            ],
+            "schema-org:description": "The alternate ID of the organization"
+          },
+          "shacl:minCount": 0,
+          "shacl:name": "alternate_id",
+          "shacl:path": {
+            "@id": "data:alternate_id"
+          }
+        },
+        {
+          "@id": "amf://id#7",
+          "@type": [
+            "shacl:PropertyShape",
+            "shacl:Shape",
+            "raml-shapes:Shape"
+          ],
+          "raml-shapes:range": {
+            "@id": "amf://id#8",
+            "@type": [
+              "shacl:NodeShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "schema-org:description": "Contains the ID and name of the category the organization is in",
+            "shacl:closed": false,
+            "shacl:name": "category",
+            "shacl:property": [
+              {
+                "@id": "amf://id#9",
+                "@type": [
+                  "shacl:PropertyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape"
+                ],
+                "raml-shapes:range": {
+                  "@id": "amf://id#10",
+                  "@type": [
+                    "raml-shapes:ScalarShape",
+                    "shacl:Shape",
+                    "raml-shapes:Shape",
+                    "doc:DomainElement"
+                  ],
+                  "schema-org:description": "ID of the category",
+                  "shacl:datatype": {
+                    "@id": "raml-shapes:number"
+                  },
+                  "shacl:name": "id"
+                },
+                "shacl:minCount": 1,
+                "shacl:name": "id",
+                "shacl:path": {
+                  "@id": "data:id"
+                }
+              },
+              {
+                "@id": "amf://id#11",
+                "@type": [
+                  "shacl:PropertyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape"
+                ],
+                "raml-shapes:range": {
+                  "@id": "amf://id#12",
+                  "@type": [
+                    "raml-shapes:ScalarShape",
+                    "shacl:Shape",
+                    "raml-shapes:Shape",
+                    "doc:DomainElement"
+                  ],
+                  "schema-org:description": "The name of the category",
+                  "shacl:datatype": {
+                    "@id": "xsd:string"
+                  },
+                  "shacl:name": "name"
+                },
+                "shacl:minCount": 1,
+                "shacl:name": "name",
+                "shacl:path": {
+                  "@id": "data:name"
+                }
+              }
+            ]
+          },
+          "shacl:minCount": 1,
+          "shacl:name": "category",
+          "shacl:path": {
+            "@id": "data:category"
+          }
+        },
+        {
+          "@id": "amf://id#13",
+          "@type": [
+            "shacl:PropertyShape",
+            "shacl:Shape",
+            "raml-shapes:Shape"
+          ],
+          "raml-shapes:range": {
+            "@id": "amf://id#14",
+            "@type": [
+              "raml-shapes:ScalarShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "schema-org:description": "The date of creation of the organization",
+            "shacl:datatype": {
+              "@id": "xsd:dateTime"
+            },
+            "shacl:name": "created_at"
+          },
+          "shacl:minCount": 1,
+          "shacl:name": "created_at",
+          "shacl:path": {
+            "@id": "data:created_at"
+          }
+        }
+      ]
+    },
+    {
+      "@id": "amf://id#34",
+      "@type": [
+        "raml-shapes:ArrayShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "doc:examples": {
+        "@id": "amf://id#25",
+        "@type": [
+          "doc:Example",
+          "doc:DomainElement"
+        ],
+        "doc:strict": true,
+        "doc:structuredValue": {
+          "@id": "amf://id#26",
+          "@type": [
+            "data:Array",
+            "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq"
+          ],
+          "data:pos0": {
+            "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2"
+          },
+          "data:pos1": {
+            "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7"
+          },
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#member": [
+            {
+              "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2",
+              "@type": "data:Object",
+              "data:category": {
+                "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3",
+                "@type": "data:Object",
+                "data:id": {
+                  "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3/scalar_4",
+                  "@type": "data:Scalar",
+                  "data:value": {
+                    "@type": "xsd:integer",
+                    "@value": "39691"
+                  }
+                },
+                "data:name": {
+                  "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3/scalar_5",
+                  "@type": "data:Scalar",
+                  "data:value": {
+                    "@type": "xsd:string",
+                    "@value": "Religious and Spiritual"
+                  }
+                }
+              },
+              "data:created_at": {
+                "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/scalar_6",
+                "@type": "data:Scalar",
+                "data:value": {
+                  "@type": "xsd:dateTime",
+                  "@value": "2013-01-02T22:21:34Z"
+                }
+              }
+            },
+            {
+              "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7",
+              "@type": "data:Object",
+              "data:category": {
+                "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8",
+                "@type": "data:Object",
+                "data:id": {
+                  "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8/scalar_9",
+                  "@type": "data:Scalar",
+                  "data:value": {
+                    "@type": "xsd:integer",
+                    "@value": "61111"
+                  }
+                },
+                "data:name": {
+                  "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8/scalar_10",
+                  "@type": "data:Scalar",
+                  "data:value": {
+                    "@type": "xsd:string",
+                    "@value": "Service"
+                  }
+                }
+              },
+              "data:created_at": {
+                "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/scalar_11",
+                "@type": "data:Scalar",
+                "data:value": {
+                  "@type": "xsd:dateTime",
+                  "@value": "2016-02-01T16:37:02Z"
+                }
+              }
+            }
+          ]
+        },
+        "schema-org:name": "value",
+        "shacl:raw": "\n  -\n   \n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n    \n  -\n    category: \n      id: 61111   \n      name: Service\n    created_at: 2016-02-01T16:37:02Z\n   "
+      },
+      "raml-shapes:items": {
+        "@id": "amf://id#1",
+        "@type": [
+          "shacl:NodeShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "doc:examples": {
+          "@id": "amf://id#15",
+          "@type": [
+            "doc:Example",
+            "doc:DomainElement"
+          ],
+          "doc:strict": true,
+          "doc:structuredValue": {
+            "@id": "amf://id#16",
+            "@type": "data:Object",
+            "data:alternate_id": {
+              "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_2",
+              "@type": "data:Scalar",
+              "data:value": {
+                "@type": "xsd:integer",
+                "@value": "1"
+              }
+            },
+            "data:category": {
+              "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3",
+              "@type": "data:Object",
+              "data:id": {
+                "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_4",
+                "@type": "data:Scalar",
+                "data:value": {
+                  "@type": "xsd:integer",
+                  "@value": "39691"
+                }
+              },
+              "data:name": {
+                "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_5",
+                "@type": "data:Scalar",
+                "data:value": {
+                  "@type": "xsd:string",
+                  "@value": "Religious and Spiritual"
+                }
+              }
+            },
+            "data:created_at": {
+              "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_6",
+              "@type": "data:Scalar",
+              "data:value": {
+                "@type": "xsd:dateTime",
+                "@value": "2013-01-02T22:21:34Z"
+              }
+            }
+          },
+          "schema-org:name": "value",
+          "shacl:raw": "\n    alternate_id: 1\n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n   \n"
+        },
+        "shacl:closed": false,
+        "shacl:name": "Organization",
+        "shacl:property": [
+          {
+            "@id": "amf://id#2",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape"
+            ],
+            "raml-shapes:range": {
+              "@id": "amf://id#3",
+              "@type": [
+                "raml-shapes:UnionShape",
+                "shacl:Shape",
+                "raml-shapes:Shape"
+              ],
+              "raml-shapes:anyOf": [
+                {
+                  "@id": "amf://id#4",
+                  "@type": [
+                    "raml-shapes:ScalarShape",
+                    "shacl:Shape",
+                    "raml-shapes:Shape",
+                    "doc:DomainElement"
+                  ],
+                  "shacl:datatype": {
+                    "@id": "raml-shapes:number"
+                  }
+                },
+                {
+                  "@id": "amf://id#5",
+                  "@type": [
+                    "raml-shapes:NilShape",
+                    "shacl:Shape",
+                    "raml-shapes:Shape"
+                  ]
+                }
+              ],
+              "schema-org:description": "The alternate ID of the organization"
+            },
+            "shacl:minCount": 0,
+            "shacl:name": "alternate_id",
+            "shacl:path": {
+              "@id": "data:alternate_id"
+            }
+          },
+          {
+            "@id": "amf://id#7",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape"
+            ],
+            "raml-shapes:range": {
+              "@id": "amf://id#8",
+              "@type": [
+                "shacl:NodeShape",
+                "shacl:Shape",
+                "raml-shapes:Shape",
+                "doc:DomainElement"
+              ],
+              "schema-org:description": "Contains the ID and name of the category the organization is in",
+              "shacl:closed": false,
+              "shacl:name": "category",
+              "shacl:property": [
+                {
+                  "@id": "amf://id#9",
+                  "@type": [
+                    "shacl:PropertyShape",
+                    "shacl:Shape",
+                    "raml-shapes:Shape"
+                  ],
+                  "raml-shapes:range": {
+                    "@id": "amf://id#10",
+                    "@type": [
+                      "raml-shapes:ScalarShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "schema-org:description": "ID of the category",
+                    "shacl:datatype": {
+                      "@id": "raml-shapes:number"
+                    },
+                    "shacl:name": "id"
+                  },
+                  "shacl:minCount": 1,
+                  "shacl:name": "id",
+                  "shacl:path": {
+                    "@id": "data:id"
+                  }
+                },
+                {
+                  "@id": "amf://id#11",
+                  "@type": [
+                    "shacl:PropertyShape",
+                    "shacl:Shape",
+                    "raml-shapes:Shape"
+                  ],
+                  "raml-shapes:range": {
+                    "@id": "amf://id#12",
+                    "@type": [
+                      "raml-shapes:ScalarShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "schema-org:description": "The name of the category",
+                    "shacl:datatype": {
+                      "@id": "xsd:string"
+                    },
+                    "shacl:name": "name"
+                  },
+                  "shacl:minCount": 1,
+                  "shacl:name": "name",
+                  "shacl:path": {
+                    "@id": "data:name"
+                  }
+                }
+              ]
+            },
+            "shacl:minCount": 1,
+            "shacl:name": "category",
+            "shacl:path": {
+              "@id": "data:category"
+            }
+          },
+          {
+            "@id": "amf://id#13",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape"
+            ],
+            "raml-shapes:range": {
+              "@id": "amf://id#14",
+              "@type": [
+                "raml-shapes:ScalarShape",
+                "shacl:Shape",
+                "raml-shapes:Shape",
+                "doc:DomainElement"
+              ],
+              "schema-org:description": "The date of creation of the organization",
+              "shacl:datatype": {
+                "@id": "xsd:dateTime"
+              },
+              "shacl:name": "created_at"
+            },
+            "shacl:minCount": 1,
+            "shacl:name": "created_at",
+            "shacl:path": {
+              "@id": "data:created_at"
+            }
+          }
+        ]
+      },
+      "shacl:name": "amf_inline_type_1"
+    },
+    {
+      "@id": "amf://id#38",
+      "@type": [
+        "raml-shapes:ArrayShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "doc:examples": {
+        "@id": "amf://id#25",
+        "@type": [
+          "doc:Example",
+          "doc:DomainElement"
+        ],
+        "doc:strict": true,
+        "doc:structuredValue": {
+          "@id": "amf://id#26",
+          "@type": [
+            "data:Array",
+            "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq"
+          ],
+          "data:pos0": {
+            "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2"
+          },
+          "data:pos1": {
+            "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7"
+          },
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#member": [
+            {
+              "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2",
+              "@type": "data:Object",
+              "data:category": {
+                "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3",
+                "@type": "data:Object",
+                "data:id": {
+                  "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3/scalar_4",
+                  "@type": "data:Scalar",
+                  "data:value": {
+                    "@type": "xsd:integer",
+                    "@value": "39691"
+                  }
+                },
+                "data:name": {
+                  "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3/scalar_5",
+                  "@type": "data:Scalar",
+                  "data:value": {
+                    "@type": "xsd:string",
+                    "@value": "Religious and Spiritual"
+                  }
+                }
+              },
+              "data:created_at": {
+                "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/scalar_6",
+                "@type": "data:Scalar",
+                "data:value": {
+                  "@type": "xsd:dateTime",
+                  "@value": "2013-01-02T22:21:34Z"
+                }
+              }
+            },
+            {
+              "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7",
+              "@type": "data:Object",
+              "data:category": {
+                "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8",
+                "@type": "data:Object",
+                "data:id": {
+                  "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8/scalar_9",
+                  "@type": "data:Scalar",
+                  "data:value": {
+                    "@type": "xsd:integer",
+                    "@value": "61111"
+                  }
+                },
+                "data:name": {
+                  "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8/scalar_10",
+                  "@type": "data:Scalar",
+                  "data:value": {
+                    "@type": "xsd:string",
+                    "@value": "Service"
+                  }
+                }
+              },
+              "data:created_at": {
+                "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/scalar_11",
+                "@type": "data:Scalar",
+                "data:value": {
+                  "@type": "xsd:dateTime",
+                  "@value": "2016-02-01T16:37:02Z"
+                }
+              }
+            }
+          ]
+        },
+        "schema-org:name": "value",
+        "shacl:raw": "\n  -\n   \n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n    \n  -\n    category: \n      id: 61111   \n      name: Service\n    created_at: 2016-02-01T16:37:02Z\n   "
+      },
+      "raml-shapes:items": {
+        "@id": "amf://id#1",
+        "@type": [
+          "shacl:NodeShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "doc:examples": {
+          "@id": "amf://id#15",
+          "@type": [
+            "doc:Example",
+            "doc:DomainElement"
+          ],
+          "doc:strict": true,
+          "doc:structuredValue": {
+            "@id": "amf://id#16",
+            "@type": "data:Object",
+            "data:alternate_id": {
+              "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_2",
+              "@type": "data:Scalar",
+              "data:value": {
+                "@type": "xsd:integer",
+                "@value": "1"
+              }
+            },
+            "data:category": {
+              "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3",
+              "@type": "data:Object",
+              "data:id": {
+                "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_4",
+                "@type": "data:Scalar",
+                "data:value": {
+                  "@type": "xsd:integer",
+                  "@value": "39691"
+                }
+              },
+              "data:name": {
+                "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_5",
+                "@type": "data:Scalar",
+                "data:value": {
+                  "@type": "xsd:string",
+                  "@value": "Religious and Spiritual"
+                }
+              }
+            },
+            "data:created_at": {
+              "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_6",
+              "@type": "data:Scalar",
+              "data:value": {
+                "@type": "xsd:dateTime",
+                "@value": "2013-01-02T22:21:34Z"
+              }
+            }
+          },
+          "schema-org:name": "value",
+          "shacl:raw": "\n    alternate_id: 1\n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n   \n"
+        },
+        "shacl:closed": false,
+        "shacl:name": "Organization",
+        "shacl:property": [
+          {
+            "@id": "amf://id#2",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape"
+            ],
+            "raml-shapes:range": {
+              "@id": "amf://id#3",
+              "@type": [
+                "raml-shapes:UnionShape",
+                "shacl:Shape",
+                "raml-shapes:Shape"
+              ],
+              "raml-shapes:anyOf": [
+                {
+                  "@id": "amf://id#4",
+                  "@type": [
+                    "raml-shapes:ScalarShape",
+                    "shacl:Shape",
+                    "raml-shapes:Shape",
+                    "doc:DomainElement"
+                  ],
+                  "shacl:datatype": {
+                    "@id": "raml-shapes:number"
+                  }
+                },
+                {
+                  "@id": "amf://id#5",
+                  "@type": [
+                    "raml-shapes:NilShape",
+                    "shacl:Shape",
+                    "raml-shapes:Shape"
+                  ]
+                }
+              ],
+              "schema-org:description": "The alternate ID of the organization"
+            },
+            "shacl:minCount": 0,
+            "shacl:name": "alternate_id",
+            "shacl:path": {
+              "@id": "data:alternate_id"
+            }
+          },
+          {
+            "@id": "amf://id#7",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape"
+            ],
+            "raml-shapes:range": {
+              "@id": "amf://id#8",
+              "@type": [
+                "shacl:NodeShape",
+                "shacl:Shape",
+                "raml-shapes:Shape",
+                "doc:DomainElement"
+              ],
+              "schema-org:description": "Contains the ID and name of the category the organization is in",
+              "shacl:closed": false,
+              "shacl:name": "category",
+              "shacl:property": [
+                {
+                  "@id": "amf://id#9",
+                  "@type": [
+                    "shacl:PropertyShape",
+                    "shacl:Shape",
+                    "raml-shapes:Shape"
+                  ],
+                  "raml-shapes:range": {
+                    "@id": "amf://id#10",
+                    "@type": [
+                      "raml-shapes:ScalarShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "schema-org:description": "ID of the category",
+                    "shacl:datatype": {
+                      "@id": "raml-shapes:number"
+                    },
+                    "shacl:name": "id"
+                  },
+                  "shacl:minCount": 1,
+                  "shacl:name": "id",
+                  "shacl:path": {
+                    "@id": "data:id"
+                  }
+                },
+                {
+                  "@id": "amf://id#11",
+                  "@type": [
+                    "shacl:PropertyShape",
+                    "shacl:Shape",
+                    "raml-shapes:Shape"
+                  ],
+                  "raml-shapes:range": {
+                    "@id": "amf://id#12",
+                    "@type": [
+                      "raml-shapes:ScalarShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "schema-org:description": "The name of the category",
+                    "shacl:datatype": {
+                      "@id": "xsd:string"
+                    },
+                    "shacl:name": "name"
+                  },
+                  "shacl:minCount": 1,
+                  "shacl:name": "name",
+                  "shacl:path": {
+                    "@id": "data:name"
+                  }
+                }
+              ]
+            },
+            "shacl:minCount": 1,
+            "shacl:name": "category",
+            "shacl:path": {
+              "@id": "data:category"
+            }
+          },
+          {
+            "@id": "amf://id#13",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape"
+            ],
+            "raml-shapes:range": {
+              "@id": "amf://id#14",
+              "@type": [
+                "raml-shapes:ScalarShape",
+                "shacl:Shape",
+                "raml-shapes:Shape",
+                "doc:DomainElement"
+              ],
+              "schema-org:description": "The date of creation of the organization",
+              "shacl:datatype": {
+                "@id": "xsd:dateTime"
+              },
+              "shacl:name": "created_at"
+            },
+            "shacl:minCount": 1,
+            "shacl:name": "created_at",
+            "shacl:path": {
+              "@id": "data:created_at"
+            }
+          }
+        ]
+      },
+      "shacl:name": "amf_inline_type_2"
+    }
+  ],
+  "doc:encodes": {
+    "@id": "amf://id#29",
+    "@type": [
+      "schema-org:WebAPI",
+      "doc:RootDomainElement",
+      "doc:DomainElement"
+    ],
+    "raml-http:endpoint": [
+      {
+        "@id": "amf://id#30",
+        "@type": [
+          "raml-http:EndPoint",
+          "doc:DomainElement"
+        ],
+        "raml-http:path": "/organizations",
+        "hydra:supportedOperation": [
+          {
+            "@id": "amf://id#31",
+            "@type": [
+              "hydra:Operation",
+              "doc:DomainElement"
+            ],
+            "hydra:expects": {
+              "@id": "amf://id#32",
+              "@type": [
+                "raml-http:Request",
+                "doc:DomainElement"
+              ],
+              "raml-http:payload": {
+                "@id": "amf://id#33",
+                "@type": [
+                  "raml-http:Payload",
+                  "doc:DomainElement"
+                ],
+                "raml-http:mediaType": "application/json",
+                "raml-http:schema": {
+                  "@id": "amf://id#34/linked_1",
+                  "@type": [
+                    "raml-shapes:ArrayShape",
+                    "shacl:Shape",
+                    "raml-shapes:Shape",
+                    "doc:DomainElement"
+                  ],
+                  "doc:link-label": "amf_inline_type_1",
+                  "doc:link-target": {
+                    "@id": "amf://id#34"
+                  }
+                }
+              }
+            },
+            "hydra:method": "put"
+          },
+          {
+            "@id": "amf://id#35",
+            "@type": [
+              "hydra:Operation",
+              "doc:DomainElement"
+            ],
+            "schema-org:name": "Get organizations",
+            "hydra:method": "get",
+            "hydra:returns": {
+              "@id": "amf://id#36",
+              "@type": [
+                "raml-http:Response",
+                "doc:DomainElement"
+              ],
+              "raml-http:payload": {
+                "@id": "amf://id#37",
+                "@type": [
+                  "raml-http:Payload",
+                  "doc:DomainElement"
+                ],
+                "raml-http:mediaType": "application/json",
+                "raml-http:schema": {
+                  "@id": "amf://id#38/linked_1",
+                  "@type": [
+                    "raml-shapes:ArrayShape",
+                    "shacl:Shape",
+                    "raml-shapes:Shape",
+                    "doc:DomainElement"
+                  ],
+                  "doc:link-label": "amf_inline_type_2",
+                  "doc:link-target": {
+                    "@id": "amf://id#38"
+                  }
+                }
+              },
+              "schema-org:name": "200",
+              "hydra:statusCode": "200"
+            }
+          }
+        ]
+      },
+      {
+        "@id": "amf://id#39",
+        "@type": [
+          "raml-http:EndPoint",
+          "doc:DomainElement"
+        ],
+        "raml-http:parameter": {
+          "@id": "amf://id#43",
+          "@type": [
+            "raml-http:Parameter",
+            "doc:DomainElement"
+          ],
+          "raml-http:binding": "path",
+          "raml-http:paramName": "organization_id",
+          "raml-http:schema": {
+            "@id": "amf://id#44",
+            "@type": [
+              "raml-shapes:ScalarShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "schema-org:description": "The organization's specific ID",
+            "shacl:datatype": {
+              "@id": "raml-shapes:number"
+            },
+            "shacl:name": "schema"
+          },
+          "schema-org:description": "The organization's specific ID",
+          "schema-org:name": "organization_id",
+          "hydra:required": true
+        },
+        "raml-http:path": "/organizations/{organization_id}",
+        "hydra:supportedOperation": {
+          "@id": "amf://id#40",
+          "@type": [
+            "hydra:Operation",
+            "doc:DomainElement"
+          ],
+          "schema-org:name": "Get organizations by organization ID",
+          "hydra:method": "get",
+          "hydra:returns": {
+            "@id": "amf://id#41",
+            "@type": [
+              "raml-http:Response",
+              "doc:DomainElement"
+            ],
+            "raml-http:payload": {
+              "@id": "amf://id#42",
+              "@type": [
+                "raml-http:Payload",
+                "doc:DomainElement"
+              ],
+              "raml-http:mediaType": "application/json",
+              "raml-http:schema": {
+                "@id": "amf://id#1/linked_2",
+                "@type": [
+                  "shacl:NodeShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "doc:link-label": "Organization",
+                "doc:link-target": {
+                  "@id": "amf://id#1"
+                }
+              }
+            },
+            "schema-org:name": "200",
+            "hydra:statusCode": "200"
+          }
+        }
+      }
+    ],
+    "schema-org:name": "test"
+  },
+  "doc:references": [
+    {
+      "@id": "amf://id#22",
+      "@type": [
+        "doc:NamedExample",
+        "doc:Fragment",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "amf://id#15",
+        "@type": [
+          "doc:Example",
+          "doc:DomainElement"
+        ],
+        "doc:strict": true,
+        "doc:structuredValue": {
+          "@id": "amf://id#16",
+          "@type": "data:Object",
+          "data:alternate_id": {
+            "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_2",
+            "@type": "data:Scalar",
+            "data:value": {
+              "@type": "xsd:integer",
+              "@value": "1"
+            }
+          },
+          "data:category": {
+            "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3",
+            "@type": "data:Object",
+            "data:id": {
+              "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_4",
+              "@type": "data:Scalar",
+              "data:value": {
+                "@type": "xsd:integer",
+                "@value": "39691"
+              }
+            },
+            "data:name": {
+              "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_5",
+              "@type": "data:Scalar",
+              "data:value": {
+                "@type": "xsd:string",
+                "@value": "Religious and Spiritual"
+              }
+            }
+          },
+          "data:created_at": {
+            "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_6",
+            "@type": "data:Scalar",
+            "data:value": {
+              "@type": "xsd:dateTime",
+              "@value": "2013-01-02T22:21:34Z"
+            }
+          }
+        },
+        "schema-org:name": "value",
+        "shacl:raw": "\n    alternate_id: 1\n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n   \n"
+      }
+    },
+    {
+      "@id": "amf://id#23",
+      "@type": [
+        "doc:DataType",
+        "doc:Fragment",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "amf://id#1",
+        "@type": [
+          "shacl:NodeShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "doc:examples": {
+          "@id": "amf://id#15",
+          "@type": [
+            "doc:Example",
+            "doc:DomainElement"
+          ],
+          "doc:strict": true,
+          "doc:structuredValue": {
+            "@id": "amf://id#16",
+            "@type": "data:Object",
+            "data:alternate_id": {
+              "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_2",
+              "@type": "data:Scalar",
+              "data:value": {
+                "@type": "xsd:integer",
+                "@value": "1"
+              }
+            },
+            "data:category": {
+              "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3",
+              "@type": "data:Object",
+              "data:id": {
+                "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_4",
+                "@type": "data:Scalar",
+                "data:value": {
+                  "@type": "xsd:integer",
+                  "@value": "39691"
+                }
+              },
+              "data:name": {
+                "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_5",
+                "@type": "data:Scalar",
+                "data:value": {
+                  "@type": "xsd:string",
+                  "@value": "Religious and Spiritual"
+                }
+              }
+            },
+            "data:created_at": {
+              "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_6",
+              "@type": "data:Scalar",
+              "data:value": {
+                "@type": "xsd:dateTime",
+                "@value": "2013-01-02T22:21:34Z"
+              }
+            }
+          },
+          "schema-org:name": "value",
+          "shacl:raw": "\n    alternate_id: 1\n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n   \n"
+        },
+        "shacl:closed": false,
+        "shacl:name": "Organization",
+        "shacl:property": [
+          {
+            "@id": "amf://id#2",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape"
+            ],
+            "raml-shapes:range": {
+              "@id": "amf://id#3",
+              "@type": [
+                "raml-shapes:UnionShape",
+                "shacl:Shape",
+                "raml-shapes:Shape"
+              ],
+              "raml-shapes:anyOf": [
+                {
+                  "@id": "amf://id#4",
+                  "@type": [
+                    "raml-shapes:ScalarShape",
+                    "shacl:Shape",
+                    "raml-shapes:Shape",
+                    "doc:DomainElement"
+                  ],
+                  "shacl:datatype": {
+                    "@id": "raml-shapes:number"
+                  }
+                },
+                {
+                  "@id": "amf://id#5",
+                  "@type": [
+                    "raml-shapes:NilShape",
+                    "shacl:Shape",
+                    "raml-shapes:Shape"
+                  ]
+                }
+              ],
+              "schema-org:description": "The alternate ID of the organization"
+            },
+            "shacl:minCount": 0,
+            "shacl:name": "alternate_id",
+            "shacl:path": {
+              "@id": "data:alternate_id"
+            }
+          },
+          {
+            "@id": "amf://id#7",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape"
+            ],
+            "raml-shapes:range": {
+              "@id": "amf://id#8",
+              "@type": [
+                "shacl:NodeShape",
+                "shacl:Shape",
+                "raml-shapes:Shape",
+                "doc:DomainElement"
+              ],
+              "schema-org:description": "Contains the ID and name of the category the organization is in",
+              "shacl:closed": false,
+              "shacl:name": "category",
+              "shacl:property": [
+                {
+                  "@id": "amf://id#9",
+                  "@type": [
+                    "shacl:PropertyShape",
+                    "shacl:Shape",
+                    "raml-shapes:Shape"
+                  ],
+                  "raml-shapes:range": {
+                    "@id": "amf://id#10",
+                    "@type": [
+                      "raml-shapes:ScalarShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "schema-org:description": "ID of the category",
+                    "shacl:datatype": {
+                      "@id": "raml-shapes:number"
+                    },
+                    "shacl:name": "id"
+                  },
+                  "shacl:minCount": 1,
+                  "shacl:name": "id",
+                  "shacl:path": {
+                    "@id": "data:id"
+                  }
+                },
+                {
+                  "@id": "amf://id#11",
+                  "@type": [
+                    "shacl:PropertyShape",
+                    "shacl:Shape",
+                    "raml-shapes:Shape"
+                  ],
+                  "raml-shapes:range": {
+                    "@id": "amf://id#12",
+                    "@type": [
+                      "raml-shapes:ScalarShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "schema-org:description": "The name of the category",
+                    "shacl:datatype": {
+                      "@id": "xsd:string"
+                    },
+                    "shacl:name": "name"
+                  },
+                  "shacl:minCount": 1,
+                  "shacl:name": "name",
+                  "shacl:path": {
+                    "@id": "data:name"
+                  }
+                }
+              ]
+            },
+            "shacl:minCount": 1,
+            "shacl:name": "category",
+            "shacl:path": {
+              "@id": "data:category"
+            }
+          },
+          {
+            "@id": "amf://id#13",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape"
+            ],
+            "raml-shapes:range": {
+              "@id": "amf://id#14",
+              "@type": [
+                "raml-shapes:ScalarShape",
+                "shacl:Shape",
+                "raml-shapes:Shape",
+                "doc:DomainElement"
+              ],
+              "schema-org:description": "The date of creation of the organization",
+              "shacl:datatype": {
+                "@id": "xsd:dateTime"
+              },
+              "shacl:name": "created_at"
+            },
+            "shacl:minCount": 1,
+            "shacl:name": "created_at",
+            "shacl:path": {
+              "@id": "data:created_at"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "@id": "amf://id#24",
+      "@type": [
+        "doc:NamedExample",
+        "doc:Fragment",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "amf://id#25",
+        "@type": [
+          "doc:Example",
+          "doc:DomainElement"
+        ],
+        "doc:strict": true,
+        "doc:structuredValue": {
+          "@id": "amf://id#26",
+          "@type": [
+            "data:Array",
+            "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq"
+          ],
+          "data:pos0": {
+            "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2"
+          },
+          "data:pos1": {
+            "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7"
+          },
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#member": [
+            {
+              "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2",
+              "@type": "data:Object",
+              "data:category": {
+                "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3",
+                "@type": "data:Object",
+                "data:id": {
+                  "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3/scalar_4",
+                  "@type": "data:Scalar",
+                  "data:value": {
+                    "@type": "xsd:integer",
+                    "@value": "39691"
+                  }
+                },
+                "data:name": {
+                  "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3/scalar_5",
+                  "@type": "data:Scalar",
+                  "data:value": {
+                    "@type": "xsd:string",
+                    "@value": "Religious and Spiritual"
+                  }
+                }
+              },
+              "data:created_at": {
+                "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/scalar_6",
+                "@type": "data:Scalar",
+                "data:value": {
+                  "@type": "xsd:dateTime",
+                  "@value": "2013-01-02T22:21:34Z"
+                }
+              }
+            },
+            {
+              "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7",
+              "@type": "data:Object",
+              "data:category": {
+                "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8",
+                "@type": "data:Object",
+                "data:id": {
+                  "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8/scalar_9",
+                  "@type": "data:Scalar",
+                  "data:value": {
+                    "@type": "xsd:integer",
+                    "@value": "61111"
+                  }
+                },
+                "data:name": {
+                  "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8/scalar_10",
+                  "@type": "data:Scalar",
+                  "data:value": {
+                    "@type": "xsd:string",
+                    "@value": "Service"
+                  }
+                }
+              },
+              "data:created_at": {
+                "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/scalar_11",
+                "@type": "data:Scalar",
+                "data:value": {
+                  "@type": "xsd:dateTime",
+                  "@value": "2016-02-01T16:37:02Z"
+                }
+              }
+            }
+          ]
+        },
+        "schema-org:name": "value",
+        "shacl:raw": "\n  -\n   \n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n    \n  -\n    category: \n      id: 61111   \n      name: Service\n    created_at: 2016-02-01T16:37:02Z\n   "
+      }
+    }
+  ]
+}

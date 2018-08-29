@@ -1,10 +1,9 @@
 const AmfLoader = {};
-AmfLoader.load = function(endpointIndex, methodIndex) {
-  endpointIndex = endpointIndex || 0;
-  methodIndex = methodIndex || 0;
+AmfLoader.load = function(compact) {
+  const file = '/demo-api' + (compact ? '-compact' : '') + '.json';
   const url = location.protocol + '//' + location.host +
     location.pathname.substr(0, location.pathname.lastIndexOf('/'))
-    .replace('/test', '/demo') + '/demo-api.json';
+    .replace('/test', '/demo') + file;
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.addEventListener('load', (e) => {

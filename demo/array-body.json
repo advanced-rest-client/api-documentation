@@ -94,36 +94,21 @@
                         ],
                         "http://a.ml/vocabularies/http#schema": [
                           {
-                            "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody/get/200/application%2Fjson/array/schema/array/default-array",
+                            "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody/get/200/application%2Fjson/array/schema/array/default-array/linked_1",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ArrayShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
                             ],
-                            "http://a.ml/vocabularies/shapes#items": [
+                            "http://a.ml/vocabularies/document#link-target": [
                               {
-                                "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody/post/request/application%2Fjson/array/schema/recursive",
-                                "@type": [
-                                  "http://a.ml/vocabularies/shapes#RecursiveShape",
-                                  "http://www.w3.org/ns/shacl#Shape",
-                                  "http://a.ml/vocabularies/shapes#Shape"
-                                ],
-                                "http://a.ml/vocabularies/shapes#fixPoint": [
-                                  {
-                                    "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody/post/request/application%2Fjson/array/schema/array/default-array/unresolved"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document#recursive": [
-                                  {
-                                    "@value": false
-                                  }
-                                ],
-                                "http://www.w3.org/ns/shacl#name": [
-                                  {
-                                    "@value": "AppPerson"
-                                  }
-                                ]
+                                "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody/get/200/application%2Fjson/array/schema/array/default-array"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document#link-label": [
+                              {
+                                "@value": "amf_inline_type_1"
                               }
                             ]
                           }
@@ -174,7 +159,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#items": [
                               {
-                                "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody/post/request/application%2Fjson/array/schema/recursive",
+                                "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody/post/request/application%2Fjson/array/schema/items/recursive",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#RecursiveShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -182,7 +167,7 @@
                                 ],
                                 "http://a.ml/vocabularies/shapes#fixPoint": [
                                   {
-                                    "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody/post/request/application%2Fjson/array/schema/array/default-array/unresolved"
+                                    "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody/post/request/application%2Fjson/array/schema/array/default-array/items/unresolved"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document#recursive": [
@@ -226,7 +211,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody/post/request/application%2Fjson/array/schema/recursive",
+        "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody/post/request/application%2Fjson/array/schema/items/recursive",
         "@type": [
           "http://a.ml/vocabularies/shapes#RecursiveShape",
           "http://www.w3.org/ns/shacl#Shape",
@@ -234,7 +219,7 @@
         ],
         "http://a.ml/vocabularies/shapes#fixPoint": [
           {
-            "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody/post/request/application%2Fjson/array/schema/array/default-array/unresolved"
+            "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody/post/request/application%2Fjson/array/schema/array/default-array/items/unresolved"
           }
         ],
         "http://a.ml/vocabularies/document#recursive": [
@@ -245,6 +230,45 @@
         "http://www.w3.org/ns/shacl#name": [
           {
             "@value": "AppPerson"
+          }
+        ]
+      },
+      {
+        "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody/get/200/application%2Fjson/array/schema/array/default-array",
+        "@type": [
+          "http://a.ml/vocabularies/shapes#ArrayShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/shapes#items": [
+          {
+            "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody/post/request/application%2Fjson/array/schema/items/recursive",
+            "@type": [
+              "http://a.ml/vocabularies/shapes#RecursiveShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape"
+            ],
+            "http://a.ml/vocabularies/shapes#fixPoint": [
+              {
+                "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody/post/request/application%2Fjson/array/schema/array/default-array/items/unresolved"
+              }
+            ],
+            "http://a.ml/vocabularies/document#recursive": [
+              {
+                "@value": false
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "AppPerson"
+              }
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "amf_inline_type_1"
           }
         ]
       }

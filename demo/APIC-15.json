@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://demo/APIC-15/APIC-15.raml",
+    "@id": "amf://id",
     "@type": [
       "http://a.ml/vocabularies/document#Document",
       "http://a.ml/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://demo/APIC-15/APIC-15.raml#/web-api",
+        "@id": "amf://id#29",
         "@type": [
           "http://schema.org/WebAPI",
           "http://a.ml/vocabularies/document#RootDomainElement",
@@ -22,7 +22,7 @@
         ],
         "http://a.ml/vocabularies/http#endpoint": [
           {
-            "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations",
+            "@id": "amf://id#30",
             "@type": [
               "http://a.ml/vocabularies/http#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -34,7 +34,7 @@
             ],
             "http://www.w3.org/ns/hydra/core#supportedOperation": [
               {
-                "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/put",
+                "@id": "amf://id#31",
                 "@type": [
                   "http://www.w3.org/ns/hydra/core#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -46,14 +46,14 @@
                 ],
                 "http://www.w3.org/ns/hydra/core#expects": [
                   {
-                    "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/put/request",
+                    "@id": "amf://id#32",
                     "@type": [
                       "http://a.ml/vocabularies/http#Request",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
                     "http://a.ml/vocabularies/http#payload": [
                       {
-                        "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/put/request/application%2Fjson",
+                        "@id": "amf://id#33",
                         "@type": [
                           "http://a.ml/vocabularies/http#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -65,547 +65,21 @@
                         ],
                         "http://a.ml/vocabularies/http#schema": [
                           {
-                            "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/array/default-array",
+                            "@id": "amf://id#34/linked_1",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ArrayShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
                             ],
-                            "http://a.ml/vocabularies/shapes#items": [
+                            "http://a.ml/vocabularies/document#link-target": [
                               {
-                                "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type",
-                                "@type": [
-                                  "http://www.w3.org/ns/shacl#NodeShape",
-                                  "http://www.w3.org/ns/shacl#Shape",
-                                  "http://a.ml/vocabularies/shapes#Shape",
-                                  "http://a.ml/vocabularies/document#DomainElement"
-                                ],
-                                "http://www.w3.org/ns/shacl#closed": [
-                                  {
-                                    "@value": false
-                                  }
-                                ],
-                                "http://www.w3.org/ns/shacl#property": [
-                                  {
-                                    "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/alternate_id",
-                                    "@type": [
-                                      "http://www.w3.org/ns/shacl#PropertyShape",
-                                      "http://www.w3.org/ns/shacl#Shape",
-                                      "http://a.ml/vocabularies/shapes#Shape"
-                                    ],
-                                    "http://www.w3.org/ns/shacl#path": [
-                                      {
-                                        "@id": "http://a.ml/vocabularies/data#alternate_id"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/shapes#range": [
-                                      {
-                                        "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/alternate_id/union/default-union",
-                                        "@type": [
-                                          "http://a.ml/vocabularies/shapes#UnionShape",
-                                          "http://www.w3.org/ns/shacl#Shape",
-                                          "http://a.ml/vocabularies/shapes#Shape"
-                                        ],
-                                        "http://a.ml/vocabularies/shapes#anyOf": [
-                                          {
-                                            "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/shape/property/alternate_id%3F/union/default-union/scalar/scalar-expression-0",
-                                            "@type": [
-                                              "http://a.ml/vocabularies/shapes#ScalarShape",
-                                              "http://www.w3.org/ns/shacl#Shape",
-                                              "http://a.ml/vocabularies/shapes#Shape",
-                                              "http://a.ml/vocabularies/document#DomainElement"
-                                            ],
-                                            "http://www.w3.org/ns/shacl#datatype": [
-                                              {
-                                                "@id": "http://a.ml/vocabularies/shapes#number"
-                                              }
-                                            ]
-                                          },
-                                          {
-                                            "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/shape/property/alternate_id%3F/union/default-union/nil/scalar-expression-2",
-                                            "@type": [
-                                              "http://a.ml/vocabularies/shapes#NilShape",
-                                              "http://www.w3.org/ns/shacl#Shape",
-                                              "http://a.ml/vocabularies/shapes#Shape"
-                                            ]
-                                          }
-                                        ],
-                                        "http://schema.org/description": [
-                                          {
-                                            "@value": "The alternate ID of the organization"
-                                          }
-                                        ]
-                                      }
-                                    ],
-                                    "http://www.w3.org/ns/shacl#minCount": [
-                                      {
-                                        "@value": 0
-                                      }
-                                    ],
-                                    "http://www.w3.org/ns/shacl#name": [
-                                      {
-                                        "@value": "alternate_id"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/category",
-                                    "@type": [
-                                      "http://www.w3.org/ns/shacl#PropertyShape",
-                                      "http://www.w3.org/ns/shacl#Shape",
-                                      "http://a.ml/vocabularies/shapes#Shape"
-                                    ],
-                                    "http://www.w3.org/ns/shacl#path": [
-                                      {
-                                        "@id": "http://a.ml/vocabularies/data#category"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/shapes#range": [
-                                      {
-                                        "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/category/category",
-                                        "@type": [
-                                          "http://www.w3.org/ns/shacl#NodeShape",
-                                          "http://www.w3.org/ns/shacl#Shape",
-                                          "http://a.ml/vocabularies/shapes#Shape",
-                                          "http://a.ml/vocabularies/document#DomainElement"
-                                        ],
-                                        "http://www.w3.org/ns/shacl#closed": [
-                                          {
-                                            "@value": false
-                                          }
-                                        ],
-                                        "http://www.w3.org/ns/shacl#property": [
-                                          {
-                                            "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/category/category/property/id",
-                                            "@type": [
-                                              "http://www.w3.org/ns/shacl#PropertyShape",
-                                              "http://www.w3.org/ns/shacl#Shape",
-                                              "http://a.ml/vocabularies/shapes#Shape"
-                                            ],
-                                            "http://www.w3.org/ns/shacl#path": [
-                                              {
-                                                "@id": "http://a.ml/vocabularies/data#id"
-                                              }
-                                            ],
-                                            "http://a.ml/vocabularies/shapes#range": [
-                                              {
-                                                "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/category/category/property/id/scalar/id",
-                                                "@type": [
-                                                  "http://a.ml/vocabularies/shapes#ScalarShape",
-                                                  "http://www.w3.org/ns/shacl#Shape",
-                                                  "http://a.ml/vocabularies/shapes#Shape",
-                                                  "http://a.ml/vocabularies/document#DomainElement"
-                                                ],
-                                                "http://www.w3.org/ns/shacl#datatype": [
-                                                  {
-                                                    "@id": "http://a.ml/vocabularies/shapes#number"
-                                                  }
-                                                ],
-                                                "http://www.w3.org/ns/shacl#name": [
-                                                  {
-                                                    "@value": "id"
-                                                  }
-                                                ],
-                                                "http://schema.org/description": [
-                                                  {
-                                                    "@value": "ID of the category"
-                                                  }
-                                                ]
-                                              }
-                                            ],
-                                            "http://www.w3.org/ns/shacl#minCount": [
-                                              {
-                                                "@value": 1
-                                              }
-                                            ],
-                                            "http://www.w3.org/ns/shacl#name": [
-                                              {
-                                                "@value": "id"
-                                              }
-                                            ]
-                                          },
-                                          {
-                                            "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/category/category/property/name",
-                                            "@type": [
-                                              "http://www.w3.org/ns/shacl#PropertyShape",
-                                              "http://www.w3.org/ns/shacl#Shape",
-                                              "http://a.ml/vocabularies/shapes#Shape"
-                                            ],
-                                            "http://www.w3.org/ns/shacl#path": [
-                                              {
-                                                "@id": "http://a.ml/vocabularies/data#name"
-                                              }
-                                            ],
-                                            "http://a.ml/vocabularies/shapes#range": [
-                                              {
-                                                "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/category/category/property/name/scalar/name",
-                                                "@type": [
-                                                  "http://a.ml/vocabularies/shapes#ScalarShape",
-                                                  "http://www.w3.org/ns/shacl#Shape",
-                                                  "http://a.ml/vocabularies/shapes#Shape",
-                                                  "http://a.ml/vocabularies/document#DomainElement"
-                                                ],
-                                                "http://www.w3.org/ns/shacl#datatype": [
-                                                  {
-                                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
-                                                  }
-                                                ],
-                                                "http://www.w3.org/ns/shacl#name": [
-                                                  {
-                                                    "@value": "name"
-                                                  }
-                                                ],
-                                                "http://schema.org/description": [
-                                                  {
-                                                    "@value": "The name of the category"
-                                                  }
-                                                ]
-                                              }
-                                            ],
-                                            "http://www.w3.org/ns/shacl#minCount": [
-                                              {
-                                                "@value": 1
-                                              }
-                                            ],
-                                            "http://www.w3.org/ns/shacl#name": [
-                                              {
-                                                "@value": "name"
-                                              }
-                                            ]
-                                          }
-                                        ],
-                                        "http://www.w3.org/ns/shacl#name": [
-                                          {
-                                            "@value": "category"
-                                          }
-                                        ],
-                                        "http://schema.org/description": [
-                                          {
-                                            "@value": "Contains the ID and name of the category the organization is in"
-                                          }
-                                        ]
-                                      }
-                                    ],
-                                    "http://www.w3.org/ns/shacl#minCount": [
-                                      {
-                                        "@value": 1
-                                      }
-                                    ],
-                                    "http://www.w3.org/ns/shacl#name": [
-                                      {
-                                        "@value": "category"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/created_at",
-                                    "@type": [
-                                      "http://www.w3.org/ns/shacl#PropertyShape",
-                                      "http://www.w3.org/ns/shacl#Shape",
-                                      "http://a.ml/vocabularies/shapes#Shape"
-                                    ],
-                                    "http://www.w3.org/ns/shacl#path": [
-                                      {
-                                        "@id": "http://a.ml/vocabularies/data#created_at"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/shapes#range": [
-                                      {
-                                        "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/created_at/scalar/created_at",
-                                        "@type": [
-                                          "http://a.ml/vocabularies/shapes#ScalarShape",
-                                          "http://www.w3.org/ns/shacl#Shape",
-                                          "http://a.ml/vocabularies/shapes#Shape",
-                                          "http://a.ml/vocabularies/document#DomainElement"
-                                        ],
-                                        "http://www.w3.org/ns/shacl#datatype": [
-                                          {
-                                            "@id": "http://www.w3.org/2001/XMLSchema#dateTime"
-                                          }
-                                        ],
-                                        "http://www.w3.org/ns/shacl#name": [
-                                          {
-                                            "@value": "created_at"
-                                          }
-                                        ],
-                                        "http://schema.org/description": [
-                                          {
-                                            "@value": "The date of creation of the organization"
-                                          }
-                                        ]
-                                      }
-                                    ],
-                                    "http://www.w3.org/ns/shacl#minCount": [
-                                      {
-                                        "@value": 1
-                                      }
-                                    ],
-                                    "http://www.w3.org/ns/shacl#name": [
-                                      {
-                                        "@value": "created_at"
-                                      }
-                                    ]
-                                  }
-                                ],
-                                "http://www.w3.org/ns/shacl#name": [
-                                  {
-                                    "@value": "Organization"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document#examples": [
-                                  {
-                                    "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value",
-                                    "@type": [
-                                      "http://a.ml/vocabularies/document#Example",
-                                      "http://a.ml/vocabularies/document#DomainElement"
-                                    ],
-                                    "http://schema.org/name": [
-                                      {
-                                        "@value": "value"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document#strict": [
-                                      {
-                                        "@value": true
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document#structuredValue": [
-                                      {
-                                        "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1",
-                                        "@type": [
-                                          "http://a.ml/vocabularies/data#Object"
-                                        ],
-                                        "http://a.ml/vocabularies/data#alternate_id": [
-                                          {
-                                            "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_2",
-                                            "@type": [
-                                              "http://a.ml/vocabularies/data#Scalar"
-                                            ],
-                                            "http://a.ml/vocabularies/data#value": [
-                                              {
-                                                "@value": "1",
-                                                "@type": "http://www.w3.org/2001/XMLSchema#integer"
-                                              }
-                                            ]
-                                          }
-                                        ],
-                                        "http://a.ml/vocabularies/data#category": [
-                                          {
-                                            "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3",
-                                            "@type": [
-                                              "http://a.ml/vocabularies/data#Object"
-                                            ],
-                                            "http://a.ml/vocabularies/data#id": [
-                                              {
-                                                "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_4",
-                                                "@type": [
-                                                  "http://a.ml/vocabularies/data#Scalar"
-                                                ],
-                                                "http://a.ml/vocabularies/data#value": [
-                                                  {
-                                                    "@value": "39691",
-                                                    "@type": "http://www.w3.org/2001/XMLSchema#integer"
-                                                  }
-                                                ]
-                                              }
-                                            ],
-                                            "http://a.ml/vocabularies/data#name": [
-                                              {
-                                                "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_5",
-                                                "@type": [
-                                                  "http://a.ml/vocabularies/data#Scalar"
-                                                ],
-                                                "http://a.ml/vocabularies/data#value": [
-                                                  {
-                                                    "@value": "Religious and Spiritual",
-                                                    "@type": "http://www.w3.org/2001/XMLSchema#string"
-                                                  }
-                                                ]
-                                              }
-                                            ]
-                                          }
-                                        ],
-                                        "http://a.ml/vocabularies/data#created_at": [
-                                          {
-                                            "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_6",
-                                            "@type": [
-                                              "http://a.ml/vocabularies/data#Scalar"
-                                            ],
-                                            "http://a.ml/vocabularies/data#value": [
-                                              {
-                                                "@value": "2013-01-02T22:21:34Z",
-                                                "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    ],
-                                    "http://www.w3.org/ns/shacl#raw": [
-                                      {
-                                        "@value": "\n    alternate_id: 1\n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n   \n"
-                                      }
-                                    ]
-                                  }
-                                ]
+                                "@id": "amf://id#34"
                               }
                             ],
-                            "http://a.ml/vocabularies/document#examples": [
+                            "http://a.ml/vocabularies/document#link-label": [
                               {
-                                "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document#Example",
-                                  "http://a.ml/vocabularies/document#DomainElement"
-                                ],
-                                "http://schema.org/name": [
-                                  {
-                                    "@value": "value"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document#strict": [
-                                  {
-                                    "@value": true
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document#structuredValue": [
-                                  {
-                                    "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1",
-                                    "@type": [
-                                      "http://a.ml/vocabularies/data#Array",
-                                      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq"
-                                    ],
-                                    "http://www.w3.org/1999/02/22-rdf-syntax-ns#member": [
-                                      {
-                                        "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2",
-                                        "@type": [
-                                          "http://a.ml/vocabularies/data#Object"
-                                        ],
-                                        "http://a.ml/vocabularies/data#category": [
-                                          {
-                                            "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3",
-                                            "@type": [
-                                              "http://a.ml/vocabularies/data#Object"
-                                            ],
-                                            "http://a.ml/vocabularies/data#id": [
-                                              {
-                                                "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3/scalar_4",
-                                                "@type": [
-                                                  "http://a.ml/vocabularies/data#Scalar"
-                                                ],
-                                                "http://a.ml/vocabularies/data#value": [
-                                                  {
-                                                    "@value": "39691",
-                                                    "@type": "http://www.w3.org/2001/XMLSchema#integer"
-                                                  }
-                                                ]
-                                              }
-                                            ],
-                                            "http://a.ml/vocabularies/data#name": [
-                                              {
-                                                "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3/scalar_5",
-                                                "@type": [
-                                                  "http://a.ml/vocabularies/data#Scalar"
-                                                ],
-                                                "http://a.ml/vocabularies/data#value": [
-                                                  {
-                                                    "@value": "Religious and Spiritual",
-                                                    "@type": "http://www.w3.org/2001/XMLSchema#string"
-                                                  }
-                                                ]
-                                              }
-                                            ]
-                                          }
-                                        ],
-                                        "http://a.ml/vocabularies/data#created_at": [
-                                          {
-                                            "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/scalar_6",
-                                            "@type": [
-                                              "http://a.ml/vocabularies/data#Scalar"
-                                            ],
-                                            "http://a.ml/vocabularies/data#value": [
-                                              {
-                                                "@value": "2013-01-02T22:21:34Z",
-                                                "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      },
-                                      {
-                                        "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7",
-                                        "@type": [
-                                          "http://a.ml/vocabularies/data#Object"
-                                        ],
-                                        "http://a.ml/vocabularies/data#category": [
-                                          {
-                                            "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8",
-                                            "@type": [
-                                              "http://a.ml/vocabularies/data#Object"
-                                            ],
-                                            "http://a.ml/vocabularies/data#id": [
-                                              {
-                                                "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8/scalar_9",
-                                                "@type": [
-                                                  "http://a.ml/vocabularies/data#Scalar"
-                                                ],
-                                                "http://a.ml/vocabularies/data#value": [
-                                                  {
-                                                    "@value": "61111",
-                                                    "@type": "http://www.w3.org/2001/XMLSchema#integer"
-                                                  }
-                                                ]
-                                              }
-                                            ],
-                                            "http://a.ml/vocabularies/data#name": [
-                                              {
-                                                "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8/scalar_10",
-                                                "@type": [
-                                                  "http://a.ml/vocabularies/data#Scalar"
-                                                ],
-                                                "http://a.ml/vocabularies/data#value": [
-                                                  {
-                                                    "@value": "Service",
-                                                    "@type": "http://www.w3.org/2001/XMLSchema#string"
-                                                  }
-                                                ]
-                                              }
-                                            ]
-                                          }
-                                        ],
-                                        "http://a.ml/vocabularies/data#created_at": [
-                                          {
-                                            "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/scalar_11",
-                                            "@type": [
-                                              "http://a.ml/vocabularies/data#Scalar"
-                                            ],
-                                            "http://a.ml/vocabularies/data#value": [
-                                              {
-                                                "@value": "2016-02-01T16:37:02Z",
-                                                "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/data#pos0": [
-                                      {
-                                        "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/data#pos1": [
-                                      {
-                                        "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7"
-                                      }
-                                    ]
-                                  }
-                                ],
-                                "http://www.w3.org/ns/shacl#raw": [
-                                  {
-                                    "@value": "\n  -\n   \n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n    \n  -\n    category: \n      id: 61111   \n      name: Service\n    created_at: 2016-02-01T16:37:02Z\n   "
-                                  }
-                                ]
+                                "@value": "amf_inline_type_1"
                               }
                             ]
                           }
@@ -616,7 +90,7 @@
                 ]
               },
               {
-                "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get",
+                "@id": "amf://id#35",
                 "@type": [
                   "http://www.w3.org/ns/hydra/core#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -633,7 +107,7 @@
                 ],
                 "http://www.w3.org/ns/hydra/core#returns": [
                   {
-                    "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200",
+                    "@id": "amf://id#36",
                     "@type": [
                       "http://a.ml/vocabularies/http#Response",
                       "http://a.ml/vocabularies/document#DomainElement"
@@ -650,7 +124,7 @@
                     ],
                     "http://a.ml/vocabularies/http#payload": [
                       {
-                        "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application%2Fjson",
+                        "@id": "amf://id#37",
                         "@type": [
                           "http://a.ml/vocabularies/http#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -662,547 +136,21 @@
                         ],
                         "http://a.ml/vocabularies/http#schema": [
                           {
-                            "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/array/default-array",
+                            "@id": "amf://id#38/linked_1",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ArrayShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
                             ],
-                            "http://a.ml/vocabularies/shapes#items": [
+                            "http://a.ml/vocabularies/document#link-target": [
                               {
-                                "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type",
-                                "@type": [
-                                  "http://www.w3.org/ns/shacl#NodeShape",
-                                  "http://www.w3.org/ns/shacl#Shape",
-                                  "http://a.ml/vocabularies/shapes#Shape",
-                                  "http://a.ml/vocabularies/document#DomainElement"
-                                ],
-                                "http://www.w3.org/ns/shacl#closed": [
-                                  {
-                                    "@value": false
-                                  }
-                                ],
-                                "http://www.w3.org/ns/shacl#property": [
-                                  {
-                                    "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/alternate_id",
-                                    "@type": [
-                                      "http://www.w3.org/ns/shacl#PropertyShape",
-                                      "http://www.w3.org/ns/shacl#Shape",
-                                      "http://a.ml/vocabularies/shapes#Shape"
-                                    ],
-                                    "http://www.w3.org/ns/shacl#path": [
-                                      {
-                                        "@id": "http://a.ml/vocabularies/data#alternate_id"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/shapes#range": [
-                                      {
-                                        "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/alternate_id/union/default-union",
-                                        "@type": [
-                                          "http://a.ml/vocabularies/shapes#UnionShape",
-                                          "http://www.w3.org/ns/shacl#Shape",
-                                          "http://a.ml/vocabularies/shapes#Shape"
-                                        ],
-                                        "http://a.ml/vocabularies/shapes#anyOf": [
-                                          {
-                                            "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/shape/property/alternate_id%3F/union/default-union/scalar/scalar-expression-0",
-                                            "@type": [
-                                              "http://a.ml/vocabularies/shapes#ScalarShape",
-                                              "http://www.w3.org/ns/shacl#Shape",
-                                              "http://a.ml/vocabularies/shapes#Shape",
-                                              "http://a.ml/vocabularies/document#DomainElement"
-                                            ],
-                                            "http://www.w3.org/ns/shacl#datatype": [
-                                              {
-                                                "@id": "http://a.ml/vocabularies/shapes#number"
-                                              }
-                                            ]
-                                          },
-                                          {
-                                            "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/shape/property/alternate_id%3F/union/default-union/nil/scalar-expression-2",
-                                            "@type": [
-                                              "http://a.ml/vocabularies/shapes#NilShape",
-                                              "http://www.w3.org/ns/shacl#Shape",
-                                              "http://a.ml/vocabularies/shapes#Shape"
-                                            ]
-                                          }
-                                        ],
-                                        "http://schema.org/description": [
-                                          {
-                                            "@value": "The alternate ID of the organization"
-                                          }
-                                        ]
-                                      }
-                                    ],
-                                    "http://www.w3.org/ns/shacl#minCount": [
-                                      {
-                                        "@value": 0
-                                      }
-                                    ],
-                                    "http://www.w3.org/ns/shacl#name": [
-                                      {
-                                        "@value": "alternate_id"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/category",
-                                    "@type": [
-                                      "http://www.w3.org/ns/shacl#PropertyShape",
-                                      "http://www.w3.org/ns/shacl#Shape",
-                                      "http://a.ml/vocabularies/shapes#Shape"
-                                    ],
-                                    "http://www.w3.org/ns/shacl#path": [
-                                      {
-                                        "@id": "http://a.ml/vocabularies/data#category"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/shapes#range": [
-                                      {
-                                        "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/category/category",
-                                        "@type": [
-                                          "http://www.w3.org/ns/shacl#NodeShape",
-                                          "http://www.w3.org/ns/shacl#Shape",
-                                          "http://a.ml/vocabularies/shapes#Shape",
-                                          "http://a.ml/vocabularies/document#DomainElement"
-                                        ],
-                                        "http://www.w3.org/ns/shacl#closed": [
-                                          {
-                                            "@value": false
-                                          }
-                                        ],
-                                        "http://www.w3.org/ns/shacl#property": [
-                                          {
-                                            "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/category/category/property/id",
-                                            "@type": [
-                                              "http://www.w3.org/ns/shacl#PropertyShape",
-                                              "http://www.w3.org/ns/shacl#Shape",
-                                              "http://a.ml/vocabularies/shapes#Shape"
-                                            ],
-                                            "http://www.w3.org/ns/shacl#path": [
-                                              {
-                                                "@id": "http://a.ml/vocabularies/data#id"
-                                              }
-                                            ],
-                                            "http://a.ml/vocabularies/shapes#range": [
-                                              {
-                                                "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/category/category/property/id/scalar/id",
-                                                "@type": [
-                                                  "http://a.ml/vocabularies/shapes#ScalarShape",
-                                                  "http://www.w3.org/ns/shacl#Shape",
-                                                  "http://a.ml/vocabularies/shapes#Shape",
-                                                  "http://a.ml/vocabularies/document#DomainElement"
-                                                ],
-                                                "http://www.w3.org/ns/shacl#datatype": [
-                                                  {
-                                                    "@id": "http://a.ml/vocabularies/shapes#number"
-                                                  }
-                                                ],
-                                                "http://www.w3.org/ns/shacl#name": [
-                                                  {
-                                                    "@value": "id"
-                                                  }
-                                                ],
-                                                "http://schema.org/description": [
-                                                  {
-                                                    "@value": "ID of the category"
-                                                  }
-                                                ]
-                                              }
-                                            ],
-                                            "http://www.w3.org/ns/shacl#minCount": [
-                                              {
-                                                "@value": 1
-                                              }
-                                            ],
-                                            "http://www.w3.org/ns/shacl#name": [
-                                              {
-                                                "@value": "id"
-                                              }
-                                            ]
-                                          },
-                                          {
-                                            "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/category/category/property/name",
-                                            "@type": [
-                                              "http://www.w3.org/ns/shacl#PropertyShape",
-                                              "http://www.w3.org/ns/shacl#Shape",
-                                              "http://a.ml/vocabularies/shapes#Shape"
-                                            ],
-                                            "http://www.w3.org/ns/shacl#path": [
-                                              {
-                                                "@id": "http://a.ml/vocabularies/data#name"
-                                              }
-                                            ],
-                                            "http://a.ml/vocabularies/shapes#range": [
-                                              {
-                                                "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/category/category/property/name/scalar/name",
-                                                "@type": [
-                                                  "http://a.ml/vocabularies/shapes#ScalarShape",
-                                                  "http://www.w3.org/ns/shacl#Shape",
-                                                  "http://a.ml/vocabularies/shapes#Shape",
-                                                  "http://a.ml/vocabularies/document#DomainElement"
-                                                ],
-                                                "http://www.w3.org/ns/shacl#datatype": [
-                                                  {
-                                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
-                                                  }
-                                                ],
-                                                "http://www.w3.org/ns/shacl#name": [
-                                                  {
-                                                    "@value": "name"
-                                                  }
-                                                ],
-                                                "http://schema.org/description": [
-                                                  {
-                                                    "@value": "The name of the category"
-                                                  }
-                                                ]
-                                              }
-                                            ],
-                                            "http://www.w3.org/ns/shacl#minCount": [
-                                              {
-                                                "@value": 1
-                                              }
-                                            ],
-                                            "http://www.w3.org/ns/shacl#name": [
-                                              {
-                                                "@value": "name"
-                                              }
-                                            ]
-                                          }
-                                        ],
-                                        "http://www.w3.org/ns/shacl#name": [
-                                          {
-                                            "@value": "category"
-                                          }
-                                        ],
-                                        "http://schema.org/description": [
-                                          {
-                                            "@value": "Contains the ID and name of the category the organization is in"
-                                          }
-                                        ]
-                                      }
-                                    ],
-                                    "http://www.w3.org/ns/shacl#minCount": [
-                                      {
-                                        "@value": 1
-                                      }
-                                    ],
-                                    "http://www.w3.org/ns/shacl#name": [
-                                      {
-                                        "@value": "category"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/created_at",
-                                    "@type": [
-                                      "http://www.w3.org/ns/shacl#PropertyShape",
-                                      "http://www.w3.org/ns/shacl#Shape",
-                                      "http://a.ml/vocabularies/shapes#Shape"
-                                    ],
-                                    "http://www.w3.org/ns/shacl#path": [
-                                      {
-                                        "@id": "http://a.ml/vocabularies/data#created_at"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/shapes#range": [
-                                      {
-                                        "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/created_at/scalar/created_at",
-                                        "@type": [
-                                          "http://a.ml/vocabularies/shapes#ScalarShape",
-                                          "http://www.w3.org/ns/shacl#Shape",
-                                          "http://a.ml/vocabularies/shapes#Shape",
-                                          "http://a.ml/vocabularies/document#DomainElement"
-                                        ],
-                                        "http://www.w3.org/ns/shacl#datatype": [
-                                          {
-                                            "@id": "http://www.w3.org/2001/XMLSchema#dateTime"
-                                          }
-                                        ],
-                                        "http://www.w3.org/ns/shacl#name": [
-                                          {
-                                            "@value": "created_at"
-                                          }
-                                        ],
-                                        "http://schema.org/description": [
-                                          {
-                                            "@value": "The date of creation of the organization"
-                                          }
-                                        ]
-                                      }
-                                    ],
-                                    "http://www.w3.org/ns/shacl#minCount": [
-                                      {
-                                        "@value": 1
-                                      }
-                                    ],
-                                    "http://www.w3.org/ns/shacl#name": [
-                                      {
-                                        "@value": "created_at"
-                                      }
-                                    ]
-                                  }
-                                ],
-                                "http://www.w3.org/ns/shacl#name": [
-                                  {
-                                    "@value": "Organization"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document#examples": [
-                                  {
-                                    "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value",
-                                    "@type": [
-                                      "http://a.ml/vocabularies/document#Example",
-                                      "http://a.ml/vocabularies/document#DomainElement"
-                                    ],
-                                    "http://schema.org/name": [
-                                      {
-                                        "@value": "value"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document#strict": [
-                                      {
-                                        "@value": true
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document#structuredValue": [
-                                      {
-                                        "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1",
-                                        "@type": [
-                                          "http://a.ml/vocabularies/data#Object"
-                                        ],
-                                        "http://a.ml/vocabularies/data#alternate_id": [
-                                          {
-                                            "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_2",
-                                            "@type": [
-                                              "http://a.ml/vocabularies/data#Scalar"
-                                            ],
-                                            "http://a.ml/vocabularies/data#value": [
-                                              {
-                                                "@value": "1",
-                                                "@type": "http://www.w3.org/2001/XMLSchema#integer"
-                                              }
-                                            ]
-                                          }
-                                        ],
-                                        "http://a.ml/vocabularies/data#category": [
-                                          {
-                                            "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3",
-                                            "@type": [
-                                              "http://a.ml/vocabularies/data#Object"
-                                            ],
-                                            "http://a.ml/vocabularies/data#id": [
-                                              {
-                                                "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_4",
-                                                "@type": [
-                                                  "http://a.ml/vocabularies/data#Scalar"
-                                                ],
-                                                "http://a.ml/vocabularies/data#value": [
-                                                  {
-                                                    "@value": "39691",
-                                                    "@type": "http://www.w3.org/2001/XMLSchema#integer"
-                                                  }
-                                                ]
-                                              }
-                                            ],
-                                            "http://a.ml/vocabularies/data#name": [
-                                              {
-                                                "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_5",
-                                                "@type": [
-                                                  "http://a.ml/vocabularies/data#Scalar"
-                                                ],
-                                                "http://a.ml/vocabularies/data#value": [
-                                                  {
-                                                    "@value": "Religious and Spiritual",
-                                                    "@type": "http://www.w3.org/2001/XMLSchema#string"
-                                                  }
-                                                ]
-                                              }
-                                            ]
-                                          }
-                                        ],
-                                        "http://a.ml/vocabularies/data#created_at": [
-                                          {
-                                            "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_6",
-                                            "@type": [
-                                              "http://a.ml/vocabularies/data#Scalar"
-                                            ],
-                                            "http://a.ml/vocabularies/data#value": [
-                                              {
-                                                "@value": "2013-01-02T22:21:34Z",
-                                                "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    ],
-                                    "http://www.w3.org/ns/shacl#raw": [
-                                      {
-                                        "@value": "\n    alternate_id: 1\n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n   \n"
-                                      }
-                                    ]
-                                  }
-                                ]
+                                "@id": "amf://id#38"
                               }
                             ],
-                            "http://a.ml/vocabularies/document#examples": [
+                            "http://a.ml/vocabularies/document#link-label": [
                               {
-                                "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document#Example",
-                                  "http://a.ml/vocabularies/document#DomainElement"
-                                ],
-                                "http://schema.org/name": [
-                                  {
-                                    "@value": "value"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document#strict": [
-                                  {
-                                    "@value": true
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document#structuredValue": [
-                                  {
-                                    "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1",
-                                    "@type": [
-                                      "http://a.ml/vocabularies/data#Array",
-                                      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq"
-                                    ],
-                                    "http://www.w3.org/1999/02/22-rdf-syntax-ns#member": [
-                                      {
-                                        "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2",
-                                        "@type": [
-                                          "http://a.ml/vocabularies/data#Object"
-                                        ],
-                                        "http://a.ml/vocabularies/data#category": [
-                                          {
-                                            "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3",
-                                            "@type": [
-                                              "http://a.ml/vocabularies/data#Object"
-                                            ],
-                                            "http://a.ml/vocabularies/data#id": [
-                                              {
-                                                "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3/scalar_4",
-                                                "@type": [
-                                                  "http://a.ml/vocabularies/data#Scalar"
-                                                ],
-                                                "http://a.ml/vocabularies/data#value": [
-                                                  {
-                                                    "@value": "39691",
-                                                    "@type": "http://www.w3.org/2001/XMLSchema#integer"
-                                                  }
-                                                ]
-                                              }
-                                            ],
-                                            "http://a.ml/vocabularies/data#name": [
-                                              {
-                                                "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3/scalar_5",
-                                                "@type": [
-                                                  "http://a.ml/vocabularies/data#Scalar"
-                                                ],
-                                                "http://a.ml/vocabularies/data#value": [
-                                                  {
-                                                    "@value": "Religious and Spiritual",
-                                                    "@type": "http://www.w3.org/2001/XMLSchema#string"
-                                                  }
-                                                ]
-                                              }
-                                            ]
-                                          }
-                                        ],
-                                        "http://a.ml/vocabularies/data#created_at": [
-                                          {
-                                            "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/scalar_6",
-                                            "@type": [
-                                              "http://a.ml/vocabularies/data#Scalar"
-                                            ],
-                                            "http://a.ml/vocabularies/data#value": [
-                                              {
-                                                "@value": "2013-01-02T22:21:34Z",
-                                                "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      },
-                                      {
-                                        "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7",
-                                        "@type": [
-                                          "http://a.ml/vocabularies/data#Object"
-                                        ],
-                                        "http://a.ml/vocabularies/data#category": [
-                                          {
-                                            "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8",
-                                            "@type": [
-                                              "http://a.ml/vocabularies/data#Object"
-                                            ],
-                                            "http://a.ml/vocabularies/data#id": [
-                                              {
-                                                "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8/scalar_9",
-                                                "@type": [
-                                                  "http://a.ml/vocabularies/data#Scalar"
-                                                ],
-                                                "http://a.ml/vocabularies/data#value": [
-                                                  {
-                                                    "@value": "61111",
-                                                    "@type": "http://www.w3.org/2001/XMLSchema#integer"
-                                                  }
-                                                ]
-                                              }
-                                            ],
-                                            "http://a.ml/vocabularies/data#name": [
-                                              {
-                                                "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8/scalar_10",
-                                                "@type": [
-                                                  "http://a.ml/vocabularies/data#Scalar"
-                                                ],
-                                                "http://a.ml/vocabularies/data#value": [
-                                                  {
-                                                    "@value": "Service",
-                                                    "@type": "http://www.w3.org/2001/XMLSchema#string"
-                                                  }
-                                                ]
-                                              }
-                                            ]
-                                          }
-                                        ],
-                                        "http://a.ml/vocabularies/data#created_at": [
-                                          {
-                                            "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/scalar_11",
-                                            "@type": [
-                                              "http://a.ml/vocabularies/data#Scalar"
-                                            ],
-                                            "http://a.ml/vocabularies/data#value": [
-                                              {
-                                                "@value": "2016-02-01T16:37:02Z",
-                                                "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/data#pos0": [
-                                      {
-                                        "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/data#pos1": [
-                                      {
-                                        "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7"
-                                      }
-                                    ]
-                                  }
-                                ],
-                                "http://www.w3.org/ns/shacl#raw": [
-                                  {
-                                    "@value": "\n  -\n   \n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n    \n  -\n    category: \n      id: 61111   \n      name: Service\n    created_at: 2016-02-01T16:37:02Z\n   "
-                                  }
-                                ]
+                                "@value": "amf_inline_type_2"
                               }
                             ]
                           }
@@ -1215,7 +163,7 @@
             ]
           },
           {
-            "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D",
+            "@id": "amf://id#39",
             "@type": [
               "http://a.ml/vocabularies/http#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -1227,7 +175,7 @@
             ],
             "http://www.w3.org/ns/hydra/core#supportedOperation": [
               {
-                "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get",
+                "@id": "amf://id#40",
                 "@type": [
                   "http://www.w3.org/ns/hydra/core#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -1244,7 +192,7 @@
                 ],
                 "http://www.w3.org/ns/hydra/core#returns": [
                   {
-                    "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200",
+                    "@id": "amf://id#41",
                     "@type": [
                       "http://a.ml/vocabularies/http#Response",
                       "http://a.ml/vocabularies/document#DomainElement"
@@ -1261,7 +209,7 @@
                     ],
                     "http://a.ml/vocabularies/http#payload": [
                       {
-                        "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson",
+                        "@id": "amf://id#42",
                         "@type": [
                           "http://a.ml/vocabularies/http#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -1273,379 +221,21 @@
                         ],
                         "http://a.ml/vocabularies/http#schema": [
                           {
-                            "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type",
+                            "@id": "amf://id#1/linked_2",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
                             ],
-                            "http://www.w3.org/ns/shacl#closed": [
+                            "http://a.ml/vocabularies/document#link-target": [
                               {
-                                "@value": false
+                                "@id": "amf://id#1"
                               }
                             ],
-                            "http://www.w3.org/ns/shacl#property": [
-                              {
-                                "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/alternate_id",
-                                "@type": [
-                                  "http://www.w3.org/ns/shacl#PropertyShape",
-                                  "http://www.w3.org/ns/shacl#Shape",
-                                  "http://a.ml/vocabularies/shapes#Shape"
-                                ],
-                                "http://www.w3.org/ns/shacl#path": [
-                                  {
-                                    "@id": "http://a.ml/vocabularies/data#alternate_id"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/shapes#range": [
-                                  {
-                                    "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/alternate_id/union/default-union",
-                                    "@type": [
-                                      "http://a.ml/vocabularies/shapes#UnionShape",
-                                      "http://www.w3.org/ns/shacl#Shape",
-                                      "http://a.ml/vocabularies/shapes#Shape"
-                                    ],
-                                    "http://a.ml/vocabularies/shapes#anyOf": [
-                                      {
-                                        "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/shape/property/alternate_id%3F/union/default-union/scalar/scalar-expression-0",
-                                        "@type": [
-                                          "http://a.ml/vocabularies/shapes#ScalarShape",
-                                          "http://www.w3.org/ns/shacl#Shape",
-                                          "http://a.ml/vocabularies/shapes#Shape",
-                                          "http://a.ml/vocabularies/document#DomainElement"
-                                        ],
-                                        "http://www.w3.org/ns/shacl#datatype": [
-                                          {
-                                            "@id": "http://a.ml/vocabularies/shapes#number"
-                                          }
-                                        ]
-                                      },
-                                      {
-                                        "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/shape/property/alternate_id%3F/union/default-union/nil/scalar-expression-2",
-                                        "@type": [
-                                          "http://a.ml/vocabularies/shapes#NilShape",
-                                          "http://www.w3.org/ns/shacl#Shape",
-                                          "http://a.ml/vocabularies/shapes#Shape"
-                                        ]
-                                      }
-                                    ],
-                                    "http://schema.org/description": [
-                                      {
-                                        "@value": "The alternate ID of the organization"
-                                      }
-                                    ]
-                                  }
-                                ],
-                                "http://www.w3.org/ns/shacl#minCount": [
-                                  {
-                                    "@value": 0
-                                  }
-                                ],
-                                "http://www.w3.org/ns/shacl#name": [
-                                  {
-                                    "@value": "alternate_id"
-                                  }
-                                ]
-                              },
-                              {
-                                "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/category",
-                                "@type": [
-                                  "http://www.w3.org/ns/shacl#PropertyShape",
-                                  "http://www.w3.org/ns/shacl#Shape",
-                                  "http://a.ml/vocabularies/shapes#Shape"
-                                ],
-                                "http://www.w3.org/ns/shacl#path": [
-                                  {
-                                    "@id": "http://a.ml/vocabularies/data#category"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/shapes#range": [
-                                  {
-                                    "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/category/category",
-                                    "@type": [
-                                      "http://www.w3.org/ns/shacl#NodeShape",
-                                      "http://www.w3.org/ns/shacl#Shape",
-                                      "http://a.ml/vocabularies/shapes#Shape",
-                                      "http://a.ml/vocabularies/document#DomainElement"
-                                    ],
-                                    "http://www.w3.org/ns/shacl#closed": [
-                                      {
-                                        "@value": false
-                                      }
-                                    ],
-                                    "http://www.w3.org/ns/shacl#property": [
-                                      {
-                                        "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/category/category/property/id",
-                                        "@type": [
-                                          "http://www.w3.org/ns/shacl#PropertyShape",
-                                          "http://www.w3.org/ns/shacl#Shape",
-                                          "http://a.ml/vocabularies/shapes#Shape"
-                                        ],
-                                        "http://www.w3.org/ns/shacl#path": [
-                                          {
-                                            "@id": "http://a.ml/vocabularies/data#id"
-                                          }
-                                        ],
-                                        "http://a.ml/vocabularies/shapes#range": [
-                                          {
-                                            "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/category/category/property/id/scalar/id",
-                                            "@type": [
-                                              "http://a.ml/vocabularies/shapes#ScalarShape",
-                                              "http://www.w3.org/ns/shacl#Shape",
-                                              "http://a.ml/vocabularies/shapes#Shape",
-                                              "http://a.ml/vocabularies/document#DomainElement"
-                                            ],
-                                            "http://www.w3.org/ns/shacl#datatype": [
-                                              {
-                                                "@id": "http://a.ml/vocabularies/shapes#number"
-                                              }
-                                            ],
-                                            "http://www.w3.org/ns/shacl#name": [
-                                              {
-                                                "@value": "id"
-                                              }
-                                            ],
-                                            "http://schema.org/description": [
-                                              {
-                                                "@value": "ID of the category"
-                                              }
-                                            ]
-                                          }
-                                        ],
-                                        "http://www.w3.org/ns/shacl#minCount": [
-                                          {
-                                            "@value": 1
-                                          }
-                                        ],
-                                        "http://www.w3.org/ns/shacl#name": [
-                                          {
-                                            "@value": "id"
-                                          }
-                                        ]
-                                      },
-                                      {
-                                        "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/category/category/property/name",
-                                        "@type": [
-                                          "http://www.w3.org/ns/shacl#PropertyShape",
-                                          "http://www.w3.org/ns/shacl#Shape",
-                                          "http://a.ml/vocabularies/shapes#Shape"
-                                        ],
-                                        "http://www.w3.org/ns/shacl#path": [
-                                          {
-                                            "@id": "http://a.ml/vocabularies/data#name"
-                                          }
-                                        ],
-                                        "http://a.ml/vocabularies/shapes#range": [
-                                          {
-                                            "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/category/category/property/name/scalar/name",
-                                            "@type": [
-                                              "http://a.ml/vocabularies/shapes#ScalarShape",
-                                              "http://www.w3.org/ns/shacl#Shape",
-                                              "http://a.ml/vocabularies/shapes#Shape",
-                                              "http://a.ml/vocabularies/document#DomainElement"
-                                            ],
-                                            "http://www.w3.org/ns/shacl#datatype": [
-                                              {
-                                                "@id": "http://www.w3.org/2001/XMLSchema#string"
-                                              }
-                                            ],
-                                            "http://www.w3.org/ns/shacl#name": [
-                                              {
-                                                "@value": "name"
-                                              }
-                                            ],
-                                            "http://schema.org/description": [
-                                              {
-                                                "@value": "The name of the category"
-                                              }
-                                            ]
-                                          }
-                                        ],
-                                        "http://www.w3.org/ns/shacl#minCount": [
-                                          {
-                                            "@value": 1
-                                          }
-                                        ],
-                                        "http://www.w3.org/ns/shacl#name": [
-                                          {
-                                            "@value": "name"
-                                          }
-                                        ]
-                                      }
-                                    ],
-                                    "http://www.w3.org/ns/shacl#name": [
-                                      {
-                                        "@value": "category"
-                                      }
-                                    ],
-                                    "http://schema.org/description": [
-                                      {
-                                        "@value": "Contains the ID and name of the category the organization is in"
-                                      }
-                                    ]
-                                  }
-                                ],
-                                "http://www.w3.org/ns/shacl#minCount": [
-                                  {
-                                    "@value": 1
-                                  }
-                                ],
-                                "http://www.w3.org/ns/shacl#name": [
-                                  {
-                                    "@value": "category"
-                                  }
-                                ]
-                              },
-                              {
-                                "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/created_at",
-                                "@type": [
-                                  "http://www.w3.org/ns/shacl#PropertyShape",
-                                  "http://www.w3.org/ns/shacl#Shape",
-                                  "http://a.ml/vocabularies/shapes#Shape"
-                                ],
-                                "http://www.w3.org/ns/shacl#path": [
-                                  {
-                                    "@id": "http://a.ml/vocabularies/data#created_at"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/shapes#range": [
-                                  {
-                                    "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/created_at/scalar/created_at",
-                                    "@type": [
-                                      "http://a.ml/vocabularies/shapes#ScalarShape",
-                                      "http://www.w3.org/ns/shacl#Shape",
-                                      "http://a.ml/vocabularies/shapes#Shape",
-                                      "http://a.ml/vocabularies/document#DomainElement"
-                                    ],
-                                    "http://www.w3.org/ns/shacl#datatype": [
-                                      {
-                                        "@id": "http://www.w3.org/2001/XMLSchema#dateTime"
-                                      }
-                                    ],
-                                    "http://www.w3.org/ns/shacl#name": [
-                                      {
-                                        "@value": "created_at"
-                                      }
-                                    ],
-                                    "http://schema.org/description": [
-                                      {
-                                        "@value": "The date of creation of the organization"
-                                      }
-                                    ]
-                                  }
-                                ],
-                                "http://www.w3.org/ns/shacl#minCount": [
-                                  {
-                                    "@value": 1
-                                  }
-                                ],
-                                "http://www.w3.org/ns/shacl#name": [
-                                  {
-                                    "@value": "created_at"
-                                  }
-                                ]
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#name": [
+                            "http://a.ml/vocabularies/document#link-label": [
                               {
                                 "@value": "Organization"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document#examples": [
-                              {
-                                "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document#Example",
-                                  "http://a.ml/vocabularies/document#DomainElement"
-                                ],
-                                "http://schema.org/name": [
-                                  {
-                                    "@value": "value"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document#strict": [
-                                  {
-                                    "@value": true
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document#structuredValue": [
-                                  {
-                                    "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1",
-                                    "@type": [
-                                      "http://a.ml/vocabularies/data#Object"
-                                    ],
-                                    "http://a.ml/vocabularies/data#alternate_id": [
-                                      {
-                                        "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_2",
-                                        "@type": [
-                                          "http://a.ml/vocabularies/data#Scalar"
-                                        ],
-                                        "http://a.ml/vocabularies/data#value": [
-                                          {
-                                            "@value": "1",
-                                            "@type": "http://www.w3.org/2001/XMLSchema#integer"
-                                          }
-                                        ]
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/data#category": [
-                                      {
-                                        "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3",
-                                        "@type": [
-                                          "http://a.ml/vocabularies/data#Object"
-                                        ],
-                                        "http://a.ml/vocabularies/data#id": [
-                                          {
-                                            "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_4",
-                                            "@type": [
-                                              "http://a.ml/vocabularies/data#Scalar"
-                                            ],
-                                            "http://a.ml/vocabularies/data#value": [
-                                              {
-                                                "@value": "39691",
-                                                "@type": "http://www.w3.org/2001/XMLSchema#integer"
-                                              }
-                                            ]
-                                          }
-                                        ],
-                                        "http://a.ml/vocabularies/data#name": [
-                                          {
-                                            "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_5",
-                                            "@type": [
-                                              "http://a.ml/vocabularies/data#Scalar"
-                                            ],
-                                            "http://a.ml/vocabularies/data#value": [
-                                              {
-                                                "@value": "Religious and Spiritual",
-                                                "@type": "http://www.w3.org/2001/XMLSchema#string"
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/data#created_at": [
-                                      {
-                                        "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_6",
-                                        "@type": [
-                                          "http://a.ml/vocabularies/data#Scalar"
-                                        ],
-                                        "http://a.ml/vocabularies/data#value": [
-                                          {
-                                            "@value": "2013-01-02T22:21:34Z",
-                                            "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  }
-                                ],
-                                "http://www.w3.org/ns/shacl#raw": [
-                                  {
-                                    "@value": "\n    alternate_id: 1\n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n   \n"
-                                  }
-                                ]
                               }
                             ]
                           }
@@ -1658,7 +248,7 @@
             ],
             "http://a.ml/vocabularies/http#parameter": [
               {
-                "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/parameter/organization_id",
+                "@id": "amf://id#43",
                 "@type": [
                   "http://a.ml/vocabularies/http#Parameter",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -1690,7 +280,7 @@
                 ],
                 "http://a.ml/vocabularies/http#schema": [
                   {
-                    "@id": "file://demo/APIC-15/APIC-15.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/parameter/organization_id/scalar/schema",
+                    "@id": "amf://id#44",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -1720,388 +310,9 @@
         ]
       }
     ],
-    "http://a.ml/vocabularies/document#declares": [
-      {
-        "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type",
-        "@type": [
-          "http://www.w3.org/ns/shacl#NodeShape",
-          "http://www.w3.org/ns/shacl#Shape",
-          "http://a.ml/vocabularies/shapes#Shape",
-          "http://a.ml/vocabularies/document#DomainElement"
-        ],
-        "http://www.w3.org/ns/shacl#closed": [
-          {
-            "@value": false
-          }
-        ],
-        "http://www.w3.org/ns/shacl#property": [
-          {
-            "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/alternate_id",
-            "@type": [
-              "http://www.w3.org/ns/shacl#PropertyShape",
-              "http://www.w3.org/ns/shacl#Shape",
-              "http://a.ml/vocabularies/shapes#Shape"
-            ],
-            "http://www.w3.org/ns/shacl#path": [
-              {
-                "@id": "http://a.ml/vocabularies/data#alternate_id"
-              }
-            ],
-            "http://a.ml/vocabularies/shapes#range": [
-              {
-                "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/alternate_id/union/default-union",
-                "@type": [
-                  "http://a.ml/vocabularies/shapes#UnionShape",
-                  "http://www.w3.org/ns/shacl#Shape",
-                  "http://a.ml/vocabularies/shapes#Shape"
-                ],
-                "http://a.ml/vocabularies/shapes#anyOf": [
-                  {
-                    "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/shape/property/alternate_id%3F/union/default-union/scalar/scalar-expression-0",
-                    "@type": [
-                      "http://a.ml/vocabularies/shapes#ScalarShape",
-                      "http://www.w3.org/ns/shacl#Shape",
-                      "http://a.ml/vocabularies/shapes#Shape",
-                      "http://a.ml/vocabularies/document#DomainElement"
-                    ],
-                    "http://www.w3.org/ns/shacl#datatype": [
-                      {
-                        "@id": "http://a.ml/vocabularies/shapes#number"
-                      }
-                    ]
-                  },
-                  {
-                    "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/shape/property/alternate_id%3F/union/default-union/nil/scalar-expression-2",
-                    "@type": [
-                      "http://a.ml/vocabularies/shapes#NilShape",
-                      "http://www.w3.org/ns/shacl#Shape",
-                      "http://a.ml/vocabularies/shapes#Shape"
-                    ]
-                  }
-                ],
-                "http://schema.org/description": [
-                  {
-                    "@value": "The alternate ID of the organization"
-                  }
-                ]
-              }
-            ],
-            "http://www.w3.org/ns/shacl#minCount": [
-              {
-                "@value": 0
-              }
-            ],
-            "http://www.w3.org/ns/shacl#name": [
-              {
-                "@value": "alternate_id"
-              }
-            ]
-          },
-          {
-            "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/category",
-            "@type": [
-              "http://www.w3.org/ns/shacl#PropertyShape",
-              "http://www.w3.org/ns/shacl#Shape",
-              "http://a.ml/vocabularies/shapes#Shape"
-            ],
-            "http://www.w3.org/ns/shacl#path": [
-              {
-                "@id": "http://a.ml/vocabularies/data#category"
-              }
-            ],
-            "http://a.ml/vocabularies/shapes#range": [
-              {
-                "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/category/category",
-                "@type": [
-                  "http://www.w3.org/ns/shacl#NodeShape",
-                  "http://www.w3.org/ns/shacl#Shape",
-                  "http://a.ml/vocabularies/shapes#Shape",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://www.w3.org/ns/shacl#closed": [
-                  {
-                    "@value": false
-                  }
-                ],
-                "http://www.w3.org/ns/shacl#property": [
-                  {
-                    "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/category/category/property/id",
-                    "@type": [
-                      "http://www.w3.org/ns/shacl#PropertyShape",
-                      "http://www.w3.org/ns/shacl#Shape",
-                      "http://a.ml/vocabularies/shapes#Shape"
-                    ],
-                    "http://www.w3.org/ns/shacl#path": [
-                      {
-                        "@id": "http://a.ml/vocabularies/data#id"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/shapes#range": [
-                      {
-                        "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/category/category/property/id/scalar/id",
-                        "@type": [
-                          "http://a.ml/vocabularies/shapes#ScalarShape",
-                          "http://www.w3.org/ns/shacl#Shape",
-                          "http://a.ml/vocabularies/shapes#Shape",
-                          "http://a.ml/vocabularies/document#DomainElement"
-                        ],
-                        "http://www.w3.org/ns/shacl#datatype": [
-                          {
-                            "@id": "http://a.ml/vocabularies/shapes#number"
-                          }
-                        ],
-                        "http://www.w3.org/ns/shacl#name": [
-                          {
-                            "@value": "id"
-                          }
-                        ],
-                        "http://schema.org/description": [
-                          {
-                            "@value": "ID of the category"
-                          }
-                        ]
-                      }
-                    ],
-                    "http://www.w3.org/ns/shacl#minCount": [
-                      {
-                        "@value": 1
-                      }
-                    ],
-                    "http://www.w3.org/ns/shacl#name": [
-                      {
-                        "@value": "id"
-                      }
-                    ]
-                  },
-                  {
-                    "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/category/category/property/name",
-                    "@type": [
-                      "http://www.w3.org/ns/shacl#PropertyShape",
-                      "http://www.w3.org/ns/shacl#Shape",
-                      "http://a.ml/vocabularies/shapes#Shape"
-                    ],
-                    "http://www.w3.org/ns/shacl#path": [
-                      {
-                        "@id": "http://a.ml/vocabularies/data#name"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/shapes#range": [
-                      {
-                        "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/category/category/property/name/scalar/name",
-                        "@type": [
-                          "http://a.ml/vocabularies/shapes#ScalarShape",
-                          "http://www.w3.org/ns/shacl#Shape",
-                          "http://a.ml/vocabularies/shapes#Shape",
-                          "http://a.ml/vocabularies/document#DomainElement"
-                        ],
-                        "http://www.w3.org/ns/shacl#datatype": [
-                          {
-                            "@id": "http://www.w3.org/2001/XMLSchema#string"
-                          }
-                        ],
-                        "http://www.w3.org/ns/shacl#name": [
-                          {
-                            "@value": "name"
-                          }
-                        ],
-                        "http://schema.org/description": [
-                          {
-                            "@value": "The name of the category"
-                          }
-                        ]
-                      }
-                    ],
-                    "http://www.w3.org/ns/shacl#minCount": [
-                      {
-                        "@value": 1
-                      }
-                    ],
-                    "http://www.w3.org/ns/shacl#name": [
-                      {
-                        "@value": "name"
-                      }
-                    ]
-                  }
-                ],
-                "http://www.w3.org/ns/shacl#name": [
-                  {
-                    "@value": "category"
-                  }
-                ],
-                "http://schema.org/description": [
-                  {
-                    "@value": "Contains the ID and name of the category the organization is in"
-                  }
-                ]
-              }
-            ],
-            "http://www.w3.org/ns/shacl#minCount": [
-              {
-                "@value": 1
-              }
-            ],
-            "http://www.w3.org/ns/shacl#name": [
-              {
-                "@value": "category"
-              }
-            ]
-          },
-          {
-            "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/created_at",
-            "@type": [
-              "http://www.w3.org/ns/shacl#PropertyShape",
-              "http://www.w3.org/ns/shacl#Shape",
-              "http://a.ml/vocabularies/shapes#Shape"
-            ],
-            "http://www.w3.org/ns/shacl#path": [
-              {
-                "@id": "http://a.ml/vocabularies/data#created_at"
-              }
-            ],
-            "http://a.ml/vocabularies/shapes#range": [
-              {
-                "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/created_at/scalar/created_at",
-                "@type": [
-                  "http://a.ml/vocabularies/shapes#ScalarShape",
-                  "http://www.w3.org/ns/shacl#Shape",
-                  "http://a.ml/vocabularies/shapes#Shape",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://www.w3.org/ns/shacl#datatype": [
-                  {
-                    "@id": "http://www.w3.org/2001/XMLSchema#dateTime"
-                  }
-                ],
-                "http://www.w3.org/ns/shacl#name": [
-                  {
-                    "@value": "created_at"
-                  }
-                ],
-                "http://schema.org/description": [
-                  {
-                    "@value": "The date of creation of the organization"
-                  }
-                ]
-              }
-            ],
-            "http://www.w3.org/ns/shacl#minCount": [
-              {
-                "@value": 1
-              }
-            ],
-            "http://www.w3.org/ns/shacl#name": [
-              {
-                "@value": "created_at"
-              }
-            ]
-          }
-        ],
-        "http://www.w3.org/ns/shacl#name": [
-          {
-            "@value": "Organization"
-          }
-        ],
-        "http://a.ml/vocabularies/document#examples": [
-          {
-            "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value",
-            "@type": [
-              "http://a.ml/vocabularies/document#Example",
-              "http://a.ml/vocabularies/document#DomainElement"
-            ],
-            "http://schema.org/name": [
-              {
-                "@value": "value"
-              }
-            ],
-            "http://a.ml/vocabularies/document#strict": [
-              {
-                "@value": true
-              }
-            ],
-            "http://a.ml/vocabularies/document#structuredValue": [
-              {
-                "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1",
-                "@type": [
-                  "http://a.ml/vocabularies/data#Object"
-                ],
-                "http://a.ml/vocabularies/data#alternate_id": [
-                  {
-                    "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_2",
-                    "@type": [
-                      "http://a.ml/vocabularies/data#Scalar"
-                    ],
-                    "http://a.ml/vocabularies/data#value": [
-                      {
-                        "@value": "1",
-                        "@type": "http://www.w3.org/2001/XMLSchema#integer"
-                      }
-                    ]
-                  }
-                ],
-                "http://a.ml/vocabularies/data#category": [
-                  {
-                    "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3",
-                    "@type": [
-                      "http://a.ml/vocabularies/data#Object"
-                    ],
-                    "http://a.ml/vocabularies/data#id": [
-                      {
-                        "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_4",
-                        "@type": [
-                          "http://a.ml/vocabularies/data#Scalar"
-                        ],
-                        "http://a.ml/vocabularies/data#value": [
-                          {
-                            "@value": "39691",
-                            "@type": "http://www.w3.org/2001/XMLSchema#integer"
-                          }
-                        ]
-                      }
-                    ],
-                    "http://a.ml/vocabularies/data#name": [
-                      {
-                        "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_5",
-                        "@type": [
-                          "http://a.ml/vocabularies/data#Scalar"
-                        ],
-                        "http://a.ml/vocabularies/data#value": [
-                          {
-                            "@value": "Religious and Spiritual",
-                            "@type": "http://www.w3.org/2001/XMLSchema#string"
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ],
-                "http://a.ml/vocabularies/data#created_at": [
-                  {
-                    "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_6",
-                    "@type": [
-                      "http://a.ml/vocabularies/data#Scalar"
-                    ],
-                    "http://a.ml/vocabularies/data#value": [
-                      {
-                        "@value": "2013-01-02T22:21:34Z",
-                        "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "http://www.w3.org/ns/shacl#raw": [
-              {
-                "@value": "\n    alternate_id: 1\n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n   \n"
-              }
-            ]
-          }
-        ]
-      }
-    ],
     "http://a.ml/vocabularies/document#references": [
       {
-        "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/",
+        "@id": "amf://id#22",
         "@type": [
           "http://a.ml/vocabularies/document#NamedExample",
           "http://a.ml/vocabularies/document#Fragment",
@@ -2109,7 +320,7 @@
         ],
         "http://a.ml/vocabularies/document#encodes": [
           {
-            "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value",
+            "@id": "amf://id#15",
             "@type": [
               "http://a.ml/vocabularies/document#Example",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -2126,7 +337,7 @@
             ],
             "http://a.ml/vocabularies/document#structuredValue": [
               {
-                "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1",
+                "@id": "amf://id#16",
                 "@type": [
                   "http://a.ml/vocabularies/data#Object"
                 ],
@@ -2205,7 +416,7 @@
         ]
       },
       {
-        "@id": "file://demo/APIC-15/data-types/organization-data-type.raml",
+        "@id": "amf://id#23",
         "@type": [
           "http://a.ml/vocabularies/document#DataType",
           "http://a.ml/vocabularies/document#Fragment",
@@ -2213,7 +424,7 @@
         ],
         "http://a.ml/vocabularies/document#encodes": [
           {
-            "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type",
+            "@id": "amf://id#1",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -2227,7 +438,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/alternate_id",
+                "@id": "amf://id#2",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -2240,7 +451,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/alternate_id/union/default-union",
+                    "@id": "amf://id#3",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -2248,7 +459,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#anyOf": [
                       {
-                        "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/shape/property/alternate_id%3F/union/default-union/scalar/scalar-expression-0",
+                        "@id": "amf://id#4",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -2262,7 +473,7 @@
                         ]
                       },
                       {
-                        "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/shape/property/alternate_id%3F/union/default-union/nil/scalar-expression-2",
+                        "@id": "amf://id#5",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -2289,7 +500,7 @@
                 ]
               },
               {
-                "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/category",
+                "@id": "amf://id#7",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -2302,7 +513,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/category/category",
+                    "@id": "amf://id#8",
                     "@type": [
                       "http://www.w3.org/ns/shacl#NodeShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -2316,7 +527,7 @@
                     ],
                     "http://www.w3.org/ns/shacl#property": [
                       {
-                        "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/category/category/property/id",
+                        "@id": "amf://id#9",
                         "@type": [
                           "http://www.w3.org/ns/shacl#PropertyShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -2329,7 +540,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#range": [
                           {
-                            "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/category/category/property/id/scalar/id",
+                            "@id": "amf://id#10",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -2365,7 +576,7 @@
                         ]
                       },
                       {
-                        "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/category/category/property/name",
+                        "@id": "amf://id#11",
                         "@type": [
                           "http://www.w3.org/ns/shacl#PropertyShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -2378,7 +589,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#range": [
                           {
-                            "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/category/category/property/name/scalar/name",
+                            "@id": "amf://id#12",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -2438,7 +649,7 @@
                 ]
               },
               {
-                "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/created_at",
+                "@id": "amf://id#13",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -2451,7 +662,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://demo/APIC-15/data-types/organization-data-type.raml#/type/property/created_at/scalar/created_at",
+                    "@id": "amf://id#14",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -2494,7 +705,7 @@
             ],
             "http://a.ml/vocabularies/document#examples": [
               {
-                "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value",
+                "@id": "amf://id#15",
                 "@type": [
                   "http://a.ml/vocabularies/document#Example",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -2511,7 +722,7 @@
                 ],
                 "http://a.ml/vocabularies/document#structuredValue": [
                   {
-                    "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1",
+                    "@id": "amf://id#16",
                     "@type": [
                       "http://a.ml/vocabularies/data#Object"
                     ],
@@ -2592,7 +803,7 @@
         ]
       },
       {
-        "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/",
+        "@id": "amf://id#24",
         "@type": [
           "http://a.ml/vocabularies/document#NamedExample",
           "http://a.ml/vocabularies/document#Fragment",
@@ -2600,7 +811,7 @@
         ],
         "http://a.ml/vocabularies/document#encodes": [
           {
-            "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value",
+            "@id": "amf://id#25",
             "@type": [
               "http://a.ml/vocabularies/document#Example",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -2617,7 +828,1486 @@
             ],
             "http://a.ml/vocabularies/document#structuredValue": [
               {
-                "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1",
+                "@id": "amf://id#26",
+                "@type": [
+                  "http://a.ml/vocabularies/data#Array",
+                  "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq"
+                ],
+                "http://www.w3.org/1999/02/22-rdf-syntax-ns#member": [
+                  {
+                    "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Object"
+                    ],
+                    "http://a.ml/vocabularies/data#category": [
+                      {
+                        "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Object"
+                        ],
+                        "http://a.ml/vocabularies/data#id": [
+                          {
+                            "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3/scalar_4",
+                            "@type": [
+                              "http://a.ml/vocabularies/data#Scalar"
+                            ],
+                            "http://a.ml/vocabularies/data#value": [
+                              {
+                                "@value": "39691",
+                                "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/data#name": [
+                          {
+                            "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3/scalar_5",
+                            "@type": [
+                              "http://a.ml/vocabularies/data#Scalar"
+                            ],
+                            "http://a.ml/vocabularies/data#value": [
+                              {
+                                "@value": "Religious and Spiritual",
+                                "@type": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/data#created_at": [
+                      {
+                        "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/scalar_6",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "2013-01-02T22:21:34Z",
+                            "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Object"
+                    ],
+                    "http://a.ml/vocabularies/data#category": [
+                      {
+                        "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Object"
+                        ],
+                        "http://a.ml/vocabularies/data#id": [
+                          {
+                            "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8/scalar_9",
+                            "@type": [
+                              "http://a.ml/vocabularies/data#Scalar"
+                            ],
+                            "http://a.ml/vocabularies/data#value": [
+                              {
+                                "@value": "61111",
+                                "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/data#name": [
+                          {
+                            "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8/scalar_10",
+                            "@type": [
+                              "http://a.ml/vocabularies/data#Scalar"
+                            ],
+                            "http://a.ml/vocabularies/data#value": [
+                              {
+                                "@value": "Service",
+                                "@type": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/data#created_at": [
+                      {
+                        "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/scalar_11",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "2016-02-01T16:37:02Z",
+                            "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/data#pos0": [
+                  {
+                    "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2"
+                  }
+                ],
+                "http://a.ml/vocabularies/data#pos1": [
+                  {
+                    "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#raw": [
+              {
+                "@value": "\n  -\n   \n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n    \n  -\n    category: \n      id: 61111   \n      name: Service\n    created_at: 2016-02-01T16:37:02Z\n   "
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#declares": [
+      {
+        "@id": "amf://id#1",
+        "@type": [
+          "http://www.w3.org/ns/shacl#NodeShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#closed": [
+          {
+            "@value": false
+          }
+        ],
+        "http://www.w3.org/ns/shacl#property": [
+          {
+            "@id": "amf://id#2",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#alternate_id"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "amf://id#3",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#UnionShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape"
+                ],
+                "http://a.ml/vocabularies/shapes#anyOf": [
+                  {
+                    "@id": "amf://id#4",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#ScalarShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://a.ml/vocabularies/shapes#number"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "amf://id#5",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#NilShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape"
+                    ]
+                  }
+                ],
+                "http://schema.org/description": [
+                  {
+                    "@value": "The alternate ID of the organization"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "alternate_id"
+              }
+            ]
+          },
+          {
+            "@id": "amf://id#7",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#category"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "amf://id#8",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#NodeShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#closed": [
+                  {
+                    "@value": false
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#property": [
+                  {
+                    "@id": "amf://id#9",
+                    "@type": [
+                      "http://www.w3.org/ns/shacl#PropertyShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape"
+                    ],
+                    "http://www.w3.org/ns/shacl#path": [
+                      {
+                        "@id": "http://a.ml/vocabularies/data#id"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/shapes#range": [
+                      {
+                        "@id": "amf://id#10",
+                        "@type": [
+                          "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://a.ml/vocabularies/shapes#number"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#name": [
+                          {
+                            "@value": "id"
+                          }
+                        ],
+                        "http://schema.org/description": [
+                          {
+                            "@value": "ID of the category"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#minCount": [
+                      {
+                        "@value": 1
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#name": [
+                      {
+                        "@value": "id"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "amf://id#11",
+                    "@type": [
+                      "http://www.w3.org/ns/shacl#PropertyShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape"
+                    ],
+                    "http://www.w3.org/ns/shacl#path": [
+                      {
+                        "@id": "http://a.ml/vocabularies/data#name"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/shapes#range": [
+                      {
+                        "@id": "amf://id#12",
+                        "@type": [
+                          "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#name": [
+                          {
+                            "@value": "name"
+                          }
+                        ],
+                        "http://schema.org/description": [
+                          {
+                            "@value": "The name of the category"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#minCount": [
+                      {
+                        "@value": 1
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#name": [
+                      {
+                        "@value": "name"
+                      }
+                    ]
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "category"
+                  }
+                ],
+                "http://schema.org/description": [
+                  {
+                    "@value": "Contains the ID and name of the category the organization is in"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "category"
+              }
+            ]
+          },
+          {
+            "@id": "amf://id#13",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#created_at"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "amf://id#14",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#dateTime"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "created_at"
+                  }
+                ],
+                "http://schema.org/description": [
+                  {
+                    "@value": "The date of creation of the organization"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "created_at"
+              }
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "Organization"
+          }
+        ],
+        "http://a.ml/vocabularies/document#examples": [
+          {
+            "@id": "amf://id#15",
+            "@type": [
+              "http://a.ml/vocabularies/document#Example",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "value"
+              }
+            ],
+            "http://a.ml/vocabularies/document#strict": [
+              {
+                "@value": true
+              }
+            ],
+            "http://a.ml/vocabularies/document#structuredValue": [
+              {
+                "@id": "amf://id#16",
+                "@type": [
+                  "http://a.ml/vocabularies/data#Object"
+                ],
+                "http://a.ml/vocabularies/data#alternate_id": [
+                  {
+                    "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_2",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "1",
+                        "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/data#category": [
+                  {
+                    "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Object"
+                    ],
+                    "http://a.ml/vocabularies/data#id": [
+                      {
+                        "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_4",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "39691",
+                            "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/data#name": [
+                      {
+                        "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_5",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "Religious and Spiritual",
+                            "@type": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/data#created_at": [
+                  {
+                    "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_6",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "2013-01-02T22:21:34Z",
+                        "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#raw": [
+              {
+                "@value": "\n    alternate_id: 1\n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n   \n"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "@id": "amf://id#34",
+        "@type": [
+          "http://a.ml/vocabularies/shapes#ArrayShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/shapes#items": [
+          {
+            "@id": "amf://id#1",
+            "@type": [
+              "http://www.w3.org/ns/shacl#NodeShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#closed": [
+              {
+                "@value": false
+              }
+            ],
+            "http://www.w3.org/ns/shacl#property": [
+              {
+                "@id": "amf://id#2",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#PropertyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape"
+                ],
+                "http://www.w3.org/ns/shacl#path": [
+                  {
+                    "@id": "http://a.ml/vocabularies/data#alternate_id"
+                  }
+                ],
+                "http://a.ml/vocabularies/shapes#range": [
+                  {
+                    "@id": "amf://id#3",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#UnionShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape"
+                    ],
+                    "http://a.ml/vocabularies/shapes#anyOf": [
+                      {
+                        "@id": "amf://id#4",
+                        "@type": [
+                          "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://a.ml/vocabularies/shapes#number"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "amf://id#5",
+                        "@type": [
+                          "http://a.ml/vocabularies/shapes#NilShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape"
+                        ]
+                      }
+                    ],
+                    "http://schema.org/description": [
+                      {
+                        "@value": "The alternate ID of the organization"
+                      }
+                    ]
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#minCount": [
+                  {
+                    "@value": 0
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "alternate_id"
+                  }
+                ]
+              },
+              {
+                "@id": "amf://id#7",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#PropertyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape"
+                ],
+                "http://www.w3.org/ns/shacl#path": [
+                  {
+                    "@id": "http://a.ml/vocabularies/data#category"
+                  }
+                ],
+                "http://a.ml/vocabularies/shapes#range": [
+                  {
+                    "@id": "amf://id#8",
+                    "@type": [
+                      "http://www.w3.org/ns/shacl#NodeShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://www.w3.org/ns/shacl#closed": [
+                      {
+                        "@value": false
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#property": [
+                      {
+                        "@id": "amf://id#9",
+                        "@type": [
+                          "http://www.w3.org/ns/shacl#PropertyShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape"
+                        ],
+                        "http://www.w3.org/ns/shacl#path": [
+                          {
+                            "@id": "http://a.ml/vocabularies/data#id"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#range": [
+                          {
+                            "@id": "amf://id#10",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://a.ml/vocabularies/shapes#number"
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#name": [
+                              {
+                                "@value": "id"
+                              }
+                            ],
+                            "http://schema.org/description": [
+                              {
+                                "@value": "ID of the category"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#minCount": [
+                          {
+                            "@value": 1
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#name": [
+                          {
+                            "@value": "id"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "amf://id#11",
+                        "@type": [
+                          "http://www.w3.org/ns/shacl#PropertyShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape"
+                        ],
+                        "http://www.w3.org/ns/shacl#path": [
+                          {
+                            "@id": "http://a.ml/vocabularies/data#name"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#range": [
+                          {
+                            "@id": "amf://id#12",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#name": [
+                              {
+                                "@value": "name"
+                              }
+                            ],
+                            "http://schema.org/description": [
+                              {
+                                "@value": "The name of the category"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#minCount": [
+                          {
+                            "@value": 1
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#name": [
+                          {
+                            "@value": "name"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#name": [
+                      {
+                        "@value": "category"
+                      }
+                    ],
+                    "http://schema.org/description": [
+                      {
+                        "@value": "Contains the ID and name of the category the organization is in"
+                      }
+                    ]
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#minCount": [
+                  {
+                    "@value": 1
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "category"
+                  }
+                ]
+              },
+              {
+                "@id": "amf://id#13",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#PropertyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape"
+                ],
+                "http://www.w3.org/ns/shacl#path": [
+                  {
+                    "@id": "http://a.ml/vocabularies/data#created_at"
+                  }
+                ],
+                "http://a.ml/vocabularies/shapes#range": [
+                  {
+                    "@id": "amf://id#14",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#ScalarShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#dateTime"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#name": [
+                      {
+                        "@value": "created_at"
+                      }
+                    ],
+                    "http://schema.org/description": [
+                      {
+                        "@value": "The date of creation of the organization"
+                      }
+                    ]
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#minCount": [
+                  {
+                    "@value": 1
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "created_at"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "Organization"
+              }
+            ],
+            "http://a.ml/vocabularies/document#examples": [
+              {
+                "@id": "amf://id#15",
+                "@type": [
+                  "http://a.ml/vocabularies/document#Example",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://schema.org/name": [
+                  {
+                    "@value": "value"
+                  }
+                ],
+                "http://a.ml/vocabularies/document#strict": [
+                  {
+                    "@value": true
+                  }
+                ],
+                "http://a.ml/vocabularies/document#structuredValue": [
+                  {
+                    "@id": "amf://id#16",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Object"
+                    ],
+                    "http://a.ml/vocabularies/data#alternate_id": [
+                      {
+                        "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_2",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "1",
+                            "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/data#category": [
+                      {
+                        "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Object"
+                        ],
+                        "http://a.ml/vocabularies/data#id": [
+                          {
+                            "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_4",
+                            "@type": [
+                              "http://a.ml/vocabularies/data#Scalar"
+                            ],
+                            "http://a.ml/vocabularies/data#value": [
+                              {
+                                "@value": "39691",
+                                "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/data#name": [
+                          {
+                            "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_5",
+                            "@type": [
+                              "http://a.ml/vocabularies/data#Scalar"
+                            ],
+                            "http://a.ml/vocabularies/data#value": [
+                              {
+                                "@value": "Religious and Spiritual",
+                                "@type": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/data#created_at": [
+                      {
+                        "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_6",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "2013-01-02T22:21:34Z",
+                            "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#raw": [
+                  {
+                    "@value": "\n    alternate_id: 1\n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n   \n"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "amf_inline_type_1"
+          }
+        ],
+        "http://a.ml/vocabularies/document#examples": [
+          {
+            "@id": "amf://id#25",
+            "@type": [
+              "http://a.ml/vocabularies/document#Example",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "value"
+              }
+            ],
+            "http://a.ml/vocabularies/document#strict": [
+              {
+                "@value": true
+              }
+            ],
+            "http://a.ml/vocabularies/document#structuredValue": [
+              {
+                "@id": "amf://id#26",
+                "@type": [
+                  "http://a.ml/vocabularies/data#Array",
+                  "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq"
+                ],
+                "http://www.w3.org/1999/02/22-rdf-syntax-ns#member": [
+                  {
+                    "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Object"
+                    ],
+                    "http://a.ml/vocabularies/data#category": [
+                      {
+                        "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Object"
+                        ],
+                        "http://a.ml/vocabularies/data#id": [
+                          {
+                            "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3/scalar_4",
+                            "@type": [
+                              "http://a.ml/vocabularies/data#Scalar"
+                            ],
+                            "http://a.ml/vocabularies/data#value": [
+                              {
+                                "@value": "39691",
+                                "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/data#name": [
+                          {
+                            "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3/scalar_5",
+                            "@type": [
+                              "http://a.ml/vocabularies/data#Scalar"
+                            ],
+                            "http://a.ml/vocabularies/data#value": [
+                              {
+                                "@value": "Religious and Spiritual",
+                                "@type": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/data#created_at": [
+                      {
+                        "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/scalar_6",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "2013-01-02T22:21:34Z",
+                            "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Object"
+                    ],
+                    "http://a.ml/vocabularies/data#category": [
+                      {
+                        "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Object"
+                        ],
+                        "http://a.ml/vocabularies/data#id": [
+                          {
+                            "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8/scalar_9",
+                            "@type": [
+                              "http://a.ml/vocabularies/data#Scalar"
+                            ],
+                            "http://a.ml/vocabularies/data#value": [
+                              {
+                                "@value": "61111",
+                                "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/data#name": [
+                          {
+                            "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8/scalar_10",
+                            "@type": [
+                              "http://a.ml/vocabularies/data#Scalar"
+                            ],
+                            "http://a.ml/vocabularies/data#value": [
+                              {
+                                "@value": "Service",
+                                "@type": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/data#created_at": [
+                      {
+                        "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/scalar_11",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "2016-02-01T16:37:02Z",
+                            "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/data#pos0": [
+                  {
+                    "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_2"
+                  }
+                ],
+                "http://a.ml/vocabularies/data#pos1": [
+                  {
+                    "@id": "file://demo/APIC-15/examples/organization/organization-array-response.raml#/example/value/array_1/object_7"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#raw": [
+              {
+                "@value": "\n  -\n   \n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n    \n  -\n    category: \n      id: 61111   \n      name: Service\n    created_at: 2016-02-01T16:37:02Z\n   "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "@id": "amf://id#38",
+        "@type": [
+          "http://a.ml/vocabularies/shapes#ArrayShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/shapes#items": [
+          {
+            "@id": "amf://id#1",
+            "@type": [
+              "http://www.w3.org/ns/shacl#NodeShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#closed": [
+              {
+                "@value": false
+              }
+            ],
+            "http://www.w3.org/ns/shacl#property": [
+              {
+                "@id": "amf://id#2",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#PropertyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape"
+                ],
+                "http://www.w3.org/ns/shacl#path": [
+                  {
+                    "@id": "http://a.ml/vocabularies/data#alternate_id"
+                  }
+                ],
+                "http://a.ml/vocabularies/shapes#range": [
+                  {
+                    "@id": "amf://id#3",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#UnionShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape"
+                    ],
+                    "http://a.ml/vocabularies/shapes#anyOf": [
+                      {
+                        "@id": "amf://id#4",
+                        "@type": [
+                          "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://a.ml/vocabularies/shapes#number"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "amf://id#5",
+                        "@type": [
+                          "http://a.ml/vocabularies/shapes#NilShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape"
+                        ]
+                      }
+                    ],
+                    "http://schema.org/description": [
+                      {
+                        "@value": "The alternate ID of the organization"
+                      }
+                    ]
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#minCount": [
+                  {
+                    "@value": 0
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "alternate_id"
+                  }
+                ]
+              },
+              {
+                "@id": "amf://id#7",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#PropertyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape"
+                ],
+                "http://www.w3.org/ns/shacl#path": [
+                  {
+                    "@id": "http://a.ml/vocabularies/data#category"
+                  }
+                ],
+                "http://a.ml/vocabularies/shapes#range": [
+                  {
+                    "@id": "amf://id#8",
+                    "@type": [
+                      "http://www.w3.org/ns/shacl#NodeShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://www.w3.org/ns/shacl#closed": [
+                      {
+                        "@value": false
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#property": [
+                      {
+                        "@id": "amf://id#9",
+                        "@type": [
+                          "http://www.w3.org/ns/shacl#PropertyShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape"
+                        ],
+                        "http://www.w3.org/ns/shacl#path": [
+                          {
+                            "@id": "http://a.ml/vocabularies/data#id"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#range": [
+                          {
+                            "@id": "amf://id#10",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://a.ml/vocabularies/shapes#number"
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#name": [
+                              {
+                                "@value": "id"
+                              }
+                            ],
+                            "http://schema.org/description": [
+                              {
+                                "@value": "ID of the category"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#minCount": [
+                          {
+                            "@value": 1
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#name": [
+                          {
+                            "@value": "id"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "amf://id#11",
+                        "@type": [
+                          "http://www.w3.org/ns/shacl#PropertyShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape"
+                        ],
+                        "http://www.w3.org/ns/shacl#path": [
+                          {
+                            "@id": "http://a.ml/vocabularies/data#name"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#range": [
+                          {
+                            "@id": "amf://id#12",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#name": [
+                              {
+                                "@value": "name"
+                              }
+                            ],
+                            "http://schema.org/description": [
+                              {
+                                "@value": "The name of the category"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#minCount": [
+                          {
+                            "@value": 1
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#name": [
+                          {
+                            "@value": "name"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#name": [
+                      {
+                        "@value": "category"
+                      }
+                    ],
+                    "http://schema.org/description": [
+                      {
+                        "@value": "Contains the ID and name of the category the organization is in"
+                      }
+                    ]
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#minCount": [
+                  {
+                    "@value": 1
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "category"
+                  }
+                ]
+              },
+              {
+                "@id": "amf://id#13",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#PropertyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape"
+                ],
+                "http://www.w3.org/ns/shacl#path": [
+                  {
+                    "@id": "http://a.ml/vocabularies/data#created_at"
+                  }
+                ],
+                "http://a.ml/vocabularies/shapes#range": [
+                  {
+                    "@id": "amf://id#14",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#ScalarShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#dateTime"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#name": [
+                      {
+                        "@value": "created_at"
+                      }
+                    ],
+                    "http://schema.org/description": [
+                      {
+                        "@value": "The date of creation of the organization"
+                      }
+                    ]
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#minCount": [
+                  {
+                    "@value": 1
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "created_at"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "Organization"
+              }
+            ],
+            "http://a.ml/vocabularies/document#examples": [
+              {
+                "@id": "amf://id#15",
+                "@type": [
+                  "http://a.ml/vocabularies/document#Example",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://schema.org/name": [
+                  {
+                    "@value": "value"
+                  }
+                ],
+                "http://a.ml/vocabularies/document#strict": [
+                  {
+                    "@value": true
+                  }
+                ],
+                "http://a.ml/vocabularies/document#structuredValue": [
+                  {
+                    "@id": "amf://id#16",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Object"
+                    ],
+                    "http://a.ml/vocabularies/data#alternate_id": [
+                      {
+                        "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_2",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "1",
+                            "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/data#category": [
+                      {
+                        "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Object"
+                        ],
+                        "http://a.ml/vocabularies/data#id": [
+                          {
+                            "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_4",
+                            "@type": [
+                              "http://a.ml/vocabularies/data#Scalar"
+                            ],
+                            "http://a.ml/vocabularies/data#value": [
+                              {
+                                "@value": "39691",
+                                "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/data#name": [
+                          {
+                            "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_5",
+                            "@type": [
+                              "http://a.ml/vocabularies/data#Scalar"
+                            ],
+                            "http://a.ml/vocabularies/data#value": [
+                              {
+                                "@value": "Religious and Spiritual",
+                                "@type": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/data#created_at": [
+                      {
+                        "@id": "file://demo/APIC-15/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_6",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "2013-01-02T22:21:34Z",
+                            "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#raw": [
+                  {
+                    "@value": "\n    alternate_id: 1\n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n   \n"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "amf_inline_type_2"
+          }
+        ],
+        "http://a.ml/vocabularies/document#examples": [
+          {
+            "@id": "amf://id#25",
+            "@type": [
+              "http://a.ml/vocabularies/document#Example",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "value"
+              }
+            ],
+            "http://a.ml/vocabularies/document#strict": [
+              {
+                "@value": true
+              }
+            ],
+            "http://a.ml/vocabularies/document#structuredValue": [
+              {
+                "@id": "amf://id#26",
                 "@type": [
                   "http://a.ml/vocabularies/data#Array",
                   "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq"
