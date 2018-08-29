@@ -1,6 +1,5 @@
 <link rel="import" href="../polymer/polymer-element.html">
 <link rel="import" href="../polymer/lib/elements/dom-if.html">
-<link rel="import" href="../polymer/lib/utils/render-status.html">
 <link rel="import" href="../raml-aware/raml-aware.html">
 <link rel="import" href="../api-endpoint-documentation/api-endpoint-documentation.html">
 <link rel="import" href="../api-type-documentation/api-type-documentation.html">
@@ -27,14 +26,50 @@
     <template is="dom-if" if="[[isSecurity]]" restamp="true">
       <api-security-documentation amf-model="{{amfModel}}" security="[[_computeSecurityModel(declares, selected)]]" narrow="[[narrow]]"></api-security-documentation>
     </template>
-    <template is="dom-if" if="[[isEndpoint]]" restamp="true">
-      <api-endpoint-documentation amf-model="{{amfModel}}" endpoint="[[_computeEndpointModel(webApi, selected)]]" previous="[[_computeEndpointPrevious(webApi, selected)]]" next="[[_computeEndpointNext(webApi, selected)]]" base-uri="[[baseUri]]" narrow="[[narrow]]" narrow="[[narrow]]"></api-endpoint-documentation>
+
+    <template is="dom-if" if="[[_renderInlineEndpoint(inlineMethods, isMethod, isEndpoint)]]" restamp="true">
+      <api-endpoint-documentation
+        amf-model="{{amfModel}}"
+        endpoint="[[endpoint]]"
+        previous="[[_computeEndpointPrevious(webApi, selected)]]"
+        next="[[_computeEndpointNext(webApi, selected)]]"
+        base-uri="[[baseUri]]"
+        narrow="[[narrow]]"
+        selected="[[selected]]"
+        no-try-it
+        inline-methods
+        scroll-target="[[scrollTarget]]"
+        redirect-uri="[[redirectUri]]"></api-endpoint-documentation>
     </template>
-    <template is="dom-if" if="[[isMethod]]" restamp="true">
-      <api-method-documentation amf-model="{{amfModel}}" endpoint="[[_computeMethodEndpointModel(webApi, selected)]]" method="[[_computeMethodModel(webApi, selected)]]" previous="[[_computeMethodPrevious(webApi, selected)]]" next="[[_computeMethodNext(webApi, selected)]]" base-uri="[[baseUri]]" no-try-it="[[noTryIt]]" narrow="[[narrow]]"></api-method-documentation>
+
+    <template is="dom-if" if="[[_renderEndpoint(inlineMethods, isEndpoint)]]" restamp="true">
+      <api-endpoint-documentation
+        amf-model="{{amfModel}}"
+        endpoint="[[endpoint]]"
+        previous="[[_computeEndpointPrevious(webApi, selected)]]"
+        next="[[_computeEndpointNext(webApi, selected)]]"
+        base-uri="[[baseUri]]"
+        narrow="[[narrow]]"
+        narrow="[[narrow]]"
+        inline-methods="[[inlineMethods]]"
+        scroll-target="[[scrollTarget]]"
+        redirect-uri="[[redirectUri]]"></api-endpoint-documentation>
     </template>
+
+    <template is="dom-if" if="[[_renderMethod(inlineMethods, isMethod)]]" restamp="true">
+      <api-method-documentation
+        amf-model="{{amfModel}}"
+        endpoint="[[endpoint]]"
+        method="[[_computeMethodModel(webApi, selected)]]"
+        previous="[[_computeMethodPrevious(webApi, selected)]]"
+        next="[[_computeMethodNext(webApi, selected)]]"
+        base-uri="[[baseUri]]"
+        no-try-it="[[noTryIt]]"
+        narrow="[[narrow]]"></api-method-documentation>
+    </template>
+
     <template is="dom-if" if="[[isDoc]]" restamp="true">
-      <api-documentation-document api-document="[[_computeDocument(webApi, selected)]]"></api-documentation-document>
+      <api-documentation-document amf-model="{{amfModel}}" api-document="[[_computeDocument(webApi, selected)]]"></api-documentation-document>
     </template>
     <template is="dom-if" if="[[isType]]" restamp="true">
       <api-type-documentation amf-model="{{amfModel}}" type="[[_computeType(declares, references, selected)]]" narrow="[[narrow]]"></api-type-documentation>
@@ -71,7 +106,8 @@
    *
    * To update base URI value either update `baseUri` property or use
    * `iron-meta` with key `ApiBaseUri`. First method is easier but the second
-   * gives much more flexibility since it use a [monostate pattern](http://wiki.c2.com/?MonostatePattern)
+   * gives much more flexibility since it use a
+   * [monostate pattern](http://wiki.c2.com/?MonostatePattern)
    * to manage base URI property.
    *
    * When the component constructs the funal URI for the endpoint it does the following:
@@ -111,7 +147,7 @@
    * @appliesMixin ApiElements.AmfHelperMixin
    */
   class ApiDocumentation extends ApiElements.AmfHelperMixin(Polymer.Element) {
-    static get is() { return 'api-documentation'; }
+    static get is() {return 'api-documentation';}
     static get properties() {
       return {
         /**
@@ -144,8 +180,7 @@
         // True if currently selection is endpoint
         isEndpoint: {
           type: Boolean,
-          readOnly: true,
-          observer: '_isEndpointChanged'
+          readOnly: true
         },
         // True if currently selection is method
         isMethod: {
@@ -211,13 +246,40 @@
         /**
          * If set it will renders the view in the narrow layout.
          */
-        narrow: Boolean
+        narrow: Boolean,
+        /**
+         * If set then it renders methods documentation inline with
+         * the endpoint documentation.
+         * When it's not set (or value is `false`, default) then it renders
+         * just a list of methods with links.
+         */
+        inlineMethods: {type: Boolean, value: false},
+        /**
+         * Scroll target used to observe `scroll` event.
+         * When set the element will observe scroll and inform other components
+         * about changes in navigation while scrolling through methods list.
+         * The navigation event contains `passive: true` property that
+         * determines that it's not user triggered navigation but rather
+         * context enforced.
+         */
+        scrollTarget: Object,
+        /**
+         * OAuth2 redirect URI.
+         * This value **must** be set in order for OAuth 1/2 to work properly.
+         * This is only required in inline mode (`inlineMethods`).
+         */
+        redirectUri: String,
+        /**
+         * Computed value of currently rendered endpoint.
+         */
+        endpoint: {type: Object, readOnly: true}
       };
     }
 
     static get observers() {
       return [
-        '_navigationOccured(selectedType)'
+        '_navigationOccured(selectedType)',
+        '_updateEndpoint(isEndpoint,isMethod,selected,webApi)'
       ];
     }
 
@@ -277,14 +339,38 @@
      * @param {String} selectedType
      */
     _navigationOccured(selectedType) {
-      this._setIsEndpoint(selectedType === 'endpoint');
-      this._setIsMethod(selectedType === 'method');
-      this._setIsDoc(selectedType === 'documentation');
-      this._setIsType(selectedType === 'type');
-      this._setIsSecurity(selectedType === 'security');
-      this._setIsSummary(selectedType === 'summary');
+      const isEndpoint = selectedType === 'endpoint';
+      if (this.isEndpoint !== isEndpoint) {
+        this._setIsEndpoint(isEndpoint);
+      }
+      const isMethod = selectedType === 'method';
+      if (this.isMethod !== isMethod) {
+        this._setIsMethod(isMethod);
+      }
+      const isDoc = selectedType === 'documentation';
+      if (this.isDoc !== isDoc) {
+        this._setIsDoc(isDoc);
+      }
+      const isType = selectedType === 'type';
+      if (this.isType !== isType) {
+        this._setIsType(isType);
+      }
+      const isSecurity = selectedType === 'security';
+      if (this.isSecurity !== isSecurity) {
+        this._setIsSecurity(isSecurity);
+      }
+      const isSummary = selectedType === 'summary';
+      if (this.isSummary !== isSummary) {
+        this._setIsSummary(isSummary);
+      }
     }
-
+    /**
+     * Creates a link model that is accepted by the endpoint documentation
+     * view.
+     * @param {?Object} item An AMF shape to use to get the data from.
+     * @return {Object|undefined} Object with `label` and `id` or `undefined`
+     * if no item.
+     */
     _computeEndpointLink(item) {
       if (!item) {
         return;
@@ -298,24 +384,46 @@
         label: name
       };
     }
-
+    /**
+     * Computes link model for previous endpoint, if any exists relative to
+     * current selection.
+     * @param {Object} webApi WebApi shape object of AMF
+     * @param {String} selected Currently selected endpoint
+     * @return {Object|undefined} Object with `label` and `id` or `undefined`
+     * if no previous item.
+     */
     _computeEndpointPrevious(webApi, selected) {
       if (!webApi || !selected) {
         return;
       }
-      const endpoints = webApi[this.ns.raml.vocabularies.http + 'endpoint'];
+      const ekey = this._getAmfKey(this.ns.raml.vocabularies.http + 'endpoint');
+      const endpoints = this._ensureArray(webApi[ekey]);
+      if (!endpoints) {
+        return;
+      }
       for (let i = 0; i < endpoints.length; i++) {
         if (endpoints[i]['@id'] === selected) {
           return this._computeEndpointLink(endpoints[i - 1]);
         }
       }
     }
-
+    /**
+     * Computes link model for next endpoint, if any exists relative to
+     * current selection.
+     * @param {Object} webApi WebApi shape object of AMF
+     * @param {String} selected Currently selected endpoint
+     * @return {Object|undefined} Object with `label` and `id` or `undefined`
+     * if no next item.
+     */
     _computeEndpointNext(webApi, selected) {
       if (!webApi || !selected) {
         return;
       }
-      const endpoints = webApi[this.ns.raml.vocabularies.http + 'endpoint'];
+      const ekey = this._getAmfKey(this.ns.raml.vocabularies.http + 'endpoint');
+      const endpoints = this._ensureArray(webApi[ekey]);
+      if (!endpoints) {
+        return;
+      }
       for (let i = 0; i < endpoints.length; i++) {
         if (endpoints[i]['@id'] === selected) {
           return this._computeEndpointLink(endpoints[i + 1]);
@@ -323,20 +431,12 @@
       }
     }
     /**
-     * Computes model for endpoint for method documentation.
-     *
-     * @param {Object} webApi Current value of `webApi` property
-     * @param {String} selected Selected shape
-     * @return {Object} An endponit definition
+     * Creates a link model that is accepted by the method documentation
+     * view.
+     * @param {?Object} item An AMF shape to use to get the data from.
+     * @return {Object|undefined} Object with `label` and `id` or `undefined`
+     * if no item.
      */
-    _computeMethodEndpointModel(webApi, selected) {
-      if (!webApi || !selected) {
-        return;
-      }
-      const endpointId = selected.substr(0, selected.lastIndexOf('/'));
-      return this._computeEndpointModel(webApi, endpointId);
-    }
-
     _computeMethodLink(item) {
       if (!item) {
         return;
@@ -350,7 +450,15 @@
         label: name
       };
     }
-
+    /**
+     * Computes link for the previous method.
+     * This is used by the method documentation panel to render previous
+     * nethod link.
+     * @param {Object} webApi WebApi shape object of AMF
+     * @param {String} selected Currently selected method
+     * @return {Object|undefined} Object with `label` and `id` or `undefined`
+     * if no previous item.
+     */
     _computeMethodPrevious(webApi, selected) {
       const methods = this.__computeMethodsListForMethod(webApi, selected);
       if (!methods) {
@@ -362,7 +470,15 @@
         }
       }
     }
-
+    /**
+     * Computes link for the next method.
+     * This is used by the method documentation panel to render next
+     * nethod link.
+     * @param {Object} webApi WebApi shape object of AMF
+     * @param {String} selected Currently selected method
+     * @return {Object|undefined} Object with `label` and `id` or `undefined`
+     * if no next item.
+     */
     _computeMethodNext(webApi, selected) {
       const methods = this.__computeMethodsListForMethod(webApi, selected);
       if (!methods) {
@@ -374,27 +490,80 @@
         }
       }
     }
-
-    _isEndpointChanged(is) {
-      if (!is) {
+    /**
+     * A method to update value of the `endpoint` property when needed.
+     * This function is to reduce number of updates of `endpoint` property
+     * when rendering endpoint documentation in inline mode. In this case each
+     * change to the endpoint trigges heavy computations.
+     *
+     * @param {Boolean} isEndpoint
+     * @param {Boolean} isMethod
+     * @param {String} selected
+     * @param {Object} webApi
+     */
+    _updateEndpoint(isEndpoint, isMethod, selected, webApi) {
+      if (!selected || !webApi) {
         return;
       }
-      Polymer.RenderStatus.afterNextRender(this, () => {
-        const node = this.shadowRoot.querySelector('api-endpoint-documentation');
-        if (!node) {
-          return;
+      if (!isEndpoint && !isMethod) {
+        return;
+      }
+      // Do not clean up "endpoint" property as it will trigger change
+      // observers. If the view is hidden it doesn't matter
+      let endpoint;
+      if (isEndpoint) {
+        endpoint = this._computeEndpointModel(webApi, selected);
+      } else {
+        endpoint = this._computeMethodEndpoint(webApi, selected);
+      }
+      const current = this.endpoint;
+      // This is designed to trigger as less changes as possible.
+      if (current === endpoint) {
+        return;
+      }
+      if (!current) {
+        if (endpoint) {
+          this._setEndpoint(endpoint);
         }
-        let options;
-        if ('scrollBehavior' in document.documentElement.style) {
-          options = {
-            block: 'start',
-            inline: 'nearest'
-          };
-        } else {
-          options = true;
+      } else {
+        if (!endpoint) {
+          this._setEndpoint(endpoint);
+        } else if (current['@id'] !== endpoint['@id']) {
+          this._setEndpoint(endpoint);
         }
-        node.scrollIntoView(options);
-      });
+      }
+    }
+    /**
+     * Tests if endpoint component should be rendered for both method and
+     * endpoint documentation in inline mode.
+     * @param {Boolean} inlineMethods
+     * @param {Boolean} isMethod
+     * @param {Boolean} isEndpoint
+     * @return {Boolean}
+     */
+    _renderInlineEndpoint(inlineMethods, isMethod, isEndpoint) {
+      if (!inlineMethods) {
+        return false;
+      }
+      return !!(isMethod || isEndpoint);
+    }
+    /**
+     * Computes if single endpoint doc should be rendered
+     * @param {Boolean} inlineMethods
+     * @param {Boolean} isEndpoint
+     * @return {Boolean}
+     */
+    _renderEndpoint(inlineMethods, isEndpoint) {
+      return !!(!inlineMethods && isEndpoint);
+    }
+    /**
+     * Computes if single method doc should be rendered
+     * @param {Boolean} inlineMethods
+     * @param {Boolean} isMethod
+     * @return {Boolean}
+     */
+    _renderMethod(inlineMethods, isMethod) {
+      return !!(!inlineMethods && isMethod);
     }
   }
   window.customElements.define(ApiDocumentation.is, ApiDocumentation);

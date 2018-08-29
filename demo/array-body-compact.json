@@ -1,0 +1,209 @@
+{
+  "@context": {
+    "declares": "http://a.ml/vocabularies/document#declares",
+    "encodes": "http://a.ml/vocabularies/document#encodes",
+    "references": "http://a.ml/vocabularies/document#references",
+    "name": "http://schema.org/name",
+    "desc": "http://schema.org/description",
+    "srv": "http://a.ml/vocabularies/http#server",
+    "url": "http://a.ml/vocabularies/http#url",
+    "var": "http://a.ml/vocabularies/http#variable",
+    "pname": "http://a.ml/vocabularies/http#paramName",
+    "required": "http://www.w3.org/ns/hydra/core#required",
+    "binding": "http://a.ml/vocabularies/http#binding",
+    "schema": "http://a.ml/vocabularies/http#schema",
+    "scheme": "http://a.ml/vocabularies/http#scheme",
+    "dt": "http://www.w3.org/ns/shacl#datatype",
+    "pattern": "http://www.w3.org/ns/shacl#pattern",
+    "w3name": "http://www.w3.org/ns/shacl#name",
+    "def": "http://www.w3.org/ns/shacl#defaultValue",
+    "dvalue": "http://a.ml/vocabularies/data#value",
+    "in": "http://www.w3.org/ns/shacl#in",
+    "v": "http://schema.org/version",
+    "doc": "http://schema.org/documentation",
+    "title": "http://schema.org/title",
+    "ep": "http://a.ml/vocabularies/http#endpoint",
+    "path": "http://a.ml/vocabularies/http#path",
+    "op": "http://www.w3.org/ns/hydra/core#supportedOperation",
+    "method": "http://www.w3.org/ns/hydra/core#method",
+    "exp": "http://www.w3.org/ns/hydra/core#expect",
+    "par": "http://a.ml/vocabularies/http#parameter",
+    "items": "http://a.ml/vocabularies/shapes#items",
+    "ex": "http://a.ml/vocabularies/document#examples",
+    "strict": "http://a.ml/vocabularies/document#strict",
+    "svalue": "http://a.ml/vocabularies/document#structuredValue",
+    "rdfNumber": "http://www.w3.org/1999/02/22-rdf-syntax-ns#member",
+    "raw": "http://www.w3.org/ns/shacl#raw",
+    "vdocname": "http://a.ml/vocabularies/document#name",
+    "cdip": "http://a.ml/vocabularies/document#customDomainProperties",
+    "dp": "http://a.ml/vocabularies/document#DomainProperty",
+    "de": "http://a.ml/vocabularies/document#DomainElement",
+    "shapesShape": "http://a.ml/vocabularies/shapes#Shape",
+    "shape": "http://www.w3.org/ns/shacl#Shape",
+    "scalar": "http://a.ml/vocabularies/shapes#ScalarShape",
+    "shapesSchema": "http://a.ml/vocabularies/shapes#schema",
+    "prop": "http://www.w3.org/ns/shacl#property",
+    "range": "http://a.ml/vocabularies/shapes#range",
+    "mc": "http://www.w3.org/ns/shacl#minCount",
+    "mac": "http://www.w3.org/ns/shacl#maxCount"
+  },
+  "@id": "file://demo/array-body/array-body.raml",
+  "@type": [
+    "http://a.ml/vocabularies/document#Document",
+    "http://a.ml/vocabularies/document#Fragment",
+    "http://a.ml/vocabularies/document#Module",
+    "http://a.ml/vocabularies/document#Unit"
+  ],
+  "declares": [
+    {
+      "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody/post/request/application%2Fjson/array/schema/items/recursive",
+      "@type": [
+        "http://a.ml/vocabularies/shapes#RecursiveShape",
+        "shape",
+        "shapesShape"
+      ],
+      "http://a.ml/vocabularies/document#recursive": false,
+      "http://a.ml/vocabularies/shapes#fixPoint": {
+        "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody/post/request/application%2Fjson/array/schema/array/default-array/items/unresolved"
+      },
+      "w3name": "AppPerson"
+    },
+    {
+      "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody/get/200/application%2Fjson/array/schema/array/default-array",
+      "@type": [
+        "http://a.ml/vocabularies/shapes#ArrayShape",
+        "shape",
+        "shapesShape",
+        "de"
+      ],
+      "items": {
+        "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody/post/request/application%2Fjson/array/schema/items/recursive",
+        "@type": [
+          "http://a.ml/vocabularies/shapes#RecursiveShape",
+          "shape",
+          "shapesShape"
+        ],
+        "http://a.ml/vocabularies/document#recursive": false,
+        "http://a.ml/vocabularies/shapes#fixPoint": {
+          "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody/post/request/application%2Fjson/array/schema/array/default-array/items/unresolved"
+        },
+        "w3name": "AppPerson"
+      },
+      "w3name": "amf_inline_type_1"
+    }
+  ],
+  "encodes": {
+    "@id": "file://demo/array-body/array-body.raml#/web-api",
+    "@type": [
+      "http://schema.org/WebAPI",
+      "http://a.ml/vocabularies/document#RootDomainElement",
+      "de"
+    ],
+    "ep": {
+      "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody",
+      "@type": [
+        "http://a.ml/vocabularies/http#EndPoint",
+        "de"
+      ],
+      "path": "/arrayBody",
+      "op": [
+        {
+          "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody/get",
+          "@type": [
+            "http://www.w3.org/ns/hydra/core#Operation",
+            "de"
+          ],
+          "method": "get",
+          "http://www.w3.org/ns/hydra/core#returns": {
+            "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody/get/200",
+            "@type": [
+              "http://a.ml/vocabularies/http#Response",
+              "de"
+            ],
+            "http://a.ml/vocabularies/http#payload": {
+              "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody/get/200/application%2Fjson",
+              "@type": [
+                "http://a.ml/vocabularies/http#Payload",
+                "de"
+              ],
+              "http://a.ml/vocabularies/http#mediaType": "application/json",
+              "schema": {
+                "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody/get/200/application%2Fjson/array/schema/array/default-array/linked_1",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ArrayShape",
+                  "shape",
+                  "shapesShape",
+                  "de"
+                ],
+                "http://a.ml/vocabularies/document#link-label": "amf_inline_type_1",
+                "http://a.ml/vocabularies/document#link-target": {
+                  "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody/get/200/application%2Fjson/array/schema/array/default-array"
+                }
+              }
+            },
+            "name": "200",
+            "http://www.w3.org/ns/hydra/core#statusCode": "200"
+          }
+        },
+        {
+          "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody/post",
+          "@type": [
+            "http://www.w3.org/ns/hydra/core#Operation",
+            "de"
+          ],
+          "http://www.w3.org/ns/hydra/core#expects": {
+            "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody/post/request",
+            "@type": [
+              "http://a.ml/vocabularies/http#Request",
+              "de"
+            ],
+            "http://a.ml/vocabularies/http#payload": {
+              "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody/post/request/application%2Fjson",
+              "@type": [
+                "http://a.ml/vocabularies/http#Payload",
+                "de"
+              ],
+              "http://a.ml/vocabularies/http#mediaType": "application/json",
+              "schema": {
+                "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody/post/request/application%2Fjson/array/schema",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ArrayShape",
+                  "shape",
+                  "shapesShape",
+                  "de"
+                ],
+                "items": {
+                  "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody/post/request/application%2Fjson/array/schema/items/recursive",
+                  "@type": [
+                    "http://a.ml/vocabularies/shapes#RecursiveShape",
+                    "shape",
+                    "shapesShape"
+                  ],
+                  "http://a.ml/vocabularies/document#recursive": false,
+                  "http://a.ml/vocabularies/shapes#fixPoint": {
+                    "@id": "file://demo/array-body/array-body.raml#/web-api/end-points/%2FarrayBody/post/request/application%2Fjson/array/schema/array/default-array/items/unresolved"
+                  },
+                  "w3name": "AppPerson"
+                },
+                "desc": "Default body for the POST method.\n\nThis is description to be rendered as markdown.\n",
+                "name": "My post body",
+                "w3name": "schema"
+              }
+            }
+          },
+          "method": "post"
+        }
+      ]
+    },
+    "srv": {
+      "@id": "file://demo/array-body/array-body.raml#/web-api/http%3A%2F%2Ftest.domain.com%2F",
+      "@type": [
+        "http://a.ml/vocabularies/http#Server",
+        "de"
+      ],
+      "url": "http://test.domain.com/"
+    },
+    "name": "API body demo",
+    "v": "v1"
+  }
+}
