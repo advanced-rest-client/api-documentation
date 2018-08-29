@@ -33,7 +33,11 @@
     "paper-listbox": "PolymerElements/paper-listbox#^2.0.0",
     "paper-item": "PolymerElements/paper-item#^2.1.0",
     "web-animations-js": "web-animations/web-animations-js#^2.3",
-    "arc-polyfills": "advanced-rest-client/arc-polyfills#^0.1.11"
+    "arc-polyfills": "advanced-rest-client/arc-polyfills#^0.1.11",
+    "paper-toggle-button": "PolymerElements/paper-toggle-button#^2.1.1",
+    "oauth-authorization": "advanced-rest-client/oauth-authorization#^2.0.1",
+    "xhr-simple-request": "advanced-rest-client/xhr-simple-request#^2.0.0",
+    "api-console-default-theme": "advanced-rest-client/api-console-default-theme#5.0.0-preview"
   },
   "repository": {
     "type": "git",

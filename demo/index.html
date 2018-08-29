@@ -17,59 +17,26 @@
     <link rel="import" href="../../paper-item/paper-item.html">
     <link rel="import" href="../../paper-listbox/paper-listbox.html">
     <link rel="import" href="../../neon-animation/web-animations.html">
+    <link rel="import" href="../../iron-meta/iron-meta.html">
+    <link rel="import" href="../../paper-toast/paper-toast.html">
+    <link rel="import" href="../../api-console-default-theme/api-console-default-theme.html">
+    <link rel="import" href="../../paper-toggle-button/paper-toggle-button.html">
+    <link rel="import" href="../../oauth-authorization/oauth2-authorization.html">
+    <link rel="import" href="../../oauth-authorization/oauth1-authorization.html">
+    <link rel="import" href="../../xhr-simple-request/xhr-simple-request.html">
     <link rel="import" href="../api-documentation.html">
     <custom-style>
       <style is="custom-style" include="demo-pages-shared-styles">
-      :root {
-        --arc-font-display1: {
-          @apply --paper-font-display1;
-        };
-        --arc-font-headline: {
-          @apply --paper-font-headline;
-        };
-        --arc-font-title: {
-          @apply --paper-font-title;
-        };
-        --arc-font-subhead: {
-          @apply --paper-font-subhead;
-        };
-        --arc-font-body1: {
-          @apply --paper-font-body1;
-          word-break: break-word;
-        };
-        --arc-font-common-code: {
-          @apply --paper-font-common-code;
-          word-break: break-word !important;
-          overflow: auto;
-          white-space: pre-wrap !important;
-        };
-        --arc-font-code1: {
-          @apply --paper-font-code1;
-          word-wrap: break-word;
-          word-break: break-all;
-          overflow: auto;
-        };
-
-        --method-label-get-background-color: rgb(0, 128, 0);
-        --method-label-get-color: #fff;
-        --method-label-post-background-color: rgb(33, 150, 243);
-        --method-label-post-color: #fff;
-        --method-label-put-background-color: rgb(255, 165, 0);
-        --method-label-put-color: #fff;
-        --method-label-patch-background-color: rgb(156, 39, 176);
-        --method-label-patch-color: #fff;
-        --method-label-delete-background-color: rgb(244, 67, 54);
-        --method-label-delete-color: #fff;
-      }
-
       html,
       body {
         margin: 0;
         padding: 0;
+        background-color: #fff;
       }
 
       [role="main"] {
-        max-width: 1100px;
+        max-width: none;
+        position: relative;
         @apply --layout-horizontal;
         @apply --layout-start;
       }
@@ -77,7 +44,13 @@
       api-navigation {
         width: 320px;
         min-width: 320px;
+      }
+
+      .demo-nav {
+        width: 320px;
+        height: calc(100vh - 86px);
         overflow: auto;
+        background-color: #F5F5F5;
       }
 
       api-documentation {
@@ -88,18 +61,46 @@
       header {
         padding: 12px 24px;
         background-color: #C5E1A5;
+        @apply --layout-horizontal;
+        @apply --layout-center;
         --iron-icon-fill-color: #3E2723;
         --paper-input-container-focus-color: #33691E;
         --paper-input-container-label: {
           color: #3E2723;
         };
       }
+
+      .spacer {
+        @apply --layout-flex;
+      }
+
+      .options {
+        @apply --layout-horizontal;
+        @apply --layout-center;
+      }
+
+      .options > * {
+        margin-left: 8px;
+      }
+
+      .doc-container {
+        height: calc(100vh - 86px);
+        overflow: auto;
+        margin-left: 20px;
+        margin-right: 20px;
+        @apply --layout-flex;
+      }
       </style>
     </custom-style>
   </head>
   <body>
     <dom-bind id="demo">
-      <template is="dom-bind">
+      <template>
+        <raml-aware raml="{{amfModel}}" scope="model"></raml-aware>
+        <xhr-simple-request></xhr-simple-request>
+        <oauth2-authorization></oauth2-authorization>
+        <oauth1-authorization></oauth1-authorization>
+
         <header>
           <paper-dropdown-menu label="Select demo API">
             <paper-listbox slot="dropdown-content" id="enpointsList" on-selected-changed="_apiChanged">
@@ -115,23 +116,46 @@
               <paper-item data-src="APIC-15-compact.json">Issue APIC-15 - compact version</paper-item>
             </paper-listbox>
           </paper-dropdown-menu>
+          <div class="spacer"></div>
+          <div class="options">
+            <paper-toggle-button checked="{{narrow}}">Render narrow view</paper-toggle-button>
+            <paper-toggle-button checked="{{noTryit}}">No try it button</paper-toggle-button>
+            <paper-toggle-button checked="{{inlineMethods}}">Render full method docs</paper-toggle-button>
+          </div>
         </header>
-        <div class="vertical-section-container centered" role="main">
-          <raml-aware raml="{{amfModel}}" scope="model"></raml-aware>
-          <api-navigation aware="model" summary endpoints-opened selected="{{selected}}" selected-type="{{selectedType}}"></api-navigation>
-          <api-documentation id="docs" aware="model" selected="[[selected]]" selected-type="[[selectedType]]"></api-documentation>
+        <div class="centered" role="main">
+          <nav class="demo-nav">
+            <api-navigation aware="model" summary endpoints-opened selected="{{selected}}" selected-type="{{selectedType}}"></api-navigation>
+          </nav>
+
+          <div class="doc-container">
+            <api-documentation
+              id="docs"
+              aware="model"
+              selected="[[selected]]"
+              selected-type="[[selectedType]]"
+              narrow="[[narrow]]"
+              no-try-it="[[noTryit]]"
+              inline-methods="[[inlineMethods]]"
+              scroll-target="[[scrollTarget]]"
+              redirect-uri="[[redirectUri]]"></api-documentation>
+          </div>
         </div>
       </template>
     </dom-bind>
     <script>
     (function(app) {
+      app.redirectUri = 'https://auth.advancedrestclient.com/oauth-popup.html';
+      app.inlineMethods = false;
+
       app._apiChanged = function(e) {
         const file = e.target.selectedItem.dataset.src;
         app._loadFile(file);
+
       };
       app._load = function() {
         document.getElementById('enpointsList').selected = 0;
-        document.getElementById('docs').scrollTarget = document.querySelector('.scrollable');
+        app.scrollTarget = document.querySelector('.doc-container');
       };
       app._loadFile = function(file) {
         fetch('./' + file)
