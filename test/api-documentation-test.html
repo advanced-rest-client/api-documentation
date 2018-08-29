@@ -18,9 +18,16 @@
       <api-documentation></api-documentation>
     </template>
   </test-fixture>
+
   <test-fixture id="Aware">
     <template>
       <api-documentation aware="test"></api-documentation>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="InlineMethods">
+    <template>
+      <api-documentation inline-methods></api-documentation>
     </template>
   </test-fixture>
   <script>
@@ -168,110 +175,327 @@
   });
 
   suite('Data computation', () => {
-    let element;
-    let amf;
-    suiteSetup(() => {
-      return AmfLoader.load()
-      .then((data) => {
-        amf = data[0];
-        element = fixture('Basic');
-        element.amfModel = amf;
+    suite('Regular model', () => {
+      let amf;
+      suiteSetup(() => {
+        return AmfLoader.load()
+        .then((data) => {
+          amf = data;
+        });
+      });
+
+      suite('_updateEndpoint()', function() {
+        let endpoints;
+        let element;
+        let webApi;
+        setup(() => {
+          element = fixture('Basic');
+          element.amfModel = amf;
+          webApi = element._computeWebApi(amf);
+          endpoints = element._computeEndpoints(webApi);
+        });
+
+        test('Computes model for endpoint selection', () => {
+          const endpoint = endpoints[0];
+          element.selected = endpoint['@id'];
+          element._setIsEndpoint(true);
+
+          assert.typeOf(element.endpoint, 'object');
+          assert.equal(element.endpoint['@id'], endpoint['@id']);
+        });
+
+        test('Computes model for method selection', () => {
+          const endpoint = endpoints[0];
+          const endpointId = endpoint['@id'];
+          const ops = element._computeOperations(webApi, endpointId);
+          element.selected = ops[0]['@id'];
+          element._setIsMethod(true);
+
+          assert.typeOf(element.endpoint, 'object');
+          assert.equal(element.endpoint['@id'], endpoint['@id']);
+        });
+      });
+
+      suite('_computeMethodNext()', function() {
+        let endpoints;
+        let element;
+        let webApi;
+        setup(() => {
+          element = fixture('Basic');
+          element.amfModel = amf;
+          webApi = element._computeWebApi(amf);
+          endpoints = element._computeEndpoints(webApi);
+        });
+
+        test('Returns undefined when no selected', function() {
+          const result = element._computeMethodNext(webApi, 'nothing');
+          assert.isUndefined(result);
+        });
+
+        test('Computes next method link', function() {
+          const ops = element._computeOperations(webApi, endpoints[2]['@id']);
+          const result = element._computeMethodNext(webApi, ops[0]['@id']);
+          assert.typeOf(result, 'object');
+          assert.equal(result.label, 'Create a person');
+          assert.equal(result.id, ops[1]['@id']);
+        });
+
+        test('Does not compute next method link when last method', function() {
+          const ops = element._computeOperations(webApi, endpoints[2]['@id']);
+          const result = element._computeMethodNext(webApi, ops[2]['@id']);
+          assert.isUndefined(result);
+        });
+      });
+
+      suite('_computeMethodPrevious()', function() {
+        let endpoints;
+        let element;
+        let webApi;
+        setup(() => {
+          element = fixture('Basic');
+          element.amfModel = amf;
+          webApi = element._computeWebApi(amf);
+          endpoints = element._computeEndpoints(webApi);
+        });
+
+        test('Returns undefined when no selected', function() {
+          const result = element._computeMethodPrevious(webApi, 'nothing');
+          assert.isUndefined(result);
+        });
+
+        test('Computes previous method link', function() {
+          const ops = element._computeOperations(webApi, endpoints[2]['@id']);
+          const result = element._computeMethodPrevious(webApi, ops[1]['@id']);
+          assert.typeOf(result, 'object');
+          assert.equal(result.label, 'List people');
+          assert.equal(result.id, ops[0]['@id']);
+        });
+
+        test('Does not compute previous method link when last method', function() {
+          const ops = element._computeOperations(webApi, endpoints[0]['@id']);
+          const result = element._computeMethodPrevious(webApi, ops[0]['@id']);
+          assert.isUndefined(result);
+        });
+      });
+
+      suite('_computeEndpointNext()', function() {
+        let endpoints;
+        let element;
+        let webApi;
+        setup(() => {
+          element = fixture('Basic');
+          element.amfModel = amf;
+          webApi = element._computeWebApi(amf);
+          endpoints = element._computeEndpoints(webApi);
+        });
+
+        test('Returns undefined when no selected', function() {
+          const result = element._computeEndpointNext(webApi, 'nothing');
+          assert.isUndefined(result);
+        });
+
+        test('Computes next method link', function() {
+          const result = element._computeEndpointNext(webApi, endpoints[3]['@id']);
+          assert.typeOf(result, 'object');
+          assert.equal(result.label, 'Products');
+          assert.equal(result.id, endpoints[4]['@id']);
+        });
+
+        test('Does not compute next method link when last method', function() {
+          const result = element._computeEndpointNext(webApi, endpoints[12]['@id']);
+          assert.isUndefined(result);
+        });
+      });
+
+      suite('_computeEndpointPrevious()', function() {
+        let endpoints;
+        let element;
+        let webApi;
+        setup(() => {
+          element = fixture('Basic');
+          element.amfModel = amf;
+          webApi = element._computeWebApi(amf);
+          endpoints = element._computeEndpoints(webApi);
+        });
+
+        test('Returns undefined when no selected', function() {
+          const result = element._computeEndpointPrevious(webApi, 'nothing');
+          assert.isUndefined(result);
+        });
+
+        test('Computes next method link', function() {
+          const result = element._computeEndpointPrevious(webApi, endpoints[5]['@id']);
+          assert.typeOf(result, 'object');
+          assert.equal(result.label, 'Products');
+          assert.equal(result.id, endpoints[4]['@id']);
+        });
+
+        test('Does not compute next method link when last method', function() {
+          const result = element._computeEndpointPrevious(webApi, endpoints[0]['@id']);
+          assert.isUndefined(result);
+        });
       });
     });
 
-    suite('_computeEndpointModel()', () => {
+    suite('Compact model', () => {
+      let amf;
       suiteSetup(() => {
-        element = fixture('Basic');
-        element.amfModel = amf;
+        return AmfLoader.load(true)
+        .then((data) => {
+          amf = data;
+        });
       });
 
-      const id = 'file://demo/demo-api/demo-api.raml#/web-api/end-points/%2Ftest-parameters%2F%7Bfeature%7D';
-      test('Computes model for selection', () => {
-        const result = element._computeEndpointModel(element.webApi, id);
-        assert.typeOf(result, 'object');
-        assert.equal(result['@id'], id);
+      suite('_updateEndpoint()', function() {
+        let endpoints;
+        let element;
+        let webApi;
+        setup(() => {
+          element = fixture('Basic');
+          element.amfModel = amf;
+          webApi = element._computeWebApi(amf);
+          endpoints = element._computeEndpoints(webApi);
+        });
+
+        test('Computes model for endpoint selection', () => {
+          const endpoint = endpoints[0];
+          element.selected = endpoint['@id'];
+          element._setIsEndpoint(true);
+
+          assert.typeOf(element.endpoint, 'object');
+          assert.equal(element.endpoint['@id'], endpoint['@id']);
+        });
+
+        test('Computes model for method selection', () => {
+          const endpoint = endpoints[0];
+          const endpointId = endpoint['@id'];
+          const ops = element._computeOperations(webApi, endpointId);
+          element.selected = ops[0]['@id'];
+          element._setIsMethod(true);
+
+          assert.typeOf(element.endpoint, 'object');
+          assert.equal(element.endpoint['@id'], endpoint['@id']);
+        });
       });
 
-      test('Returns undefined when no model', () => {
-        const result = element._computeEndpointModel(undefined, id);
-        assert.isUndefined(result);
+      suite('_computeMethodNext()', function() {
+        let endpoints;
+        let element;
+        let webApi;
+        setup(() => {
+          element = fixture('Basic');
+          element.amfModel = amf;
+          webApi = element._computeWebApi(amf);
+          endpoints = element._computeEndpoints(webApi);
+        });
+
+        test('Returns undefined when no selected', function() {
+          const result = element._computeMethodNext(webApi, 'nothing');
+          assert.isUndefined(result);
+        });
+
+        test('Computes next method link', function() {
+          const ops = element._computeOperations(webApi, endpoints[2]['@id']);
+          const result = element._computeMethodNext(webApi, ops[0]['@id']);
+          assert.typeOf(result, 'object');
+          assert.equal(result.label, 'Create a person');
+          assert.equal(result.id, ops[1]['@id']);
+        });
+
+        test('Does not compute next method link when last method', function() {
+          const ops = element._computeOperations(webApi, endpoints[2]['@id']);
+          const result = element._computeMethodNext(webApi, ops[2]['@id']);
+          assert.isUndefined(result);
+        });
       });
 
-      test('Returns undefined when no selection', () => {
-        const result = element._computeEndpointModel(element.webApi);
-        assert.isUndefined(result);
-      });
-    });
+      suite('_computeMethodPrevious()', function() {
+        let endpoints;
+        let element;
+        let webApi;
+        setup(() => {
+          element = fixture('Basic');
+          element.amfModel = amf;
+          webApi = element._computeWebApi(amf);
+          endpoints = element._computeEndpoints(webApi);
+        });
 
-    suite('_computeMethodModel()', () => {
-      suiteSetup(() => {
-        element = fixture('Basic');
-        element.amfModel = amf;
-      });
-      const id = 'file://demo/demo-api/demo-api.raml#/web-api/end-points/%2Ftest-parameters%2F%7Bfeature%7D/get';
+        test('Returns undefined when no selected', function() {
+          const result = element._computeMethodPrevious(webApi, 'nothing');
+          assert.isUndefined(result);
+        });
 
-      test('Computes model for selection', () => {
-        const result = element._computeMethodModel(element.webApi, id);
-        assert.typeOf(result, 'object');
-        assert.equal(result['@id'], id);
-      });
+        test('Computes previous method link', function() {
+          const ops = element._computeOperations(webApi, endpoints[2]['@id']);
+          const result = element._computeMethodPrevious(webApi, ops[1]['@id']);
+          assert.typeOf(result, 'object');
+          assert.equal(result.label, 'List people');
+          assert.equal(result.id, ops[0]['@id']);
+        });
 
-      test('Returns undefined when no model', () => {
-        const result = element._computeMethodModel(undefined, id);
-        assert.isUndefined(result);
-      });
-
-      test('Returns undefined when no selection', () => {
-        const result = element._computeMethodModel(element.webApi);
-        assert.isUndefined(result);
-      });
-    });
-
-    suite('_computeDocument()', () => {
-      suiteSetup(() => {
-        element = fixture('Basic');
-        element.amfModel = amf;
-      });
-      const id = 'file://demo/demo-api/demo-api.raml#/web-api/creative-work/Test%20doc';
-
-      test('Computes model for selection', () => {
-        const result = element._computeDocument(element.webApi, id);
-        assert.typeOf(result, 'object');
-        assert.equal(result['@id'], id);
+        test('Does not compute previous method link when last method', function() {
+          const ops = element._computeOperations(webApi, endpoints[0]['@id']);
+          const result = element._computeMethodPrevious(webApi, ops[0]['@id']);
+          assert.isUndefined(result);
+        });
       });
 
-      test('Returns undefined when no model', () => {
-        const result = element._computeDocument(undefined, id);
-        assert.isUndefined(result);
+      suite('_computeEndpointNext()', function() {
+        let endpoints;
+        let element;
+        let webApi;
+        setup(() => {
+          element = fixture('Basic');
+          element.amfModel = amf;
+          webApi = element._computeWebApi(amf);
+          endpoints = element._computeEndpoints(webApi);
+        });
+
+        test('Returns undefined when no selected', function() {
+          const result = element._computeEndpointNext(webApi, 'nothing');
+          assert.isUndefined(result);
+        });
+
+        test('Computes next method link', function() {
+          const result = element._computeEndpointNext(webApi, endpoints[3]['@id']);
+          assert.typeOf(result, 'object');
+          assert.equal(result.label, 'Products');
+          assert.equal(result.id, endpoints[4]['@id']);
+        });
+
+        test('Does not compute next method link when last method', function() {
+          const result = element._computeEndpointNext(webApi, endpoints[12]['@id']);
+          assert.isUndefined(result);
+        });
       });
 
-      test('Returns undefined when no selection', () => {
-        const result = element._computeDocument(element.webApi);
-        assert.isUndefined(result);
-      });
-    });
+      suite('_computeEndpointPrevious()', function() {
+        let endpoints;
+        let element;
+        let webApi;
+        setup(() => {
+          element = fixture('Basic');
+          element.amfModel = amf;
+          webApi = element._computeWebApi(amf);
+          endpoints = element._computeEndpoints(webApi);
+        });
 
-    suite('_computeSecurityModel()', () => {
-      suiteSetup(() => {
-        element = fixture('Basic');
-        element.amfModel = amf;
-      });
-      const id = 'file://demo/demo-api/securitySchemes/oauth_2_0.raml#fragment';
+        test('Returns undefined when no selected', function() {
+          const result = element._computeEndpointPrevious(webApi, 'nothing');
+          assert.isUndefined(result);
+        });
 
-      test('Computes model for selection', () => {
-        const result = element._computeSecurityModel(element.declares, id);
-        assert.typeOf(result, 'object');
-        assert.equal(result['@id'], id);
-      });
+        test('Computes next method link', function() {
+          const result = element._computeEndpointPrevious(webApi, endpoints[5]['@id']);
+          assert.typeOf(result, 'object');
+          assert.equal(result.label, 'Products');
+          assert.equal(result.id, endpoints[4]['@id']);
+        });
 
-      test('Returns undefined when no model', () => {
-        const result = element._computeSecurityModel(undefined, id);
-        assert.isUndefined(result);
-      });
-
-      test('Returns undefined when no selection', () => {
-        const result = element._computeSecurityModel(element.declares);
-        assert.isUndefined(result);
+        test('Does not compute next method link when last method', function() {
+          const result = element._computeEndpointPrevious(webApi, endpoints[0]['@id']);
+          assert.isUndefined(result);
+        });
       });
     });
   });
