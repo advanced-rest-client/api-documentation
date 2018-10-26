@@ -1,0 +1,488 @@
+[
+  {
+    "@id": "amf://id",
+    "@type": [
+      "http://a.ml/vocabularies/document#Module",
+      "http://a.ml/vocabularies/document#Unit"
+    ],
+    "http://a.ml/vocabularies/document#declares": [
+      {
+        "@id": "amf://id#1",
+        "@type": [
+          "http://www.w3.org/ns/shacl#NodeShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#closed": [
+          {
+            "@value": false
+          }
+        ],
+        "http://www.w3.org/ns/shacl#property": [
+          {
+            "@id": "amf://id#2",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#foo"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "amf://id#3",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "foo"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "foo"
+              }
+            ]
+          },
+          {
+            "@id": "amf://id#4",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#bar"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "amf://id#5",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "bar"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "bar"
+              }
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "myType"
+          }
+        ]
+      },
+      {
+        "@id": "amf://id#6",
+        "@type": [
+          "http://a.ml/vocabularies/document#ResourceType",
+          "http://a.ml/vocabularies/document#AbstractDeclaration",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://schema.org/name": [
+          {
+            "@value": "myResourceType"
+          }
+        ],
+        "http://a.ml/vocabularies/document#dataNode": [
+          {
+            "@id": "amf://id#7",
+            "@type": [
+              "http://a.ml/vocabularies/data#Object"
+            ],
+            "http://a.ml/vocabularies/data#get": [
+              {
+                "@id": "amf://id#8",
+                "@type": [
+                  "http://a.ml/vocabularies/data#Object"
+                ],
+                "http://a.ml/vocabularies/data#headers": [
+                  {
+                    "@id": "amf://id#9",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Object"
+                    ],
+                    "http://a.ml/vocabularies/data#x-header": [
+                      {
+                        "@id": "amf://id#10",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "string",
+                            "@type": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "@id": "amf://id#11",
+        "@type": [
+          "http://a.ml/vocabularies/document#Trait",
+          "http://a.ml/vocabularies/document#AbstractDeclaration",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://schema.org/name": [
+          {
+            "@value": "myTrait"
+          }
+        ],
+        "http://a.ml/vocabularies/document#dataNode": [
+          {
+            "@id": "amf://id#12",
+            "@type": [
+              "http://a.ml/vocabularies/data#Object"
+            ],
+            "http://a.ml/vocabularies/data#headers": [
+              {
+                "@id": "amf://id#13",
+                "@type": [
+                  "http://a.ml/vocabularies/data#Object"
+                ],
+                "http://a.ml/vocabularies/data#x-abc": [
+                  {
+                    "@id": "amf://id#14",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Object"
+                    ],
+                    "http://a.ml/vocabularies/data#default": [
+                      {
+                        "@id": "amf://id#15",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "no",
+                            "@type": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/data#pattern": [
+                      {
+                        "@id": "amf://id#16",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "(yes|no)",
+                            "@type": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/data#type": [
+                      {
+                        "@id": "amf://id#17",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "string",
+                            "@type": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/data#queryParameters": [
+              {
+                "@id": "amf://id#18",
+                "@type": [
+                  "http://a.ml/vocabularies/data#Object"
+                ],
+                "http://a.ml/vocabularies/data#abc": [
+                  {
+                    "@id": "amf://id#19",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Object"
+                    ],
+                    "http://a.ml/vocabularies/data#default": [
+                      {
+                        "@id": "amf://id#20",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "yes",
+                            "@type": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/data#description": [
+                      {
+                        "@id": "amf://id#21",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "test type",
+                            "@type": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/data#maxLength": [
+                      {
+                        "@id": "amf://id#22",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "3",
+                            "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/data#minLength": [
+                      {
+                        "@id": "amf://id#23",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "1",
+                            "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/data#type": [
+                      {
+                        "@id": "amf://id#24",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "string",
+                            "@type": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/data#responses": [
+              {
+                "@id": "amf://id#25",
+                "@type": [
+                  "http://a.ml/vocabularies/data#Object"
+                ],
+                "http://a.ml/vocabularies/data#200": [
+                  {
+                    "@id": "amf://id#26",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Object"
+                    ],
+                    "http://a.ml/vocabularies/data#description": [
+                      {
+                        "@id": "amf://id#27",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "test response",
+                            "@type": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/data#headers": [
+                      {
+                        "@id": "amf://id#28",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Object"
+                        ],
+                        "http://a.ml/vocabularies/data#X-Frame-Options": [
+                          {
+                            "@id": "amf://id#29",
+                            "@type": [
+                              "http://a.ml/vocabularies/data#Object"
+                            ],
+                            "http://a.ml/vocabularies/data#type": [
+                              {
+                                "@id": "amf://id#30",
+                                "@type": [
+                                  "http://a.ml/vocabularies/data#Scalar"
+                                ],
+                                "http://a.ml/vocabularies/data#value": [
+                                  {
+                                    "@value": "string",
+                                    "@type": "http://www.w3.org/2001/XMLSchema#string"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/data#securedBy": [
+              {
+                "@id": "amf://id#31",
+                "@type": [
+                  "http://a.ml/vocabularies/data#Array",
+                  "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq"
+                ],
+                "http://www.w3.org/1999/02/22-rdf-syntax-ns#member": [
+                  {
+                    "@id": "amf://id#32",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "OAuth1",
+                        "@type": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "amf://id#33",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "null",
+                        "@type": "http://www.w3.org/2001/XMLSchema#nil"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/data#pos0": [
+                  {
+                    "@id": "amf://id#32"
+                  }
+                ],
+                "http://a.ml/vocabularies/data#pos1": [
+                  {
+                    "@id": "amf://id#33"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "@id": "amf://id#34",
+        "@type": [
+          "http://a.ml/vocabularies/security#SecurityScheme",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/security#name": [
+          {
+            "@value": "OAuth1"
+          }
+        ],
+        "http://a.ml/vocabularies/security#type": [
+          {
+            "@value": "OAuth 1.0"
+          }
+        ],
+        "http://schema.org/description": [
+          {
+            "@value": "OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred."
+          }
+        ],
+        "http://a.ml/vocabularies/security#settings": [
+          {
+            "@id": "amf://id#35",
+            "@type": [
+              "http://a.ml/vocabularies/security#OAuth1Settings",
+              "http://a.ml/vocabularies/security#Settings",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/security#requestTokenUri": [
+              {
+                "@value": "http://api.domain.com/oauth1/request_token"
+              }
+            ],
+            "http://a.ml/vocabularies/security#authorizationUri": [
+              {
+                "@value": "http://api.domain.com/oauth1/authorize"
+              }
+            ],
+            "http://a.ml/vocabularies/security#tokenCredentialsUri": [
+              {
+                "@value": "http://api.domain.com/oauth1/access_token"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

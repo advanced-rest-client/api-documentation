@@ -24,9 +24,8 @@
       <api-summary amf-model="[[amfModel]]" base-uri="[[baseUri]]"></api-summary>
     </template>
     <template is="dom-if" if="[[isSecurity]]" restamp="true">
-      <api-security-documentation amf-model="{{amfModel}}" security="[[_computeSecurityModel(declares, selected)]]" narrow="[[narrow]]"></api-security-documentation>
+      <api-security-documentation amf-model="{{amfModel}}" security="[[_computeSecurity(declares, selected, amfModel, _isFragment)]]" narrow="[[narrow]]"></api-security-documentation>
     </template>
-
     <template is="dom-if" if="[[_renderInlineEndpoint(inlineMethods, isMethod, isEndpoint)]]" restamp="true">
       <api-endpoint-documentation
         amf-model="{{amfModel}}"
@@ -41,7 +40,6 @@
         scroll-target="[[scrollTarget]]"
         redirect-uri="[[redirectUri]]"></api-endpoint-documentation>
     </template>
-
     <template is="dom-if" if="[[_renderEndpoint(inlineMethods, isEndpoint)]]" restamp="true">
       <api-endpoint-documentation
         amf-model="{{amfModel}}"
@@ -55,7 +53,6 @@
         scroll-target="[[scrollTarget]]"
         redirect-uri="[[redirectUri]]"></api-endpoint-documentation>
     </template>
-
     <template is="dom-if" if="[[_renderMethod(inlineMethods, isMethod)]]" restamp="true">
       <api-method-documentation
         amf-model="{{amfModel}}"
@@ -69,12 +66,11 @@
         render-security
         render-code-snippets></api-method-documentation>
     </template>
-
     <template is="dom-if" if="[[isDoc]]" restamp="true">
-      <api-documentation-document amf-model="{{amfModel}}" api-document="[[_computeDocument(webApi, selected)]]"></api-documentation-document>
+      <api-documentation-document amf-model="{{amfModel}}" api-document="[[_computeDocuemntationModel(webApi, selected, amfModel, _isFragment)]]"></api-documentation-document>
     </template>
     <template is="dom-if" if="[[isType]]" restamp="true">
-      <api-type-documentation amf-model="{{amfModel}}" type="[[_computeType(declares, references, selected)]]" narrow="[[narrow]]"></api-type-documentation>
+      <api-type-documentation amf-model="{{amfModel}}" type="[[_computeTypeModel(declares, references, selected, amfModel, _isFragment)]]" narrow="[[narrow]]"></api-type-documentation>
     </template>
   </template>
   <script>
@@ -149,7 +145,9 @@
    * @appliesMixin ApiElements.AmfHelperMixin
    */
   class ApiDocumentation extends ApiElements.AmfHelperMixin(Polymer.Element) {
-    static get is() {return 'api-documentation';}
+    static get is() {
+      return 'api-documentation';
+    }
     static get properties() {
       return {
         /**
@@ -169,6 +167,10 @@
          * or `summary`.
          */
         selectedType: String,
+        _isFragment: {
+          type: Boolean,
+          computed: '_computeIsFragment(amfModel)'
+        },
         /**
          * By default application hosting the element must set `selected` and
          * `selectedType` properties. When using `api-navigation` element
@@ -566,6 +568,90 @@
      */
     _renderMethod(inlineMethods, isMethod) {
       return !!(!inlineMethods && isMethod);
+    }
+
+    _computeIsFragment(model) {
+      if (model instanceof Array) {
+        model = model[0];
+      }
+      return !this._hasType(model, this.ns.raml.vocabularies.document + 'Document');
+    }
+    /**
+     * Tests if `model` is of a RAML library model.
+     * @param {Object|Array} model A shape to test
+     * @return {Boolean}
+     */
+    _isLibrary(model) {
+      if (!model) {
+        return false;
+      }
+      if (model instanceof Array) {
+        model = model[0];
+      }
+      const moduleKey = this._getAmfKey(this.ns.raml.vocabularies.document + 'Module');
+      return moduleKey === model['@type'][0];
+    }
+    /**
+     * Computes security scheme model.
+     * @param {Object} declares Computed value of `declares`
+     * @param {String} selected Current selection
+     * @param {Object|Array} model Passed AMF model.
+     * @param {Boolean} isFragment Value of `_isFragment` property
+     * @return {Object|undefined}
+     */
+    _computeSecurity(declares, selected, model, isFragment) {
+      if (!isFragment) {
+        return this._computeSecurityModel(declares, selected);
+      }
+      if (this._isLibrary(model)) {
+        return this._computeDeclById(model, selected);
+      }
+      return this._computeEncodes(model);
+    }
+    /**
+     * Computes model for documentation.
+     * @param {Object} webApi Computed value of webApi
+     * @param {String} selected Current selection
+     * @param {Object|Array} model Passed AMF model.
+     * @param {Boolean} isFragment Value of `_isFragment` property
+     * @return {Object|undefined}
+     */
+    _computeDocuemntationModel(webApi, selected, model, isFragment) {
+      if (!isFragment) {
+        return this._computeDocument(webApi, selected);
+      }
+      return this._computeEncodes(model);
+    }
+    /**
+     * Computes model for a type.
+     * @param {Array<Object>} declares Computed list of declares
+     * @param {Array<Object>} references Computed list of references
+     * @param {String} selected Current selection
+     * @param {Object|Array} model Passed AMF model.
+     * @param {Boolean} isFragment Value of `_isFragment` property
+     * @return {Object|undefined}
+     */
+    _computeTypeModel(declares, references, selected, model, isFragment) {
+      if (!isFragment) {
+        return this._computeType(declares, references, selected);
+      }
+      if (this._isLibrary(model)) {
+        return this._computeDeclById(model, selected);
+      }
+      return this._computeEncodes(model);
+    }
+    /**
+     * Computes model of a shape defined ni `declares` list
+     * @param {Object} model AMF model
+     * @param {String} selected Current selection
+     * @return {Object|undefined}
+     */
+    _computeDeclById(model, selected) {
+      const declares = this._computeDeclares(model);
+      if (!declares) {
+        return;
+      }
+      return declares.find((item) => item['@id'] === selected);
     }
   }
   window.customElements.define(ApiDocumentation.is, ApiDocumentation);
