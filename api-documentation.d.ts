@@ -108,6 +108,7 @@ declare namespace ApiElements {
      * or `summary`.
      */
     selectedType: string|null|undefined;
+    readonly _isFragment: boolean|null|undefined;
 
     /**
      * By default application hosting the element must set `selected` and
@@ -207,6 +208,16 @@ declare namespace ApiElements {
      * Computed value of currently rendered endpoint.
      */
     readonly endpoint: object|null|undefined;
+
+    /**
+     * Computes security scheme model.
+     *
+     * @param declares Computed value of `declares`
+     * @param selected Current selection
+     * @param model Passed AMF model.
+     * @param isFragment Value of `_isFragment` property
+     */
+    _computeSecurity(declares: object|null, selected: String|null, model: object|any[]|null, isFragment: Boolean|null): object|null|undefined;
     disconnectedCallback(): void;
 
     /**
@@ -326,6 +337,43 @@ declare namespace ApiElements {
      * Computes if single method doc should be rendered
      */
     _renderMethod(inlineMethods: Boolean|null, isMethod: Boolean|null): Boolean|null;
+    _computeIsFragment(model: any): any;
+
+    /**
+     * Tests if `model` is of a RAML library model.
+     *
+     * @param model A shape to test
+     */
+    _isLibrary(model: object|any[]|null): Boolean|null;
+
+    /**
+     * Computes model for documentation.
+     *
+     * @param webApi Computed value of webApi
+     * @param selected Current selection
+     * @param model Passed AMF model.
+     * @param isFragment Value of `_isFragment` property
+     */
+    _computeDocuemntationModel(webApi: object|null, selected: String|null, model: object|any[]|null, isFragment: Boolean|null): object|null|undefined;
+
+    /**
+     * Computes model for a type.
+     *
+     * @param declares Computed list of declares
+     * @param references Computed list of references
+     * @param selected Current selection
+     * @param model Passed AMF model.
+     * @param isFragment Value of `_isFragment` property
+     */
+    _computeTypeModel(declares: Array<object|null>|null, references: Array<object|null>|null, selected: String|null, model: object|any[]|null, isFragment: Boolean|null): object|null|undefined;
+
+    /**
+     * Computes model of a shape defined ni `declares` list
+     *
+     * @param model AMF model
+     * @param selected Current selection
+     */
+    _computeDeclById(model: object|null, selected: String|null): object|null|undefined;
   }
 }
 

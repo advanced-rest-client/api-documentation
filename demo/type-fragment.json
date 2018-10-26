@@ -1,0 +1,1238 @@
+[
+  {
+    "@id": "amf://id",
+    "@type": [
+      "http://a.ml/vocabularies/document#DataType",
+      "http://a.ml/vocabularies/document#Fragment",
+      "http://a.ml/vocabularies/document#Unit"
+    ],
+    "http://a.ml/vocabularies/document#encodes": [
+      {
+        "@id": "amf://id#1",
+        "@type": [
+          "http://www.w3.org/ns/shacl#NodeShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#closed": [
+          {
+            "@value": false
+          }
+        ],
+        "http://www.w3.org/ns/shacl#property": [
+          {
+            "@id": "amf://id#2",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#id"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "amf://id#3",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#pattern": [
+                  {
+                    "@value": "^[A-Za-z0-9]*$"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#minLength": [
+                  {
+                    "@value": 32
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#maxLength": [
+                  {
+                    "@value": 32
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "id"
+                  }
+                ],
+                "http://schema.org/description": [
+                  {
+                    "@value": "A unique identifier of a person.\n\nIt is a 32 bit string containing alphanumeric characters.\n"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "id"
+              }
+            ]
+          },
+          {
+            "@id": "amf://id#4",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#name"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "amf://id#5",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#pattern": [
+                  {
+                    "@value": "^[0-9a-zA-Z ]+$"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "name"
+                  }
+                ],
+                "http://schema.org/description": [
+                  {
+                    "@value": "Person full name. The input will be rejected if this property is not set while creating new object."
+                  }
+                ],
+                "http://a.ml/vocabularies/document#examples": [
+                  {
+                    "@id": "amf://id#6",
+                    "@type": [
+                      "http://a.ml/vocabularies/document#Example",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/document#strict": [
+                      {
+                        "@value": true
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document#structuredValue": [
+                      {
+                        "@id": "amf://id#6",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "John Smith",
+                            "@type": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#raw": [
+                      {
+                        "@value": "John Smith"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "name"
+              }
+            ]
+          },
+          {
+            "@id": "amf://id#7",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#birthday"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "amf://id#8",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#date"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "birthday"
+                  }
+                ],
+                "http://schema.org/description": [
+                  {
+                    "@value": "The person's date of birth, represented as YYYY-MM-DD."
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "birthday"
+              }
+            ]
+          },
+          {
+            "@id": "amf://id#9",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#favouriteTime"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "amf://id#10",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#time"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "favouriteTime"
+                  }
+                ],
+                "http://schema.org/description": [
+                  {
+                    "@value": "The person's favourite time of day"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "favouriteTime"
+              }
+            ]
+          },
+          {
+            "@id": "amf://id#11",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#gender"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "amf://id#12",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "gender?"
+                  }
+                ],
+                "http://schema.org/description": [
+                  {
+                    "@value": "The person's gender. Possible values includes, but are not limited to, the following values:\n* \"male\" - Male gender.\n* \"female\" - Female gender.\n* \"other\" - Other.\n"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#in": [
+                  {
+                    "@id": "amf://id#12/list",
+                    "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
+                    "http://www.w3.org/2000/01/rdf-schema#_1": [
+                      {
+                        "@id": "amf://id#13",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "male",
+                            "@type": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://www.w3.org/2000/01/rdf-schema#_2": [
+                      {
+                        "@id": "amf://id#14",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "female",
+                            "@type": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://www.w3.org/2000/01/rdf-schema#_3": [
+                      {
+                        "@id": "amf://id#15",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "other",
+                            "@type": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document#examples": [
+                  {
+                    "@id": "amf://id#16",
+                    "@type": [
+                      "http://a.ml/vocabularies/document#Example",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://schema.org/name": [
+                      {
+                        "@value": "Women"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document#strict": [
+                      {
+                        "@value": true
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document#structuredValue": [
+                      {
+                        "@id": "amf://id#16",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "female",
+                            "@type": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#raw": [
+                      {
+                        "@value": "female"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "amf://id#17",
+                    "@type": [
+                      "http://a.ml/vocabularies/document#Example",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://schema.org/name": [
+                      {
+                        "@value": "Man"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document#strict": [
+                      {
+                        "@value": true
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document#structuredValue": [
+                      {
+                        "@id": "amf://id#17",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "male",
+                            "@type": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#raw": [
+                      {
+                        "@value": "male"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "amf://id#18",
+                    "@type": [
+                      "http://a.ml/vocabularies/document#Example",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://schema.org/name": [
+                      {
+                        "@value": "Elmo"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document#strict": [
+                      {
+                        "@value": true
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document#structuredValue": [
+                      {
+                        "@id": "amf://id#18",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "other",
+                            "@type": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#raw": [
+                      {
+                        "@value": "other"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "gender"
+              }
+            ]
+          },
+          {
+            "@id": "amf://id#19",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#favouriteNumber"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "amf://id#20",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://a.ml/vocabularies/shapes#number"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#minInclusive": [
+                  {
+                    "@value": 0.0
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#maxInclusive": [
+                  {
+                    "@value": 9999.0
+                  }
+                ],
+                "http://a.ml/vocabularies/shapes#multipleOf": [
+                  {
+                    "@value": 5.0
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "favouriteNumber"
+                  }
+                ],
+                "http://schema.org/name": [
+                  {
+                    "@value": "Favourite number"
+                  }
+                ],
+                "http://a.ml/vocabularies/document#examples": [
+                  {
+                    "@id": "amf://id#21",
+                    "@type": [
+                      "http://a.ml/vocabularies/document#Example",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/document#strict": [
+                      {
+                        "@value": true
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document#structuredValue": [
+                      {
+                        "@id": "amf://id#21",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "25",
+                            "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#raw": [
+                      {
+                        "@value": "25"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "favouriteNumber"
+              }
+            ]
+          },
+          {
+            "@id": "amf://id#22",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#url"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "amf://id#23",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "url"
+                  }
+                ],
+                "http://schema.org/description": [
+                  {
+                    "@value": "The URL of this person's profile."
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "url"
+              }
+            ]
+          },
+          {
+            "@id": "amf://id#24",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#tagline"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "amf://id#25",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "tagline"
+                  }
+                ],
+                "http://schema.org/description": [
+                  {
+                    "@value": "The brief description (tagline) of this person."
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "tagline"
+              }
+            ]
+          },
+          {
+            "@id": "amf://id#26",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#language"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "amf://id#27",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "language"
+                  }
+                ],
+                "http://schema.org/description": [
+                  {
+                    "@value": "The user's preferred language for rendering."
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "language"
+              }
+            ]
+          },
+          {
+            "@id": "amf://id#28",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#newsletter"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "amf://id#29",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "newsletter"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#defaultValue": [
+                  {
+                    "@id": "amf://id#30",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "false",
+                        "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+                      }
+                    ]
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#defaultValueStr": [
+                  {
+                    "@value": "false"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "newsletter"
+              }
+            ]
+          },
+          {
+            "@id": "amf://id#31",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#age"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "amf://id#32",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "age"
+                  }
+                ],
+                "http://schema.org/description": [
+                  {
+                    "@value": "Very unpractical property to have in a data store.\n"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "age"
+              }
+            ]
+          },
+          {
+            "@id": "amf://id#33",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#created"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "amf://id#34",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://a.ml/vocabularies/shapes#dateTimeOnly"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "created"
+                  }
+                ],
+                "http://a.ml/vocabularies/document#examples": [
+                  {
+                    "@id": "amf://id#35",
+                    "@type": [
+                      "http://a.ml/vocabularies/document#Example",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/document#strict": [
+                      {
+                        "@value": true
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document#structuredValue": [
+                      {
+                        "@id": "amf://id#35",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "2018-04-09T19:10:15",
+                            "@type": "http://a.ml/vocabularies/shapes#dateTimeOnly"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#raw": [
+                      {
+                        "@value": "2018-04-09T19:10:15"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "created"
+              }
+            ]
+          },
+          {
+            "@id": "amf://id#36",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#fietype"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "amf://id#37",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#FileShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape"
+                ],
+                "http://a.ml/vocabularies/shapes#fileType": [
+                  {
+                    "@value": "image/png"
+                  },
+                  {
+                    "@value": "image/jpeg"
+                  },
+                  {
+                    "@value": "image/jpg"
+                  },
+                  {
+                    "@value": "image/gif"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#minLength": [
+                  {
+                    "@value": 10
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#maxLength": [
+                  {
+                    "@value": 1000
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "fietype"
+              }
+            ]
+          },
+          {
+            "@id": "amf://id#38",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#nillable"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "amf://id#39/linked_1",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#UnionShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape"
+                ],
+                "http://a.ml/vocabularies/document#link-target": [
+                  {
+                    "@id": "amf://id#39"
+                  }
+                ],
+                "http://a.ml/vocabularies/document#link-label": [
+                  {
+                    "@value": "amf_inline_type_1"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "nillable"
+              }
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "type"
+          }
+        ],
+        "http://schema.org/name": [
+          {
+            "@value": "A person resource"
+          }
+        ],
+        "http://schema.org/description": [
+          {
+            "@value": "An object representing a person in the API.\nThis object will be used in all methods returning a Person or list of people.\n"
+          }
+        ],
+        "http://a.ml/vocabularies/document#examples": [
+          {
+            "@id": "amf://id#42",
+            "@type": [
+              "http://a.ml/vocabularies/document#Example",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/document#strict": [
+              {
+                "@value": true
+              }
+            ],
+            "http://a.ml/vocabularies/document#structuredValue": [
+              {
+                "@id": "amf://id#42",
+                "@type": [
+                  "http://a.ml/vocabularies/data#Object"
+                ],
+                "http://a.ml/vocabularies/data#birthday": [
+                  {
+                    "@id": "amf://id#43",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "1983-10-20",
+                        "@type": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/data#favouriteNumber": [
+                  {
+                    "@id": "amf://id#44",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "10",
+                        "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/data#favouriteTime": [
+                  {
+                    "@id": "amf://id#45",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "10:29:52",
+                        "@type": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/data#gender": [
+                  {
+                    "@id": "amf://id#46",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "male",
+                        "@type": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/data#id": [
+                  {
+                    "@id": "amf://id#47",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "R34fg663H9KW9MMSKISIhTs1dR7Hss7e",
+                        "@type": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/data#language": [
+                  {
+                    "@id": "amf://id#48",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "en_GB",
+                        "@type": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/data#name": [
+                  {
+                    "@id": "amf://id#49",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "Pawel Psztyc",
+                        "@type": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/data#nillable": [
+                  {
+                    "@id": "amf://id#50",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "null",
+                        "@type": "http://www.w3.org/2001/XMLSchema#nil"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/data#tagline": [
+                  {
+                    "@id": "amf://id#51",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "Some text about me.",
+                        "@type": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/data#url": [
+                  {
+                    "@id": "amf://id#52",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "https://domain.com/profile/pawel.psztyc",
+                        "@type": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#raw": [
+              {
+                "@value": "  id: \"R34fg663H9KW9MMSKISIhTs1dR7Hss7e\"\n  name: \"Pawel Psztyc\"\n  birthday: \"1983-10-20\"\n  gender: male\n  url: \"https://domain.com/profile/pawel.psztyc\"\n  tagline: Some text about me.\n  language: en_GB\n  favouriteNumber: 10\n  favouriteTime: 10:29:52\n  nillable: null\n\n"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#declares": [
+      {
+        "@id": "amf://id#39",
+        "@type": [
+          "http://a.ml/vocabularies/shapes#UnionShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape"
+        ],
+        "http://a.ml/vocabularies/shapes#anyOf": [
+          {
+            "@id": "amf://id#40",
+            "@type": [
+              "http://a.ml/vocabularies/shapes#ScalarShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#datatype": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ]
+          },
+          {
+            "@id": "amf://id#41",
+            "@type": [
+              "http://a.ml/vocabularies/shapes#NilShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape"
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "amf_inline_type_1"
+          }
+        ]
+      }
+    ]
+  }
+]
