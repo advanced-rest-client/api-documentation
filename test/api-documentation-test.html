@@ -147,7 +147,6 @@
         ['isSecurity', true, 'security'],
         ['isSummary', false, 'security'],
       ].forEach((item) => testVarState(item));
-
     });
     suite('DOM content', () => {
       function testPresent(item) {
@@ -495,6 +494,186 @@
         test('Does not compute next method link when last method', function() {
           const result = element._computeEndpointPrevious(webApi, endpoints[0]['@id']);
           assert.isUndefined(result);
+        });
+      });
+    });
+  });
+
+  suite('handleNavigationEvents property', () => {
+    let element;
+    setup(() => {
+      element = fixture('Basic');
+    });
+
+    test('Calls _registerNavigationEvents() when state is set', () => {
+      const spy = sinon.spy(element, '_registerNavigationEvents');
+      element.handleNavigationEvents = true;
+      assert.isTrue(spy.called);
+    });
+
+    test('Sets __eventsRegistered flag', () => {
+      element.handleNavigationEvents = true;
+      assert.isTrue(element.__eventsRegistered);
+    });
+
+    test('Calls _unregisterNavigationEvents() when state is set', () => {
+      element.handleNavigationEvents = true;
+      const spy = sinon.spy(element, '_unregisterNavigationEvents');
+      element.handleNavigationEvents = false;
+      assert.isTrue(spy.called);
+    });
+
+    test('Sets __eventsRegistered flag', () => {
+      element.handleNavigationEvents = true;
+      element.handleNavigationEvents = false;
+      assert.isFalse(element.__eventsRegistered);
+    });
+
+    test('Updates selection from the event', () => {
+      element.handleNavigationEvents = true;
+      document.body.dispatchEvent(new CustomEvent('api-navigation-selection-changed', {
+        bubbles: true,
+        detail: {
+          selected: 'summary',
+          type: 'summary'
+        }
+      }));
+      assert.equal(element.selected, 'summary');
+      assert.equal(element.selectedType, 'summary');
+    });
+
+    test('Ignores passive events', () => {
+      element.handleNavigationEvents = true;
+      document.body.dispatchEvent(new CustomEvent('api-navigation-selection-changed', {
+        bubbles: true,
+        detail: {
+          selected: 'summary',
+          type: 'summary',
+          passive: true
+        }
+      }));
+      assert.isUndefined(element.selected);
+      assert.isUndefined(element.selectedType);
+    });
+  });
+
+  suite('Security scheme rendering', () => {
+    function getScheme(element, name) {
+      const declares = element._computeDeclares(element.amfModel);
+      for (let i = 0; i < declares.length; i++) {
+        const item = declares[i];
+        if (element._hasType(item, element.ns.raml.vocabularies.security + 'SecurityScheme')) {
+          const value = element._getValue(item, element.ns.raml.vocabularies.security + 'name');
+          if (value === name) {
+            return item;
+          }
+        }
+      }
+    }
+    [
+      ['Full model', false],
+      ['Compact model', true]
+    ].forEach((item) => {
+      suite(item[0], () => {
+        let element;
+        setup(() => {
+          element = fixture('Basic');
+          return AmfLoader.load(item[1])
+          .then((data) => {
+            element.amfModel = data;
+          });
+        });
+
+        test('Renders security scheme', (done) => {
+          const scheme = getScheme(element, 'oauth_2_0');
+          const id = scheme['@id'];
+          element.selected = id;
+          element.selectedType = 'security';
+          flush(() => {
+            const node = element.shadowRoot.querySelector('api-security-documentation');
+            assert.ok(node);
+            done();
+          });
+        });
+
+        test('Scheme is computed and set on panel', (done) => {
+          const scheme = getScheme(element, 'oauth_2_0');
+          const id = scheme['@id'];
+          element.selected = id;
+          element.selectedType = 'security';
+          flush(() => {
+            const node = element.shadowRoot.querySelector('api-security-documentation');
+            assert.typeOf(node.security, 'object');
+            assert.isTrue(node.security === scheme);
+            done();
+          });
+        });
+      });
+    });
+  });
+
+  suite('RAML library rendering', () => {
+    function getScheme(element, name) {
+      const declares = element._computeDeclares(element.amfModel);
+      for (let i = 0; i < declares.length; i++) {
+        const item = declares[i];
+        if (element._hasType(item, element.ns.raml.vocabularies.security + 'SecurityScheme')) {
+          const value = element._getValue(item, element.ns.raml.vocabularies.security + 'name');
+          if (value === name) {
+            return item;
+          }
+        }
+      }
+    }
+
+    function getType(element, name) {
+      const declares = element._computeDeclares(element.amfModel);
+      for (let i = 0; i < declares.length; i++) {
+        const item = declares[i];
+        if (element._hasType(item, element.ns.w3.shacl.name + 'NodeShape')) {
+          const value = element._getValue(item, element.ns.w3.shacl.name + 'name');
+          if (value === name) {
+            return item;
+          }
+        }
+      }
+    }
+    [
+      ['Full model', false],
+      ['Compact model', true]
+    ].forEach((item) => {
+      suite(item[0], () => {
+        let element;
+        setup(() => {
+          element = fixture('Basic');
+          return AmfLoader.load(item[1], 'lib-fragment')
+          .then((data) => {
+            element.amfModel = data;
+          });
+        });
+
+        test('Renders security scheme from a library', (done) => {
+          const scheme = getScheme(element, 'OAuth1');
+          const id = scheme['@id'];
+          element.selected = id;
+          element.selectedType = 'security';
+          flush(() => {
+            const node = element.shadowRoot.querySelector('api-security-documentation');
+            assert.ok(node);
+            done();
+          });
+        });
+
+        test('Renders type from a library', (done) => {
+          const scheme = getType(element, 'myType');
+          const id = scheme['@id'];
+          element.selected = id;
+          element.selectedType = 'type';
+          flush(() => {
+            const node = element.shadowRoot.querySelector('api-type-documentation');
+            assert.ok(node);
+            done();
+          });
         });
       });
     });

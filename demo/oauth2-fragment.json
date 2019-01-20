@@ -1,362 +1,362 @@
 [
-  {
-    "@id": "amf://id",
-    "@type": [
-      "http://a.ml/vocabularies/document#SecuritySchemeFragment",
-      "http://a.ml/vocabularies/document#Fragment",
-      "http://a.ml/vocabularies/document#Unit"
-    ],
-    "http://a.ml/vocabularies/document#encodes": [
-      {
-        "@id": "amf://id#1",
-        "@type": [
-          "http://a.ml/vocabularies/security#SecurityScheme",
-          "http://a.ml/vocabularies/document#DomainElement"
-        ],
-        "http://a.ml/vocabularies/security#type": [
-          {
-            "@value": "OAuth 2.0"
-          }
-        ],
-        "http://schema.org/description": [
-          {
-            "@value": "This API supports OAuth 2.0 for authenticating all API requests."
-          }
-        ],
-        "http://a.ml/vocabularies/http#header": [
-          {
-            "@id": "amf://id#2",
-            "@type": [
-              "http://a.ml/vocabularies/http#Parameter",
-              "http://a.ml/vocabularies/document#DomainElement"
-            ],
-            "http://schema.org/name": [
-              {
-                "@value": "authorization"
-              }
-            ],
-            "http://a.ml/vocabularies/http#paramName": [
-              {
-                "@value": "authorization"
-              }
-            ],
-            "http://schema.org/description": [
-              {
-                "@value": "Used to send a valid OAuth 2 access token. Do not use with the \"access_token\" query string parameter."
-              }
-            ],
-            "http://www.w3.org/ns/hydra/core#required": [
-              {
-                "@value": false
-              }
-            ],
-            "http://a.ml/vocabularies/http#binding": [
-              {
-                "@value": "header"
-              }
-            ],
-            "http://a.ml/vocabularies/http#schema": [
-              {
-                "@id": "amf://id#3",
-                "@type": [
-                  "http://a.ml/vocabularies/shapes#ScalarShape",
-                  "http://www.w3.org/ns/shacl#Shape",
-                  "http://a.ml/vocabularies/shapes#Shape",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://www.w3.org/ns/shacl#datatype": [
-                  {
-                    "@id": "http://www.w3.org/2001/XMLSchema#string"
-                  }
-                ],
-                "http://www.w3.org/ns/shacl#name": [
-                  {
-                    "@value": "schema"
-                  }
-                ],
-                "http://schema.org/description": [
-                  {
-                    "@value": "Used to send a valid OAuth 2 access token. Do not use with the \"access_token\" query string parameter."
-                  }
-                ],
-                "http://a.ml/vocabularies/document#examples": [
-                  {
-                    "@id": "amf://id#4",
-                    "@type": [
-                      "http://a.ml/vocabularies/document#Example",
-                      "http://a.ml/vocabularies/document#DomainElement"
-                    ],
-                    "http://a.ml/vocabularies/document#strict": [
-                      {
-                        "@value": true
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document#structuredValue": [
-                      {
-                        "@id": "amf://id#4",
-                        "@type": [
-                          "http://a.ml/vocabularies/data#Scalar"
-                        ],
-                        "http://a.ml/vocabularies/data#value": [
-                          {
-                            "@value": "ya.2453vfDb3cJHisdf.*&H",
-                            "@type": "http://www.w3.org/2001/XMLSchema#string"
-                          }
-                        ]
-                      }
-                    ],
-                    "http://www.w3.org/ns/shacl#raw": [
-                      {
-                        "@value": "ya.2453vfDb3cJHisdf.*&H"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#sources": [
-                      {
-                        "@id": "amf://id#4/source-map",
-                        "@type": [
-                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#tracked-element": [
-                          {
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "amf://id#4"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "amf://id#2"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ],
-        "http://a.ml/vocabularies/http#parameter": [
-          {
-            "@id": "amf://id#5",
-            "@type": [
-              "http://a.ml/vocabularies/http#Parameter",
-              "http://a.ml/vocabularies/document#DomainElement"
-            ],
-            "http://schema.org/name": [
-              {
-                "@value": "access_token"
-              }
-            ],
-            "http://a.ml/vocabularies/http#paramName": [
-              {
-                "@value": "access_token"
-              }
-            ],
-            "http://schema.org/description": [
-              {
-                "@value": "Used to send a valid OAuth 2 access token. Do not use with the \"Authorization\" header."
-              }
-            ],
-            "http://www.w3.org/ns/hydra/core#required": [
-              {
-                "@value": false
-              }
-            ],
-            "http://a.ml/vocabularies/http#binding": [
-              {
-                "@value": "query"
-              }
-            ],
-            "http://a.ml/vocabularies/http#schema": [
-              {
-                "@id": "amf://id#6",
-                "@type": [
-                  "http://a.ml/vocabularies/shapes#ScalarShape",
-                  "http://www.w3.org/ns/shacl#Shape",
-                  "http://a.ml/vocabularies/shapes#Shape",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://www.w3.org/ns/shacl#datatype": [
-                  {
-                    "@id": "http://www.w3.org/2001/XMLSchema#string"
-                  }
-                ],
-                "http://www.w3.org/ns/shacl#name": [
-                  {
-                    "@value": "schema"
-                  }
-                ],
-                "http://schema.org/description": [
-                  {
-                    "@value": "Used to send a valid OAuth 2 access token. Do not use with the \"Authorization\" header."
-                  }
-                ]
-              }
-            ]
-          }
-        ],
-        "http://www.w3.org/ns/hydra/core#response": [
-          {
-            "@id": "amf://id#7",
-            "@type": [
-              "http://a.ml/vocabularies/http#Response",
-              "http://a.ml/vocabularies/document#DomainElement"
-            ],
-            "http://schema.org/name": [
-              {
-                "@value": "401"
-              }
-            ],
-            "http://schema.org/description": [
-              {
-                "@value": "Bad or expired token. This can happen if the user or Dropbox revoked or expired an access token. To fix, re-authenticate the user."
-              }
-            ],
-            "http://www.w3.org/ns/hydra/core#statusCode": [
-              {
-                "@value": "401"
-              }
-            ],
-            "http://a.ml/vocabularies/http#payload": [
-              {
-                "@id": "amf://id#8",
-                "@type": [
-                  "http://a.ml/vocabularies/http#Payload",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://a.ml/vocabularies/http#mediaType": [
-                  {
-                    "@value": "application/json"
-                  }
-                ],
-                "http://a.ml/vocabularies/http#schema": [
-                  {
-                    "@id": "amf://id#9",
-                    "@type": [
-                      "http://a.ml/vocabularies/shapes#AnyShape",
-                      "http://www.w3.org/ns/shacl#Shape",
-                      "http://a.ml/vocabularies/shapes#Shape"
-                    ],
-                    "http://www.w3.org/ns/shacl#name": [
-                      {
-                        "@value": "schema"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "@id": "amf://id#10",
-            "@type": [
-              "http://a.ml/vocabularies/http#Response",
-              "http://a.ml/vocabularies/document#DomainElement"
-            ],
-            "http://schema.org/name": [
-              {
-                "@value": "403"
-              }
-            ],
-            "http://schema.org/description": [
-              {
-                "@value": "Bad OAuth request (wrong consumer key, bad nonce, expired timestamp...). Unfortunately, re-authenticating the user won't help here."
-              }
-            ],
-            "http://www.w3.org/ns/hydra/core#statusCode": [
-              {
-                "@value": "403"
-              }
-            ],
-            "http://a.ml/vocabularies/http#payload": [
-              {
-                "@id": "amf://id#11",
-                "@type": [
-                  "http://a.ml/vocabularies/http#Payload",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://a.ml/vocabularies/http#mediaType": [
-                  {
-                    "@value": "application/json"
-                  }
-                ],
-                "http://a.ml/vocabularies/http#schema": [
-                  {
-                    "@id": "amf://id#12",
-                    "@type": [
-                      "http://a.ml/vocabularies/shapes#AnyShape",
-                      "http://www.w3.org/ns/shacl#Shape",
-                      "http://a.ml/vocabularies/shapes#Shape"
-                    ],
-                    "http://www.w3.org/ns/shacl#name": [
-                      {
-                        "@value": "schema"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ],
-        "http://a.ml/vocabularies/security#settings": [
-          {
-            "@id": "amf://id#13",
-            "@type": [
-              "http://a.ml/vocabularies/security#OAuth2Settings",
-              "http://a.ml/vocabularies/security#Settings",
-              "http://a.ml/vocabularies/document#DomainElement"
-            ],
-            "http://a.ml/vocabularies/security#authorizationUri": [
-              {
-                "@value": "http://api.domain.com/oauth2/auth"
-              }
-            ],
-            "http://a.ml/vocabularies/security#accessTokenUri": [
-              {
-                "@value": "http://api.domain.com/oauth2/token"
-              }
-            ],
-            "http://a.ml/vocabularies/security#authorizationGrant": [
-              {
-                "@value": "authorization_code"
-              },
-              {
-                "@value": "implicit"
-              }
-            ],
-            "http://a.ml/vocabularies/security#scope": [
-              {
-                "@id": "amf://id#14",
-                "@type": [
-                  "http://a.ml/vocabularies/security#Scope",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://a.ml/vocabularies/security#name": [
-                  {
-                    "@value": "profile"
-                  }
-                ]
-              },
-              {
-                "@id": "amf://id#15",
-                "@type": [
-                  "http://a.ml/vocabularies/security#Scope",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://a.ml/vocabularies/security#name": [
-                  {
-                    "@value": "email"
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
+{
+"@id": "amf://id",
+"@type": [
+"http://a.ml/vocabularies/document#SecuritySchemeFragment",
+"http://a.ml/vocabularies/document#Fragment",
+"http://a.ml/vocabularies/document#Unit"
+],
+"http://a.ml/vocabularies/document#encodes": [
+{
+"@id": "amf://id#1",
+"@type": [
+"http://a.ml/vocabularies/security#SecurityScheme",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/security#type": [
+{
+"@value": "OAuth 2.0"
+}
+],
+"http://schema.org/description": [
+{
+"@value": "This API supports OAuth 2.0 for authenticating all API requests."
+}
+],
+"http://a.ml/vocabularies/http#header": [
+{
+"@id": "amf://id#2",
+"@type": [
+"http://a.ml/vocabularies/http#Parameter",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://schema.org/name": [
+{
+"@value": "authorization"
+}
+],
+"http://a.ml/vocabularies/http#paramName": [
+{
+"@value": "authorization"
+}
+],
+"http://schema.org/description": [
+{
+"@value": "Used to send a valid OAuth 2 access token. Do not use with the \"access_token\" query string parameter."
+}
+],
+"http://www.w3.org/ns/hydra/core#required": [
+{
+"@value": false
+}
+],
+"http://a.ml/vocabularies/http#binding": [
+{
+"@value": "header"
+}
+],
+"http://a.ml/vocabularies/http#schema": [
+{
+"@id": "amf://id#3",
+"@type": [
+"http://a.ml/vocabularies/shapes#ScalarShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.w3.org/ns/shacl#datatype": [
+{
+"@id": "http://www.w3.org/2001/XMLSchema#string"
+}
+],
+"http://www.w3.org/ns/shacl#name": [
+{
+"@value": "schema"
+}
+],
+"http://schema.org/description": [
+{
+"@value": "Used to send a valid OAuth 2 access token. Do not use with the \"access_token\" query string parameter."
+}
+],
+"http://a.ml/vocabularies/document#examples": [
+{
+"@id": "amf://id#4",
+"@type": [
+"http://a.ml/vocabularies/document#Example",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/document#strict": [
+{
+"@value": true
+}
+],
+"http://a.ml/vocabularies/document#structuredValue": [
+{
+"@id": "amf://id#4",
+"@type": [
+"http://a.ml/vocabularies/data#Scalar"
+],
+"http://a.ml/vocabularies/data#value": [
+{
+"@value": "ya.2453vfDb3cJHisdf.*&H",
+"@type": "http://www.w3.org/2001/XMLSchema#string"
+}
+]
+}
+],
+"http://www.w3.org/ns/shacl#raw": [
+{
+"@value": "ya.2453vfDb3cJHisdf.*&H"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "amf://id#4/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#tracked-element": [
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "amf://id#4"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "amf://id#2"
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+],
+"http://a.ml/vocabularies/http#parameter": [
+{
+"@id": "amf://id#5",
+"@type": [
+"http://a.ml/vocabularies/http#Parameter",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://schema.org/name": [
+{
+"@value": "access_token"
+}
+],
+"http://a.ml/vocabularies/http#paramName": [
+{
+"@value": "access_token"
+}
+],
+"http://schema.org/description": [
+{
+"@value": "Used to send a valid OAuth 2 access token. Do not use with the \"Authorization\" header."
+}
+],
+"http://www.w3.org/ns/hydra/core#required": [
+{
+"@value": false
+}
+],
+"http://a.ml/vocabularies/http#binding": [
+{
+"@value": "query"
+}
+],
+"http://a.ml/vocabularies/http#schema": [
+{
+"@id": "amf://id#6",
+"@type": [
+"http://a.ml/vocabularies/shapes#ScalarShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.w3.org/ns/shacl#datatype": [
+{
+"@id": "http://www.w3.org/2001/XMLSchema#string"
+}
+],
+"http://www.w3.org/ns/shacl#name": [
+{
+"@value": "schema"
+}
+],
+"http://schema.org/description": [
+{
+"@value": "Used to send a valid OAuth 2 access token. Do not use with the \"Authorization\" header."
+}
+]
+}
+]
+}
+],
+"http://www.w3.org/ns/hydra/core#response": [
+{
+"@id": "amf://id#7",
+"@type": [
+"http://a.ml/vocabularies/http#Response",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://schema.org/name": [
+{
+"@value": "401"
+}
+],
+"http://schema.org/description": [
+{
+"@value": "Bad or expired token. This can happen if the user or Dropbox revoked or expired an access token. To fix, re-authenticate the user."
+}
+],
+"http://www.w3.org/ns/hydra/core#statusCode": [
+{
+"@value": "401"
+}
+],
+"http://a.ml/vocabularies/http#payload": [
+{
+"@id": "amf://id#8",
+"@type": [
+"http://a.ml/vocabularies/http#Payload",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/http#mediaType": [
+{
+"@value": "application/json"
+}
+],
+"http://a.ml/vocabularies/http#schema": [
+{
+"@id": "amf://id#9",
+"@type": [
+"http://a.ml/vocabularies/shapes#AnyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape"
+],
+"http://www.w3.org/ns/shacl#name": [
+{
+"@value": "schema"
+}
+]
+}
+]
+}
+]
+},
+{
+"@id": "amf://id#10",
+"@type": [
+"http://a.ml/vocabularies/http#Response",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://schema.org/name": [
+{
+"@value": "403"
+}
+],
+"http://schema.org/description": [
+{
+"@value": "Bad OAuth request (wrong consumer key, bad nonce, expired timestamp...). Unfortunately, re-authenticating the user won't help here."
+}
+],
+"http://www.w3.org/ns/hydra/core#statusCode": [
+{
+"@value": "403"
+}
+],
+"http://a.ml/vocabularies/http#payload": [
+{
+"@id": "amf://id#11",
+"@type": [
+"http://a.ml/vocabularies/http#Payload",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/http#mediaType": [
+{
+"@value": "application/json"
+}
+],
+"http://a.ml/vocabularies/http#schema": [
+{
+"@id": "amf://id#12",
+"@type": [
+"http://a.ml/vocabularies/shapes#AnyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape"
+],
+"http://www.w3.org/ns/shacl#name": [
+{
+"@value": "schema"
+}
+]
+}
+]
+}
+]
+}
+],
+"http://a.ml/vocabularies/security#settings": [
+{
+"@id": "amf://id#13",
+"@type": [
+"http://a.ml/vocabularies/security#OAuth2Settings",
+"http://a.ml/vocabularies/security#Settings",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/security#authorizationUri": [
+{
+"@value": "http://api.domain.com/oauth2/auth"
+}
+],
+"http://a.ml/vocabularies/security#accessTokenUri": [
+{
+"@value": "http://api.domain.com/oauth2/token"
+}
+],
+"http://a.ml/vocabularies/security#authorizationGrant": [
+{
+"@value": "authorization_code"
+},
+{
+"@value": "implicit"
+}
+],
+"http://a.ml/vocabularies/security#scope": [
+{
+"@id": "amf://id#14",
+"@type": [
+"http://a.ml/vocabularies/security#Scope",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/security#name": [
+{
+"@value": "profile"
+}
+]
+},
+{
+"@id": "amf://id#15",
+"@type": [
+"http://a.ml/vocabularies/security#Scope",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/security#name": [
+{
+"@value": "email"
+}
+]
+}
+]
+}
+]
+}
+]
+}
 ]
