@@ -3,35 +3,34 @@
 title: test
 
 
-types: 
+types:
   Organization: !include data-types/organization-data-type.raml
 
-/organizations: 
+/organizations:
   put:
-    body: 
+    body:
       application/json:
         type: Organization []
-        example: !include examples/organization/organization-array-response.raml
+        examples: !include examples/organization/organization-array-response.raml
   get:
     displayName: Get organizations
-    responses: 
+    responses:
       200:
-        body: 
+        body:
           application/json:
             type: Organization[]
-            example: !include examples/organization/organization-array-response.raml
-            
+            examples: !include examples/organization/organization-array-response.raml
+
   /{organization_id}:
-    uriParameters: 
-      organization_id: 
+    uriParameters:
+      organization_id:
         type: number
         description: The organization's specific ID
     get:
       displayName: Get organizations by organization ID
-      responses: 
+      responses:
         200:
-          body: 
+          body:
             application/json:
               type: Organization
-              example: !include examples/organization/organization-individual-response.raml
-   
+              examples: !include examples/organization/organization-individual-response.raml
