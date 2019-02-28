@@ -5,23 +5,18 @@
  *   https://github.com/Polymer/tools/tree/master/packages/gen-typescript-declarations
  *
  * To modify these typings, edit the source file(s):
- *   api-documentation.html
+ *   api-documentation.js
  */
 
 
 // tslint:disable:variable-name Describing an API that's defined elsewhere.
 // tslint:disable:no-any describes the API as best we are able today
 
-/// <reference path="../polymer/types/polymer-element.d.ts" />
-/// <reference path="../polymer/types/lib/elements/dom-if.d.ts" />
-/// <reference path="../raml-aware/raml-aware.d.ts" />
-/// <reference path="../api-endpoint-documentation/api-endpoint-documentation.d.ts" />
-/// <reference path="../api-type-documentation/api-type-documentation.d.ts" />
-/// <reference path="../api-documentation-document/api-documentation-document.d.ts" />
-/// <reference path="../api-method-documentation/api-method-documentation.d.ts" />
-/// <reference path="../api-summary/api-summary.d.ts" />
-/// <reference path="../api-security-documentation/api-security-documentation.d.ts" />
-/// <reference path="../amf-helper-mixin/amf-helper-mixin.d.ts" />
+import {PolymerElement} from '@polymer/polymer/polymer-element.js';
+
+import {html} from '@polymer/polymer/lib/utils/html-tag.js';
+
+import {AmfHelperMixin} from '@api-components/amf-helper-mixin/amf-helper-mixin.js';
 
 declare namespace ApiElements {
 
@@ -78,8 +73,8 @@ declare namespace ApiElements {
    * new Polymer.IronMeta({key: 'ApiBaseUri'}).value = 'https://other.domain';
    * ```
    *
-   * Note: The element will not get notified about the change in `iron-meta`.
-   * The change will be reflected whehn `amfModel` or `endpoint` property chnage.
+   * Note: The element will not be notified about the change when `iron-meta` value change.
+   * The change will be reflected when `amfModel` or `endpoint` property chnage.
    *
    * ## Styling
    *
@@ -90,7 +85,7 @@ declare namespace ApiElements {
    * `--api-documentation` | Mixin applied to this elment | `{}`
    */
   class ApiDocumentation extends
-    ApiElements.AmfHelperMixin(
+    AmfHelperMixin(
     Object) {
 
     /**
@@ -381,6 +376,9 @@ declare namespace ApiElements {
   }
 }
 
-interface HTMLElementTagNameMap {
-  "api-documentation": ApiElements.ApiDocumentation;
+declare global {
+
+  interface HTMLElementTagNameMap {
+    "api-documentation": ApiElements.ApiDocumentation;
+  }
 }
