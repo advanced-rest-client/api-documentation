@@ -1,14 +1,14 @@
-import {PolymerElement} from '@polymer/polymer/polymer-element.js';
-import {html} from '@polymer/polymer/lib/utils/html-tag.js';
-import '@polymer/polymer/lib/elements/dom-if.js';
-import '@api-components/raml-aware/raml-aware.js';
-import '@api-components/api-endpoint-documentation/api-endpoint-documentation.js';
-import '@api-components/api-type-documentation/api-type-documentation.js';
-import '@api-components/api-documentation-document/api-documentation-document.js';
-import '@api-components/api-method-documentation/api-method-documentation.js';
-import '@api-components/api-summary/api-summary.js';
-import '@api-components/api-security-documentation/api-security-documentation.js';
-import {AmfHelperMixin} from '@api-components/amf-helper-mixin/amf-helper-mixin.js';
+import {PolymerElement} from '../../@polymer/polymer/polymer-element.js';
+import {html} from '../../@polymer/polymer/lib/utils/html-tag.js';
+import '../../@polymer/polymer/lib/elements/dom-if.js';
+import '../../@api-components/raml-aware/raml-aware.js';
+import '../../@api-components/api-endpoint-documentation/api-endpoint-documentation.js';
+import '../../@api-components/api-type-documentation/api-type-documentation.js';
+import '../../@api-components/api-documentation-document/api-documentation-document.js';
+import '../../@api-components/api-method-documentation/api-method-documentation.js';
+import '../../@api-components/api-summary/api-summary.js';
+import '../../@api-components/api-security-documentation/api-security-documentation.js';
+import {AmfHelperMixin} from '../../@api-components/amf-helper-mixin/amf-helper-mixin.js';
 /* eslint-disable max-len */
 /**
  * `api-documentation`
