@@ -10,7 +10,7 @@
   ],
   "devDependencies": {
     "@api-components/api-model-generator": "^0.1.10",
-    "@polymer/gen-typescript-declarations": "^1.6.0"
+    "@polymer/gen-typescript-declarations": "^1.6.1"
   },
   "private": false,
   "scripts": {
