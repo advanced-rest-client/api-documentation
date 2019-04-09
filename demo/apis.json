@@ -10,5 +10,6 @@
   "documentation-fragment/documentation-fragment.raml": "RAML 1.0",
   "lib-fragment/lib-fragment.raml": "RAML 1.0",
   "example-fragment/example-fragment.raml": "RAML 1.0",
-  "SE-10469/SE-10469.raml": "RAML 1.0"
+  "SE-10469/SE-10469.raml": "RAML 1.0",
+  "SE-11415/SE-11415.raml": "RAML 1.0"
 }
