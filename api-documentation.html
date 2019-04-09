@@ -24,7 +24,7 @@
       <api-summary amf-model="[[amfModel]]" base-uri="[[baseUri]]"></api-summary>
     </template>
     <template is="dom-if" if="[[isSecurity]]" restamp="true">
-      <api-security-documentation amf-model="{{amfModel}}" security="[[_computeSecurity(declares, selected, amfModel, _isFragment)]]" narrow="[[narrow]]"></api-security-documentation>
+      <api-security-documentation amf-model="{{amfModel}}" security="[[_computeSecurity(declares, references, selected, amfModel, _isFragment)]]" narrow="[[narrow]]"></api-security-documentation>
     </template>
     <template is="dom-if" if="[[_renderInlineEndpoint(inlineMethods, isMethod, isEndpoint)]]" restamp="true">
       <api-endpoint-documentation
@@ -594,19 +594,71 @@
     /**
      * Computes security scheme model.
      * @param {Object} declares Computed value of `declares`
+     * @param {Array<Object>} references Computed list of references
      * @param {String} selected Current selection
      * @param {Object|Array} model Passed AMF model.
      * @param {Boolean} isFragment Value of `_isFragment` property
      * @return {Object|undefined}
      */
-    _computeSecurity(declares, selected, model, isFragment) {
+    _computeSecurity(declares, references, selected, model, isFragment) {
       if (!isFragment) {
-        return this._computeSecurityModel(declares, selected);
+        return this._computeSecurityModel(declares, references, selected);
       }
       if (this._isLibrary(model)) {
         return this._computeDeclById(model, selected);
       }
       return this._computeEncodes(model);
+    }
+    /**
+     * Computes model for selected security definition.
+     *
+     * @param {Array} declares Current value of `declares` property
+     * @param {Array<Object>} references Computed list of references
+     * @param {String} selected Selected shape
+     * @return {Object} A security definition
+     */
+    _computeSecurityModel(declares, references, selected) {
+      if ((!declares && !references) || !selected) {
+        return;
+      }
+      let result;
+      if (declares) {
+        result = declares.find((item) => item['@id'] === selected);
+      }
+      if (!result && references && references.length) {
+        for (let i = 0, len = references.length; i < len; i++) {
+          if (!this._hasType(references[i], this.ns.raml.vocabularies.document + 'Module')) {
+            continue;
+          }
+          result = this._computeReferenceSecurity(references[i], selected);
+          if (result) {
+            break;
+          }
+        }
+      }
+      return result;
+    }
+    /**
+     * Computes a security model from a reference (library for example).
+     * @param {Object|Array} reference AMF model for a reference to extract the data from
+     * @param {String} selected Node ID to look for
+     * @return {Object|undefined} Type definition or undefined if not found.
+     */
+    _computeReferenceSecurity(reference, selected) {
+      const declare = this._computeDeclares(reference);
+      if (!declare) {
+        return;
+      }
+      let result = declare.find((item) => {
+        if (item instanceof Array) {
+          item = item[0];
+        }
+        return item['@id'] === selected;
+      });
+      if (result instanceof Array) {
+        result = result[0];
+      }
+      return this._resolve(result);
     }
     /**
      * Computes model for documentation.
