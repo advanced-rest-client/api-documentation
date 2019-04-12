@@ -2074,12 +2074,36 @@
 {
 "sourcemaps:element": [
 {
+"@value": "data:url"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(16,9)-(16,54)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
 "@value": "amf://id#34"
 }
 ],
 "sourcemaps:value": [
 {
 "@value": "[(16,0)-(18,0)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:thumb"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(17,11)-(17,62)]"
 }
 ]
 }
@@ -2242,6 +2266,66 @@
 {
 "sourcemaps:element": [
 {
+"@value": "data:url"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(14,7)-(14,48)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:name"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(11,8)-(11,22)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:image"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(16,0)-(18,0)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:gender"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(13,10)-(13,14)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:birthday"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(12,12)-(12,24)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
 "@value": "amf://id#29"
 }
 ],
@@ -2250,9 +2334,69 @@
 "@value": "[(10,0)-(21,0)]"
 }
 ]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:etag"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(20,8)-(20,34)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:id"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(10,6)-(10,28)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:language"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(19,12)-(19,17)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:tagline"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(18,11)-(18,30)]"
+}
+]
 }
 ],
 "sourcemaps:data-node-properties": [
+{
+"sourcemaps:element": [
+{
+"@value": "data:image"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "url->[(16,4)-(17,0)]#thumb->[(17,4)-(18,0)]"
+}
+]
+},
 {
 "sourcemaps:element": [
 {
@@ -2814,12 +2958,36 @@
 {
 "sourcemaps:element": [
 {
+"@value": "data:url"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(22,7)-(22,52)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
 "@value": "amf://id#24"
 }
 ],
 "sourcemaps:value": [
 {
 "@value": "[(22,0)-(24,0)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:thumb"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(23,9)-(23,60)]"
 }
 ]
 }
@@ -4729,12 +4897,36 @@
 {
 "sourcemaps:element": [
 {
+"@value": "data:url"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(22,7)-(22,52)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
 "@value": "amf://id#24"
 }
 ],
 "sourcemaps:value": [
 {
 "@value": "[(22,0)-(24,0)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:thumb"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(23,9)-(23,60)]"
 }
 ]
 }
@@ -5334,12 +5526,36 @@
 {
 "sourcemaps:element": [
 {
+"@value": "data:url"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(16,9)-(16,54)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
 "@value": "amf://id#34"
 }
 ],
 "sourcemaps:value": [
 {
 "@value": "[(16,0)-(18,0)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:thumb"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(17,11)-(17,62)]"
 }
 ]
 }
@@ -5502,6 +5718,66 @@
 {
 "sourcemaps:element": [
 {
+"@value": "data:url"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(14,7)-(14,48)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:name"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(11,8)-(11,22)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:image"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(16,0)-(18,0)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:gender"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(13,10)-(13,14)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:birthday"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(12,12)-(12,24)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
 "@value": "amf://id#29"
 }
 ],
@@ -5510,9 +5786,69 @@
 "@value": "[(10,0)-(21,0)]"
 }
 ]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:etag"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(20,8)-(20,34)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:id"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(10,6)-(10,28)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:language"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(19,12)-(19,17)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:tagline"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(18,11)-(18,30)]"
+}
+]
 }
 ],
 "sourcemaps:data-node-properties": [
+{
+"sourcemaps:element": [
+{
+"@value": "data:image"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "url->[(16,4)-(17,0)]#thumb->[(17,4)-(18,0)]"
+}
+]
+},
 {
 "sourcemaps:element": [
 {
@@ -6149,12 +6485,36 @@
 {
 "sourcemaps:element": [
 {
+"@value": "data:url"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(22,7)-(22,52)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
 "@value": "amf://id#24"
 }
 ],
 "sourcemaps:value": [
 {
 "@value": "[(22,0)-(24,0)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:thumb"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(23,9)-(23,60)]"
 }
 ]
 }

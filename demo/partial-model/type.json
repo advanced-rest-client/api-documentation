@@ -1,0 +1,91 @@
+{
+  "@id": "#12",
+  "@type": [
+    "doc:DomainElement",
+    "raml-shapes:Shape",
+    "shacl:Shape",
+    "shacl:NodeShape"
+  ],
+  "doc:examples": {
+    "@id": "#17",
+    "@type": [
+      "doc:DomainElement",
+      "doc:Example"
+    ],
+    "doc:strict": true,
+    "doc:structuredValue": {
+      "@id": "#18",
+      "@type": "http://a.ml/vocabularies/data#Object",
+      "http://a.ml/vocabularies/data#number": {
+        "@id": "#19",
+        "@type": "http://a.ml/vocabularies/data#Scalar",
+        "http://a.ml/vocabularies/data#value": 20
+      },
+      "http://a.ml/vocabularies/data#street": {
+        "@id": "#20",
+        "@type": "http://a.ml/vocabularies/data#Scalar",
+        "http://a.ml/vocabularies/data#value": "Pepe"
+      }
+    },
+    "shacl:raw": "\n                number: 20\n                street: Pepe\n"
+  },
+  "shacl:closed": false,
+  "shacl:name": "Address",
+  "shacl:property": [{
+      "@id": "#15",
+      "@type": "shacl:PropertyShape",
+      "raml-shapes:range": {
+        "@id": "#16",
+        "@type": [
+          "doc:DomainElement",
+          "raml-shapes:Shape",
+          "shacl:Shape",
+          "raml-shapes:ScalarShape"
+        ],
+        "shacl:datatype": {
+          "@id": "raml-shapes:number"
+        },
+        "shacl:maxInclusive": 99999999,
+        "shacl:minInclusive": 1,
+        "shacl:name": "number"
+      },
+      "shacl:minCount": 1,
+      "shacl:name": "number",
+      "shacl:path": {
+        "@id": "http://a.ml/vocabularies/data#number"
+      }
+    },
+    {
+      "@id": "#13",
+      "@type": "shacl:PropertyShape",
+      "raml-shapes:range": {
+        "@id": "#14",
+        "@type": [
+          "doc:DomainElement",
+          "raml-shapes:Shape",
+          "shacl:Shape",
+          "raml-shapes:ScalarShape"
+        ],
+        "shacl:datatype": {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        },
+        "shacl:name": "street"
+      },
+      "shacl:minCount": 1,
+      "shacl:name": "street",
+      "shacl:path": {
+        "@id": "http://a.ml/vocabularies/data#street"
+      }
+    }
+  ],
+  "@context": {
+    "@base": "amf://id",
+    "hydra": "http://www.w3.org/ns/hydra/core#",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "schema-org": "http://schema.org/",
+    "http": "http://a.ml/vocabularies/http#",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "smap": "http://a.ml/vocabularies/document-source-maps"
+  }
+}

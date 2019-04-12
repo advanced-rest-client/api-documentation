@@ -10148,12 +10148,36 @@
 {
 "sourcemaps:element": [
 {
+"@value": "data:processVar2"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(118,37)-(118,45)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
 "@value": "amf://id#46"
 }
 ],
 "sourcemaps:value": [
 {
 "@value": "[(116,20)-(119,21)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:processVar1"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(117,37)-(117,45)]"
 }
 ]
 }
@@ -11549,12 +11573,60 @@
 {
 "sourcemaps:element": [
 {
+"@value": "data:type"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(30,14)-(30,21)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:description"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(27,21)-(27,98)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
 "@value": "amf://id#76"
 }
 ],
 "sourcemaps:value": [
 {
 "@value": "[(27,0)-(31,0)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:default"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(28,17)-(28,19)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:required"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(29,18)-(29,23)]"
 }
 ]
 }
@@ -11737,12 +11809,60 @@
 {
 "sourcemaps:element": [
 {
+"@value": "data:type"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(25,14)-(25,21)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:description"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(22,21)-(22,89)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
 "@value": "amf://id#81"
 }
 ],
 "sourcemaps:value": [
 {
 "@value": "[(22,0)-(26,0)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:default"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(23,17)-(23,18)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:required"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(24,18)-(24,23)]"
 }
 ]
 }
@@ -11761,6 +11881,18 @@
 {
 "sourcemaps:element": [
 {
+"@value": "data:startIndex"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "required->[(24,8)-(25,0)]#type->[(25,8)-(26,0)]#default->[(23,8)-(24,0)]#description->[(22,8)-(23,0)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
 "@value": "amf://id#75"
 }
 ],
@@ -11769,9 +11901,33 @@
 "@value": "startIndex->[(21,6)-(26,0)]#batchSize->[(26,6)-(31,0)]"
 }
 ]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:batchSize"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "required->[(29,8)-(30,0)]#type->[(30,8)-(31,0)]#default->[(28,8)-(29,0)]#description->[(27,8)-(28,0)]"
+}
+]
 }
 ],
 "sourcemaps:lexical": [
+{
+"sourcemaps:element": [
+{
+"@value": "data:startIndex"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(22,0)-(26,0)]"
+}
+]
+},
 {
 "sourcemaps:element": [
 {
@@ -11781,6 +11937,18 @@
 "sourcemaps:value": [
 {
 "@value": "[(21,0)-(31,0)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:batchSize"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(27,0)-(31,0)]"
 }
 ]
 }
@@ -11945,12 +12113,48 @@
 {
 "sourcemaps:element": [
 {
+"@value": "data:totalCount"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(38,24)-(38,31)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:batchSize"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(37,23)-(37,30)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
 "@value": "amf://id#89"
 }
 ],
 "sourcemaps:value": [
 {
 "@value": "[(36,0)-(40,0)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:startIndex"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(36,24)-(36,31)]"
 }
 ]
 }
@@ -12005,6 +12209,18 @@
 {
 "sourcemaps:element": [
 {
+"@value": "data:properties"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "totalCount->[(38,12)-(40,0)]#startIndex->[(36,12)-(37,0)]#batchSize->[(37,12)-(38,0)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
 "@value": "amf://id#88"
 }
 ],
@@ -12019,12 +12235,36 @@
 {
 "sourcemaps:element": [
 {
+"@value": "data:type"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(34,16)-(34,22)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
 "@value": "amf://id#88"
 }
 ],
 "sourcemaps:value": [
 {
 "@value": "[(34,0)-(40,0)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:properties"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(36,0)-(40,0)]"
 }
 ]
 }
@@ -12043,6 +12283,18 @@
 {
 "sourcemaps:element": [
 {
+"@value": "data:body"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "type->[(34,10)-(35,0)]#properties->[(35,10)-(40,0)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
 "@value": "amf://id#87"
 }
 ],
@@ -12054,6 +12306,18 @@
 }
 ],
 "sourcemaps:lexical": [
+{
+"sourcemaps:element": [
+{
+"@value": "data:body"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(34,0)-(40,0)]"
+}
+]
+},
 {
 "sourcemaps:element": [
 {
@@ -12081,6 +12345,18 @@
 {
 "sourcemaps:element": [
 {
+"@value": "data:200"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "body->[(33,8)-(40,0)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
 "@value": "amf://id#86"
 }
 ],
@@ -12092,6 +12368,18 @@
 }
 ],
 "sourcemaps:lexical": [
+{
+"sourcemaps:element": [
+{
+"@value": "data:200"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(33,0)-(40,0)]"
+}
+]
+},
 {
 "sourcemaps:element": [
 {
@@ -12119,6 +12407,18 @@
 {
 "sourcemaps:element": [
 {
+"@value": "data:responses"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "200->[(32,6)-(40,0)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
 "@value": "amf://id#74"
 }
 ],
@@ -12127,9 +12427,33 @@
 "@value": "queryParameters->[(20,4)-(31,0)]#responses->[(31,4)-(40,0)]"
 }
 ]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:queryParameters"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "startIndex->[(21,6)-(26,0)]#batchSize->[(26,6)-(31,0)]"
+}
+]
 }
 ],
 "sourcemaps:lexical": [
+{
+"sourcemaps:element": [
+{
+"@value": "data:responses"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(32,0)-(40,0)]"
+}
+]
+},
 {
 "sourcemaps:element": [
 {
@@ -12139,6 +12463,18 @@
 "sourcemaps:value": [
 {
 "@value": "[(20,4)-(40,0)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:queryParameters"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(21,0)-(31,0)]"
 }
 ]
 }

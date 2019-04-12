@@ -1,5 +1,7 @@
 import {PolymerElement} from '../../@polymer/polymer/polymer-element.js';
 import {html} from '../../@polymer/polymer/lib/utils/html-tag.js';
+import {AmfHelperMixin, ns} from '../../@api-components/amf-helper-mixin/amf-helper-mixin.js';
+import {afterNextRender} from '../../@polymer/polymer/lib/utils/render-status.js';
 import '../../@polymer/polymer/lib/elements/dom-if.js';
 import '../../@api-components/raml-aware/raml-aware.js';
 import '../../@api-components/api-endpoint-documentation/api-endpoint-documentation.js';
@@ -8,7 +10,6 @@ import '../../@api-components/api-documentation-document/api-documentation-docum
 import '../../@api-components/api-method-documentation/api-method-documentation.js';
 import '../../@api-components/api-summary/api-summary.js';
 import '../../@api-components/api-security-documentation/api-security-documentation.js';
-import {AmfHelperMixin} from '../../@api-components/amf-helper-mixin/amf-helper-mixin.js';
 /* eslint-disable max-len */
 /**
  * `api-documentation`
@@ -93,32 +94,28 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
       <raml-aware raml="{{amfModel}}" scope="[[aware]]"></raml-aware>
     </template>
     <template is="dom-if" if="[[isSummary]]" restamp="true">
-      <api-summary amf-model="[[amfModel]]" base-uri="[[baseUri]]"></api-summary>
+      <api-summary amf-model="[[docsModel]]" base-uri="[[baseUri]]"></api-summary>
     </template>
     <template is="dom-if" if="[[isSecurity]]" restamp="true">
-      <api-security-documentation amf-model="{{amfModel}}" security="[[_computeSecurity(declares, references, selected, amfModel, _isFragment)]]" narrow="[[narrow]]"></api-security-documentation>
+      <api-security-documentation amf-model="{{amfModel}}" security="[[docsModel]]" narrow="[[narrow]]"></api-security-documentation>
     </template>
     <template is="dom-if" if="[[_renderInlineEndpoint(inlineMethods, isMethod, isEndpoint)]]" restamp="true">
-      <api-endpoint-documentation amf-model="{{amfModel}}" endpoint="[[endpoint]]" previous="[[_computeEndpointPrevious(webApi, selected)]]" next="[[_computeEndpointNext(webApi, selected)]]" base-uri="[[baseUri]]" narrow="[[narrow]]" selected="[[selected]]" no-try-it="" inline-methods="" scroll-target="[[scrollTarget]]" redirect-uri="[[redirectUri]]"></api-endpoint-documentation>
+      <api-endpoint-documentation amf-model="{{amfModel}}" endpoint="[[docsModel]]" previous="[[_computeEndpointPrevious(amfModel, selected)]]" next="[[_computeEndpointNext(amfModel, selected)]]" base-uri="[[baseUri]]" narrow="[[narrow]]" selected="[[selected]]" no-try-it="" inline-methods="" scroll-target="[[scrollTarget]]" redirect-uri="[[redirectUri]]"></api-endpoint-documentation>
     </template>
     <template is="dom-if" if="[[_renderEndpoint(inlineMethods, isEndpoint)]]" restamp="true">
-      <api-endpoint-documentation amf-model="{{amfModel}}" endpoint="[[endpoint]]" previous="[[_computeEndpointPrevious(webApi, selected)]]" next="[[_computeEndpointNext(webApi, selected)]]" base-uri="[[baseUri]]" narrow="[[narrow]]" inline-methods="[[inlineMethods]]" scroll-target="[[scrollTarget]]" redirect-uri="[[redirectUri]]"></api-endpoint-documentation>
+      <api-endpoint-documentation amf-model="{{amfModel}}" endpoint="[[docsModel]]" previous="[[_computeEndpointPrevious(amfModel, selected)]]" next="[[_computeEndpointNext(amfModel, selected)]]" base-uri="[[baseUri]]" narrow="[[narrow]]" inline-methods="[[inlineMethods]]" scroll-target="[[scrollTarget]]" redirect-uri="[[redirectUri]]"></api-endpoint-documentation>
     </template>
     <template is="dom-if" if="[[_renderMethod(inlineMethods, isMethod)]]" restamp="true">
-      <api-method-documentation amf-model="{{amfModel}}" endpoint="[[endpoint]]" method="[[_computeMethodModel(webApi, selected)]]" previous="[[_computeMethodPrevious(webApi, selected)]]" next="[[_computeMethodNext(webApi, selected)]]" base-uri="[[baseUri]]" no-try-it="[[noTryIt]]" narrow="[[narrow]]" render-security="" render-code-snippets=""></api-method-documentation>
+      <api-method-documentation amf-model="{{amfModel}}" endpoint="[[endpoint]]" method="[[docsModel]]" previous="[[_computeMethodPrevious(amfModel, selected)]]" next="[[_computeMethodNext(amfModel, selected)]]" base-uri="[[baseUri]]" no-try-it="[[noTryIt]]" narrow="[[narrow]]" render-security="" render-code-snippets=""></api-method-documentation>
     </template>
     <template is="dom-if" if="[[isDoc]]" restamp="true">
-      <api-documentation-document amf-model="{{amfModel}}" api-document="[[_computeDocuemntationModel(webApi, selected, amfModel, _isFragment)]]"></api-documentation-document>
+      <api-documentation-document amf-model="{{amfModel}}" api-document="[[docsModel]]"></api-documentation-document>
     </template>
     <template is="dom-if" if="[[isType]]" restamp="true">
-      <api-type-documentation amf-model="{{amfModel}}" type="[[_computeTypeModel(declares, references, selected, amfModel, _isFragment)]]" narrow="[[narrow]]"></api-type-documentation>
-    </template>
-`;
+      <api-type-documentation amf-model="{{amfModel}}" type="[[docsModel]]" narrow="[[narrow]]"></api-type-documentation>
+    </template>`;
   }
 
-  static get is() {
-    return 'api-documentation';
-  }
   static get properties() {
     return {
       /**
@@ -138,10 +135,6 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
        * or `summary`.
        */
       selectedType: String,
-      _isFragment: {
-        type: Boolean,
-        computed: '_computeIsFragment(amfModel)'
-      },
       /**
        * By default application hosting the element must set `selected` and
        * `selectedType` properties. When using `api-navigation` element
@@ -183,32 +176,15 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
         readOnly: true
       },
       /**
-       * Computed value of AMF model of a type of `http://schema.org/WebAPI`
-       *
+       * Computed value of the final model extracted from `amfModel`, `selected`,
+       * and `selectedType` properties.
        * @type {Object}
        */
-      webApi: {
-        type: Object,
-        computed: '_computeWebApi(amfModel)'
-      },
+      docsModel: {type: Object, readOnly: true},
       /**
-       * Computed value of `declares` part of the AMF model
-       *
-       * @type {Array<Object>}
+       * Computed value of currently rendered endpoint.
        */
-      declares: {
-        type: Array,
-        computed: '_computeDeclares(amfModel)'
-      },
-      /**
-       * Computed value of `references` part of the AMF model
-       *
-       * @type {Array<Object>}
-       */
-      references: {
-        type: Array,
-        computed: '_computeReferences(amfModel)'
-      },
+      endpoint: {type: Object, readOnly: true},
       /**
        * A property to set to override AMF's model base URI information.
        */
@@ -243,18 +219,13 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
        * This value **must** be set in order for OAuth 1/2 to work properly.
        * This is only required in inline mode (`inlineMethods`).
        */
-      redirectUri: String,
-      /**
-       * Computed value of currently rendered endpoint.
-       */
-      endpoint: {type: Object, readOnly: true}
+      redirectUri: String
     };
   }
 
   static get observers() {
     return [
-      '_navigationOccured(selectedType)',
-      '_updateEndpoint(isEndpoint,isMethod,selected,webApi)'
+      '_apiModelChanged(amfModel, selected, selectedType)'
     ];
   }
 
@@ -309,11 +280,76 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
     this.selectedType = e.detail.type;
   }
   /**
-   * Handles navigation change, computes model for the view and finally
-   * renders the view.
-   * @param {String} selectedType
+   * A function that is called each time `amfModel`, `selected`, or `selectedType`
+   * changed. It calls `__processModel()` function in a debouncer (Polymer's
+   * `afterNextRender` from RenderStatus class) to ensure all properties are set.
+   *
+   * Note, this function won't be called when any change inside `amfModel` ocurred
+   * as this reacts on complete variable change.
    */
-  _navigationOccured(selectedType) {
+  _apiModelChanged() {
+    if (this.__modelChangeDebouncer) {
+      return;
+    }
+    this.__modelChangeDebouncer = true;
+    afterNextRender(this, () => {
+      this.__modelChangeDebouncer = false;
+      this.__processModel(this.amfModel, this.selected, this.selectedType);
+    });
+  }
+
+  __processModel(model, selected, selectedType) {
+    if (!model) {
+      return;
+    }
+    if (model instanceof Array) {
+      model = model[0];
+    }
+    if (this._hasType(model, ns.raml.vocabularies.document + 'Document')) {
+      this.__processApiSpecSelection(model, selected, selectedType);
+      return;
+    }
+    if (this._isLibrary(model)) {
+      this.__processLibrarySelection(model, selected, selectedType);
+      return;
+    }
+    if (this._isSecurityFragment(model)) {
+      this._processSecurityFragment(model);
+      return;
+    }
+    if (this._isDocumentationFragment(model)) {
+      this._processDocumentationFragment(model);
+      return;
+    }
+    if (this._isTypeFragment(model)) {
+      this._processTypeFragment(model);
+      return;
+    }
+    if (this._isDocumentationPartialModel(model)) {
+      this._processDocumentationParial(model);
+      return;
+    }
+    if (this._isSecurityPartialModel(model)) {
+      this._processSecurityParial(model);
+      return;
+    }
+    if (this._isTypePartialModel(model)) {
+      this._processTypeParial(model);
+      return;
+    }
+    if (this._isEndpointPartialModel(model)) {
+      this._processEndpointParial(model, selected, selectedType);
+      return;
+    }
+    throw new Error('Unsupported AMF model.');
+  }
+  /**
+   * Sets current component selection to the one specified in `selectedType`.
+   * It does not change anything if current selection equals desired selection.
+   * @param {String} selectedType Desired selection. One of `endpoint`, `method`,
+   * `documentation`, `type`, `security`, or `summary`.
+   */
+  __resetComponentSelection(selectedType) {
     const isEndpoint = selectedType === 'endpoint';
     if (this.isEndpoint !== isEndpoint) {
       this._setIsEndpoint(isEndpoint);
@@ -340,6 +376,226 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
     }
   }
   /**
+   * Processes selection for the web API data model. It ignores the input if
+   * `selected` or `selectedType` is not set.
+   * @param {Object} model WebApi AMF model. Do not use an array here.
+   * @param {String} selected Currently selected `@id`.
+   * @param {String} selectedType Currently selected view type. One of `endpoint`, `method`,
+   * `documentation`, `type`, `security`, or `summary`.
+   */
+  __processApiSpecSelection(model, selected, selectedType) {
+    if (!selected || !selectedType) {
+      // Not all required properties were set.
+      return;
+    }
+    this.__resetComponentSelection(selectedType);
+    let result;
+    switch (selectedType) {
+      case 'summary': result = model; break;
+      case 'security': result = this._computeSecurityApiModel(model, selected); break;
+      case 'type': result = this._computeTypeApiModel(model, selected); break;
+      case 'documentation': result = this._computeDocsApiModel(model, selected); break;
+      case 'endpoint': result = this._computeEndpointApiModel(model, selected); break;
+      case 'method': result = this._computeMethodApiModel(model, selected); break;
+      default:
+        console.warn('Unknown API selection type. Unable to process.');
+        return;
+    }
+    this._setDocsModel(result);
+  }
+  /**
+   * Computes security scheme definition model from web API and current selection.
+   * It looks for the definition in both `declares` and `references` properties.
+   * Returned value is already resolved AMF model (references are resolved).
+   *
+   * @param {Object} model WebApi AMF model. Do not use an array here.
+   * @param {String} selected Currently selected `@id`.
+   * @return {Object|undefined} Model definition for the securit scheme.
+   */
+  _computeSecurityApiModel(model, selected) {
+    const declares = this._computeDeclares(model);
+    let result;
+    if (declares) {
+      result = declares.find((item) => item['@id'] === selected);
+    }
+    if (!result) {
+      const references = this._computeReferences(model);
+      if (references && references.length) {
+        for (let i = 0, len = references.length; i < len; i++) {
+          if (!this._hasType(references[i], this.ns.raml.vocabularies.document + 'Module')) {
+            continue;
+          }
+          result = this._computeReferenceSecurity(references[i], selected);
+          if (result) {
+            break;
+          }
+        }
+      }
+    } else {
+      result = this._resolve(result);
+    }
+    return result;
+  }
+  /**
+   * Computes type definition model from web API and current selection.
+   * It looks for the definition in both `declares` and `references` properties.
+   * Returned value is already resolved AMF model (references are resolved).
+   *
+   * @param {Object} model WebApi AMF model. Do not use an array here.
+   * @param {String} selected Currently selected `@id`.
+   * @return {Object|undefined} Model definition for a type.
+   */
+  _computeTypeApiModel(model, selected) {
+    const declares = this._computeDeclares(model);
+    const references = this._computeReferences(model);
+    return this._computeType(declares, references, selected);
+  }
+  /**
+   * Computes documentation definition model from web API and current selection.
+   *
+   * @param {Object} model WebApi AMF model. Do not use an array here.
+   * @param {String} selected Currently selected `@id`.
+   * @return {Object|undefined} Model definition for a documentation fragment.
+   */
+  _computeDocsApiModel(model, selected) {
+    const webApi = this._computeWebApi(model);
+    return this._computeDocument(webApi, selected);
+  }
+  /**
+   * Computes Endpoint definition model from web API and current selection.
+   *
+   * @param {Object} model WebApi AMF model. Do not use an array here.
+   * @param {String} selected Currently selected `@id`.
+   * @return {Object|undefined} Model definition for an endpoint fragment.
+   */
+  _computeEndpointApiModel(model, selected) {
+    const webApi = this._computeWebApi(model);
+    return this._computeEndpointModel(webApi, selected);
+  }
+  /**
+   * Computes Method definition model from web API and current selection.
+   *
+   * @param {Object} model WebApi AMF model. Do not use an array here.
+   * @param {String} selected Currently selected `@id`.
+   * @return {Object|undefined} Model definition for an endpoint fragment.
+   */
+  _computeMethodApiModel(model, selected) {
+    const webApi = this._computeWebApi(model);
+    return this._computeMethodModel(webApi, selected);
+  }
+  /**
+   * Processes selection for a library data model. It ignores the input if
+   * `selected` or `selectedType` is not set.
+   * @param {Object} model Library AMF model. Do not use an array here.
+   * @param {String} selected Currently selected `@id`.
+   * @param {String} selectedType Currently selected view type. One of `type` and `security`.
+   * Other values, even though it may exists in the library, is not currently supported.
+   */
+  __processLibrarySelection(model, selected, selectedType) {
+    if (!selected || !selectedType) {
+      // Not all required properties were set.
+      return;
+    }
+    this.__resetComponentSelection(selectedType);
+    let result;
+    switch (selectedType) {
+      case 'security': result = this._computeSecurityLibraryModel(model, selected); break;
+      case 'type': result = this._computeTypeLibraryModel(model, selected); break;
+      default:
+        console.warn('Unknown Library selection type. Unable to process.');
+        return;
+    }
+    this._setDocsModel(result);
+  }
+  /**
+   * Computes Security scheme from a Library model.
+   * @param {Object} model Library AMF model.
+   * @param {String} selected Currently selected `@id`.
+   * @return {Object|undefined} Model definition for a security.
+   */
+  _computeSecurityLibraryModel(model, selected) {
+    return this._computeDeclById(model, selected);
+  }
+  /**
+   * Computes Type definition from a Library model.
+   * @param {Object} model Library AMF model.
+   * @param {String} selected Currently selected `@id`.
+   * @return {Object|undefined} Model definition for a type.
+   */
+  _computeTypeLibraryModel(model, selected) {
+    return this._computeDeclById(model, selected);
+  }
+  /**
+   * Extracts security model from security scheme fragment and sets current selection
+   * and the model.
+   * @param {Object} model Security scheme fragment model
+   */
+  _processSecurityFragment(model) {
+    this.__processFragment(model, 'security');
+  }
+  /**
+   * Extracts documentation model from documentation fragment and sets current selection
+   * and the model.
+   * @param {Object} model Documentation fragment model
+   */
+  _processDocumentationFragment(model) {
+    this.__processFragment(model, 'documentation');
+  }
+  /**
+   * Extracts Type model from Type fragment and sets current selection
+   * and the model.
+   * @param {Object} model Type fragment model
+   */
+  _processTypeFragment(model) {
+    this.__processFragment(model, 'type');
+  }
+  /**
+   * Processes fragment model and sets current selection and the model.
+   * @param {Object} model RAML fragment model
+   * @param {String} selectedType Currently selected type.
+   */
+  __processFragment(model, selectedType) {
+    const result = this._computeEncodes(model);
+    this._setDocsModel(result);
+    this.__resetComponentSelection(selectedType);
+  }
+
+  _processDocumentationParial(model) {
+    this._setDocsModel(model);
+    this.__resetComponentSelection('documentation');
+  }
+
+  _processSecurityParial(model) {
+    this._setDocsModel(model);
+    this.__resetComponentSelection('security');
+  }
+
+  _processTypeParial(model) {
+    this._setDocsModel(model);
+    this.__resetComponentSelection('type');
+  }
+  /**
+   * Processes endpoint data from partial model definitnion.
+   * It sets models that are used by the docs.
+   *
+   * If `selected` or `selectedType` is not set then it automatically selects
+   * an endpoint.
+   * @param {Object} model Partial model for endpoints
+   * @param {?String} selected Current selection.
+   * @param {?string} selectedType Selection type.
+   */
+  _processEndpointParial(model, selected, selectedType) {
+    this._setEndpoint(model);
+    if (selectedType === 'method') {
+      const method = this._computeMethodPartialEndpoint(model, selected);
+      this._setDocsModel(method);
+      this.__resetComponentSelection('method');
+      return;
+    }
+    this._setDocsModel(model);
+    this.__resetComponentSelection('endpoint');
+  }
+  /**
    * Creates a link model that is accepted by the endpoint documentation
    * view.
    * @param {?Object} item An AMF shape to use to get the data from.
@@ -362,15 +618,16 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
   /**
    * Computes link model for previous endpoint, if any exists relative to
    * current selection.
-   * @param {Object} webApi WebApi shape object of AMF
+   * @param {Object} model Web API AMF model
    * @param {String} selected Currently selected endpoint
    * @return {Object|undefined} Object with `label` and `id` or `undefined`
    * if no previous item.
    */
-  _computeEndpointPrevious(webApi, selected) {
-    if (!webApi || !selected) {
+  _computeEndpointPrevious(model, selected) {
+    if (!model || !selected) {
       return;
     }
+    const webApi = this._computeWebApi(model);
     const ekey = this._getAmfKey(this.ns.raml.vocabularies.http + 'endpoint');
     const endpoints = this._ensureArray(webApi[ekey]);
     if (!endpoints) {
@@ -385,15 +642,16 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
   /**
    * Computes link model for next endpoint, if any exists relative to
    * current selection.
-   * @param {Object} webApi WebApi shape object of AMF
+   * @param {Object} model WebApi shape object of AMF
    * @param {String} selected Currently selected endpoint
    * @return {Object|undefined} Object with `label` and `id` or `undefined`
    * if no next item.
    */
-  _computeEndpointNext(webApi, selected) {
-    if (!webApi || !selected) {
+  _computeEndpointNext(model, selected) {
+    if (!model || !selected) {
       return;
     }
+    const webApi = this._computeWebApi(model);
     const ekey = this._getAmfKey(this.ns.raml.vocabularies.http + 'endpoint');
     const endpoints = this._ensureArray(webApi[ekey]);
     if (!endpoints) {
@@ -429,12 +687,13 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
    * Computes link for the previous method.
    * This is used by the method documentation panel to render previous
    * nethod link.
-   * @param {Object} webApi WebApi shape object of AMF
+   * @param {Object} model WebApi shape object of AMF
    * @param {String} selected Currently selected method
    * @return {Object|undefined} Object with `label` and `id` or `undefined`
    * if no previous item.
    */
-  _computeMethodPrevious(webApi, selected) {
+  _computeMethodPrevious(model, selected) {
+    const webApi = this._computeWebApi(model);
     const methods = this.__computeMethodsListForMethod(webApi, selected);
     if (!methods) {
       return;
@@ -449,12 +708,13 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
    * Computes link for the next method.
    * This is used by the method documentation panel to render next
    * nethod link.
-   * @param {Object} webApi WebApi shape object of AMF
+   * @param {Object} model WebApi shape object of AMF
    * @param {String} selected Currently selected method
    * @return {Object|undefined} Object with `label` and `id` or `undefined`
    * if no next item.
    */
-  _computeMethodNext(webApi, selected) {
+  _computeMethodNext(model, selected) {
+    const webApi = this._computeWebApi(model);
     const methods = this.__computeMethodsListForMethod(webApi, selected);
     if (!methods) {
       return;
@@ -466,45 +726,21 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
     }
   }
   /**
-   * A method to update value of the `endpoint` property when needed.
-   * This function is to reduce number of updates of `endpoint` property
-   * when rendering endpoint documentation in inline mode. In this case each
-   * change to the endpoint trigges heavy computations.
-   *
-   * @param {Boolean} isEndpoint
-   * @param {Boolean} isMethod
-   * @param {String} selected
-   * @param {Object} webApi
+   * Computes method definition from an endpoint partial model.
+   * @param {Object} api Endpoint partial model
+   * @param {String} selected Currently selected ID.
+   * @return {Object|undefined} Method model.
    */
-  _updateEndpoint(isEndpoint, isMethod, selected, webApi) {
-    if (!selected || !webApi) {
+  _computeMethodPartialEndpoint(api, selected) {
+    const opKey = this._getAmfKey(ns.w3.hydra.supportedOperation);
+    const ops = this._ensureArray(api[opKey]);
+    if (!ops) {
       return;
     }
-    if (!isEndpoint && !isMethod) {
-      return;
-    }
-    // Do not clean up "endpoint" property as it will trigger change
-    // observers. If the view is hidden it doesn't matter
-    let endpoint;
-    if (isEndpoint) {
-      endpoint = this._computeEndpointModel(webApi, selected);
-    } else {
-      endpoint = this._computeMethodEndpoint(webApi, selected);
-    }
-    const current = this.endpoint;
-    // This is designed to trigger as less changes as possible.
-    if (current === endpoint) {
-      return;
-    }
-    if (!current) {
-      if (endpoint) {
-        this._setEndpoint(endpoint);
-      }
-    } else {
-      if (!endpoint) {
-        this._setEndpoint(endpoint);
-      } else if (current['@id'] !== endpoint['@id']) {
-        this._setEndpoint(endpoint);
+    for (let i = 0, len = ops.length; i < len; i++) {
+      const op = ops[i];
+      if (op['@id'] === selected) {
+        return op;
       }
     }
   }
@@ -540,13 +776,6 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
   _renderMethod(inlineMethods, isMethod) {
     return !!(!inlineMethods && isMethod);
   }
-
-  _computeIsFragment(model) {
-    if (model instanceof Array) {
-      model = model[0];
-    }
-    return !this._hasType(model, this.ns.raml.vocabularies.document + 'Document');
-  }
   /**
    * Tests if `model` is of a RAML library model.
    * @param {Object|Array} model A shape to test
@@ -561,53 +790,6 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
     }
     const moduleKey = this._getAmfKey(this.ns.raml.vocabularies.document + 'Module');
     return moduleKey === model['@type'][0];
-  }
-  /**
-   * Computes security scheme model.
-   * @param {Object} declares Computed value of `declares`
-   * @param {Array<Object>} references Computed list of references
-   * @param {String} selected Current selection
-   * @param {Object|Array} model Passed AMF model.
-   * @param {Boolean} isFragment Value of `_isFragment` property
-   * @return {Object|undefined}
-   */
-  _computeSecurity(declares, references, selected, model, isFragment) {
-    if (!isFragment) {
-      return this._computeSecurityModel(declares, references, selected);
-    }
-    if (this._isLibrary(model)) {
-      return this._computeDeclById(model, selected);
-    }
-    return this._computeEncodes(model);
-  }
-  /**
-   * Computes model for selected security definition.
-   *
-   * @param {Array} declares Current value of `declares` property
-   * @param {Array<Object>} references Computed list of references
-   * @param {String} selected Selected shape
-   * @return {Object} A security definition
-   */
-  _computeSecurityModel(declares, references, selected) {
-    if ((!declares && !references) || !selected) {
-      return;
-    }
-    let result;
-    if (declares) {
-      result = declares.find((item) => item['@id'] === selected);
-    }
-    if (!result && references && references.length) {
-      for (let i = 0, len = references.length; i < len; i++) {
-        if (!this._hasType(references[i], this.ns.raml.vocabularies.document + 'Module')) {
-          continue;
-        }
-        result = this._computeReferenceSecurity(references[i], selected);
-        if (result) {
-          break;
-        }
-      }
-    }
-    return result;
   }
   /**
    * Computes a security model from a reference (library for example).
@@ -632,38 +814,6 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
     return this._resolve(result);
   }
   /**
-   * Computes model for documentation.
-   * @param {Object} webApi Computed value of webApi
-   * @param {String} selected Current selection
-   * @param {Object|Array} model Passed AMF model.
-   * @param {Boolean} isFragment Value of `_isFragment` property
-   * @return {Object|undefined}
-   */
-  _computeDocuemntationModel(webApi, selected, model, isFragment) {
-    if (!isFragment) {
-      return this._computeDocument(webApi, selected);
-    }
-    return this._computeEncodes(model);
-  }
-  /**
-   * Computes model for a type.
-   * @param {Array<Object>} declares Computed list of declares
-   * @param {Array<Object>} references Computed list of references
-   * @param {String} selected Current selection
-   * @param {Object|Array} model Passed AMF model.
-   * @param {Boolean} isFragment Value of `_isFragment` property
-   * @return {Object|undefined}
-   */
-  _computeTypeModel(declares, references, selected, model, isFragment) {
-    if (!isFragment) {
-      return this._computeType(declares, references, selected);
-    }
-    if (this._isLibrary(model)) {
-      return this._computeDeclById(model, selected);
-    }
-    return this._computeEncodes(model);
-  }
-  /**
    * Computes model of a shape defined ni `declares` list
    * @param {Object} model AMF model
    * @param {String} selected Current selection
@@ -676,5 +826,54 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
     }
     return declares.find((item) => item['@id'] === selected);
   }
+
+  _isTypeFragment(model) {
+    if (model instanceof Array) {
+      model = model[0];
+    }
+    return this._hasType(model, ns.raml.vocabularies.document + 'DataType');
+  }
+
+  _isTypePartialModel(model) {
+    if (model instanceof Array) {
+      model = model[0];
+    }
+    return this._hasType(model, ns.raml.vocabularies.document + 'DomainElement');
+  }
+
+  _isSecurityFragment(model) {
+    if (model instanceof Array) {
+      model = model[0];
+    }
+    return this._hasType(model, ns.raml.vocabularies.document + 'SecuritySchemeFragment');
+  }
+
+  _isSecurityPartialModel(model) {
+    if (model instanceof Array) {
+      model = model[0];
+    }
+    return this._hasType(model, ns.raml.vocabularies.security + 'SecurityScheme');
+  }
+
+  _isDocumentationFragment(model) {
+    if (model instanceof Array) {
+      model = model[0];
+    }
+    return this._hasType(model, ns.raml.vocabularies.document + 'UserDocumentation');
+  }
+
+  _isDocumentationPartialModel(model) {
+    if (model instanceof Array) {
+      model = model[0];
+    }
+    return this._hasType(model, ns.schema.creativeWork);
+  }
+
+  _isEndpointPartialModel(model) {
+    if (model instanceof Array) {
+      model = model[0];
+    }
+    return this._hasType(model, ns.raml.vocabularies.http + 'EndPoint');
+  }
 }
-window.customElements.define(ApiDocumentation.is, ApiDocumentation);
+window.customElements.define('api-documentation', ApiDocumentation);
