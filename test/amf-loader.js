@@ -1,4 +1,4 @@
-const AmfLoader = {};
+export const AmfLoader = {};
 AmfLoader.load = function(compact, fileName) {
   if (!fileName) {
     fileName = 'demo-api';

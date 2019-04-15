@@ -103,7 +103,7 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
       <api-endpoint-documentation amf-model="{{amfModel}}" endpoint="[[docsModel]]" previous="[[_computeEndpointPrevious(amfModel, selected)]]" next="[[_computeEndpointNext(amfModel, selected)]]" base-uri="[[baseUri]]" narrow="[[narrow]]" selected="[[selected]]" no-try-it="" inline-methods="" scroll-target="[[scrollTarget]]" redirect-uri="[[redirectUri]]"></api-endpoint-documentation>
     </template>
     <template is="dom-if" if="[[_renderEndpoint(inlineMethods, isEndpoint)]]" restamp="true">
-      <api-endpoint-documentation amf-model="{{amfModel}}" endpoint="[[docsModel]]" previous="[[_computeEndpointPrevious(amfModel, selected)]]" next="[[_computeEndpointNext(amfModel, selected)]]" base-uri="[[baseUri]]" narrow="[[narrow]]" inline-methods="[[inlineMethods]]" scroll-target="[[scrollTarget]]" redirect-uri="[[redirectUri]]"></api-endpoint-documentation>
+      <api-endpoint-documentation amf-model="{{amfModel}}" endpoint="[[docsModel]]" previous="[[_computeEndpointPrevious(amfModel, selected)]]" next="[[_computeEndpointNext(amfModel, selected)]]" base-uri="[[baseUri]]" narrow="[[narrow]]" scroll-target="[[scrollTarget]]" redirect-uri="[[redirectUri]]"></api-endpoint-documentation>
     </template>
     <template is="dom-if" if="[[_renderMethod(inlineMethods, isMethod)]]" restamp="true">
       <api-method-documentation amf-model="{{amfModel}}" endpoint="[[endpoint]]" method="[[docsModel]]" previous="[[_computeMethodPrevious(amfModel, selected)]]" next="[[_computeMethodNext(amfModel, selected)]]" base-uri="[[baseUri]]" no-try-it="[[noTryIt]]" narrow="[[narrow]]" render-security="" render-code-snippets=""></api-method-documentation>
@@ -225,7 +225,7 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
 
   static get observers() {
     return [
-      '_apiModelChanged(amfModel, selected, selectedType)'
+      '_apiModelChanged(amfModel, selected, selectedType, inlineMethods)'
     ];
   }
 
@@ -294,11 +294,11 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
     this.__modelChangeDebouncer = true;
     afterNextRender(this, () => {
       this.__modelChangeDebouncer = false;
-      this.__processModel(this.amfModel, this.selected, this.selectedType);
+      this.__processModel(this.amfModel, this.selected, this.selectedType, this.inlineMethods);
     });
   }
 
-  __processModel(model, selected, selectedType) {
+  __processModel(model, selected, selectedType, inlineMethods) {
     if (!model) {
       return;
     }
@@ -306,7 +306,7 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
       model = model[0];
     }
     if (this._hasType(model, ns.raml.vocabularies.document + 'Document')) {
-      this.__processApiSpecSelection(model, selected, selectedType);
+      this.__processApiSpecSelection(model, selected, selectedType, inlineMethods);
       return;
     }
     if (this._isLibrary(model)) {
@@ -338,7 +338,7 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
       return;
     }
     if (this._isEndpointPartialModel(model)) {
-      this._processEndpointParial(model, selected, selectedType);
+      this._processEndpointParial(model, selected, selectedType, inlineMethods);
       return;
     }
     throw new Error('Unsupported AMF model.');
@@ -382,8 +382,9 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
    * @param {String} selected Currently selected `@id`.
    * @param {String} selectedType Currently selected view type. One of `endpoint`, `method`,
    * `documentation`, `type`, `security`, or `summary`.
+   * @param {Boolean} inlineMethods
    */
-  __processApiSpecSelection(model, selected, selectedType) {
+  __processApiSpecSelection(model, selected, selectedType, inlineMethods) {
     if (!selected || !selectedType) {
       // Not all required properties were set.
       return;
@@ -396,7 +397,13 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
       case 'type': result = this._computeTypeApiModel(model, selected); break;
       case 'documentation': result = this._computeDocsApiModel(model, selected); break;
       case 'endpoint': result = this._computeEndpointApiModel(model, selected); break;
-      case 'method': result = this._computeMethodApiModel(model, selected); break;
+      case 'method':
+        if (inlineMethods) {
+          result = this._computeEndpointApiMethodModel(model, selected);
+        } else {
+          result = this._computeMethodApiModel(model, selected);
+        }
+        break;
       default:
         console.warn('Unknown API selection type. Unable to process.');
         return;
@@ -482,6 +489,11 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
   _computeMethodApiModel(model, selected) {
     const webApi = this._computeWebApi(model);
     return this._computeMethodModel(webApi, selected);
+  }
+
+  _computeEndpointApiMethodModel(model, selected) {
+    const webApi = this._computeWebApi(model);
+    return this._computeMethodEndpoint(webApi, selected);
   }
   /**
    * Processes selection for a library data model. It ignores the input if
@@ -583,17 +595,18 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
    * @param {Object} model Partial model for endpoints
    * @param {?String} selected Current selection.
    * @param {?string} selectedType Selection type.
+   * @param {Boolean} inlineMethods
    */
-  _processEndpointParial(model, selected, selectedType) {
+  _processEndpointParial(model, selected, selectedType, inlineMethods) {
+    if (!selectedType || inlineMethods) {
+      selectedType = 'endpoint';
+    }
     this._setEndpoint(model);
-    if (selectedType === 'method') {
-      const method = this._computeMethodPartialEndpoint(model, selected);
-      this._setDocsModel(method);
-      this.__resetComponentSelection('method');
-      return;
+    if (!inlineMethods && selectedType === 'method') {
+      model = this._computeMethodPartialEndpoint(model, selected);
     }
     this._setDocsModel(model);
-    this.__resetComponentSelection('endpoint');
+    this.__resetComponentSelection(selectedType);
   }
   /**
    * Creates a link model that is accepted by the endpoint documentation
@@ -627,6 +640,9 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
     if (!model || !selected) {
       return;
     }
+    if (this._hasType(model, ns.raml.vocabularies.http + 'EndPoint')) {
+      return;
+    }
     const webApi = this._computeWebApi(model);
     const ekey = this._getAmfKey(this.ns.raml.vocabularies.http + 'endpoint');
     const endpoints = this._ensureArray(webApi[ekey]);
@@ -651,8 +667,11 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
     if (!model || !selected) {
       return;
     }
+    if (this._hasType(model, ns.raml.vocabularies.http + 'EndPoint')) {
+      return;
+    }
     const webApi = this._computeWebApi(model);
-    const ekey = this._getAmfKey(this.ns.raml.vocabularies.http + 'endpoint');
+    const ekey = this._getAmfKey(ns.raml.vocabularies.http + 'endpoint');
     const endpoints = this._ensureArray(webApi[ekey]);
     if (!endpoints) {
       return;
@@ -693,8 +712,14 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
    * if no previous item.
    */
   _computeMethodPrevious(model, selected) {
-    const webApi = this._computeWebApi(model);
-    const methods = this.__computeMethodsListForMethod(webApi, selected);
+    let methods;
+    if (this._hasType(model, ns.raml.vocabularies.http + 'EndPoint')) {
+      const key = this._getAmfKey(ns.w3.hydra.supportedOperation);
+      methods = this._ensureArray(model[key]);
+    } else {
+      const webApi = this._computeWebApi(model);
+      methods = this.__computeMethodsListForMethod(webApi, selected);
+    }
     if (!methods) {
       return;
     }
@@ -714,8 +739,14 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
    * if no next item.
    */
   _computeMethodNext(model, selected) {
-    const webApi = this._computeWebApi(model);
-    const methods = this.__computeMethodsListForMethod(webApi, selected);
+    let methods;
+    if (this._hasType(model, ns.raml.vocabularies.http + 'EndPoint')) {
+      const key = this._getAmfKey(ns.w3.hydra.supportedOperation);
+      methods = this._ensureArray(model[key]);
+    } else {
+      const webApi = this._computeWebApi(model);
+      methods = this.__computeMethodsListForMethod(webApi, selected);
+    }
     if (!methods) {
       return;
     }
