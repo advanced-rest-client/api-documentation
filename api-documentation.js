@@ -297,7 +297,20 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
       this.__processModel(this.amfModel, this.selected, this.selectedType, this.inlineMethods);
     });
   }
-
+  /**
+   * Processes AMF model depending on it's type.
+   * The documentation panel supports full API model, (some) RAML fragments,
+   * and "partial" model returned from the query serice based on graph queries.
+   *
+   * Note, this function throws an error if unsuported data is passed.
+   *
+   * @param {Array|Object} model AMF model to process
+   * @param {?String} selected Selected AMF node `@id`
+   * @param {?String} selectedType Selected view type. One of `endpoint`, `method`,
+   * `documentation`, `type`, `security`, or `summary`.
+   * @param {?Boolean} inlineMethods Whether the view should render the request panel
+   * alongside the documentation.
+   */
   __processModel(model, selected, selectedType, inlineMethods) {
     if (!model) {
       return;
