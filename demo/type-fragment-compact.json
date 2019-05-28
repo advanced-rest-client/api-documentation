@@ -234,7 +234,9 @@
 {
 "@id": "#6",
 "@type": [
-"data:Scalar"
+"data:Scalar",
+"data:Node",
+"doc:DomainElement"
 ],
 "data:value": [
 {
@@ -746,7 +748,9 @@
 {
 "@id": "#13",
 "@type": [
-"data:Scalar"
+"data:Scalar",
+"data:Node",
+"doc:DomainElement"
 ],
 "data:value": [
 {
@@ -782,7 +786,9 @@
 {
 "@id": "#14",
 "@type": [
-"data:Scalar"
+"data:Scalar",
+"data:Node",
+"doc:DomainElement"
 ],
 "data:value": [
 {
@@ -818,7 +824,9 @@
 {
 "@id": "#15",
 "@type": [
-"data:Scalar"
+"data:Scalar",
+"data:Node",
+"doc:DomainElement"
 ],
 "data:value": [
 {
@@ -873,7 +881,9 @@
 {
 "@id": "#16",
 "@type": [
-"data:Scalar"
+"data:Scalar",
+"data:Node",
+"doc:DomainElement"
 ],
 "data:value": [
 {
@@ -991,7 +1001,9 @@
 {
 "@id": "#17",
 "@type": [
-"data:Scalar"
+"data:Scalar",
+"data:Node",
+"doc:DomainElement"
 ],
 "data:value": [
 {
@@ -1109,7 +1121,9 @@
 {
 "@id": "#18",
 "@type": [
-"data:Scalar"
+"data:Scalar",
+"data:Node",
+"doc:DomainElement"
 ],
 "data:value": [
 {
@@ -1382,7 +1396,9 @@
 {
 "@id": "#21",
 "@type": [
-"data:Scalar"
+"data:Scalar",
+"data:Node",
+"doc:DomainElement"
 ],
 "data:value": [
 {
@@ -2040,7 +2056,9 @@
 {
 "@id": "#30",
 "@type": [
-"data:Scalar"
+"data:Scalar",
+"data:Node",
+"doc:DomainElement"
 ],
 "data:value": [
 {
@@ -2374,7 +2392,9 @@
 {
 "@id": "#35",
 "@type": [
-"data:Scalar"
+"data:Scalar",
+"data:Node",
+"doc:DomainElement"
 ],
 "data:value": [
 {
@@ -2816,13 +2836,17 @@
 {
 "@id": "#42",
 "@type": [
-"data:Object"
+"data:Object",
+"data:Node",
+"doc:DomainElement"
 ],
 "data:birthday": [
 {
 "@id": "#43",
 "@type": [
-"data:Scalar"
+"data:Scalar",
+"data:Node",
+"doc:DomainElement"
 ],
 "data:value": [
 {
@@ -2858,7 +2882,9 @@
 {
 "@id": "#44",
 "@type": [
-"data:Scalar"
+"data:Scalar",
+"data:Node",
+"doc:DomainElement"
 ],
 "data:value": [
 {
@@ -2894,7 +2920,9 @@
 {
 "@id": "#45",
 "@type": [
-"data:Scalar"
+"data:Scalar",
+"data:Node",
+"doc:DomainElement"
 ],
 "data:value": [
 {
@@ -2930,7 +2958,9 @@
 {
 "@id": "#46",
 "@type": [
-"data:Scalar"
+"data:Scalar",
+"data:Node",
+"doc:DomainElement"
 ],
 "data:value": [
 {
@@ -2966,7 +2996,9 @@
 {
 "@id": "#47",
 "@type": [
-"data:Scalar"
+"data:Scalar",
+"data:Node",
+"doc:DomainElement"
 ],
 "data:value": [
 {
@@ -3002,7 +3034,9 @@
 {
 "@id": "#48",
 "@type": [
-"data:Scalar"
+"data:Scalar",
+"data:Node",
+"doc:DomainElement"
 ],
 "data:value": [
 {
@@ -3038,7 +3072,9 @@
 {
 "@id": "#49",
 "@type": [
-"data:Scalar"
+"data:Scalar",
+"data:Node",
+"doc:DomainElement"
 ],
 "data:value": [
 {
@@ -3074,7 +3110,9 @@
 {
 "@id": "#50",
 "@type": [
-"data:Scalar"
+"data:Scalar",
+"data:Node",
+"doc:DomainElement"
 ],
 "data:value": [
 {
@@ -3110,7 +3148,9 @@
 {
 "@id": "#51",
 "@type": [
-"data:Scalar"
+"data:Scalar",
+"data:Node",
+"doc:DomainElement"
 ],
 "data:value": [
 {
@@ -3146,7 +3186,9 @@
 {
 "@id": "#52",
 "@type": [
-"data:Scalar"
+"data:Scalar",
+"data:Node",
+"doc:DomainElement"
 ],
 "data:value": [
 {
@@ -3188,12 +3230,132 @@
 {
 "sourcemaps:element": [
 {
+"@value": "data:url"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(14,7)-(14,48)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:nillable"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(19,12)-(19,16)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:language"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(16,12)-(16,17)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:gender"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(13,10)-(13,14)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:favouriteNumber"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(17,19)-(17,21)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
 "@value": "amf://id#42"
 }
 ],
 "sourcemaps:value": [
 {
 "@value": "[(10,0)-(21,0)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:birthday"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(12,12)-(12,24)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:favouriteTime"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(18,17)-(18,25)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:id"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(10,6)-(10,40)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:name"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(11,8)-(11,22)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "data:tagline"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(15,11)-(15,30)]"
 }
 ]
 }
