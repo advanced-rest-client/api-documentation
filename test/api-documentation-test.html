@@ -678,6 +678,42 @@
       });
     });
   });
+
+  suite('_computeApiMediaTypes()', () => {
+    [
+      ['Full model', false],
+      ['Compact model', true]
+    ].forEach((item) => {
+      suite(item[0], () => {
+        let element;
+        let amf;
+        setup(() => {
+          element = fixture('Basic');
+          return AmfLoader.load(item[1])
+          .then((data) => {
+            element.amfModel = data;
+            amf = data;
+          });
+        });
+
+        test('Computes media types', () => {
+          const webApi = element._computeWebApi(amf);
+          const result = element._computeApiMediaTypes(webApi);
+          assert.deepEqual(result, ['application/json', 'application/xml']);
+        });
+
+        test('Returns undefined when no model', () => {
+          const result = element._computeApiMediaTypes();
+          assert.isUndefined(result);
+        });
+
+        test('Returns undefined when no media types', () => {
+          const result = element._computeApiMediaTypes({});
+          assert.isUndefined(result);
+        });
+      });
+    });
+  });
   </script>
 </body>
 
