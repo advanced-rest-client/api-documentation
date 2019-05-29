@@ -112,7 +112,7 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
       <api-documentation-document amf-model="{{amfModel}}" api-document="[[docsModel]]"></api-documentation-document>
     </template>
     <template is="dom-if" if="[[isType]]" restamp="true">
-      <api-type-documentation amf-model="{{amfModel}}" type="[[docsModel]]" narrow="[[narrow]]"></api-type-documentation>
+      <api-type-documentation amf-model="{{amfModel}}" type="[[docsModel]]" narrow="[[narrow]]" media-types="[[_computeApiMediaTypes(amfModel)]]"></api-type-documentation>
     </template>`;
   }
 
@@ -918,6 +918,31 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
       model = model[0];
     }
     return this._hasType(model, ns.raml.vocabularies.http + 'EndPoint');
+  }
+  /**
+   * Computes API's media types when requesting type documentation view.
+   * This is passed to the type documentation to render examples in the type
+   * according to API's defined media type.
+   *
+   * @param {Object} model API model.
+   * @return {Array<String>|undefined} List of supported media types or undefined.
+   */
+  _computeApiMediaTypes(model) {
+    if (model instanceof Array) {
+      model = model[0];
+    }
+    let webApi = this._computeWebApi(model);
+    if (!webApi) {
+      return;
+    }
+    if (webApi instanceof Array) {
+      webApi = webApi[0];
+    }
+    const key = this._getAmfKey(this.ns.raml.vocabularies.http + 'accepts');
+    const value = this._ensureArray(webApi[key]);
+    if (value) {
+      return value.map((item) => item['@value']);
+    }
   }
 }
 window.customElements.define('api-documentation', ApiDocumentation);

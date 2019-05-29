@@ -1422,6 +1422,52 @@
       assert.isUndefined(element.selectedType);
     });
   });
+
+  suite('_computeApiMediaTypes()', () => {
+    [
+      ['Full model', false],
+      ['Compact model', true]
+    ].forEach((item) => {
+      suite(item[0], () => {
+        let element;
+        let amf;
+        setup(() => {
+          element = fixture('Basic');
+          return AmfLoader.load(item[1])
+          .then((data) => {
+            element.amfModel = data;
+            amf = data;
+          });
+        });
+
+        test('Computes media types', () => {
+          const result = element._computeApiMediaTypes(amf);
+          assert.deepEqual(result, ['application/json', 'application/xml']);
+        });
+
+        test('Returns undefined when no model', () => {
+          const result = element._computeApiMediaTypes();
+          assert.isUndefined(result);
+        });
+
+        test('Returns undefined when no web api', () => {
+          const result = element._computeApiMediaTypes({});
+          assert.isUndefined(result);
+        });
+
+        test('Returns undefined when no media types', () => {
+          let webApi = element._computeWebApi(amf);
+          if (webApi instanceof Array) {
+            webApi = webApi[0];
+          }
+          const key = element._getAmfKey(element.ns.raml.vocabularies.http + 'accepts');
+          delete webApi[key];
+          const result = element._computeApiMediaTypes(amf);
+          assert.isUndefined(result);
+        });
+      });
+    });
+  });
   //
   // suite('Security scheme rendering', () => {
   //   function getScheme(element, name) {

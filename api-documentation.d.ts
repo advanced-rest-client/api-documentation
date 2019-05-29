@@ -12,12 +12,6 @@
 // tslint:disable:variable-name Describing an API that's defined elsewhere.
 // tslint:disable:no-any describes the API as best we are able today
 
-import {PolymerElement} from '@polymer/polymer/polymer-element.js';
-
-import {html} from '@polymer/polymer/lib/utils/html-tag.js';
-
-import {AmfHelperMixin} from '@api-components/amf-helper-mixin/amf-helper-mixin.js';
-
 declare namespace ApiElements {
 
   /**
@@ -107,7 +101,6 @@ declare namespace ApiElements {
      * or `summary`.
      */
     selectedType: string|null|undefined;
-    readonly _isFragment: boolean|null|undefined;
 
     /**
      * By default application hosting the element must set `selected` and
@@ -148,19 +141,15 @@ declare namespace ApiElements {
     readonly isSummary: boolean|null|undefined;
 
     /**
-     * Computed value of AMF model of a type of `http://schema.org/WebAPI`
+     * Computed value of the final model extracted from `amfModel`, `selected`,
+     * and `selectedType` properties.
      */
-    readonly webApi: object|null;
+    readonly docsModel: object|null;
 
     /**
-     * Computed value of `declares` part of the AMF model
+     * Computed value of currently rendered endpoint.
      */
-    readonly declares: Array<object|null>|null;
-
-    /**
-     * Computed value of `references` part of the AMF model
-     */
-    readonly references: Array<object|null>|null;
+    readonly endpoint: object|null|undefined;
 
     /**
      * A property to set to override AMF's model base URI information.
@@ -202,21 +191,6 @@ declare namespace ApiElements {
      * This is only required in inline mode (`inlineMethods`).
      */
     redirectUri: string|null|undefined;
-
-    /**
-     * Computed value of currently rendered endpoint.
-     */
-    readonly endpoint: object|null|undefined;
-
-    /**
-     * Computes security scheme model.
-     *
-     * @param declares Computed value of `declares`
-     * @param selected Current selection
-     * @param model Passed AMF model.
-     * @param isFragment Value of `_isFragment` property
-     */
-    _computeSecurity(declares: object|null, selected: String|null, model: object|any[]|null, isFragment: Boolean|null): object|null|undefined;
     disconnectedCallback(): void;
 
     /**
@@ -242,10 +216,122 @@ declare namespace ApiElements {
     _navigationHandler(e: CustomEvent|null): void;
 
     /**
-     * Handles navigation change, computes model for the view and finally
-     * renders the view.
+     * A function that is called each time `amfModel`, `selected`, or `selectedType`
+     * changed. It calls `__processModel()` function in a debouncer (Polymer's
+     * `afterNextRender` from RenderStatus class) to ensure all properties are set.
+     *
+     * Note, this function won't be called when any change inside `amfModel` ocurred
+     * as this reacts on complete variable change.
      */
-    _navigationOccured(selectedType: String|null): void;
+    _apiModelChanged(): void;
+
+    /**
+     * Computes security scheme definition model from web API and current selection.
+     * It looks for the definition in both `declares` and `references` properties.
+     * Returned value is already resolved AMF model (references are resolved).
+     *
+     * @param model WebApi AMF model. Do not use an array here.
+     * @param selected Currently selected `@id`.
+     * @returns Model definition for the securit scheme.
+     */
+    _computeSecurityApiModel(model: object|null, selected: String|null): object|null|undefined;
+
+    /**
+     * Computes type definition model from web API and current selection.
+     * It looks for the definition in both `declares` and `references` properties.
+     * Returned value is already resolved AMF model (references are resolved).
+     *
+     * @param model WebApi AMF model. Do not use an array here.
+     * @param selected Currently selected `@id`.
+     * @returns Model definition for a type.
+     */
+    _computeTypeApiModel(model: object|null, selected: String|null): object|null|undefined;
+
+    /**
+     * Computes documentation definition model from web API and current selection.
+     *
+     * @param model WebApi AMF model. Do not use an array here.
+     * @param selected Currently selected `@id`.
+     * @returns Model definition for a documentation fragment.
+     */
+    _computeDocsApiModel(model: object|null, selected: String|null): object|null|undefined;
+
+    /**
+     * Computes Endpoint definition model from web API and current selection.
+     *
+     * @param model WebApi AMF model. Do not use an array here.
+     * @param selected Currently selected `@id`.
+     * @returns Model definition for an endpoint fragment.
+     */
+    _computeEndpointApiModel(model: object|null, selected: String|null): object|null|undefined;
+
+    /**
+     * Computes Method definition model from web API and current selection.
+     *
+     * @param model WebApi AMF model. Do not use an array here.
+     * @param selected Currently selected `@id`.
+     * @returns Model definition for an endpoint fragment.
+     */
+    _computeMethodApiModel(model: object|null, selected: String|null): object|null|undefined;
+    _computeEndpointApiMethodModel(model: any, selected: any): any;
+
+    /**
+     * Computes Security scheme from a Library model.
+     *
+     * @param model Library AMF model.
+     * @param selected Currently selected `@id`.
+     * @returns Model definition for a security.
+     */
+    _computeSecurityLibraryModel(model: object|null, selected: String|null): object|null|undefined;
+
+    /**
+     * Computes Type definition from a Library model.
+     *
+     * @param model Library AMF model.
+     * @param selected Currently selected `@id`.
+     * @returns Model definition for a type.
+     */
+    _computeTypeLibraryModel(model: object|null, selected: String|null): object|null|undefined;
+
+    /**
+     * Extracts security model from security scheme fragment and sets current selection
+     * and the model.
+     *
+     * @param model Security scheme fragment model
+     */
+    _processSecurityFragment(model: object|null): void;
+
+    /**
+     * Extracts documentation model from documentation fragment and sets current selection
+     * and the model.
+     *
+     * @param model Documentation fragment model
+     */
+    _processDocumentationFragment(model: object|null): void;
+
+    /**
+     * Extracts Type model from Type fragment and sets current selection
+     * and the model.
+     *
+     * @param model Type fragment model
+     */
+    _processTypeFragment(model: object|null): void;
+    _processDocumentationParial(model: any): void;
+    _processSecurityParial(model: any): void;
+    _processTypeParial(model: any): void;
+
+    /**
+     * Processes endpoint data from partial model definitnion.
+     * It sets models that are used by the docs.
+     *
+     * If `selected` or `selectedType` is not set then it automatically selects
+     * an endpoint.
+     *
+     * @param model Partial model for endpoints
+     * @param selected Current selection.
+     * @param selectedType Selection type.
+     */
+    _processEndpointParial(model: object|null, selected: String|null, selectedType: string|null, inlineMethods: Boolean|null): void;
 
     /**
      * Creates a link model that is accepted by the endpoint documentation
@@ -261,23 +347,23 @@ declare namespace ApiElements {
      * Computes link model for previous endpoint, if any exists relative to
      * current selection.
      *
-     * @param webApi WebApi shape object of AMF
+     * @param model Web API AMF model
      * @param selected Currently selected endpoint
      * @returns Object with `label` and `id` or `undefined`
      * if no previous item.
      */
-    _computeEndpointPrevious(webApi: object|null, selected: String|null): object|null|undefined;
+    _computeEndpointPrevious(model: object|null, selected: String|null): object|null|undefined;
 
     /**
      * Computes link model for next endpoint, if any exists relative to
      * current selection.
      *
-     * @param webApi WebApi shape object of AMF
+     * @param model WebApi shape object of AMF
      * @param selected Currently selected endpoint
      * @returns Object with `label` and `id` or `undefined`
      * if no next item.
      */
-    _computeEndpointNext(webApi: object|null, selected: String|null): object|null|undefined;
+    _computeEndpointNext(model: object|null, selected: String|null): object|null|undefined;
 
     /**
      * Creates a link model that is accepted by the method documentation
@@ -294,32 +380,33 @@ declare namespace ApiElements {
      * This is used by the method documentation panel to render previous
      * nethod link.
      *
-     * @param webApi WebApi shape object of AMF
+     * @param model WebApi shape object of AMF
      * @param selected Currently selected method
      * @returns Object with `label` and `id` or `undefined`
      * if no previous item.
      */
-    _computeMethodPrevious(webApi: object|null, selected: String|null): object|null|undefined;
+    _computeMethodPrevious(model: object|null, selected: String|null): object|null|undefined;
 
     /**
      * Computes link for the next method.
      * This is used by the method documentation panel to render next
      * nethod link.
      *
-     * @param webApi WebApi shape object of AMF
+     * @param model WebApi shape object of AMF
      * @param selected Currently selected method
      * @returns Object with `label` and `id` or `undefined`
      * if no next item.
      */
-    _computeMethodNext(webApi: object|null, selected: String|null): object|null|undefined;
+    _computeMethodNext(model: object|null, selected: String|null): object|null|undefined;
 
     /**
-     * A method to update value of the `endpoint` property when needed.
-     * This function is to reduce number of updates of `endpoint` property
-     * when rendering endpoint documentation in inline mode. In this case each
-     * change to the endpoint trigges heavy computations.
+     * Computes method definition from an endpoint partial model.
+     *
+     * @param api Endpoint partial model
+     * @param selected Currently selected ID.
+     * @returns Method model.
      */
-    _updateEndpoint(isEndpoint: Boolean|null, isMethod: Boolean|null, selected: String|null, webApi: object|null): void;
+    _computeMethodPartialEndpoint(api: object|null, selected: String|null): object|null|undefined;
 
     /**
      * Tests if endpoint component should be rendered for both method and
@@ -336,7 +423,6 @@ declare namespace ApiElements {
      * Computes if single method doc should be rendered
      */
     _renderMethod(inlineMethods: Boolean|null, isMethod: Boolean|null): Boolean|null;
-    _computeIsFragment(model: any): any;
 
     /**
      * Tests if `model` is of a RAML library model.
@@ -346,25 +432,13 @@ declare namespace ApiElements {
     _isLibrary(model: object|any[]|null): Boolean|null;
 
     /**
-     * Computes model for documentation.
+     * Computes a security model from a reference (library for example).
      *
-     * @param webApi Computed value of webApi
-     * @param selected Current selection
-     * @param model Passed AMF model.
-     * @param isFragment Value of `_isFragment` property
+     * @param reference AMF model for a reference to extract the data from
+     * @param selected Node ID to look for
+     * @returns Type definition or undefined if not found.
      */
-    _computeDocuemntationModel(webApi: object|null, selected: String|null, model: object|any[]|null, isFragment: Boolean|null): object|null|undefined;
-
-    /**
-     * Computes model for a type.
-     *
-     * @param declares Computed list of declares
-     * @param references Computed list of references
-     * @param selected Current selection
-     * @param model Passed AMF model.
-     * @param isFragment Value of `_isFragment` property
-     */
-    _computeTypeModel(declares: Array<object|null>|null, references: Array<object|null>|null, selected: String|null, model: object|any[]|null, isFragment: Boolean|null): object|null|undefined;
+    _computeReferenceSecurity(reference: object|any[]|null, selected: String|null): object|null|undefined;
 
     /**
      * Computes model of a shape defined ni `declares` list
@@ -373,6 +447,23 @@ declare namespace ApiElements {
      * @param selected Current selection
      */
     _computeDeclById(model: object|null, selected: String|null): object|null|undefined;
+    _isTypeFragment(model: any): any;
+    _isTypePartialModel(model: any): any;
+    _isSecurityFragment(model: any): any;
+    _isSecurityPartialModel(model: any): any;
+    _isDocumentationFragment(model: any): any;
+    _isDocumentationPartialModel(model: any): any;
+    _isEndpointPartialModel(model: any): any;
+
+    /**
+     * Computes API's media types when requesting type documentation view.
+     * This is passed to the type documentation to render examples in the type
+     * according to API's defined media type.
+     *
+     * @param model API model.
+     * @returns List of supported media types or undefined.
+     */
+    _computeApiMediaTypes(model: object|null): Array<String|null>|null|undefined;
   }
 }
 
@@ -382,3 +473,5 @@ declare global {
     "api-documentation": ApiElements.ApiDocumentation;
   }
 }
+
+export {};

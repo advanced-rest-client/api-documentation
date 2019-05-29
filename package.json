@@ -58,7 +58,7 @@
     "@api-components/api-method-documentation": "^3.0.0-preview.4",
     "@api-components/api-security-documentation": "^3.0.0-preview.2",
     "@api-components/api-summary": "^3.0.0-preview.3",
-    "@api-components/api-type-documentation": "^3.0.0-preview.2",
+    "@api-components/api-type-documentation": "^3.0.0-preview.3",
     "@api-components/raml-aware": "^3.0.0-preview.2",
     "@polymer/polymer": "^3.2.0"
   }
