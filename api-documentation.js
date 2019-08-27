@@ -1,15 +1,12 @@
-import {PolymerElement} from '../../@polymer/polymer/polymer-element.js';
-import {html} from '../../@polymer/polymer/lib/utils/html-tag.js';
-import {AmfHelperMixin, ns} from '../../@api-components/amf-helper-mixin/amf-helper-mixin.js';
-import {afterNextRender} from '../../@polymer/polymer/lib/utils/render-status.js';
-import '../../@polymer/polymer/lib/elements/dom-if.js';
-import '../../@api-components/raml-aware/raml-aware.js';
-import '../../@api-components/api-endpoint-documentation/api-endpoint-documentation.js';
-import '../../@api-components/api-type-documentation/api-type-documentation.js';
-import '../../@api-components/api-documentation-document/api-documentation-document.js';
-import '../../@api-components/api-method-documentation/api-method-documentation.js';
-import '../../@api-components/api-summary/api-summary.js';
-import '../../@api-components/api-security-documentation/api-security-documentation.js';
+import { html, css, LitElement } from 'lit-element';
+import { AmfHelperMixin } from '@api-components/amf-helper-mixin/amf-helper-mixin.js';
+import '@api-components/raml-aware/raml-aware.js';
+import '@api-components/api-endpoint-documentation/api-endpoint-documentation.js';
+import '@api-components/api-type-documentation/api-type-documentation.js';
+import '@api-components/api-documentation-document/api-documentation-document.js';
+import '@api-components/api-method-documentation/api-method-documentation.js';
+import '@api-components/api-summary/api-summary.js';
+import '@api-components/api-security-documentation/api-security-documentation.js';
 /* eslint-disable max-len */
 /**
  * `api-documentation`
@@ -49,7 +46,7 @@ import '../../@api-components/api-security-documentation/api-security-documentat
  * - if `baseUri` is set it uses this value as a base uri for the endpoint
  * - else if `iron-meta` with key `ApiBaseUri` exists and contains a value
  * it uses it uses this value as a base uri for the endpoint
- * - else if `amfModel` is set then it computes base uri value from main
+ * - else if `amf` is set then it computes base uri value from main
  * model document
  * Then it concatenates computed base URI with `endpoint`'s path property.
  *
@@ -65,15 +62,8 @@ import '../../@api-components/api-security-documentation/api-security-documentat
  * ```
  *
  * Note: The element will not be notified about the change when `iron-meta` value change.
- * The change will be reflected when `amfModel` or `endpoint` property chnage.
+ * The change will be reflected when `amf` or `endpoint` property chnage.
  *
- * ## Styling
- *
- * `<api-documentation>` provides the following custom properties and mixins for styling:
- *
- * Custom property | Description | Default
- * ----------------|-------------|----------
- * `--api-documentation` | Mixin applied to this elment | `{}`
  *
  * @customElement
  * @polymer
@@ -81,39 +71,126 @@ import '../../@api-components/api-security-documentation/api-security-documentat
  * @memberof ApiElements
  * @appliesMixin AmfHelperMixin
  */
-class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
-  static get template() {
-    return html`
-    <style>
-    :host {
+class ApiDocumentation extends AmfHelperMixin(LitElement) {
+  static get styles() {
+    return css`:host {
       display: block;
-      @apply --api-documentation;
+    }`;
+  }
+
+  render() {
+    const {
+      aware
+    } = this;
+    return html`
+    ${aware ? html`<raml-aware
+      .scope="${aware}"
+      @api-changed="${this._apiChanged}"></raml-aware>` : ''}
+    ${this._renderView()}`;
+  }
+
+  _renderView() {
+    switch (this._viewType) {
+      case 'summary': return this._summaryTemplate();
+      case 'security': return this._securityTemplate();
+      case 'documentation': return this._documentationTemplate();
+      case 'type': return this._typeTemplate();
+      case 'endpoint': return this._endpointTemplate();
+      case 'method': return this._methodTemplate();
     }
-    </style>
-    <template is="dom-if" if="[[aware]]">
-      <raml-aware raml="{{amfModel}}" scope="[[aware]]"></raml-aware>
-    </template>
-    <template is="dom-if" if="[[isSummary]]" restamp="true">
-      <api-summary amf-model="[[docsModel]]" base-uri="[[baseUri]]"></api-summary>
-    </template>
-    <template is="dom-if" if="[[isSecurity]]" restamp="true">
-      <api-security-documentation amf-model="{{amfModel}}" security="[[docsModel]]" narrow="[[narrow]]"></api-security-documentation>
-    </template>
-    <template is="dom-if" if="[[_renderInlineEndpoint(inlineMethods, isMethod, isEndpoint)]]" restamp="true">
-      <api-endpoint-documentation amf-model="{{amfModel}}" endpoint="[[docsModel]]" previous="[[_computeEndpointPrevious(amfModel, selected)]]" next="[[_computeEndpointNext(amfModel, selected)]]" base-uri="[[baseUri]]" narrow="[[narrow]]" selected="[[selected]]" no-try-it="" inline-methods="" scroll-target="[[scrollTarget]]" redirect-uri="[[redirectUri]]"></api-endpoint-documentation>
-    </template>
-    <template is="dom-if" if="[[_renderEndpoint(inlineMethods, isEndpoint)]]" restamp="true">
-      <api-endpoint-documentation amf-model="{{amfModel}}" endpoint="[[docsModel]]" previous="[[_computeEndpointPrevious(amfModel, selected)]]" next="[[_computeEndpointNext(amfModel, selected)]]" base-uri="[[baseUri]]" narrow="[[narrow]]" scroll-target="[[scrollTarget]]" redirect-uri="[[redirectUri]]"></api-endpoint-documentation>
-    </template>
-    <template is="dom-if" if="[[_renderMethod(inlineMethods, isMethod)]]" restamp="true">
-      <api-method-documentation amf-model="{{amfModel}}" endpoint="[[endpoint]]" method="[[docsModel]]" previous="[[_computeMethodPrevious(amfModel, selected)]]" next="[[_computeMethodNext(amfModel, selected)]]" base-uri="[[baseUri]]" no-try-it="[[noTryIt]]" narrow="[[narrow]]" render-security="" render-code-snippets=""></api-method-documentation>
-    </template>
-    <template is="dom-if" if="[[isDoc]]" restamp="true">
-      <api-documentation-document amf-model="{{amfModel}}" api-document="[[docsModel]]"></api-documentation-document>
-    </template>
-    <template is="dom-if" if="[[isType]]" restamp="true">
-      <api-type-documentation amf-model="{{amfModel}}" type="[[docsModel]]" narrow="[[narrow]]" media-types="[[_computeApiMediaTypes(amfModel)]]"></api-type-documentation>
-    </template>`;
+  }
+
+  _summaryTemplate() {
+    const { _docsModel, baseUri } = this;
+    return html`<api-summary .amf="${_docsModel}" .baseUri="${baseUri}"></api-summary>`;
+  }
+
+  _securityTemplate() {
+    const { amf, _docsModel, narrow } = this;
+    return html`<api-security-documentation
+      .amf="${amf}"
+      .security="${_docsModel}"
+      .narrow="${narrow}"></api-security-documentation>`;
+  }
+
+  _documentationTemplate() {
+    const { amf, _docsModel } = this;
+    return html`<api-documentation-document
+      .amf="${amf}"
+      .shape="${_docsModel}"></api-documentation-document>`;
+  }
+
+  _typeTemplate() {
+    const { amf, _docsModel, narrow, legacy } = this;
+    const mt = this._computeApiMediaTypes(amf);
+    return html`<api-type-documentation
+      .amf="${amf}"
+      .type="${_docsModel}"
+      .narrow="${narrow}"
+      .mediaTypes="${mt}"
+      .legacy="${legacy}"></api-type-documentation>`;
+  }
+
+  _methodTemplate() {
+    const { amf, _docsModel, narrow, legacy, _endpoint, selected, baseUri, noTryIt } = this;
+    const prev = this._computeMethodPrevious(amf, selected);
+    const next = this._computeMethodNext(amf, selected);
+    return html`<api-method-documentation
+      .amf="${amf}"
+      .narrow="${narrow}"
+      .legacy="${legacy}"
+      .endpoint="${_endpoint}"
+      .method="${_docsModel}"
+      .previous="${prev}"
+      .next="${next}"
+      .baseUri="${baseUri}"
+      .noTryIt="${noTryIt}"
+      rendersecurity
+      rendercodesnippets></api-method-documentation>`;
+  }
+
+  _endpointTemplate() {
+    return this.inlineMethods ?
+      this._inlineEndpointTemplate() :
+      this._simpleEndpointTemplate();
+  }
+
+  _inlineEndpointTemplate() {
+    const { amf, _docsModel, narrow, legacy, outlined, selected, baseUri, scrollTarget, redirectUri, noUrlEditor } = this;
+    const prev = this._computeEndpointPrevious(amf, selected, true);
+    const next = this._computeEndpointNext(amf, selected, true);
+    return html`<api-endpoint-documentation
+      .amf="${amf}"
+      .narrow="${narrow}"
+      .legacy="${legacy}"
+      .outlined="${outlined}"
+      .selected="${selected}"
+      .endpoint="${_docsModel}"
+      .previous="${prev}"
+      .next="${next}"
+      .baseUri="${baseUri}"
+      .scrollTarget="${scrollTarget}"
+      .redirectUri="${redirectUri}"
+      .noUrlEditor="${noUrlEditor}"
+      notryit
+      inlinemethods></api-endpoint-documentation>`;
+  }
+
+  _simpleEndpointTemplate() {
+    const { amf, _docsModel, narrow, legacy, selected, baseUri } = this;
+    const prev = this._computeEndpointPrevious(amf, selected);
+    const next = this._computeEndpointNext(amf, selected);
+
+    return html`<api-endpoint-documentation
+      .amf="${amf}"
+      .narrow="${narrow}"
+      .legacy="${legacy}"
+      .selected="${selected}"
+      .endpoint="${_docsModel}"
+      .previous="${prev}"
+      .next="${next}"
+      .baseUri="${baseUri}"
+      ></api-endpoint-documentation>`;
   }
 
   static get properties() {
@@ -121,90 +198,47 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
       /**
        * `raml-aware` scope property to use.
        */
-      aware: String,
+      aware: { type: String },
       /**
        * A model's `@id` of selected documentation part.
        * Special case is for `summary` view. It's not part of an API
        * but most applications has some kind of summary view for the
        * API.
        */
-      selected: String,
+      selected: { type: String },
       /**
        * Type of the selected item.
        * One of `documentation`, `type`, `security`, `endpoint`, `method`
        * or `summary`.
        */
-      selectedType: String,
+      selectedType: { type: String },
       /**
        * By default application hosting the element must set `selected` and
        * `selectedType` properties. When using `api-navigation` element
        * by setting this property the element listens for navigation events
        * and updates the state
        */
-      handleNavigationEvents: {
-        type: Boolean,
-        observer: '_handleNavChanged'
-      },
-      // True if currently selection is endpoint
-      isEndpoint: {
-        type: Boolean,
-        readOnly: true
-      },
-      // True if currently selection is method
-      isMethod: {
-        type: Boolean,
-        readOnly: true
-      },
-      // True if currently selection is documentation
-      isDoc: {
-        type: Boolean,
-        readOnly: true
-      },
-      // True if currently selection is type
-      isType: {
-        type: Boolean,
-        readOnly: true
-      },
-      // True if currently selection is security
-      isSecurity: {
-        type: Boolean,
-        readOnly: true
-      },
-      // True if currently selection is summary
-      isSummary: {
-        type: Boolean,
-        readOnly: true
-      },
-      /**
-       * Computed value of the final model extracted from `amfModel`, `selected`,
-       * and `selectedType` properties.
-       * @type {Object}
-       */
-      docsModel: {type: Object, readOnly: true},
-      /**
-       * Computed value of currently rendered endpoint.
-       */
-      endpoint: {type: Object, readOnly: true},
+      handleNavigationEvents: { type: Boolean },
       /**
        * A property to set to override AMF's model base URI information.
        */
-      baseUri: String,
+      baseUri: { type: String },
       /**
        * Passing value of `noTryIt` to the method documentation.
        * Hiddes "Try it" button.
        */
-      noTryIt: Boolean,
+      noTryIt: { type: Boolean },
       /**
        * If set it will renders the view in the narrow layout.
        */
-      narrow: Boolean,
+      narrow: { type: Boolean },
       /**
        * If set then it renders methods documentation inline with
        * the endpoint documentation.
        * When it's not set (or value is `false`, default) then it renders
        * just a list of methods with links.
        */
-      inlineMethods: {type: Boolean, value: false},
+      inlineMethods: { type: Boolean },
       /**
        * Scroll target used to observe `scroll` event.
        * When set the element will observe scroll and inform other components
@@ -213,20 +247,97 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
        * determines that it's not user triggered navigation but rather
        * context enforced.
        */
-      scrollTarget: Object,
+      scrollTarget: { type: Object },
       /**
        * OAuth2 redirect URI.
        * This value **must** be set in order for OAuth 1/2 to work properly.
        * This is only required in inline mode (`inlineMethods`).
        */
-      redirectUri: String
+      redirectUri: { type: String },
+      /**
+       * When set it enables Anypoint compatibility theme
+       */
+      legacy: { type: Boolean },
+      /**
+       * Applied outlined theme to the try it panel
+       */
+      outlined: { type: Boolean },
+      /**
+       * In inline mode, passes the `noUrlEditor` value on the
+       * `api-request-paqnel`
+       */
+      noUrlEditor: { type: Boolean },
+
+      // Currently rendered view type
+      _viewType: { type: String },
+      /**
+       * Computed value of the final model extracted from the `amf`, `selected`,
+       * and `selectedType` properties.
+       * @type {Object}
+       */
+      _docsModel: { type: Object },
+      /**
+       * Computed value of currently rendered endpoint.
+       */
+      _endpoint: { type: Object }
     };
   }
 
-  static get observers() {
-    return [
-      '_apiModelChanged(amfModel, selected, selectedType, inlineMethods)'
-    ];
+  get selected() {
+    return this._selected;
+  }
+
+  set selected(value) {
+    const old = this._selected;
+    /* istanbul ignore if */
+    if (old === value) {
+      return;
+    }
+    this._selected = value;
+    this.__amfChanged();
+    this.requestUpdate('selected', old);
+  }
+
+  get selectedType() {
+    return this._selectedType;
+  }
+
+  set selectedType(value) {
+    const old = this._selectedType;
+    /* istanbul ignore if */
+    if (old === value) {
+      return;
+    }
+    this._selectedType = value;
+    this.__amfChanged();
+  }
+
+  get inlineMethods() {
+    return this._inlineMethods;
+  }
+
+  set inlineMethods(value) {
+    const old = this._inlineMethods;
+    /* istanbul ignore if */
+    if (old === value) {
+      return;
+    }
+    this._inlineMethods = value;
+    this.__amfChanged();
+  }
+
+  get handleNavigationEvents() {
+    return this._handleNavigationEvents;
+  }
+
+  set handleNavigationEvents(value) {
+    const old = this._handleNavigationEvents;
+    /* istanbul ignore if */
+    if (old === value) {
+      return;
+    }
+    this._handleNavigationEvents = value;
+    this._handleNavChanged(value);
   }
 
   constructor() {
@@ -235,10 +346,70 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
   }
 
   disconnectedCallback() {
+    if (super.disconnectedCallback) {
+      super.disconnectedCallback();
+    }
     if (this.__eventsRegistered) {
       this._unregisterNavigationEvents();
     }
   }
+
+  __amfChanged() {
+    if (this.__amfProcessingDebouncer) {
+      return;
+    }
+    this.__amfProcessingDebouncer = true;
+    setTimeout(() => this._processModelChange());
+  }
+
+  _processModelChange() {
+    this.__amfProcessingDebouncer = false;
+
+    let { amf } = this;
+    if (!amf) {
+      return;
+    }
+    if (amf instanceof Array) {
+      amf = amf[0];
+    }
+    if (this._hasType(amf, this.ns.raml.vocabularies.document + 'Document')) {
+      this.__processApiSpecSelection(amf);
+      return;
+    }
+    if (this._isLibrary(amf)) {
+      this.__processLibrarySelection(amf);
+      return;
+    }
+    if (this._isSecurityFragment(amf)) {
+      this._processSecurityFragment(amf);
+      return;
+    }
+    if (this._isDocumentationFragment(amf)) {
+      this._processDocumentationFragment(amf);
+      return;
+    }
+    if (this._isTypeFragment(amf)) {
+      this._processTypeFragment(amf);
+      return;
+    }
+    if (this._isDocumentationPartialModel(amf)) {
+      this._processDocumentationParial(amf);
+      return;
+    }
+    if (this._isSecurityPartialModel(amf)) {
+      this._processSecurityParial(amf);
+      return;
+    }
+    if (this._isTypePartialModel(amf)) {
+      this._processTypeParial(amf);
+      return;
+    }
+    if (this._isEndpointPartialModel(amf)) {
+      this._processEndpointParial(amf);
+      return;
+    }
+  }
+
   /**
    * Registers `api-navigation-selection-changed` event listener handler
    * on window object.
@@ -280,148 +451,41 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
     this.selectedType = e.detail.type;
   }
   /**
-   * A function that is called each time `amfModel`, `selected`, or `selectedType`
-   * changed. It calls `__processModel()` function in a debouncer (Polymer's
-   * `afterNextRender` from RenderStatus class) to ensure all properties are set.
-   *
-   * Note, this function won't be called when any change inside `amfModel` ocurred
-   * as this reacts on complete variable change.
-   */
-  _apiModelChanged() {
-    if (this.__modelChangeDebouncer) {
-      return;
-    }
-    this.__modelChangeDebouncer = true;
-    afterNextRender(this, () => {
-      this.__modelChangeDebouncer = false;
-      this.__processModel(this.amfModel, this.selected, this.selectedType, this.inlineMethods);
-    });
-  }
-  /**
-   * Processes AMF model depending on it's type.
-   * The documentation panel supports full API model, (some) RAML fragments,
-   * and "partial" model returned from the query serice based on graph queries.
-   *
-   * Note, this function throws an error if unsuported data is passed.
-   *
-   * @param {Array|Object} model AMF model to process
-   * @param {?String} selected Selected AMF node `@id`
-   * @param {?String} selectedType Selected view type. One of `endpoint`, `method`,
-   * `documentation`, `type`, `security`, or `summary`.
-   * @param {?Boolean} inlineMethods Whether the view should render the request panel
-   * alongside the documentation.
-   */
-  __processModel(model, selected, selectedType, inlineMethods) {
-    if (!model) {
-      return;
-    }
-    if (model instanceof Array) {
-      model = model[0];
-    }
-    if (this._hasType(model, ns.raml.vocabularies.document + 'Document')) {
-      this.__processApiSpecSelection(model, selected, selectedType, inlineMethods);
-      return;
-    }
-    if (this._isLibrary(model)) {
-      this.__processLibrarySelection(model, selected, selectedType);
-      return;
-    }
-    if (this._isSecurityFragment(model)) {
-      this._processSecurityFragment(model);
-      return;
-    }
-    if (this._isDocumentationFragment(model)) {
-      this._processDocumentationFragment(model);
-      return;
-    }
-    if (this._isTypeFragment(model)) {
-      this._processTypeFragment(model);
-      return;
-    }
-    if (this._isDocumentationPartialModel(model)) {
-      this._processDocumentationParial(model);
-      return;
-    }
-    if (this._isSecurityPartialModel(model)) {
-      this._processSecurityParial(model);
-      return;
-    }
-    if (this._isTypePartialModel(model)) {
-      this._processTypeParial(model);
-      return;
-    }
-    if (this._isEndpointPartialModel(model)) {
-      this._processEndpointParial(model, selected, selectedType, inlineMethods);
-      return;
-    }
-    throw new Error('Unsupported AMF model.');
-  }
-  /**
-   * Sets current component selection to the one specified in `selectedType`.
-   * It does not change anything if current selection equals desired selection.
-   * @param {String} selectedType Desired selection. One of `endpoint`, `method`,
-   * `documentation`, `type`, `security`, or `summary`.
-   */
-  __resetComponentSelection(selectedType) {
-    const isEndpoint = selectedType === 'endpoint';
-    if (this.isEndpoint !== isEndpoint) {
-      this._setIsEndpoint(isEndpoint);
-    }
-    const isMethod = selectedType === 'method';
-    if (this.isMethod !== isMethod) {
-      this._setIsMethod(isMethod);
-    }
-    const isDoc = selectedType === 'documentation';
-    if (this.isDoc !== isDoc) {
-      this._setIsDoc(isDoc);
-    }
-    const isType = selectedType === 'type';
-    if (this.isType !== isType) {
-      this._setIsType(isType);
-    }
-    const isSecurity = selectedType === 'security';
-    if (this.isSecurity !== isSecurity) {
-      this._setIsSecurity(isSecurity);
-    }
-    const isSummary = selectedType === 'summary';
-    if (this.isSummary !== isSummary) {
-      this._setIsSummary(isSummary);
-    }
-  }
-  /**
    * Processes selection for the web API data model. It ignores the input if
    * `selected` or `selectedType` is not set.
    * @param {Object} model WebApi AMF model. Do not use an array here.
-   * @param {String} selected Currently selected `@id`.
-   * @param {String} selectedType Currently selected view type. One of `endpoint`, `method`,
-   * `documentation`, `type`, `security`, or `summary`.
-   * @param {Boolean} inlineMethods
    */
-  __processApiSpecSelection(model, selected, selectedType, inlineMethods) {
+  __processApiSpecSelection(model) {
+    const { selected, inlineMethods } = this;
+    let { selectedType } = this;
     if (!selected || !selectedType) {
       // Not all required properties were set.
       return;
     }
-    this.__resetComponentSelection(selectedType);
     let result;
     switch (selectedType) {
       case 'summary': result = model; break;
       case 'security': result = this._computeSecurityApiModel(model, selected); break;
       case 'type': result = this._computeTypeApiModel(model, selected); break;
       case 'documentation': result = this._computeDocsApiModel(model, selected); break;
-      case 'endpoint': result = this._computeEndpointApiModel(model, selected); break;
+      case 'endpoint':
+        result = this._computeEndpointApiModel(model, selected);
+        // this._endpoint = result;
+        break;
       case 'method':
         if (inlineMethods) {
+          selectedType = 'endpoint';
           result = this._computeEndpointApiMethodModel(model, selected);
         } else {
           result = this._computeMethodApiModel(model, selected);
+          this._endpoint = this._computeEndpointApiMethodModel(model, selected);
         }
         break;
       default:
-        console.warn('Unknown API selection type. Unable to process.');
         return;
     }
-    this._setDocsModel(result);
+    this._docsModel = result;
+    this._viewType = selectedType;
   }
   /**
    * Computes security scheme definition model from web API and current selection.
@@ -512,25 +576,22 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
    * Processes selection for a library data model. It ignores the input if
    * `selected` or `selectedType` is not set.
    * @param {Object} model Library AMF model. Do not use an array here.
-   * @param {String} selected Currently selected `@id`.
-   * @param {String} selectedType Currently selected view type. One of `type` and `security`.
-   * Other values, even though it may exists in the library, is not currently supported.
    */
-  __processLibrarySelection(model, selected, selectedType) {
+  __processLibrarySelection(model) {
+    const { selected, selectedType } = this;
     if (!selected || !selectedType) {
       // Not all required properties were set.
       return;
     }
-    this.__resetComponentSelection(selectedType);
     let result;
     switch (selectedType) {
       case 'security': result = this._computeSecurityLibraryModel(model, selected); break;
       case 'type': result = this._computeTypeLibraryModel(model, selected); break;
       default:
-        console.warn('Unknown Library selection type. Unable to process.');
         return;
     }
-    this._setDocsModel(result);
+    this._docsModel = result;
+    this._viewType = selectedType;
   }
   /**
    * Computes Security scheme from a Library model.
@@ -581,23 +642,23 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
    */
   __processFragment(model, selectedType) {
     const result = this._computeEncodes(model);
-    this._setDocsModel(result);
-    this.__resetComponentSelection(selectedType);
+    this._docsModel = result;
+    this._viewType = selectedType;
   }
 
   _processDocumentationParial(model) {
-    this._setDocsModel(model);
-    this.__resetComponentSelection('documentation');
+    this._docsModel = model;
+    this._viewType = 'documentation';
   }
 
   _processSecurityParial(model) {
-    this._setDocsModel(model);
-    this.__resetComponentSelection('security');
+    this._docsModel = model;
+    this._viewType = 'security';
   }
 
   _processTypeParial(model) {
-    this._setDocsModel(model);
-    this.__resetComponentSelection('type');
+    this._docsModel = model;
+    this._viewType = 'type';
   }
   /**
    * Processes endpoint data from partial model definitnion.
@@ -606,20 +667,18 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
    * If `selected` or `selectedType` is not set then it automatically selects
    * an endpoint.
    * @param {Object} model Partial model for endpoints
-   * @param {?String} selected Current selection.
-   * @param {?string} selectedType Selection type.
-   * @param {Boolean} inlineMethods
    */
-  _processEndpointParial(model, selected, selectedType, inlineMethods) {
+  _processEndpointParial(model) {
+    let { selected, selectedType, inlineMethods } = this;
     if (!selectedType || inlineMethods) {
       selectedType = 'endpoint';
     }
-    this._setEndpoint(model);
+    this._endpoint = model;
     if (!inlineMethods && selectedType === 'method') {
       model = this._computeMethodPartialEndpoint(model, selected);
     }
-    this._setDocsModel(model);
-    this.__resetComponentSelection(selectedType);
+    this._docsModel = model;
+    this._viewType = selectedType;
   }
   /**
    * Creates a link model that is accepted by the endpoint documentation
@@ -648,23 +707,41 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
    * @param {String} selected Currently selected endpoint
    * @return {Object|undefined} Object with `label` and `id` or `undefined`
    * if no previous item.
+   * @param {?Boolean} lookupMethods When set it looks for the ID in methods array.
    */
-  _computeEndpointPrevious(model, selected) {
+  _computeEndpointPrevious(model, selected, lookupMethods) {
     if (!model || !selected) {
       return;
     }
-    if (this._hasType(model, ns.raml.vocabularies.http + 'EndPoint')) {
+    if (this._hasType(model, this.ns.raml.vocabularies.http + 'EndPoint')) {
       return;
     }
     const webApi = this._computeWebApi(model);
+    if (!webApi) {
+      return;
+    }
     const ekey = this._getAmfKey(this.ns.raml.vocabularies.http + 'endpoint');
     const endpoints = this._ensureArray(webApi[ekey]);
     if (!endpoints) {
       return;
     }
     for (let i = 0; i < endpoints.length; i++) {
-      if (endpoints[i]['@id'] === selected) {
+      const endpoint = endpoints[i];
+      if (endpoint['@id'] === selected) {
         return this._computeEndpointLink(endpoints[i - 1]);
+      }
+      if (!lookupMethods) {
+        continue;
+      }
+      const key = this._getAmfKey(this.ns.w3.hydra.supportedOperation);
+      const methods = this._ensureArray(endpoint[key]);
+      if (!methods) {
+        continue;
+      }
+      for (let j = 0; j < methods.length; j++) {
+        if (methods[j]['@id'] === selected) {
+          return this._computeEndpointLink(endpoints[i - 1]);
+        }
       }
     }
   }
@@ -675,23 +752,41 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
    * @param {String} selected Currently selected endpoint
    * @return {Object|undefined} Object with `label` and `id` or `undefined`
    * if no next item.
+   * @param {?Boolean} lookupMethods When set it looks for the ID in methods array.
    */
-  _computeEndpointNext(model, selected) {
+  _computeEndpointNext(model, selected, lookupMethods) {
     if (!model || !selected) {
       return;
     }
-    if (this._hasType(model, ns.raml.vocabularies.http + 'EndPoint')) {
+    if (this._hasType(model, this.ns.raml.vocabularies.http + 'EndPoint')) {
       return;
     }
     const webApi = this._computeWebApi(model);
-    const ekey = this._getAmfKey(ns.raml.vocabularies.http + 'endpoint');
+    if (!webApi) {
+      return;
+    }
+    const ekey = this._getAmfKey(this.ns.raml.vocabularies.http + 'endpoint');
     const endpoints = this._ensureArray(webApi[ekey]);
     if (!endpoints) {
       return;
     }
     for (let i = 0; i < endpoints.length; i++) {
-      if (endpoints[i]['@id'] === selected) {
+      const endpoint = endpoints[i];
+      if (endpoint['@id'] === selected) {
         return this._computeEndpointLink(endpoints[i + 1]);
+      }
+      if (!lookupMethods) {
+        continue;
+      }
+      const key = this._getAmfKey(this.ns.w3.hydra.supportedOperation);
+      const methods = this._ensureArray(endpoint[key]);
+      if (!methods) {
+        continue;
+      }
+      for (let j = 0; j < methods.length; j++) {
+        if (methods[j]['@id'] === selected) {
+          return this._computeEndpointLink(endpoints[i + 1]);
+        }
       }
     }
   }
@@ -726,8 +821,8 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
    */
   _computeMethodPrevious(model, selected) {
     let methods;
-    if (this._hasType(model, ns.raml.vocabularies.http + 'EndPoint')) {
-      const key = this._getAmfKey(ns.w3.hydra.supportedOperation);
+    if (this._hasType(model, this.ns.raml.vocabularies.http + 'EndPoint')) {
+      const key = this._getAmfKey(this.ns.w3.hydra.supportedOperation);
       methods = this._ensureArray(model[key]);
     } else {
       const webApi = this._computeWebApi(model);
@@ -753,8 +848,8 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
    */
   _computeMethodNext(model, selected) {
     let methods;
-    if (this._hasType(model, ns.raml.vocabularies.http + 'EndPoint')) {
-      const key = this._getAmfKey(ns.w3.hydra.supportedOperation);
+    if (this._hasType(model, this.ns.raml.vocabularies.http + 'EndPoint')) {
+      const key = this._getAmfKey(this.ns.w3.hydra.supportedOperation);
       methods = this._ensureArray(model[key]);
     } else {
       const webApi = this._computeWebApi(model);
@@ -776,7 +871,7 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
    * @return {Object|undefined} Method model.
    */
   _computeMethodPartialEndpoint(api, selected) {
-    const opKey = this._getAmfKey(ns.w3.hydra.supportedOperation);
+    const opKey = this._getAmfKey(this.ns.w3.hydra.supportedOperation);
     const ops = this._ensureArray(api[opKey]);
     if (!ops) {
       return;
@@ -789,38 +884,6 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
     }
   }
   /**
-   * Tests if endpoint component should be rendered for both method and
-   * endpoint documentation in inline mode.
-   * @param {Boolean} inlineMethods
-   * @param {Boolean} isMethod
-   * @param {Boolean} isEndpoint
-   * @return {Boolean}
-   */
-  _renderInlineEndpoint(inlineMethods, isMethod, isEndpoint) {
-    if (!inlineMethods) {
-      return false;
-    }
-    return !!(isMethod || isEndpoint);
-  }
-  /**
-   * Computes if single endpoint doc should be rendered
-   * @param {Boolean} inlineMethods
-   * @param {Boolean} isEndpoint
-   * @return {Boolean}
-   */
-  _renderEndpoint(inlineMethods, isEndpoint) {
-    return !!(!inlineMethods && isEndpoint);
-  }
-  /**
-   * Computes if single method doc should be rendered
-   * @param {Boolean} inlineMethods
-   * @param {Boolean} isMethod
-   * @return {Boolean}
-   */
-  _renderMethod(inlineMethods, isMethod) {
-    return !!(!inlineMethods && isMethod);
-  }
-  /**
    * Tests if `model` is of a RAML library model.
    * @param {Object|Array} model A shape to test
    * @return {Boolean}
@@ -831,6 +894,9 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
     }
     if (model instanceof Array) {
       model = model[0];
+    }
+    if (!model['@type']) {
+      return;
     }
     const moduleKey = this._getAmfKey(this.ns.raml.vocabularies.document + 'Module');
     return moduleKey === model['@type'][0];
@@ -872,52 +938,59 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
   }
 
   _isTypeFragment(model) {
+    /* istanbul ignore if */
     if (model instanceof Array) {
       model = model[0];
     }
-    return this._hasType(model, ns.raml.vocabularies.document + 'DataType');
+    return this._hasType(model, this.ns.raml.vocabularies.document + 'DataType');
   }
 
   _isTypePartialModel(model) {
+    /* istanbul ignore if */
     if (model instanceof Array) {
       model = model[0];
     }
-    return this._hasType(model, ns.raml.vocabularies.document + 'DomainElement');
+    return this._hasType(model, this.ns.raml.vocabularies.document + 'DomainElement');
   }
 
   _isSecurityFragment(model) {
+    /* istanbul ignore if */
     if (model instanceof Array) {
       model = model[0];
     }
-    return this._hasType(model, ns.raml.vocabularies.document + 'SecuritySchemeFragment');
+    return this._hasType(model, this.ns.raml.vocabularies.document + 'SecuritySchemeFragment');
   }
 
   _isSecurityPartialModel(model) {
+    /* istanbul ignore if */
     if (model instanceof Array) {
       model = model[0];
     }
-    return this._hasType(model, ns.raml.vocabularies.security + 'SecurityScheme');
+    return this._hasType(model, this.ns.raml.vocabularies.security + 'SecurityScheme');
   }
 
   _isDocumentationFragment(model) {
+    /* istanbul ignore if */
     if (model instanceof Array) {
       model = model[0];
     }
-    return this._hasType(model, ns.raml.vocabularies.document + 'UserDocumentation');
+    return this._hasType(model, this.ns.raml.vocabularies.document + 'UserDocumentation');
   }
 
   _isDocumentationPartialModel(model) {
+    /* istanbul ignore if */
     if (model instanceof Array) {
       model = model[0];
     }
-    return this._hasType(model, ns.schema.creativeWork);
+    return this._hasType(model, this.ns.schema.creativeWork);
   }
 
   _isEndpointPartialModel(model) {
+    /* istanbul ignore if */
     if (model instanceof Array) {
       model = model[0];
     }
-    return this._hasType(model, ns.raml.vocabularies.http + 'EndPoint');
+    return this._hasType(model, this.ns.raml.vocabularies.http + 'EndPoint');
   }
   /**
    * Computes API's media types when requesting type documentation view.
@@ -943,6 +1016,10 @@ class ApiDocumentation extends AmfHelperMixin(PolymerElement) {
     if (value) {
       return value.map((item) => item['@value']);
     }
+  }
+
+  _apiChanged(e) {
+    this.amf = e.detail.value;
   }
 }
 window.customElements.define('api-documentation', ApiDocumentation);

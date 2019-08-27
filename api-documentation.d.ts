@@ -12,6 +12,10 @@
 // tslint:disable:variable-name Describing an API that's defined elsewhere.
 // tslint:disable:no-any describes the API as best we are able today
 
+import {html, css, LitElement} from 'lit-element';
+
+import {AmfHelperMixin} from '@api-components/amf-helper-mixin/amf-helper-mixin.js';
+
 declare namespace ApiElements {
 
   /**
@@ -52,7 +56,7 @@ declare namespace ApiElements {
    * - if `baseUri` is set it uses this value as a base uri for the endpoint
    * - else if `iron-meta` with key `ApiBaseUri` exists and contains a value
    * it uses it uses this value as a base uri for the endpoint
-   * - else if `amfModel` is set then it computes base uri value from main
+   * - else if `amf` is set then it computes base uri value from main
    * model document
    * Then it concatenates computed base URI with `endpoint`'s path property.
    *
@@ -68,24 +72,11 @@ declare namespace ApiElements {
    * ```
    *
    * Note: The element will not be notified about the change when `iron-meta` value change.
-   * The change will be reflected when `amfModel` or `endpoint` property chnage.
-   *
-   * ## Styling
-   *
-   * `<api-documentation>` provides the following custom properties and mixins for styling:
-   *
-   * Custom property | Description | Default
-   * ----------------|-------------|----------
-   * `--api-documentation` | Mixin applied to this elment | `{}`
+   * The change will be reflected when `amf` or `endpoint` property chnage.
    */
   class ApiDocumentation extends
     AmfHelperMixin(
     Object) {
-
-    /**
-     * `raml-aware` scope property to use.
-     */
-    aware: string|null|undefined;
 
     /**
      * A model's `@id` of selected documentation part.
@@ -103,6 +94,14 @@ declare namespace ApiElements {
     selectedType: string|null|undefined;
 
     /**
+     * If set then it renders methods documentation inline with
+     * the endpoint documentation.
+     * When it's not set (or value is `false`, default) then it renders
+     * just a list of methods with links.
+     */
+    inlineMethods: boolean|null|undefined;
+
+    /**
      * By default application hosting the element must set `selected` and
      * `selectedType` properties. When using `api-navigation` element
      * by setting this property the element listens for navigation events
@@ -111,45 +110,9 @@ declare namespace ApiElements {
     handleNavigationEvents: boolean|null|undefined;
 
     /**
-     * True if currently selection is endpoint
+     * `raml-aware` scope property to use.
      */
-    readonly isEndpoint: boolean|null|undefined;
-
-    /**
-     * True if currently selection is method
-     */
-    readonly isMethod: boolean|null|undefined;
-
-    /**
-     * True if currently selection is documentation
-     */
-    readonly isDoc: boolean|null|undefined;
-
-    /**
-     * True if currently selection is type
-     */
-    readonly isType: boolean|null|undefined;
-
-    /**
-     * True if currently selection is security
-     */
-    readonly isSecurity: boolean|null|undefined;
-
-    /**
-     * True if currently selection is summary
-     */
-    readonly isSummary: boolean|null|undefined;
-
-    /**
-     * Computed value of the final model extracted from `amfModel`, `selected`,
-     * and `selectedType` properties.
-     */
-    readonly docsModel: object|null;
-
-    /**
-     * Computed value of currently rendered endpoint.
-     */
-    readonly endpoint: object|null|undefined;
+    aware: string|null|undefined;
 
     /**
      * A property to set to override AMF's model base URI information.
@@ -168,14 +131,6 @@ declare namespace ApiElements {
     narrow: boolean|null|undefined;
 
     /**
-     * If set then it renders methods documentation inline with
-     * the endpoint documentation.
-     * When it's not set (or value is `false`, default) then it renders
-     * just a list of methods with links.
-     */
-    inlineMethods: boolean|null|undefined;
-
-    /**
      * Scroll target used to observe `scroll` event.
      * When set the element will observe scroll and inform other components
      * about changes in navigation while scrolling through methods list.
@@ -191,7 +146,50 @@ declare namespace ApiElements {
      * This is only required in inline mode (`inlineMethods`).
      */
     redirectUri: string|null|undefined;
+
+    /**
+     * When set it enables Anypoint compatibility theme
+     */
+    legacy: boolean|null|undefined;
+
+    /**
+     * Applied outlined theme to the try it panel
+     */
+    outlined: boolean|null|undefined;
+
+    /**
+     * In inline mode, passes the `noUrlEditor` value on the
+     * `api-request-paqnel`
+     */
+    noUrlEditor: boolean|null|undefined;
+
+    /**
+     * Currently rendered view type
+     */
+    _viewType: string|null|undefined;
+
+    /**
+     * Computed value of the final model extracted from the `amf`, `selected`,
+     * and `selectedType` properties.
+     */
+    _docsModel: object|null;
+
+    /**
+     * Computed value of currently rendered endpoint.
+     */
+    _endpoint: object|null|undefined;
+    render(): any;
+    _renderView(): any;
+    _summaryTemplate(): any;
+    _securityTemplate(): any;
+    _documentationTemplate(): any;
+    _typeTemplate(): any;
+    _methodTemplate(): any;
+    _endpointTemplate(): any;
+    _inlineEndpointTemplate(): any;
+    _simpleEndpointTemplate(): any;
     disconnectedCallback(): void;
+    _processModelChange(): void;
 
     /**
      * Registers `api-navigation-selection-changed` event listener handler
@@ -214,16 +212,6 @@ declare namespace ApiElements {
      * Handler for `api-navigation-selection-changed` event.
      */
     _navigationHandler(e: CustomEvent|null): void;
-
-    /**
-     * A function that is called each time `amfModel`, `selected`, or `selectedType`
-     * changed. It calls `__processModel()` function in a debouncer (Polymer's
-     * `afterNextRender` from RenderStatus class) to ensure all properties are set.
-     *
-     * Note, this function won't be called when any change inside `amfModel` ocurred
-     * as this reacts on complete variable change.
-     */
-    _apiModelChanged(): void;
 
     /**
      * Computes security scheme definition model from web API and current selection.
@@ -328,10 +316,8 @@ declare namespace ApiElements {
      * an endpoint.
      *
      * @param model Partial model for endpoints
-     * @param selected Current selection.
-     * @param selectedType Selection type.
      */
-    _processEndpointParial(model: object|null, selected: String|null, selectedType: string|null, inlineMethods: Boolean|null): void;
+    _processEndpointParial(model: object|null): void;
 
     /**
      * Creates a link model that is accepted by the endpoint documentation
@@ -349,10 +335,11 @@ declare namespace ApiElements {
      *
      * @param model Web API AMF model
      * @param selected Currently selected endpoint
+     * @param lookupMethods When set it looks for the ID in methods array.
      * @returns Object with `label` and `id` or `undefined`
      * if no previous item.
      */
-    _computeEndpointPrevious(model: object|null, selected: String|null): object|null|undefined;
+    _computeEndpointPrevious(model: object|null, selected: String|null, lookupMethods: Boolean|null): object|null|undefined;
 
     /**
      * Computes link model for next endpoint, if any exists relative to
@@ -360,10 +347,11 @@ declare namespace ApiElements {
      *
      * @param model WebApi shape object of AMF
      * @param selected Currently selected endpoint
+     * @param lookupMethods When set it looks for the ID in methods array.
      * @returns Object with `label` and `id` or `undefined`
      * if no next item.
      */
-    _computeEndpointNext(model: object|null, selected: String|null): object|null|undefined;
+    _computeEndpointNext(model: object|null, selected: String|null, lookupMethods: Boolean|null): object|null|undefined;
 
     /**
      * Creates a link model that is accepted by the method documentation
@@ -409,22 +397,6 @@ declare namespace ApiElements {
     _computeMethodPartialEndpoint(api: object|null, selected: String|null): object|null|undefined;
 
     /**
-     * Tests if endpoint component should be rendered for both method and
-     * endpoint documentation in inline mode.
-     */
-    _renderInlineEndpoint(inlineMethods: Boolean|null, isMethod: Boolean|null, isEndpoint: Boolean|null): Boolean|null;
-
-    /**
-     * Computes if single endpoint doc should be rendered
-     */
-    _renderEndpoint(inlineMethods: Boolean|null, isEndpoint: Boolean|null): Boolean|null;
-
-    /**
-     * Computes if single method doc should be rendered
-     */
-    _renderMethod(inlineMethods: Boolean|null, isMethod: Boolean|null): Boolean|null;
-
-    /**
      * Tests if `model` is of a RAML library model.
      *
      * @param model A shape to test
@@ -464,6 +436,7 @@ declare namespace ApiElements {
      * @returns List of supported media types or undefined.
      */
     _computeApiMediaTypes(model: object|null): Array<String|null>|null|undefined;
+    _apiChanged(e: any): void;
   }
 }
 
@@ -473,5 +446,3 @@ declare global {
     "api-documentation": ApiElements.ApiDocumentation;
   }
 }
-
-export {};

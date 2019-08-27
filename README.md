@@ -14,10 +14,6 @@ A main documentation view for AMF model generated from API spec.
 <api-documentation></api-documentation>
 ```
 
-### API components
-
-This components is a part of [API components ecosystem](https://elements.advancedrestclient.com/)
-
 ## Usage
 
 ### Installation
@@ -35,80 +31,134 @@ npm install --save @api-components/api-documentation
     </script>
   </head>
   <body>
-    <api-documentation></api-documentation>
+    <api-documentation amf="..." selected="..."></api-documentation>
   </body>
 </html>
 ```
 
-### In a Polymer 3 element
+### In a LitElement
 
 ```js
-import {PolymerElement, html} from '@polymer/polymer';
+import { LitElement, html } from 'lit-element';
 import '@api-components/api-documentation/api-documentation.js';
 
 class SampleElement extends PolymerElement {
-  static get template() {
+  render() {
     return html`
-    <api-documentation></api-documentation>
+    <api-endpoint-documentation
+      .amf="${this.amf}"
+      .selected="${this.selectedAmfId}"
+      .selectedType="${this.selectedType}"
+      ?narrow="${this.narrow}"
+      ?legacy="${this.legacy}"
+      ?outlined="${this.outlined}"
+      .inlineMethods="${this.inlineMethods}"
+      .scrollTarget="${this.scrollTarget}"
+      .noTryIt="${this.noTryit}"
+      @tryit-requested="${this._tryitHandler}"></api-endpoint-documentation>
     `;
   }
 
-  _authChanged(e) {
-    console.log(e.detail);
+  _tryitHandler(e) {
+    console.log('opening api-request-panel...');
   }
 }
 customElements.define('sample-element', SampleElement);
 ```
 
-### Installation
+### AMF model and selection
+
+Pass the entire AMF model to the element. It accepts models for:
+
+-   API
+-   Documentation fragment
+-   Type fragment
+-   Security fragment
+-   Library fragment
+-   AMF service partial model
+
+API, library, and partial model for endpoint requires `selected` and `selectedType` properties to be set.
+It computes required properties when selection change.
+
+The type can be one of:
+
+-   `summary`
+-   `documentation`
+-   `type`
+-   `security`
+-   `endpoint`
+-   `method`
+
+The `selected` property id the `@id` value of a model to render. It has to correspond to selected type.
+This means, when `selectedType` it `security` then the component scans declarations and references for a type
+with given id. If model cannot be found then it renders blank element.
+
+### api-navigation
+
+To avoid dealing with selection and types you can use [api-navigation](https://github.com/advanced-rest-client/api-navigation) element
+in combination with `handleNavigationEvents` property. When set, and the navigation is in the DOM, the element listens for navigation
+events dispatched from the navigation element when the user changes selection.
+
+Note, initial event when the DOM is constructed might not be handled. Therefore use a default value `summary` for both `selectedType` and `selected`.
+
+```html
+<api-navigation amf="..."></api-navigation>
+<api-documentation amf="..." handleNavigationEvents selected="summary" selectedtype="summary"></api-documentation>
+```
+
+### inline methods
+
+The components by default render endpoint and method documentation separately. It's mostly for performance reasons and endpoint documentation may contain multiple methods with complex data types. In this case it could potentially slow down the browsers lowering good experience.
+However, it is possible to render a single view for an endpoint that includes all methods and the "try it" panel by setting `inlineMethods` property and by providing `scrollTarget`.
+
+The scroll target should be set to either the `window` object or a parent that has scrolling region (overflow set). The endpoint documentation uses this to compute which method is currently being rendered on the screen and to scroll to a method when selection change.
+
+## Development
 
 ```sh
 git clone https://github.com/advanced-rest-client/api-documentation
-cd api-url-editor
+cd api-documentation
 npm install
-npm install -g polymer-cli
 ```
 
 ### Running the demo locally
 
 ```sh
-polymer serve --npm
-open http://127.0.0.1:<port>/demo/
+npm start
 ```
 
 ### Running the tests
 ```sh
-polymer test --npm
+npm test
 ```
 
 ## Breaking Changes in v3
 
-Due to completely different dependencies import algorithm the CodeMirror and it's dependencies has to
-be included to the web application manually, outside the component.
+When using `inlinemethods` property you should note this breaking changes.
 
-Web Compoennts are ES6 modules and libraries like CodeMirror are not adjusted to
-new spec. Therefore importing the library inside the component won't make it work
-(no reference is created).
+### OAuth popup location
 
-All the dependencies described below are installed with the package.
+The `bower-location` attribute becomes `auth-popup-location`.
+It is a path to `node_modules` directory. It can be both relative or absolute location. For example `/static/console/node_modules` will produce OAuth Redirect URI `/static/console/node_modules/@advanced-rest-client/oauth-authorization/oauth-popup.html`.
 
-**Code Mirror support**
+However, you are encourage to use your own redirect popup. It can be anything but it must post message to the opened window with URL parameters. See `@advanced-rest-client/oauth-authorization/oauth-popup.html` for more details.
 
-CodeMirror + JSON linter (body editor) + headers hints and syntax (headers editor) + basic syntax (body editor).
+### Code Mirror dependencies
+
+Code mirror is not ES6 ready. Their build contains AMD exports which is incompatible with native modules. Therefore the dependencies cannot be imported with the element but outside of it.
+The component requires the following scripts to be ready before it's initialized (especially body and headers editors):
 
 ```html
-<script src="../../../jsonlint/lib/jsonlint.js"></script>
-<script src="../../../codemirror/lib/codemirror.js"></script>
-<script src="../../../codemirror/addon/mode/loadmode.js"></script>
-<script src="../../../codemirror/mode/meta.js"></script>
-<script src="../../../codemirror/mode/javascript/javascript.js"></script>
-<script src="../../../codemirror/mode/xml/xml.js"></script>
-<script src="../../../codemirror/mode/htmlmixed/htmlmixed.js"></script>
-<script src="../../../codemirror/addon/lint/lint.js"></script>
-<script src="../../../codemirror/addon/lint/json-lint.js"></script>
-<script src="../../../@advanced-rest-client/code-mirror-hint/headers-addon.js"></script>
-<script src="../../../@advanced-rest-client/code-mirror-hint/show-hint.js"></script>
-<script src="../../../@advanced-rest-client/code-mirror-hint/hint-http-headers.js"></script>
+<script src="node_modules/jsonlint/lib/jsonlint.js"></script>
+<script src="node_modules/codemirror/lib/codemirror.js"></script>
+<script src="node_modules/codemirror/addon/mode/loadmode.js"></script>
+<script src="node_modules/codemirror/mode/meta.js"></script>
+<!-- Some basic syntax highlighting -->
+<script src="node_modules/codemirror/mode/javascript/javascript.js"></script>
+<script src="node_modules/codemirror/mode/xml/xml.js"></script>
+<script src="node_modules/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+<script src="node_modules/codemirror/addon/lint/lint.js"></script>
+<script src="node_modules/codemirror/addon/lint/json-lint.js"></script>
 ```
 
 CodeMirror's modes location. May be skipped if all possible modes are already included into the app.
@@ -116,17 +166,19 @@ CodeMirror's modes location. May be skipped if all possible modes are already in
 ```html
 <script>
 /* global CodeMirror */
-CodeMirror.modeURL = '../../../codemirror/mode/%N/%N.js';
+CodeMirror.modeURL = 'node_modules/codemirror/mode/%N/%N.js';
 </script>
 ```
 
-**Dependencies for OAuth1 and Digest authorization methods.**
+### Dependencies for OAuth1 and Digest authorization methods
+
+For the same reasons as for CodeMirror this dependencies are required for OAuth1 and Digest authorization panels to work.
 
 ```html
-<script src="../../../cryptojslib/components/core.js"></script>
-<script src="../../../cryptojslib/rollups/sha1.js"></script>
-<script src="../../../cryptojslib/components/enc-base64-min.js"></script>
-<script src="../../../cryptojslib/rollups/md5.js"></script>
-<script src="../../../cryptojslib/rollups/hmac-sha1.js"></script>
-<script src="../../../jsrsasign/lib/jsrsasign-rsa-min.js"></script>
+<script src="node_modules/cryptojslib/components/core.js"></script>
+<script src="node_modules/cryptojslib/rollups/sha1.js"></script>
+<script src="node_modules/cryptojslib/components/enc-base64-min.js"></script>
+<script src="node_modules/cryptojslib/rollups/md5.js"></script>
+<script src="node_modules/cryptojslib/rollups/hmac-sha1.js"></script>
+<script src="node_modules/jsrsasign/lib/jsrsasign-rsa-min.js"></script>
 ```
