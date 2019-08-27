@@ -39,3 +39,17 @@ securitySchemes:
       requestTokenUri: http://api.domain.com/oauth1/request_token
       authorizationUri: http://api.domain.com/oauth1/authorize
       tokenCredentialsUri: http://api.domain.com/oauth1/access_token
+annotationTypes:
+  deprecated: string
+  annotationTest: nil
+  clearanceLevel:
+    properties:
+      level:
+        enum: [ low, medium, high ]
+        required: true
+      signature:
+        pattern: "\\d{3}-\\w{12}"
+        required: true
+documentation:
+  - title: Test doc
+    content: Test content

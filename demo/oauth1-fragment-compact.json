@@ -130,12 +130,24 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "security:settings"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(3,0)-(4,0)]"
+"@value": "[(4,0)-(8,0)]"
+}
+]
+},
+{
+"sourcemaps:element": [
+{
+"@value": "security:type"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(2,0)-(3,0)]"
 }
 ]
 },
@@ -154,12 +166,12 @@
 {
 "sourcemaps:element": [
 {
-"@value": "security:type"
+"@value": "schema-org:description"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(2,0)-(3,0)]"
+"@value": "[(3,0)-(4,0)]"
 }
 ]
 }
