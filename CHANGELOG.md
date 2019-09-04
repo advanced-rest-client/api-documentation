@@ -306,3 +306,12 @@
 
 
 
+## 3.0.1 (2019-09-04)
+
+
+### Features
+
+* adding `compatibility` and `graph` property ([edc43eb](https://github.com/advanced-rest-client/api-documentation/commit/edc43eb))
+
+
+
