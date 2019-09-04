@@ -121,30 +121,32 @@ class ApiDocumentation extends AmfHelperMixin(LitElement) {
   }
 
   _typeTemplate() {
-    const { amf, _docsModel, narrow, legacy } = this;
+    const { amf, _docsModel, narrow, compatibility, graph } = this;
     const mt = this._computeApiMediaTypes(amf);
     return html`<api-type-documentation
       .amf="${amf}"
       .type="${_docsModel}"
       .narrow="${narrow}"
       .mediaTypes="${mt}"
-      .legacy="${legacy}"></api-type-documentation>`;
+      .compatibility="${compatibility}"
+      ?graph="${graph}"></api-type-documentation>`;
   }
 
   _methodTemplate() {
-    const { amf, _docsModel, narrow, legacy, _endpoint, selected, baseUri, noTryIt } = this;
+    const { amf, _docsModel, narrow, compatibility, _endpoint, selected, baseUri, noTryIt, graph } = this;
     const prev = this._computeMethodPrevious(amf, selected);
     const next = this._computeMethodNext(amf, selected);
     return html`<api-method-documentation
       .amf="${amf}"
       .narrow="${narrow}"
-      .legacy="${legacy}"
+      .compatibility="${compatibility}"
       .endpoint="${_endpoint}"
       .method="${_docsModel}"
       .previous="${prev}"
       .next="${next}"
       .baseUri="${baseUri}"
       .noTryIt="${noTryIt}"
+      ?graph="${graph}"
       rendersecurity
       rendercodesnippets></api-method-documentation>`;
   }
@@ -156,13 +158,13 @@ class ApiDocumentation extends AmfHelperMixin(LitElement) {
   }
 
   _inlineEndpointTemplate() {
-    const { amf, _docsModel, narrow, legacy, outlined, selected, baseUri, scrollTarget, redirectUri, noUrlEditor } = this;
+    const { amf, _docsModel, narrow, compatibility, outlined, selected, baseUri, scrollTarget, redirectUri, noUrlEditor, graph } = this;
     const prev = this._computeEndpointPrevious(amf, selected, true);
     const next = this._computeEndpointNext(amf, selected, true);
     return html`<api-endpoint-documentation
       .amf="${amf}"
       .narrow="${narrow}"
-      .legacy="${legacy}"
+      .compatibility="${compatibility}"
       .outlined="${outlined}"
       .selected="${selected}"
       .endpoint="${_docsModel}"
@@ -172,24 +174,26 @@ class ApiDocumentation extends AmfHelperMixin(LitElement) {
       .scrollTarget="${scrollTarget}"
       .redirectUri="${redirectUri}"
       .noUrlEditor="${noUrlEditor}"
+      ?graph="${graph}"
       notryit
       inlinemethods></api-endpoint-documentation>`;
   }
 
   _simpleEndpointTemplate() {
-    const { amf, _docsModel, narrow, legacy, selected, baseUri } = this;
+    const { amf, _docsModel, narrow, compatibility, selected, baseUri, graph } = this;
     const prev = this._computeEndpointPrevious(amf, selected);
     const next = this._computeEndpointNext(amf, selected);
 
     return html`<api-endpoint-documentation
       .amf="${amf}"
       .narrow="${narrow}"
-      .legacy="${legacy}"
+      .compatibility="${compatibility}"
       .selected="${selected}"
       .endpoint="${_docsModel}"
       .previous="${prev}"
       .next="${next}"
       .baseUri="${baseUri}"
+      ?graph="${graph}"
       ></api-endpoint-documentation>`;
   }
 
@@ -255,9 +259,20 @@ class ApiDocumentation extends AmfHelperMixin(LitElement) {
        */
       redirectUri: { type: String },
       /**
-       * When set it enables Anypoint compatibility theme
+       * Enables compatibility with Anypoint components.
+       */
+      compatibility: { type: Boolean },
+      /**
+       * @deprecated Use `compatibility` instead
        */
       legacy: { type: Boolean },
+      /**
+       * When enabled it renders external types as links and dispatches
+       * `api-navigation-selection-changed` when clicked.
+       *
+       * This property is experimental.
+       */
+      graph: { type: Boolean },
       /**
        * Applied outlined theme to the try it panel
        */
@@ -281,6 +296,14 @@ class ApiDocumentation extends AmfHelperMixin(LitElement) {
        */
       _endpoint: { type: Object }
     };
+  }
+
+  get legacy() {
+    return this.compatibility;
+  }
+
+  set legacy(value) {
+    this.compatibility = value;
   }
 
   get selected() {

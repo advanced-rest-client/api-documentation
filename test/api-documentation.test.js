@@ -201,14 +201,14 @@ describe('<api-documentation>', function() {
           const type = AmfLoader.lookupType(amf, 'Image');
           const element = await modelFixture(amf, 'type', type['@id']);
           element.narrow = true;
-          element.legacy = true;
+          element.compatibility = true;
           await aTimeout();
           const node = element.shadowRoot.querySelector('api-type-documentation');
           assert.ok(node, 'type is rendered');
           assert.typeOf(node.amf, 'array', 'amf is set');
           assert.isTrue(node.type === type, 'type model is set');
           assert.equal(node.narrow, element.narrow, 'narrow is set');
-          assert.equal(node.legacy, element.legacy, 'legacy is set');
+          assert.equal(node.compatibility, element.compatibility, 'compatibility is set');
           assert.deepEqual(node.mediaTypes, ['application/json', 'application/xml'], 'mediaTypes is set');
         });
 
@@ -226,7 +226,7 @@ describe('<api-documentation>', function() {
           const model = AmfLoader.lookupEndpoint(amf, '/people');
           const element = await modelFixture(amf, 'endpoint', model['@id']);
           element.narrow = true;
-          element.legacy = true;
+          element.compatibility = true;
           element.baseUri = 'https://test.com';
           await aTimeout();
           const node = element.shadowRoot.querySelector('api-endpoint-documentation');
@@ -234,7 +234,7 @@ describe('<api-documentation>', function() {
           assert.typeOf(node.amf, 'array', 'amf is set');
           assert.isTrue(node.endpoint === model, 'type model is set');
           assert.equal(node.narrow, element.narrow, 'narrow is set');
-          assert.equal(node.legacy, element.legacy, 'legacy is set');
+          assert.equal(node.compatibility, element.compatibility, 'compatibility is set');
           assert.equal(node.selected, model['@id'], 'selected is set');
           assert.equal(node.baseUri, element.baseUri, 'baseUri is set');
           assert.typeOf(node.next, 'object', 'next is set');
@@ -248,7 +248,7 @@ describe('<api-documentation>', function() {
           const model = AmfLoader.lookupOperation(amf, '/people', 'post');
           const element = await modelFixture(amf, 'method', model['@id']);
           element.narrow = true;
-          element.legacy = true;
+          element.compatibility = true;
           element.noTryIt = true;
           element.baseUri = 'https://test.com';
           await aTimeout();
@@ -258,7 +258,7 @@ describe('<api-documentation>', function() {
           assert.equal(node.endpoint['@id'], endpoint['@id'], 'endpoint model is set');
           assert.equal(node.method['@id'], model['@id'], 'method model is set');
           assert.equal(node.narrow, element.narrow, 'narrow is set');
-          assert.equal(node.legacy, element.legacy, 'legacy is set');
+          assert.equal(node.compatibility, element.compatibility, 'compatibility is set');
           assert.equal(node.baseUri, element.baseUri, 'baseUri is set');
           assert.typeOf(node.next, 'object', 'next is set');
           assert.typeOf(node.previous, 'object', 'previous is set');
@@ -269,7 +269,7 @@ describe('<api-documentation>', function() {
           const model = AmfLoader.lookupEndpoint(amf, '/people');
           const element = await inlineFixture(amf, 'endpoint', model['@id']);
           element.narrow = true;
-          element.legacy = true;
+          element.compatibility = true;
           element.noTryIt = true;
           element.baseUri = 'https://test.com';
           element.redirectUri = 'https://auth.com';
@@ -283,8 +283,8 @@ describe('<api-documentation>', function() {
           assert.equal(node.selected, model['@id'], 'selected is set');
           assert.equal(node.endpoint['@id'], model['@id'], 'endpoint model is set');
           assert.equal(node.narrow, element.narrow, 'narrow is set');
-          assert.equal(node.legacy, element.legacy, 'legacy is set');
-          assert.equal(node.outlined, element.outlined, 'legacy is set');
+          assert.equal(node.compatibility, element.compatibility, 'compatibility is set');
+          assert.equal(node.outlined, element.outlined, 'outlined is set');
           assert.equal(node.baseUri, element.baseUri, 'baseUri is set');
           assert.typeOf(node.next, 'object', 'next is set');
           assert.typeOf(node.previous, 'object', 'previous is set');
@@ -299,7 +299,7 @@ describe('<api-documentation>', function() {
           const model = AmfLoader.lookupOperation(amf, '/people', 'post');
           const element = await inlineFixture(amf, 'method', model['@id']);
           element.narrow = true;
-          element.legacy = true;
+          element.compatibility = true;
           element.noTryIt = true;
           element.baseUri = 'https://test.com';
           element.redirectUri = 'https://auth.com';
@@ -313,8 +313,8 @@ describe('<api-documentation>', function() {
           assert.equal(node.selected, model['@id'], 'selected is set');
           assert.equal(node.endpoint['@id'], endpoint['@id'], 'endpoint model is set');
           assert.equal(node.narrow, element.narrow, 'narrow is set');
-          assert.equal(node.legacy, element.legacy, 'legacy is set');
-          assert.equal(node.outlined, element.outlined, 'legacy is set');
+          assert.equal(node.compatibility, element.compatibility, 'compatibility is set');
+          assert.equal(node.outlined, element.outlined, 'outlined is set');
           assert.equal(node.baseUri, element.baseUri, 'baseUri is set');
           assert.typeOf(node.next, 'object', 'next is set');
           assert.typeOf(node.previous, 'object', 'previous is set');
@@ -335,14 +335,14 @@ describe('<api-documentation>', function() {
           const type = AmfLoader.lookupType(amf, 'myType');
           const element = await modelFixture(amf, 'type', type['@id']);
           element.narrow = true;
-          element.legacy = true;
+          element.compatibility = true;
           await aTimeout();
           const node = element.shadowRoot.querySelector('api-type-documentation');
           assert.ok(node, 'security is rendered');
           assert.typeOf(node.amf, 'array', 'amf is set');
           assert.isTrue(node.type === type, 'type model is set');
           assert.equal(node.narrow, element.narrow, 'narrow is set');
-          assert.equal(node.legacy, element.legacy, 'legacy is set');
+          assert.equal(node.compatibility, element.compatibility, 'compatibility is set');
           // libraries do not have media type
           assert.isUndefined(node.mediaTypes, 'mediaTypes is not set');
         });
