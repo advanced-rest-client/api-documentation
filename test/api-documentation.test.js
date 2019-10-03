@@ -228,6 +228,7 @@ describe('<api-documentation>', function() {
           element.narrow = true;
           element.compatibility = true;
           element.baseUri = 'https://test.com';
+          element.noBottomNavigation = true;
           await aTimeout();
           const node = element.shadowRoot.querySelector('api-endpoint-documentation');
           assert.ok(node, 'endpoint is rendered');
@@ -241,6 +242,7 @@ describe('<api-documentation>', function() {
           assert.typeOf(node.previous, 'object', 'previous is set');
           // notryit is only set when inlining methods
           assert.isUndefined(node.notryit, 'notryit is not set');
+          assert.isTrue(node.noNavigation, 'noNavigation is set');
         });
 
         it('renders method', async () => {
@@ -251,6 +253,7 @@ describe('<api-documentation>', function() {
           element.compatibility = true;
           element.noTryIt = true;
           element.baseUri = 'https://test.com';
+          element.noBottomNavigation = true;
           await aTimeout();
           const node = element.shadowRoot.querySelector('api-method-documentation');
           assert.ok(node, 'method is rendered');
@@ -263,6 +266,7 @@ describe('<api-documentation>', function() {
           assert.typeOf(node.next, 'object', 'next is set');
           assert.typeOf(node.previous, 'object', 'previous is set');
           assert.isTrue(node.noTryIt, 'noTryIt is set');
+          assert.isTrue(node.noNavigation, 'noNavigation is set');
         });
 
         it('renders inline method endpoint selection', async () => {
@@ -276,6 +280,7 @@ describe('<api-documentation>', function() {
           element.scrollTarget = window;
           element.noUrlEditor = true;
           element.outlined = true;
+          element.noBottomNavigation = true;
           await aTimeout();
           const node = element.shadowRoot.querySelector('api-endpoint-documentation');
           assert.ok(node, 'endpoint is rendered');
@@ -292,6 +297,7 @@ describe('<api-documentation>', function() {
           assert.isTrue(node.noUrlEditor, 'noUrlEditor is set');
           assert.isTrue(node.noTryIt, 'noTryIt is set');
           assert.isTrue(node.inlineMethods, 'inlineMethods is set');
+          assert.isTrue(node.noNavigation, 'noNavigation is set');
         });
 
         it('renders inline method for method selection', async () => {
@@ -306,6 +312,7 @@ describe('<api-documentation>', function() {
           element.scrollTarget = window;
           element.noUrlEditor = true;
           element.outlined = true;
+          element.noBottomNavigation = true;
           await aTimeout();
           const node = element.shadowRoot.querySelector('api-endpoint-documentation');
           assert.ok(node, 'endpoint is rendered');
@@ -322,6 +329,7 @@ describe('<api-documentation>', function() {
           assert.isTrue(node.noUrlEditor, 'noUrlEditor is set');
           assert.isTrue(node.noTryIt, 'noTryIt is set');
           assert.isTrue(node.inlineMethods, 'inlineMethods is set');
+          assert.isTrue(node.noNavigation, 'noNavigation is set');
         });
       });
 
