@@ -335,3 +335,13 @@
 
 
 
+# 4.0.0 (2019-10-14)
+
+
+### Features
+
+* adding `compatibility` and `graph` property ([edc43eb](https://github.com/advanced-rest-client/api-documentation/commit/edc43eb))
+* adding noBottomNavigation to be passed to endpoint/method ([fbe0824](https://github.com/advanced-rest-client/api-documentation/commit/fbe0824))
+
+
+
