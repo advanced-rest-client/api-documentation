@@ -2,7 +2,7 @@
 {
 "@id": "amf://id",
 "@type": [
-"http://a.ml/vocabularies/document#SecuritySchemeFragment",
+"http://a.ml/vocabularies/security#SecuritySchemeFragment",
 "http://a.ml/vocabularies/document#Fragment",
 "http://a.ml/vocabularies/document#Unit"
 ],
@@ -18,7 +18,7 @@
 "@value": "OAuth 1.0"
 }
 ],
-"http://schema.org/description": [
+"http://a.ml/vocabularies/core#description": [
 {
 "@value": "OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred."
 }
@@ -166,7 +166,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "http://schema.org/description"
+"@value": "http://a.ml/vocabularies/core#description"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -178,6 +178,11 @@
 ]
 }
 ]
+}
+],
+"http://a.ml/vocabularies/document#version": [
+{
+"@value": "2.0.0"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [

@@ -11,23 +11,23 @@
 {
 "@id": "#61",
 "@type": [
-"schema-org:WebAPI",
+"apiContract:WebAPI",
 "doc:RootDomainElement",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "mule-template"
 }
 ],
-"raml-http:server": [
+"apiContract:server": [
 {
 "@id": "#195",
 "@type": [
-"raml-http:Server",
+"apiContract:Server",
 "doc:DomainElement"
 ],
-"raml-http:url": [
+"core:urlTemplate": [
 {
 "@value": "http://mule-deve.canda.biz:24030/api"
 }
@@ -42,7 +42,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:url"
+"@value": "core:urlTemplate"
 }
 ],
 "sourcemaps:value": [
@@ -70,24 +70,24 @@
 ]
 }
 ],
-"schema-org:version": [
+"core:version": [
 {
 "@value": "api"
 }
 ],
-"schema-org:documentation": [
+"core:documentation": [
 {
 "@id": "#196",
 "@type": [
-"schema-org:CreativeWork",
+"core:CreativeWork",
 "doc:DomainElement"
 ],
-"schema-org:title": [
+"core:title": [
 {
 "@value": "Home"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Welcome to the **Mule Template API** Documentation. The Mule Template API allows you to connect your application to some simple endpoints that illustrate the design of a Web-based API.\n"
 }
@@ -102,7 +102,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -126,7 +126,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:title"
+"@value": "core:title"
 }
 ],
 "sourcemaps:value": [
@@ -140,70 +140,70 @@
 ]
 }
 ],
-"raml-http:endpoint": [
+"apiContract:endpoint": [
 {
 "@id": "#62",
 "@type": [
-"raml-http:EndPoint",
+"apiContract:EndPoint",
 "doc:DomainElement"
 ],
-"raml-http:path": [
+"apiContract:path": [
 {
 "@value": "/greetings"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The greetings resource contains only a simple message. The message text might be customized by passing a query parameter."
 }
 ],
-"hydra:supportedOperation": [
+"apiContract:supportedOperation": [
 {
 "@id": "#63",
 "@type": [
-"hydra:Operation",
+"apiContract:Operation",
 "doc:DomainElement"
 ],
-"hydra:method": [
+"apiContract:method": [
 {
 "@value": "get"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Answers a collection of three simple greetings."
 }
 ],
-"hydra:returns": [
+"apiContract:returns": [
 {
 "@id": "#64",
 "@type": [
-"raml-http:Response",
+"apiContract:Response",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "200"
 }
 ],
-"hydra:statusCode": [
+"apiContract:statusCode": [
 {
 "@value": "200"
 }
 ],
-"raml-http:payload": [
+"apiContract:payload": [
 {
 "@id": "#65",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#66",
 "@type": [
@@ -301,7 +301,7 @@
 "@value": "id"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The ID of the representation, a randomly generated UUID."
 }
@@ -330,7 +330,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -470,7 +470,7 @@
 "@value": "message"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The text of the message."
 }
@@ -499,7 +499,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -631,7 +631,7 @@
 "@value": "greetings"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Holds the collection of simple messages."
 }
@@ -660,7 +660,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -737,16 +737,16 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Describes a collection of 0..n simple message representations consisting of an ID and a text."
 }
 ],
-"doc:examples": [
+"apiContract:examples": [
 {
 "@id": "#67",
 "@type": [
-"doc:Example",
+"apiContract:Example",
 "doc:DomainElement"
 ],
 "doc:strict": [
@@ -771,7 +771,7 @@
 "data:Node",
 "doc:DomainElement"
 ],
-"rdf:member": [
+"rdfs:member": [
 {
 "@id": "#69",
 "@type": [
@@ -797,7 +797,7 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_4"
 }
@@ -844,7 +844,7 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_5"
 }
@@ -873,7 +873,7 @@
 ]
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "object_3"
 }
@@ -950,7 +950,7 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_7"
 }
@@ -997,7 +997,7 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_8"
 }
@@ -1026,7 +1026,7 @@
 ]
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "object_6"
 }
@@ -1103,7 +1103,7 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_10"
 }
@@ -1150,7 +1150,7 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_11"
 }
@@ -1179,7 +1179,7 @@
 ]
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "object_9"
 }
@@ -1232,7 +1232,7 @@
 ]
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "array_2"
 }
@@ -1261,7 +1261,7 @@
 ]
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "object_1"
 }
@@ -1318,7 +1318,7 @@
 ],
 "doc:reference-id": [
 {
-"@id": "#52"
+"@id": "#56"
 }
 ],
 "doc:location": [
@@ -1414,7 +1414,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -1431,7 +1431,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(1,0)-(34,1)]"
+"@value": "[(22,10)-(34,1)]"
 }
 ]
 },
@@ -1514,7 +1514,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:payload"
+"@value": "apiContract:payload"
 }
 ],
 "sourcemaps:value": [
@@ -1542,20 +1542,20 @@
 {
 "@id": "#85",
 "@type": [
-"raml-http:Response",
+"apiContract:Response",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "204"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The response does not contain any content."
 }
 ],
-"hydra:statusCode": [
+"apiContract:statusCode": [
 {
 "@value": "204"
 }
@@ -1570,7 +1570,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -1603,19 +1603,19 @@
 "security:ParametrizedSecurityScheme",
 "doc:DomainElement"
 ],
-"security:name": [
+"core:name": [
 {
 "@value": "candaCommons.basicAuth"
 }
 ],
 "security:scheme": [
 {
-"@id": "#42",
+"@id": "#44",
 "@type": [
 "security:SecurityScheme",
 "doc:DomainElement"
 ],
-"security:name": [
+"core:name": [
 {
 "@value": "basicAuth"
 }
@@ -1625,51 +1625,51 @@
 "@value": "Basic Authentication"
 }
 ],
-"schema-org:displayName": [
+"core:displayName": [
 {
 "@value": "Basic Authentication"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "This API supports Basic Authentication. The client has to provide an \"Authorization\" header with valid credentials."
 }
 ],
-"raml-http:header": [
+"apiContract:header": [
 {
-"@id": "#43",
+"@id": "#45",
 "@type": [
-"raml-http:Parameter",
+"apiContract:Parameter",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "Authorization"
 }
 ],
-"raml-http:paramName": [
+"apiContract:paramName": [
 {
 "@value": "Authorization"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Used to send valid credentials."
 }
 ],
-"hydra:required": [
+"apiContract:required": [
 {
 "@value": true
 }
 ],
-"raml-http:binding": [
+"apiContract:binding": [
 {
 "@value": "header"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
-"@id": "#44",
+"@id": "#46",
 "@type": [
 "raml-shapes:ScalarShape",
 "raml-shapes:AnyShape",
@@ -1687,16 +1687,16 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Used to send valid credentials."
 }
 ],
-"doc:examples": [
+"apiContract:examples": [
 {
-"@id": "#45",
+"@id": "#47",
 "@type": [
-"doc:Example",
+"apiContract:Example",
 "doc:DomainElement"
 ],
 "doc:strict": [
@@ -1706,7 +1706,7 @@
 ],
 "doc:structuredValue": [
 {
-"@id": "#45",
+"@id": "#47",
 "@type": [
 "data:Scalar",
 "data:Node",
@@ -1722,14 +1722,14 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_1"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#45/source-map",
+"@id": "#47/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -1737,7 +1737,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#45"
+"@value": "amf://id#47"
 }
 ],
 "sourcemaps:value": [
@@ -1751,14 +1751,14 @@
 ]
 }
 ],
-"shacl:raw": [
+"doc:raw": [
 {
 "@value": "Basic ax5Gdza5OnJpZnG4Z2ok"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#45/source-map",
+"@id": "#47/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -1780,7 +1780,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "shacl:raw"
+"@value": "doc:raw"
 }
 ],
 "sourcemaps:value": [
@@ -1792,7 +1792,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#45"
+"@value": "amf://id#47"
 }
 ],
 "sourcemaps:value": [
@@ -1818,12 +1818,12 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#45"
+"@value": "amf://id#47"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "amf://id#43"
+"@value": "amf://id#45"
 }
 ]
 }
@@ -1834,7 +1834,7 @@
 ],
 "sourcemaps:sources": [
 {
-"@id": "#44/source-map",
+"@id": "#46/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -1842,7 +1842,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#44"
+"@value": "amf://id#46"
 }
 ],
 "sourcemaps:value": [
@@ -1856,7 +1856,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -1868,7 +1868,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#44"
+"@value": "amf://id#46"
 }
 ],
 "sourcemaps:value": [
@@ -1896,7 +1896,7 @@
 ],
 "sourcemaps:sources": [
 {
-"@id": "#43/source-map",
+"@id": "#45/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -1904,7 +1904,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:schema"
+"@value": "raml-shapes:schema"
 }
 ],
 "sourcemaps:value": [
@@ -1916,7 +1916,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#43"
+"@value": "amf://id#45"
 }
 ],
 "sourcemaps:value": [
@@ -1928,7 +1928,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -1942,31 +1942,31 @@
 ]
 }
 ],
-"hydra:response": [
+"apiContract:response": [
 {
-"@id": "#46",
+"@id": "#48",
 "@type": [
-"raml-http:Response",
+"apiContract:Response",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "401"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Credentials are missing or could not be validated by the server."
 }
 ],
-"hydra:statusCode": [
+"apiContract:statusCode": [
 {
 "@value": "401"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#46/source-map",
+"@id": "#48/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -1974,7 +1974,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -1986,7 +1986,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#46"
+"@value": "amf://id#48"
 }
 ],
 "sourcemaps:value": [
@@ -2002,7 +2002,7 @@
 ],
 "sourcemaps:sources": [
 {
-"@id": "#42/source-map",
+"@id": "#44/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -2010,7 +2010,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#42"
+"@value": "amf://id#44"
 }
 ],
 "sourcemaps:value": [
@@ -2024,7 +2024,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:response"
+"@value": "apiContract:response"
 }
 ],
 "sourcemaps:value": [
@@ -2036,7 +2036,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -2060,7 +2060,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#42"
+"@value": "amf://id#44"
 }
 ],
 "sourcemaps:value": [
@@ -2072,7 +2072,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "security:name"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -2084,7 +2084,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:displayName"
+"@value": "core:displayName"
 }
 ],
 "sourcemaps:value": [
@@ -2096,7 +2096,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:header"
+"@value": "apiContract:header"
 }
 ],
 "sourcemaps:value": [
@@ -2144,7 +2144,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:returns"
+"@value": "apiContract:returns"
 }
 ],
 "sourcemaps:value": [
@@ -2168,7 +2168,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -2184,39 +2184,39 @@
 {
 "@id": "#87",
 "@type": [
-"hydra:Operation",
+"apiContract:Operation",
 "doc:DomainElement"
 ],
-"hydra:method": [
+"apiContract:method": [
 {
 "@value": "put"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Creates a representation of a simple greeting message. This is a pseudo operation, the API does not store the representation in any way."
 }
 ],
-"hydra:expects": [
+"apiContract:expects": [
 {
 "@id": "#88",
 "@type": [
-"raml-http:Request",
+"apiContract:Request",
 "doc:DomainElement"
 ],
-"raml-http:payload": [
+"apiContract:payload": [
 {
 "@id": "#89",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#90",
 "@type": [
@@ -2275,7 +2275,7 @@
 "@value": "id"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The ID of the representation, a randomly generated UUID."
 }
@@ -2304,7 +2304,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -2444,7 +2444,7 @@
 "@value": "message"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The text message of the greeting."
 }
@@ -2473,7 +2473,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -2562,16 +2562,16 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Describes simple greeting representation consisting of an ID and a message."
 }
 ],
-"doc:examples": [
+"apiContract:examples": [
 {
 "@id": "#91",
 "@type": [
-"doc:Example",
+"apiContract:Example",
 "doc:DomainElement"
 ],
 "doc:strict": [
@@ -2605,7 +2605,7 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_2"
 }
@@ -2652,7 +2652,7 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_3"
 }
@@ -2681,7 +2681,7 @@
 ]
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "object_1"
 }
@@ -2750,7 +2750,7 @@
 ],
 "doc:reference-id": [
 {
-"@id": "#54"
+"@id": "#58"
 }
 ],
 "doc:location": [
@@ -2846,7 +2846,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -2863,7 +2863,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(1,0)-(30,22)]"
+"@value": "[(30,6)-(22,1)]"
 }
 ]
 },
@@ -2946,7 +2946,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:payload"
+"@value": "apiContract:payload"
 }
 ],
 "sourcemaps:value": [
@@ -2972,36 +2972,36 @@
 ]
 }
 ],
-"hydra:returns": [
+"apiContract:returns": [
 {
 "@id": "#98",
 "@type": [
-"raml-http:Response",
+"apiContract:Response",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "201"
 }
 ],
-"hydra:statusCode": [
+"apiContract:statusCode": [
 {
 "@value": "201"
 }
 ],
-"raml-http:payload": [
+"apiContract:payload": [
 {
 "@id": "#99",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#100",
 "@type": [
@@ -3060,7 +3060,7 @@
 "@value": "id"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The ID of the representation, a randomly generated UUID."
 }
@@ -3089,7 +3089,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -3229,7 +3229,7 @@
 "@value": "message"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The text message of the greeting."
 }
@@ -3258,7 +3258,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -3347,16 +3347,16 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Describes simple greeting representation consisting of an ID and a message."
 }
 ],
-"doc:examples": [
+"apiContract:examples": [
 {
 "@id": "#101",
 "@type": [
-"doc:Example",
+"apiContract:Example",
 "doc:DomainElement"
 ],
 "doc:strict": [
@@ -3390,7 +3390,7 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_2"
 }
@@ -3437,7 +3437,7 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_3"
 }
@@ -3466,7 +3466,7 @@
 ]
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "object_1"
 }
@@ -3535,7 +3535,7 @@
 ],
 "doc:reference-id": [
 {
-"@id": "#54"
+"@id": "#58"
 }
 ],
 "doc:location": [
@@ -3631,7 +3631,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -3648,7 +3648,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(1,0)-(30,22)]"
+"@value": "[(30,6)-(22,1)]"
 }
 ]
 },
@@ -3731,7 +3731,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:payload"
+"@value": "apiContract:payload"
 }
 ],
 "sourcemaps:value": [
@@ -3764,19 +3764,19 @@
 "security:ParametrizedSecurityScheme",
 "doc:DomainElement"
 ],
-"security:name": [
+"core:name": [
 {
 "@value": "candaCommons.basicAuth"
 }
 ],
 "security:scheme": [
 {
-"@id": "#42",
+"@id": "#44",
 "@type": [
 "security:SecurityScheme",
 "doc:DomainElement"
 ],
-"security:name": [
+"core:name": [
 {
 "@value": "basicAuth"
 }
@@ -3786,51 +3786,51 @@
 "@value": "Basic Authentication"
 }
 ],
-"schema-org:displayName": [
+"core:displayName": [
 {
 "@value": "Basic Authentication"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "This API supports Basic Authentication. The client has to provide an \"Authorization\" header with valid credentials."
 }
 ],
-"raml-http:header": [
+"apiContract:header": [
 {
-"@id": "#43",
+"@id": "#45",
 "@type": [
-"raml-http:Parameter",
+"apiContract:Parameter",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "Authorization"
 }
 ],
-"raml-http:paramName": [
+"apiContract:paramName": [
 {
 "@value": "Authorization"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Used to send valid credentials."
 }
 ],
-"hydra:required": [
+"apiContract:required": [
 {
 "@value": true
 }
 ],
-"raml-http:binding": [
+"apiContract:binding": [
 {
 "@value": "header"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
-"@id": "#44",
+"@id": "#46",
 "@type": [
 "raml-shapes:ScalarShape",
 "raml-shapes:AnyShape",
@@ -3848,16 +3848,16 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Used to send valid credentials."
 }
 ],
-"doc:examples": [
+"apiContract:examples": [
 {
-"@id": "#45",
+"@id": "#47",
 "@type": [
-"doc:Example",
+"apiContract:Example",
 "doc:DomainElement"
 ],
 "doc:strict": [
@@ -3867,7 +3867,7 @@
 ],
 "doc:structuredValue": [
 {
-"@id": "#45",
+"@id": "#47",
 "@type": [
 "data:Scalar",
 "data:Node",
@@ -3883,14 +3883,14 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_1"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#45/source-map",
+"@id": "#47/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -3898,7 +3898,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#45"
+"@value": "amf://id#47"
 }
 ],
 "sourcemaps:value": [
@@ -3912,14 +3912,14 @@
 ]
 }
 ],
-"shacl:raw": [
+"doc:raw": [
 {
 "@value": "Basic ax5Gdza5OnJpZnG4Z2ok"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#45/source-map",
+"@id": "#47/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -3941,7 +3941,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "shacl:raw"
+"@value": "doc:raw"
 }
 ],
 "sourcemaps:value": [
@@ -3953,7 +3953,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#45"
+"@value": "amf://id#47"
 }
 ],
 "sourcemaps:value": [
@@ -3979,12 +3979,12 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#45"
+"@value": "amf://id#47"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "amf://id#43"
+"@value": "amf://id#45"
 }
 ]
 }
@@ -3995,7 +3995,7 @@
 ],
 "sourcemaps:sources": [
 {
-"@id": "#44/source-map",
+"@id": "#46/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -4003,7 +4003,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#44"
+"@value": "amf://id#46"
 }
 ],
 "sourcemaps:value": [
@@ -4017,7 +4017,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -4029,7 +4029,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#44"
+"@value": "amf://id#46"
 }
 ],
 "sourcemaps:value": [
@@ -4057,7 +4057,7 @@
 ],
 "sourcemaps:sources": [
 {
-"@id": "#43/source-map",
+"@id": "#45/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -4065,7 +4065,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:schema"
+"@value": "raml-shapes:schema"
 }
 ],
 "sourcemaps:value": [
@@ -4077,7 +4077,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#43"
+"@value": "amf://id#45"
 }
 ],
 "sourcemaps:value": [
@@ -4089,7 +4089,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -4103,31 +4103,31 @@
 ]
 }
 ],
-"hydra:response": [
+"apiContract:response": [
 {
-"@id": "#46",
+"@id": "#48",
 "@type": [
-"raml-http:Response",
+"apiContract:Response",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "401"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Credentials are missing or could not be validated by the server."
 }
 ],
-"hydra:statusCode": [
+"apiContract:statusCode": [
 {
 "@value": "401"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#46/source-map",
+"@id": "#48/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -4135,7 +4135,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -4147,7 +4147,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#46"
+"@value": "amf://id#48"
 }
 ],
 "sourcemaps:value": [
@@ -4163,7 +4163,7 @@
 ],
 "sourcemaps:sources": [
 {
-"@id": "#42/source-map",
+"@id": "#44/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -4171,7 +4171,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#42"
+"@value": "amf://id#44"
 }
 ],
 "sourcemaps:value": [
@@ -4185,7 +4185,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:response"
+"@value": "apiContract:response"
 }
 ],
 "sourcemaps:value": [
@@ -4197,7 +4197,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -4221,7 +4221,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#42"
+"@value": "amf://id#44"
 }
 ],
 "sourcemaps:value": [
@@ -4233,7 +4233,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "security:name"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -4245,7 +4245,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:displayName"
+"@value": "core:displayName"
 }
 ],
 "sourcemaps:value": [
@@ -4257,7 +4257,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:header"
+"@value": "apiContract:header"
 }
 ],
 "sourcemaps:value": [
@@ -4305,7 +4305,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:returns"
+"@value": "apiContract:returns"
 }
 ],
 "sourcemaps:value": [
@@ -4329,7 +4329,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -4353,7 +4353,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -4381,76 +4381,76 @@
 {
 "@id": "#104",
 "@type": [
-"raml-http:EndPoint",
+"apiContract:EndPoint",
 "doc:DomainElement"
 ],
-"raml-http:path": [
+"apiContract:path": [
 {
 "@value": "/greetings/{name}"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Responds with a greeting a for the given 'name'."
 }
 ],
-"hydra:supportedOperation": [
+"apiContract:supportedOperation": [
 {
 "@id": "#105",
 "@type": [
-"hydra:Operation",
+"apiContract:Operation",
 "doc:DomainElement"
 ],
-"hydra:method": [
+"apiContract:method": [
 {
 "@value": "get"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Answers a greeting representation for the given 'name'."
 }
 ],
-"hydra:expects": [
+"apiContract:expects": [
 {
 "@id": "#106",
 "@type": [
-"raml-http:Request",
+"apiContract:Request",
 "doc:DomainElement"
 ],
-"raml-http:parameter": [
+"apiContract:parameter": [
 {
 "@id": "#107",
 "@type": [
-"raml-http:Parameter",
+"apiContract:Parameter",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "message"
 }
 ],
-"raml-http:paramName": [
+"apiContract:paramName": [
 {
 "@value": "message"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Pass a message which should be used by the response."
 }
 ],
-"hydra:required": [
+"apiContract:required": [
 {
 "@value": false
 }
 ],
-"raml-http:binding": [
+"apiContract:binding": [
 {
 "@value": "query"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#108",
 "@type": [
@@ -4470,21 +4470,21 @@
 "@value": "schema"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "message"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Pass a message which should be used by the response."
 }
 ],
-"doc:examples": [
+"apiContract:examples": [
 {
 "@id": "#109",
 "@type": [
-"doc:Example",
+"apiContract:Example",
 "doc:DomainElement"
 ],
 "doc:strict": [
@@ -4510,7 +4510,7 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_1"
 }
@@ -4539,7 +4539,7 @@
 ]
 }
 ],
-"shacl:raw": [
+"doc:raw": [
 {
 "@value": "Hi, Dude"
 }
@@ -4568,7 +4568,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "shacl:raw"
+"@value": "doc:raw"
 }
 ],
 "sourcemaps:value": [
@@ -4644,7 +4644,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -4680,7 +4680,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -4704,7 +4704,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:schema"
+"@value": "raml-shapes:schema"
 }
 ],
 "sourcemaps:value": [
@@ -4716,7 +4716,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -4740,7 +4740,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:required"
+"@value": "apiContract:required"
 }
 ],
 "sourcemaps:value": [
@@ -4764,7 +4764,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:parameter"
+"@value": "apiContract:parameter"
 }
 ],
 "sourcemaps:value": [
@@ -4790,36 +4790,36 @@
 ]
 }
 ],
-"hydra:returns": [
+"apiContract:returns": [
 {
 "@id": "#110",
 "@type": [
-"raml-http:Response",
+"apiContract:Response",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "200"
 }
 ],
-"hydra:statusCode": [
+"apiContract:statusCode": [
 {
 "@value": "200"
 }
 ],
-"raml-http:payload": [
+"apiContract:payload": [
 {
 "@id": "#111",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#112",
 "@type": [
@@ -4878,7 +4878,7 @@
 "@value": "id"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The ID of the representation, a randomly generated UUID."
 }
@@ -4907,7 +4907,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -5047,7 +5047,7 @@
 "@value": "message"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The text message of the greeting."
 }
@@ -5076,7 +5076,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -5165,16 +5165,16 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Describes simple greeting representation consisting of an ID and a message."
 }
 ],
-"doc:examples": [
+"apiContract:examples": [
 {
 "@id": "#113",
 "@type": [
-"doc:Example",
+"apiContract:Example",
 "doc:DomainElement"
 ],
 "doc:strict": [
@@ -5208,7 +5208,7 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_2"
 }
@@ -5255,7 +5255,7 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_3"
 }
@@ -5284,7 +5284,7 @@
 ]
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "object_1"
 }
@@ -5353,7 +5353,7 @@
 ],
 "doc:reference-id": [
 {
-"@id": "#54"
+"@id": "#58"
 }
 ],
 "doc:location": [
@@ -5449,7 +5449,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -5466,7 +5466,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(1,0)-(30,22)]"
+"@value": "[(30,6)-(22,1)]"
 }
 ]
 },
@@ -5549,7 +5549,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:payload"
+"@value": "apiContract:payload"
 }
 ],
 "sourcemaps:value": [
@@ -5582,19 +5582,19 @@
 "security:ParametrizedSecurityScheme",
 "doc:DomainElement"
 ],
-"security:name": [
+"core:name": [
 {
 "@value": "candaCommons.basicAuth"
 }
 ],
 "security:scheme": [
 {
-"@id": "#42",
+"@id": "#44",
 "@type": [
 "security:SecurityScheme",
 "doc:DomainElement"
 ],
-"security:name": [
+"core:name": [
 {
 "@value": "basicAuth"
 }
@@ -5604,51 +5604,51 @@
 "@value": "Basic Authentication"
 }
 ],
-"schema-org:displayName": [
+"core:displayName": [
 {
 "@value": "Basic Authentication"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "This API supports Basic Authentication. The client has to provide an \"Authorization\" header with valid credentials."
 }
 ],
-"raml-http:header": [
+"apiContract:header": [
 {
-"@id": "#43",
+"@id": "#45",
 "@type": [
-"raml-http:Parameter",
+"apiContract:Parameter",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "Authorization"
 }
 ],
-"raml-http:paramName": [
+"apiContract:paramName": [
 {
 "@value": "Authorization"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Used to send valid credentials."
 }
 ],
-"hydra:required": [
+"apiContract:required": [
 {
 "@value": true
 }
 ],
-"raml-http:binding": [
+"apiContract:binding": [
 {
 "@value": "header"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
-"@id": "#44",
+"@id": "#46",
 "@type": [
 "raml-shapes:ScalarShape",
 "raml-shapes:AnyShape",
@@ -5666,16 +5666,16 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Used to send valid credentials."
 }
 ],
-"doc:examples": [
+"apiContract:examples": [
 {
-"@id": "#45",
+"@id": "#47",
 "@type": [
-"doc:Example",
+"apiContract:Example",
 "doc:DomainElement"
 ],
 "doc:strict": [
@@ -5685,7 +5685,7 @@
 ],
 "doc:structuredValue": [
 {
-"@id": "#45",
+"@id": "#47",
 "@type": [
 "data:Scalar",
 "data:Node",
@@ -5701,14 +5701,14 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_1"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#45/source-map",
+"@id": "#47/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -5716,7 +5716,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#45"
+"@value": "amf://id#47"
 }
 ],
 "sourcemaps:value": [
@@ -5730,14 +5730,14 @@
 ]
 }
 ],
-"shacl:raw": [
+"doc:raw": [
 {
 "@value": "Basic ax5Gdza5OnJpZnG4Z2ok"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#45/source-map",
+"@id": "#47/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -5759,7 +5759,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "shacl:raw"
+"@value": "doc:raw"
 }
 ],
 "sourcemaps:value": [
@@ -5771,7 +5771,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#45"
+"@value": "amf://id#47"
 }
 ],
 "sourcemaps:value": [
@@ -5797,12 +5797,12 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#45"
+"@value": "amf://id#47"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "amf://id#43"
+"@value": "amf://id#45"
 }
 ]
 }
@@ -5813,7 +5813,7 @@
 ],
 "sourcemaps:sources": [
 {
-"@id": "#44/source-map",
+"@id": "#46/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -5821,7 +5821,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#44"
+"@value": "amf://id#46"
 }
 ],
 "sourcemaps:value": [
@@ -5835,7 +5835,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -5847,7 +5847,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#44"
+"@value": "amf://id#46"
 }
 ],
 "sourcemaps:value": [
@@ -5875,7 +5875,7 @@
 ],
 "sourcemaps:sources": [
 {
-"@id": "#43/source-map",
+"@id": "#45/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -5883,7 +5883,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:schema"
+"@value": "raml-shapes:schema"
 }
 ],
 "sourcemaps:value": [
@@ -5895,7 +5895,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#43"
+"@value": "amf://id#45"
 }
 ],
 "sourcemaps:value": [
@@ -5907,7 +5907,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -5921,31 +5921,31 @@
 ]
 }
 ],
-"hydra:response": [
+"apiContract:response": [
 {
-"@id": "#46",
+"@id": "#48",
 "@type": [
-"raml-http:Response",
+"apiContract:Response",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "401"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Credentials are missing or could not be validated by the server."
 }
 ],
-"hydra:statusCode": [
+"apiContract:statusCode": [
 {
 "@value": "401"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#46/source-map",
+"@id": "#48/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -5953,7 +5953,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -5965,7 +5965,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#46"
+"@value": "amf://id#48"
 }
 ],
 "sourcemaps:value": [
@@ -5981,7 +5981,7 @@
 ],
 "sourcemaps:sources": [
 {
-"@id": "#42/source-map",
+"@id": "#44/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -5989,7 +5989,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#42"
+"@value": "amf://id#44"
 }
 ],
 "sourcemaps:value": [
@@ -6003,7 +6003,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:response"
+"@value": "apiContract:response"
 }
 ],
 "sourcemaps:value": [
@@ -6015,7 +6015,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -6039,7 +6039,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#42"
+"@value": "amf://id#44"
 }
 ],
 "sourcemaps:value": [
@@ -6051,7 +6051,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "security:name"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -6063,7 +6063,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:displayName"
+"@value": "core:displayName"
 }
 ],
 "sourcemaps:value": [
@@ -6075,7 +6075,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:header"
+"@value": "apiContract:header"
 }
 ],
 "sourcemaps:value": [
@@ -6123,7 +6123,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:returns"
+"@value": "apiContract:returns"
 }
 ],
 "sourcemaps:value": [
@@ -6147,7 +6147,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -6161,34 +6161,34 @@
 ]
 }
 ],
-"raml-http:parameter": [
+"apiContract:parameter": [
 {
 "@id": "#116",
 "@type": [
-"raml-http:Parameter",
+"apiContract:Parameter",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "name"
 }
 ],
-"raml-http:paramName": [
+"apiContract:paramName": [
 {
 "@value": "name"
 }
 ],
-"hydra:required": [
+"apiContract:required": [
 {
 "@value": true
 }
 ],
-"raml-http:binding": [
+"apiContract:binding": [
 {
 "@value": "path"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#117",
 "@type": [
@@ -6208,11 +6208,11 @@
 "@value": "schema"
 }
 ],
-"doc:examples": [
+"apiContract:examples": [
 {
 "@id": "#118",
 "@type": [
-"doc:Example",
+"apiContract:Example",
 "doc:DomainElement"
 ],
 "doc:strict": [
@@ -6238,7 +6238,7 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_1"
 }
@@ -6267,7 +6267,7 @@
 ]
 }
 ],
-"shacl:raw": [
+"doc:raw": [
 {
 "@value": "mike"
 }
@@ -6296,7 +6296,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "shacl:raw"
+"@value": "doc:raw"
 }
 ],
 "sourcemaps:value": [
@@ -6408,7 +6408,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:schema"
+"@value": "raml-shapes:schema"
 }
 ],
 "sourcemaps:value": [
@@ -6458,7 +6458,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:parameter"
+"@value": "apiContract:parameter"
 }
 ],
 "sourcemaps:value": [
@@ -6482,7 +6482,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -6498,66 +6498,66 @@
 {
 "@id": "#119",
 "@type": [
-"raml-http:EndPoint",
+"apiContract:EndPoint",
 "doc:DomainElement"
 ],
-"raml-http:path": [
+"apiContract:path": [
 {
 "@value": "/companies"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The companies resource is probably the most simple representation of a C&A company."
 }
 ],
-"hydra:supportedOperation": [
+"apiContract:supportedOperation": [
 {
 "@id": "#120",
 "@type": [
-"hydra:Operation",
+"apiContract:Operation",
 "doc:DomainElement"
 ],
-"hydra:method": [
+"apiContract:method": [
 {
 "@value": "get"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Answers a collection (1..n) of all available Companies with their basic attributes."
 }
 ],
-"hydra:returns": [
+"apiContract:returns": [
 {
 "@id": "#121",
 "@type": [
-"raml-http:Response",
+"apiContract:Response",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "200"
 }
 ],
-"hydra:statusCode": [
+"apiContract:statusCode": [
 {
 "@value": "200"
 }
 ],
-"raml-http:payload": [
+"apiContract:payload": [
 {
 "@id": "#122",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#123",
 "@type": [
@@ -6655,7 +6655,7 @@
 "@value": "code"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The code of the given company is the unique identifier of the entity."
 }
@@ -6684,7 +6684,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -6829,7 +6829,7 @@
 "@value": "name"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The legal name of the given company."
 }
@@ -6858,7 +6858,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -7103,16 +7103,16 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Describes the probably most simple representation of a CANDA company."
 }
 ],
-"doc:examples": [
+"apiContract:examples": [
 {
 "@id": "#124",
 "@type": [
-"doc:Example",
+"apiContract:Example",
 "doc:DomainElement"
 ],
 "doc:strict": [
@@ -7137,7 +7137,7 @@
 "data:Node",
 "doc:DomainElement"
 ],
-"rdf:member": [
+"rdfs:member": [
 {
 "@id": "#126",
 "@type": [
@@ -7163,7 +7163,7 @@
 "@id": "http://www.w3.org/2001/XMLSchema#integer"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_4"
 }
@@ -7210,7 +7210,7 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_5"
 }
@@ -7239,7 +7239,7 @@
 ]
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "object_3"
 }
@@ -7316,7 +7316,7 @@
 "@id": "http://www.w3.org/2001/XMLSchema#integer"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_7"
 }
@@ -7363,7 +7363,7 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_8"
 }
@@ -7392,7 +7392,7 @@
 ]
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "object_6"
 }
@@ -7445,7 +7445,7 @@
 ]
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "array_2"
 }
@@ -7474,7 +7474,7 @@
 ]
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "object_1"
 }
@@ -7531,7 +7531,7 @@
 ],
 "doc:reference-id": [
 {
-"@id": "#58"
+"@id": "#50"
 }
 ],
 "doc:location": [
@@ -7627,7 +7627,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -7644,7 +7644,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(1,0)-(67,26)]"
+"@value": "[(67,10)-(36,1)]"
 }
 ]
 },
@@ -7727,7 +7727,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:payload"
+"@value": "apiContract:payload"
 }
 ],
 "sourcemaps:value": [
@@ -7755,20 +7755,20 @@
 {
 "@id": "#139",
 "@type": [
-"raml-http:Response",
+"apiContract:Response",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "204"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The response does not contain any content."
 }
 ],
-"hydra:statusCode": [
+"apiContract:statusCode": [
 {
 "@value": "204"
 }
@@ -7783,7 +7783,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -7816,19 +7816,19 @@
 "security:ParametrizedSecurityScheme",
 "doc:DomainElement"
 ],
-"security:name": [
+"core:name": [
 {
 "@value": "candaCommons.basicAuth"
 }
 ],
 "security:scheme": [
 {
-"@id": "#42",
+"@id": "#44",
 "@type": [
 "security:SecurityScheme",
 "doc:DomainElement"
 ],
-"security:name": [
+"core:name": [
 {
 "@value": "basicAuth"
 }
@@ -7838,51 +7838,51 @@
 "@value": "Basic Authentication"
 }
 ],
-"schema-org:displayName": [
+"core:displayName": [
 {
 "@value": "Basic Authentication"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "This API supports Basic Authentication. The client has to provide an \"Authorization\" header with valid credentials."
 }
 ],
-"raml-http:header": [
+"apiContract:header": [
 {
-"@id": "#43",
+"@id": "#45",
 "@type": [
-"raml-http:Parameter",
+"apiContract:Parameter",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "Authorization"
 }
 ],
-"raml-http:paramName": [
+"apiContract:paramName": [
 {
 "@value": "Authorization"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Used to send valid credentials."
 }
 ],
-"hydra:required": [
+"apiContract:required": [
 {
 "@value": true
 }
 ],
-"raml-http:binding": [
+"apiContract:binding": [
 {
 "@value": "header"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
-"@id": "#44",
+"@id": "#46",
 "@type": [
 "raml-shapes:ScalarShape",
 "raml-shapes:AnyShape",
@@ -7900,16 +7900,16 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Used to send valid credentials."
 }
 ],
-"doc:examples": [
+"apiContract:examples": [
 {
-"@id": "#45",
+"@id": "#47",
 "@type": [
-"doc:Example",
+"apiContract:Example",
 "doc:DomainElement"
 ],
 "doc:strict": [
@@ -7919,7 +7919,7 @@
 ],
 "doc:structuredValue": [
 {
-"@id": "#45",
+"@id": "#47",
 "@type": [
 "data:Scalar",
 "data:Node",
@@ -7935,14 +7935,14 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_1"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#45/source-map",
+"@id": "#47/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -7950,7 +7950,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#45"
+"@value": "amf://id#47"
 }
 ],
 "sourcemaps:value": [
@@ -7964,14 +7964,14 @@
 ]
 }
 ],
-"shacl:raw": [
+"doc:raw": [
 {
 "@value": "Basic ax5Gdza5OnJpZnG4Z2ok"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#45/source-map",
+"@id": "#47/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -7993,7 +7993,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "shacl:raw"
+"@value": "doc:raw"
 }
 ],
 "sourcemaps:value": [
@@ -8005,7 +8005,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#45"
+"@value": "amf://id#47"
 }
 ],
 "sourcemaps:value": [
@@ -8031,12 +8031,12 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#45"
+"@value": "amf://id#47"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "amf://id#43"
+"@value": "amf://id#45"
 }
 ]
 }
@@ -8047,7 +8047,7 @@
 ],
 "sourcemaps:sources": [
 {
-"@id": "#44/source-map",
+"@id": "#46/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -8055,7 +8055,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#44"
+"@value": "amf://id#46"
 }
 ],
 "sourcemaps:value": [
@@ -8069,7 +8069,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -8081,7 +8081,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#44"
+"@value": "amf://id#46"
 }
 ],
 "sourcemaps:value": [
@@ -8109,7 +8109,7 @@
 ],
 "sourcemaps:sources": [
 {
-"@id": "#43/source-map",
+"@id": "#45/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -8117,7 +8117,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:schema"
+"@value": "raml-shapes:schema"
 }
 ],
 "sourcemaps:value": [
@@ -8129,7 +8129,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#43"
+"@value": "amf://id#45"
 }
 ],
 "sourcemaps:value": [
@@ -8141,7 +8141,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -8155,31 +8155,31 @@
 ]
 }
 ],
-"hydra:response": [
+"apiContract:response": [
 {
-"@id": "#46",
+"@id": "#48",
 "@type": [
-"raml-http:Response",
+"apiContract:Response",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "401"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Credentials are missing or could not be validated by the server."
 }
 ],
-"hydra:statusCode": [
+"apiContract:statusCode": [
 {
 "@value": "401"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#46/source-map",
+"@id": "#48/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -8187,7 +8187,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -8199,7 +8199,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#46"
+"@value": "amf://id#48"
 }
 ],
 "sourcemaps:value": [
@@ -8215,7 +8215,7 @@
 ],
 "sourcemaps:sources": [
 {
-"@id": "#42/source-map",
+"@id": "#44/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -8223,7 +8223,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#42"
+"@value": "amf://id#44"
 }
 ],
 "sourcemaps:value": [
@@ -8237,7 +8237,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:response"
+"@value": "apiContract:response"
 }
 ],
 "sourcemaps:value": [
@@ -8249,7 +8249,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -8273,7 +8273,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#42"
+"@value": "amf://id#44"
 }
 ],
 "sourcemaps:value": [
@@ -8285,7 +8285,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "security:name"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -8297,7 +8297,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:displayName"
+"@value": "core:displayName"
 }
 ],
 "sourcemaps:value": [
@@ -8309,7 +8309,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:header"
+"@value": "apiContract:header"
 }
 ],
 "sourcemaps:value": [
@@ -8357,7 +8357,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:returns"
+"@value": "apiContract:returns"
 }
 ],
 "sourcemaps:value": [
@@ -8381,7 +8381,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -8405,7 +8405,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -8433,76 +8433,76 @@
 {
 "@id": "#140",
 "@type": [
-"raml-http:EndPoint",
+"apiContract:EndPoint",
 "doc:DomainElement"
 ],
-"raml-http:path": [
+"apiContract:path": [
 {
 "@value": "/additions"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The additions resource consists of the elements of a mathematical addition - a result and the summands."
 }
 ],
-"hydra:supportedOperation": [
+"apiContract:supportedOperation": [
 {
 "@id": "#141",
 "@type": [
-"hydra:Operation",
+"apiContract:Operation",
 "doc:DomainElement"
 ],
-"hydra:method": [
+"apiContract:method": [
 {
 "@value": "get"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Answers a simple JSON response that reflects the elements of an addition."
 }
 ],
-"hydra:expects": [
+"apiContract:expects": [
 {
 "@id": "#142",
 "@type": [
-"raml-http:Request",
+"apiContract:Request",
 "doc:DomainElement"
 ],
-"raml-http:parameter": [
+"apiContract:parameter": [
 {
 "@id": "#143",
 "@type": [
-"raml-http:Parameter",
+"apiContract:Parameter",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "summands"
 }
 ],
-"raml-http:paramName": [
+"apiContract:paramName": [
 {
 "@value": "summands"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Pass the list of summands separated by ',' (comma). Each summand must be a value between 0 and 99999. The value must not contain spaces."
 }
 ],
-"hydra:required": [
+"apiContract:required": [
 {
 "@value": true
 }
 ],
-"raml-http:binding": [
+"apiContract:binding": [
 {
 "@value": "query"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#144",
 "@type": [
@@ -8527,21 +8527,21 @@
 "@value": "schema"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "summands"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Pass the list of summands separated by ',' (comma). Each summand must be a value between 0 and 99999. The value must not contain spaces."
 }
 ],
-"doc:examples": [
+"apiContract:examples": [
 {
 "@id": "#145",
 "@type": [
-"doc:Example",
+"apiContract:Example",
 "doc:DomainElement"
 ],
 "doc:strict": [
@@ -8567,7 +8567,7 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_1"
 }
@@ -8596,7 +8596,7 @@
 ]
 }
 ],
-"shacl:raw": [
+"doc:raw": [
 {
 "@value": "2,4,88765,0"
 }
@@ -8625,7 +8625,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "shacl:raw"
+"@value": "doc:raw"
 }
 ],
 "sourcemaps:value": [
@@ -8701,7 +8701,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -8749,7 +8749,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -8773,7 +8773,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:schema"
+"@value": "raml-shapes:schema"
 }
 ],
 "sourcemaps:value": [
@@ -8785,7 +8785,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -8809,7 +8809,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:required"
+"@value": "apiContract:required"
 }
 ],
 "sourcemaps:value": [
@@ -8833,7 +8833,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:parameter"
+"@value": "apiContract:parameter"
 }
 ],
 "sourcemaps:value": [
@@ -8859,36 +8859,36 @@
 ]
 }
 ],
-"hydra:returns": [
+"apiContract:returns": [
 {
 "@id": "#146",
 "@type": [
-"raml-http:Response",
+"apiContract:Response",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "200"
 }
 ],
-"hydra:statusCode": [
+"apiContract:statusCode": [
 {
 "@value": "200"
 }
 ],
-"raml-http:payload": [
+"apiContract:payload": [
 {
 "@id": "#147",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#148",
 "@type": [
@@ -8937,7 +8937,7 @@
 "@value": "sum"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The result (sum) of the addition."
 }
@@ -8966,7 +8966,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -9121,7 +9121,7 @@
 "@value": "value"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The integer value of the summand."
 }
@@ -9150,7 +9150,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -9383,16 +9383,16 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Describes the representation of an addition with 1..n summands."
 }
 ],
-"doc:examples": [
+"apiContract:examples": [
 {
 "@id": "#149",
 "@type": [
-"doc:Example",
+"apiContract:Example",
 "doc:DomainElement"
 ],
 "doc:strict": [
@@ -9426,7 +9426,7 @@
 "@id": "http://www.w3.org/2001/XMLSchema#integer"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_2"
 }
@@ -9464,7 +9464,7 @@
 "data:Node",
 "doc:DomainElement"
 ],
-"rdf:member": [
+"rdfs:member": [
 {
 "@id": "#152",
 "@type": [
@@ -9490,7 +9490,7 @@
 "@id": "http://www.w3.org/2001/XMLSchema#integer"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_5"
 }
@@ -9519,7 +9519,7 @@
 ]
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "object_4"
 }
@@ -9584,7 +9584,7 @@
 "@id": "http://www.w3.org/2001/XMLSchema#integer"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_7"
 }
@@ -9613,7 +9613,7 @@
 ]
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "object_6"
 }
@@ -9654,7 +9654,7 @@
 ]
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "array_3"
 }
@@ -9683,7 +9683,7 @@
 ]
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "object_1"
 }
@@ -9752,7 +9752,7 @@
 ],
 "doc:reference-id": [
 {
-"@id": "#48"
+"@id": "#60"
 }
 ],
 "doc:location": [
@@ -9848,7 +9848,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -9865,7 +9865,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(1,0)-(87,26)]"
+"@value": "[(87,10)-(43,1)]"
 }
 ]
 },
@@ -9948,7 +9948,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:payload"
+"@value": "apiContract:payload"
 }
 ],
 "sourcemaps:value": [
@@ -9981,19 +9981,19 @@
 "security:ParametrizedSecurityScheme",
 "doc:DomainElement"
 ],
-"security:name": [
+"core:name": [
 {
 "@value": "candaCommons.basicAuth"
 }
 ],
 "security:scheme": [
 {
-"@id": "#42",
+"@id": "#44",
 "@type": [
 "security:SecurityScheme",
 "doc:DomainElement"
 ],
-"security:name": [
+"core:name": [
 {
 "@value": "basicAuth"
 }
@@ -10003,51 +10003,51 @@
 "@value": "Basic Authentication"
 }
 ],
-"schema-org:displayName": [
+"core:displayName": [
 {
 "@value": "Basic Authentication"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "This API supports Basic Authentication. The client has to provide an \"Authorization\" header with valid credentials."
 }
 ],
-"raml-http:header": [
+"apiContract:header": [
 {
-"@id": "#43",
+"@id": "#45",
 "@type": [
-"raml-http:Parameter",
+"apiContract:Parameter",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "Authorization"
 }
 ],
-"raml-http:paramName": [
+"apiContract:paramName": [
 {
 "@value": "Authorization"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Used to send valid credentials."
 }
 ],
-"hydra:required": [
+"apiContract:required": [
 {
 "@value": true
 }
 ],
-"raml-http:binding": [
+"apiContract:binding": [
 {
 "@value": "header"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
-"@id": "#44",
+"@id": "#46",
 "@type": [
 "raml-shapes:ScalarShape",
 "raml-shapes:AnyShape",
@@ -10065,16 +10065,16 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Used to send valid credentials."
 }
 ],
-"doc:examples": [
+"apiContract:examples": [
 {
-"@id": "#45",
+"@id": "#47",
 "@type": [
-"doc:Example",
+"apiContract:Example",
 "doc:DomainElement"
 ],
 "doc:strict": [
@@ -10084,7 +10084,7 @@
 ],
 "doc:structuredValue": [
 {
-"@id": "#45",
+"@id": "#47",
 "@type": [
 "data:Scalar",
 "data:Node",
@@ -10100,14 +10100,14 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_1"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#45/source-map",
+"@id": "#47/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -10115,7 +10115,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#45"
+"@value": "amf://id#47"
 }
 ],
 "sourcemaps:value": [
@@ -10129,14 +10129,14 @@
 ]
 }
 ],
-"shacl:raw": [
+"doc:raw": [
 {
 "@value": "Basic ax5Gdza5OnJpZnG4Z2ok"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#45/source-map",
+"@id": "#47/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -10158,7 +10158,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "shacl:raw"
+"@value": "doc:raw"
 }
 ],
 "sourcemaps:value": [
@@ -10170,7 +10170,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#45"
+"@value": "amf://id#47"
 }
 ],
 "sourcemaps:value": [
@@ -10196,12 +10196,12 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#45"
+"@value": "amf://id#47"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "amf://id#43"
+"@value": "amf://id#45"
 }
 ]
 }
@@ -10212,7 +10212,7 @@
 ],
 "sourcemaps:sources": [
 {
-"@id": "#44/source-map",
+"@id": "#46/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -10220,7 +10220,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#44"
+"@value": "amf://id#46"
 }
 ],
 "sourcemaps:value": [
@@ -10234,7 +10234,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -10246,7 +10246,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#44"
+"@value": "amf://id#46"
 }
 ],
 "sourcemaps:value": [
@@ -10274,7 +10274,7 @@
 ],
 "sourcemaps:sources": [
 {
-"@id": "#43/source-map",
+"@id": "#45/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -10282,7 +10282,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:schema"
+"@value": "raml-shapes:schema"
 }
 ],
 "sourcemaps:value": [
@@ -10294,7 +10294,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#43"
+"@value": "amf://id#45"
 }
 ],
 "sourcemaps:value": [
@@ -10306,7 +10306,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -10320,31 +10320,31 @@
 ]
 }
 ],
-"hydra:response": [
+"apiContract:response": [
 {
-"@id": "#46",
+"@id": "#48",
 "@type": [
-"raml-http:Response",
+"apiContract:Response",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "401"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Credentials are missing or could not be validated by the server."
 }
 ],
-"hydra:statusCode": [
+"apiContract:statusCode": [
 {
 "@value": "401"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#46/source-map",
+"@id": "#48/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -10352,7 +10352,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -10364,7 +10364,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#46"
+"@value": "amf://id#48"
 }
 ],
 "sourcemaps:value": [
@@ -10380,7 +10380,7 @@
 ],
 "sourcemaps:sources": [
 {
-"@id": "#42/source-map",
+"@id": "#44/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -10388,7 +10388,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#42"
+"@value": "amf://id#44"
 }
 ],
 "sourcemaps:value": [
@@ -10402,7 +10402,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:response"
+"@value": "apiContract:response"
 }
 ],
 "sourcemaps:value": [
@@ -10414,7 +10414,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -10438,7 +10438,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#42"
+"@value": "amf://id#44"
 }
 ],
 "sourcemaps:value": [
@@ -10450,7 +10450,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "security:name"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -10462,7 +10462,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:displayName"
+"@value": "core:displayName"
 }
 ],
 "sourcemaps:value": [
@@ -10474,7 +10474,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:header"
+"@value": "apiContract:header"
 }
 ],
 "sourcemaps:value": [
@@ -10522,7 +10522,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:returns"
+"@value": "apiContract:returns"
 }
 ],
 "sourcemaps:value": [
@@ -10546,7 +10546,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -10570,7 +10570,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -10598,51 +10598,51 @@
 {
 "@id": "#163",
 "@type": [
-"raml-http:EndPoint",
+"apiContract:EndPoint",
 "doc:DomainElement"
 ],
-"raml-http:path": [
+"apiContract:path": [
 {
 "@value": "/logLevels/{loggerName}"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Change the severity of a specific logger."
 }
 ],
-"hydra:supportedOperation": [
+"apiContract:supportedOperation": [
 {
 "@id": "#168",
 "@type": [
-"hydra:Operation",
+"apiContract:Operation",
 "doc:DomainElement"
 ],
-"hydra:method": [
+"apiContract:method": [
 {
 "@value": "put"
 }
 ],
-"hydra:expects": [
+"apiContract:expects": [
 {
 "@id": "#169",
 "@type": [
-"raml-http:Request",
+"apiContract:Request",
 "doc:DomainElement"
 ],
-"raml-http:payload": [
+"apiContract:payload": [
 {
 "@id": "#170",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#171",
 "@type": [
@@ -10691,7 +10691,7 @@
 "@value": "newLevel"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "The new log level to be set."
 }
@@ -10718,7 +10718,7 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_1"
 }
@@ -10765,7 +10765,7 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_1"
 }
@@ -10812,7 +10812,7 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_1"
 }
@@ -10859,7 +10859,7 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_1"
 }
@@ -10906,7 +10906,7 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_1"
 }
@@ -10953,7 +10953,7 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_1"
 }
@@ -11044,7 +11044,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -11136,7 +11136,7 @@
 "@value": "createFlag"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Optional parameter to create a logger in case it does not exist (to avoid typo errors for existing loggers)."
 }
@@ -11165,7 +11165,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -11269,7 +11269,7 @@
 "@value": "hoursToReset"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Delay in hours after which time the logger is set back to its original log level."
 }
@@ -11298,7 +11298,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -11375,16 +11375,16 @@
 "@value": "schema"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "change  a certain log level"
 }
 ],
-"doc:examples": [
+"apiContract:examples": [
 {
 "@id": "#172",
 "@type": [
-"doc:Example",
+"apiContract:Example",
 "doc:DomainElement"
 ],
 "doc:strict": [
@@ -11418,7 +11418,7 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_2"
 }
@@ -11447,7 +11447,7 @@
 ]
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "object_1"
 }
@@ -11502,7 +11502,7 @@
 ]
 }
 ],
-"shacl:raw": [
+"doc:raw": [
 {
 "@value": "{\n\t\"newLevel\": \"DEBUG\"\n}"
 }
@@ -11531,7 +11531,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "shacl:raw"
+"@value": "doc:raw"
 }
 ],
 "sourcemaps:value": [
@@ -11607,7 +11607,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -11624,7 +11624,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(2,0)-(31,1)]"
+"@value": "[(24,10)-(31,1)]"
 }
 ]
 }
@@ -11676,7 +11676,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(1,0)-(26,16)]"
+"@value": "[(24,10)-(1,0)]"
 }
 ]
 }
@@ -11695,12 +11695,12 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:payload"
+"@value": "apiContract:payload"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(1,0)-(26,16)]"
+"@value": "[(23,8)-(1,0)]"
 }
 ]
 },
@@ -11712,7 +11712,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(1,0)-(35,23)]"
+"@value": "[(23,8)-(35,0)]"
 }
 ]
 }
@@ -11721,36 +11721,36 @@
 ]
 }
 ],
-"hydra:returns": [
+"apiContract:returns": [
 {
 "@id": "#181",
 "@type": [
-"raml-http:Response",
+"apiContract:Response",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "200"
 }
 ],
-"hydra:statusCode": [
+"apiContract:statusCode": [
 {
 "@value": "200"
 }
 ],
-"raml-http:payload": [
+"apiContract:payload": [
 {
 "@id": "#182",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/json"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#183",
 "@type": [
@@ -11799,7 +11799,7 @@
 "@value": "message"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "the human readable result of the changeLogLevel operation."
 }
@@ -11828,7 +11828,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -11905,16 +11905,16 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Add\n\"#[com.canda.mulestac.logging.ChangeLogLevel.changeWithJson(flowVars.loggerName, payload)]\"\nto your generated set-payload flow element.\n"
 }
 ],
-"doc:examples": [
+"apiContract:examples": [
 {
 "@id": "#184",
 "@type": [
-"doc:Example",
+"apiContract:Example",
 "doc:DomainElement"
 ],
 "doc:strict": [
@@ -11948,7 +11948,7 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_2"
 }
@@ -11977,7 +11977,7 @@
 ]
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "object_1"
 }
@@ -12032,7 +12032,7 @@
 ]
 }
 ],
-"shacl:raw": [
+"doc:raw": [
 {
 "@value": "{\n  \"message\" : \"TODO you need to replace this generated setpayload by #[com.canda.mulestac.logging.ChangeLogLevel.changeWithJson(flowVars.loggerName, payload)] in the api.xml\"\n}"
 }
@@ -12061,7 +12061,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "shacl:raw"
+"@value": "doc:raw"
 }
 ],
 "sourcemaps:value": [
@@ -12137,7 +12137,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -12154,7 +12154,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(2,0)-(30,30)]"
+"@value": "[(30,14)-(11,1)]"
 }
 ]
 }
@@ -12206,7 +12206,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(1,0)-(35,23)]"
+"@value": "[(30,14)-(35,0)]"
 }
 ]
 }
@@ -12225,12 +12225,12 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:payload"
+"@value": "apiContract:payload"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(1,0)-(35,23)]"
+"@value": "[(29,12)-(35,0)]"
 }
 ]
 },
@@ -12242,7 +12242,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(1,0)-(35,23)]"
+"@value": "[(28,10)-(35,0)]"
 }
 ]
 }
@@ -12258,19 +12258,19 @@
 "security:ParametrizedSecurityScheme",
 "doc:DomainElement"
 ],
-"security:name": [
+"core:name": [
 {
 "@value": "candaCommons.basicAuth"
 }
 ],
 "security:scheme": [
 {
-"@id": "#42",
+"@id": "#44",
 "@type": [
 "security:SecurityScheme",
 "doc:DomainElement"
 ],
-"security:name": [
+"core:name": [
 {
 "@value": "basicAuth"
 }
@@ -12280,51 +12280,51 @@
 "@value": "Basic Authentication"
 }
 ],
-"schema-org:displayName": [
+"core:displayName": [
 {
 "@value": "Basic Authentication"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "This API supports Basic Authentication. The client has to provide an \"Authorization\" header with valid credentials."
 }
 ],
-"raml-http:header": [
+"apiContract:header": [
 {
-"@id": "#43",
+"@id": "#45",
 "@type": [
-"raml-http:Parameter",
+"apiContract:Parameter",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "Authorization"
 }
 ],
-"raml-http:paramName": [
+"apiContract:paramName": [
 {
 "@value": "Authorization"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Used to send valid credentials."
 }
 ],
-"hydra:required": [
+"apiContract:required": [
 {
 "@value": true
 }
 ],
-"raml-http:binding": [
+"apiContract:binding": [
 {
 "@value": "header"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
-"@id": "#44",
+"@id": "#46",
 "@type": [
 "raml-shapes:ScalarShape",
 "raml-shapes:AnyShape",
@@ -12342,16 +12342,16 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Used to send valid credentials."
 }
 ],
-"doc:examples": [
+"apiContract:examples": [
 {
-"@id": "#45",
+"@id": "#47",
 "@type": [
-"doc:Example",
+"apiContract:Example",
 "doc:DomainElement"
 ],
 "doc:strict": [
@@ -12361,7 +12361,7 @@
 ],
 "doc:structuredValue": [
 {
-"@id": "#45",
+"@id": "#47",
 "@type": [
 "data:Scalar",
 "data:Node",
@@ -12377,14 +12377,14 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_1"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#45/source-map",
+"@id": "#47/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -12392,7 +12392,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#45"
+"@value": "amf://id#47"
 }
 ],
 "sourcemaps:value": [
@@ -12406,14 +12406,14 @@
 ]
 }
 ],
-"shacl:raw": [
+"doc:raw": [
 {
 "@value": "Basic ax5Gdza5OnJpZnG4Z2ok"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#45/source-map",
+"@id": "#47/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -12435,7 +12435,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "shacl:raw"
+"@value": "doc:raw"
 }
 ],
 "sourcemaps:value": [
@@ -12447,7 +12447,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#45"
+"@value": "amf://id#47"
 }
 ],
 "sourcemaps:value": [
@@ -12473,12 +12473,12 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#45"
+"@value": "amf://id#47"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "amf://id#43"
+"@value": "amf://id#45"
 }
 ]
 }
@@ -12489,7 +12489,7 @@
 ],
 "sourcemaps:sources": [
 {
-"@id": "#44/source-map",
+"@id": "#46/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -12497,7 +12497,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#44"
+"@value": "amf://id#46"
 }
 ],
 "sourcemaps:value": [
@@ -12511,7 +12511,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -12523,7 +12523,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#44"
+"@value": "amf://id#46"
 }
 ],
 "sourcemaps:value": [
@@ -12551,7 +12551,7 @@
 ],
 "sourcemaps:sources": [
 {
-"@id": "#43/source-map",
+"@id": "#45/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -12559,7 +12559,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:schema"
+"@value": "raml-shapes:schema"
 }
 ],
 "sourcemaps:value": [
@@ -12571,7 +12571,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#43"
+"@value": "amf://id#45"
 }
 ],
 "sourcemaps:value": [
@@ -12583,7 +12583,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -12597,31 +12597,31 @@
 ]
 }
 ],
-"hydra:response": [
+"apiContract:response": [
 {
-"@id": "#46",
+"@id": "#48",
 "@type": [
-"raml-http:Response",
+"apiContract:Response",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "401"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Credentials are missing or could not be validated by the server."
 }
 ],
-"hydra:statusCode": [
+"apiContract:statusCode": [
 {
 "@value": "401"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#46/source-map",
+"@id": "#48/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -12629,7 +12629,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -12641,7 +12641,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#46"
+"@value": "amf://id#48"
 }
 ],
 "sourcemaps:value": [
@@ -12657,7 +12657,7 @@
 ],
 "sourcemaps:sources": [
 {
-"@id": "#42/source-map",
+"@id": "#44/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -12665,7 +12665,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#42"
+"@value": "amf://id#44"
 }
 ],
 "sourcemaps:value": [
@@ -12679,7 +12679,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:response"
+"@value": "apiContract:response"
 }
 ],
 "sourcemaps:value": [
@@ -12691,7 +12691,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -12715,7 +12715,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#42"
+"@value": "amf://id#44"
 }
 ],
 "sourcemaps:value": [
@@ -12727,7 +12727,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "security:name"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -12739,7 +12739,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:displayName"
+"@value": "core:displayName"
 }
 ],
 "sourcemaps:value": [
@@ -12751,7 +12751,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:header"
+"@value": "apiContract:header"
 }
 ],
 "sourcemaps:value": [
@@ -12799,12 +12799,12 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:returns"
+"@value": "apiContract:returns"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "[(1,0)-(35,23)]"
+"@value": "[(27,8)-(35,0)]"
 }
 ]
 },
@@ -12816,7 +12816,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(1,0)-(35,23)]"
+"@value": "[(22,6)-(35,0)]"
 }
 ]
 }
@@ -12825,39 +12825,39 @@
 ]
 }
 ],
-"raml-http:parameter": [
+"apiContract:parameter": [
 {
 "@id": "#164",
 "@type": [
-"raml-http:Parameter",
+"apiContract:Parameter",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "loggerName"
 }
 ],
-"raml-http:paramName": [
+"apiContract:paramName": [
 {
 "@value": "loggerName"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Name of the logger whose level is to be changed."
 }
 ],
-"hydra:required": [
+"apiContract:required": [
 {
 "@value": true
 }
 ],
-"raml-http:binding": [
+"apiContract:binding": [
 {
 "@value": "path"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#165",
 "@type": [
@@ -12877,16 +12877,16 @@
 "@value": "loggerName"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Name of the logger whose level is to be changed."
 }
 ],
-"doc:examples": [
+"apiContract:examples": [
 {
 "@id": "#166",
 "@type": [
-"doc:Example",
+"apiContract:Example",
 "doc:DomainElement"
 ],
 "doc:strict": [
@@ -12912,7 +12912,7 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_1"
 }
@@ -12941,7 +12941,7 @@
 ]
 }
 ],
-"shacl:raw": [
+"doc:raw": [
 {
 "@value": "org.apache"
 }
@@ -12970,7 +12970,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "shacl:raw"
+"@value": "doc:raw"
 }
 ],
 "sourcemaps:value": [
@@ -13074,61 +13074,61 @@
 {
 "@id": "#188",
 "@type": [
-"raml-http:EndPoint",
+"apiContract:EndPoint",
 "doc:DomainElement"
 ],
-"raml-http:path": [
+"apiContract:path": [
 {
 "@value": "/ping"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Answers the current version of the deployed Mule application, possibly a value like \"2018.6.1\". Your implementation should always return **${muleapp.version.info}**.\n"
 }
 ],
-"hydra:supportedOperation": [
+"apiContract:supportedOperation": [
 {
 "@id": "#189",
 "@type": [
-"hydra:Operation",
+"apiContract:Operation",
 "doc:DomainElement"
 ],
-"hydra:method": [
+"apiContract:method": [
 {
 "@value": "get"
 }
 ],
-"hydra:returns": [
+"apiContract:returns": [
 {
 "@id": "#190",
 "@type": [
-"raml-http:Response",
+"apiContract:Response",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "200"
 }
 ],
-"hydra:statusCode": [
+"apiContract:statusCode": [
 {
 "@value": "200"
 }
 ],
-"raml-http:payload": [
+"apiContract:payload": [
 {
 "@id": "#191",
 "@type": [
-"raml-http:Payload",
+"apiContract:Payload",
 "doc:DomainElement"
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "text/plain"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
 "@id": "#192",
 "@type": [
@@ -13142,11 +13142,11 @@
 "@value": "schema"
 }
 ],
-"doc:examples": [
+"apiContract:examples": [
 {
 "@id": "#193",
 "@type": [
-"doc:Example",
+"apiContract:Example",
 "doc:DomainElement"
 ],
 "doc:strict": [
@@ -13172,7 +13172,7 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_1"
 }
@@ -13201,7 +13201,7 @@
 ]
 }
 ],
-"shacl:raw": [
+"doc:raw": [
 {
 "@value": "${muleapp.version.info}"
 }
@@ -13230,7 +13230,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "shacl:raw"
+"@value": "doc:raw"
 }
 ],
 "sourcemaps:value": [
@@ -13354,7 +13354,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:payload"
+"@value": "apiContract:payload"
 }
 ],
 "sourcemaps:value": [
@@ -13387,19 +13387,19 @@
 "security:ParametrizedSecurityScheme",
 "doc:DomainElement"
 ],
-"security:name": [
+"core:name": [
 {
 "@value": "candaCommons.basicAuth"
 }
 ],
 "security:scheme": [
 {
-"@id": "#42",
+"@id": "#44",
 "@type": [
 "security:SecurityScheme",
 "doc:DomainElement"
 ],
-"security:name": [
+"core:name": [
 {
 "@value": "basicAuth"
 }
@@ -13409,51 +13409,51 @@
 "@value": "Basic Authentication"
 }
 ],
-"schema-org:displayName": [
+"core:displayName": [
 {
 "@value": "Basic Authentication"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "This API supports Basic Authentication. The client has to provide an \"Authorization\" header with valid credentials."
 }
 ],
-"raml-http:header": [
+"apiContract:header": [
 {
-"@id": "#43",
+"@id": "#45",
 "@type": [
-"raml-http:Parameter",
+"apiContract:Parameter",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "Authorization"
 }
 ],
-"raml-http:paramName": [
+"apiContract:paramName": [
 {
 "@value": "Authorization"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Used to send valid credentials."
 }
 ],
-"hydra:required": [
+"apiContract:required": [
 {
 "@value": true
 }
 ],
-"raml-http:binding": [
+"apiContract:binding": [
 {
 "@value": "header"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
-"@id": "#44",
+"@id": "#46",
 "@type": [
 "raml-shapes:ScalarShape",
 "raml-shapes:AnyShape",
@@ -13471,16 +13471,16 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Used to send valid credentials."
 }
 ],
-"doc:examples": [
+"apiContract:examples": [
 {
-"@id": "#45",
+"@id": "#47",
 "@type": [
-"doc:Example",
+"apiContract:Example",
 "doc:DomainElement"
 ],
 "doc:strict": [
@@ -13490,7 +13490,7 @@
 ],
 "doc:structuredValue": [
 {
-"@id": "#45",
+"@id": "#47",
 "@type": [
 "data:Scalar",
 "data:Node",
@@ -13506,14 +13506,14 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_1"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#45/source-map",
+"@id": "#47/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -13521,7 +13521,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#45"
+"@value": "amf://id#47"
 }
 ],
 "sourcemaps:value": [
@@ -13535,14 +13535,14 @@
 ]
 }
 ],
-"shacl:raw": [
+"doc:raw": [
 {
 "@value": "Basic ax5Gdza5OnJpZnG4Z2ok"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#45/source-map",
+"@id": "#47/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -13564,7 +13564,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "shacl:raw"
+"@value": "doc:raw"
 }
 ],
 "sourcemaps:value": [
@@ -13576,7 +13576,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#45"
+"@value": "amf://id#47"
 }
 ],
 "sourcemaps:value": [
@@ -13602,12 +13602,12 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#45"
+"@value": "amf://id#47"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "amf://id#43"
+"@value": "amf://id#45"
 }
 ]
 }
@@ -13618,7 +13618,7 @@
 ],
 "sourcemaps:sources": [
 {
-"@id": "#44/source-map",
+"@id": "#46/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -13626,7 +13626,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#44"
+"@value": "amf://id#46"
 }
 ],
 "sourcemaps:value": [
@@ -13640,7 +13640,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -13652,7 +13652,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#44"
+"@value": "amf://id#46"
 }
 ],
 "sourcemaps:value": [
@@ -13680,7 +13680,7 @@
 ],
 "sourcemaps:sources": [
 {
-"@id": "#43/source-map",
+"@id": "#45/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -13688,7 +13688,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:schema"
+"@value": "raml-shapes:schema"
 }
 ],
 "sourcemaps:value": [
@@ -13700,7 +13700,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#43"
+"@value": "amf://id#45"
 }
 ],
 "sourcemaps:value": [
@@ -13712,7 +13712,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -13726,31 +13726,31 @@
 ]
 }
 ],
-"hydra:response": [
+"apiContract:response": [
 {
-"@id": "#46",
+"@id": "#48",
 "@type": [
-"raml-http:Response",
+"apiContract:Response",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "401"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Credentials are missing or could not be validated by the server."
 }
 ],
-"hydra:statusCode": [
+"apiContract:statusCode": [
 {
 "@value": "401"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#46/source-map",
+"@id": "#48/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -13758,7 +13758,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -13770,7 +13770,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#46"
+"@value": "amf://id#48"
 }
 ],
 "sourcemaps:value": [
@@ -13786,7 +13786,7 @@
 ],
 "sourcemaps:sources": [
 {
-"@id": "#42/source-map",
+"@id": "#44/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -13794,7 +13794,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#42"
+"@value": "amf://id#44"
 }
 ],
 "sourcemaps:value": [
@@ -13808,7 +13808,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:response"
+"@value": "apiContract:response"
 }
 ],
 "sourcemaps:value": [
@@ -13820,7 +13820,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -13844,7 +13844,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#42"
+"@value": "amf://id#44"
 }
 ],
 "sourcemaps:value": [
@@ -13856,7 +13856,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "security:name"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -13868,7 +13868,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:displayName"
+"@value": "core:displayName"
 }
 ],
 "sourcemaps:value": [
@@ -13880,7 +13880,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:header"
+"@value": "apiContract:header"
 }
 ],
 "sourcemaps:value": [
@@ -13928,7 +13928,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:returns"
+"@value": "apiContract:returns"
 }
 ],
 "sourcemaps:value": [
@@ -14002,7 +14002,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:documentation"
+"@value": "core:documentation"
 }
 ],
 "sourcemaps:value": [
@@ -14014,7 +14014,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:server"
+"@value": "apiContract:server"
 }
 ],
 "sourcemaps:value": [
@@ -14038,7 +14038,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:name"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -14050,7 +14050,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:version"
+"@value": "core:version"
 }
 ],
 "sourcemaps:value": [
@@ -14062,6 +14062,11 @@
 ]
 }
 ]
+}
+],
+"doc:version": [
+{
+"@value": "2.0.0"
 }
 ],
 "doc:references": [
@@ -14084,36 +14089,73 @@
 "@value": "{\r\n\t\"$schema\": \"http://json-schema.org/draft-04/schema#\",\r\n\t\"description\": \"Describes a collection of 0..n simple message representations consisting of an ID and a text.\",\r\n\t\"additionalProperties\": false,\r\n\t\"type\": \"object\",\r\n\t\"required\": [\r\n\t\t\"greetings\"\r\n\t],\r\n\t\"properties\": {\r\n\t\t\"greetings\": {\r\n\t\t\t\"type\": \"array\",\r\n\t\t\t\"description\": \"Holds the collection of simple messages.\",\r\n\t\t\t\"items\": {\r\n\t\t\t\t\"type\": \"object\",\r\n\t\t\t\t\"required\": [\r\n\t\t\t\t\t\"id\",\r\n\t\t\t\t\t\"message\"\r\n\t\t\t\t],\r\n\t\t\t\t\"properties\": {\r\n\t\t\t\t\t\"id\": {\r\n\t\t\t\t\t\t\"type\": \"string\",\r\n\t\t\t\t\t\t\"minLength\": 36,\r\n\t\t\t\t\t\t\"maxLength\": 36,\r\n\t\t\t\t\t\t\"description\": \"The ID of the representation, a randomly generated UUID.\"\r\n\t\t\t\t\t},\r\n\t\t\t\t\t\"message\": {\r\n\t\t\t\t\t\t\"type\": \"string\",\r\n\t\t\t\t\t\t\"description\": \"The text of the message.\"\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\t}\r\n\t}\r\n}"
 }
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/json"
 }
 ]
+}
+],
+"doc:version": [
+{
+"@value": "2.0.0"
 }
 ]
 },
 {
 "@id": "#3",
 "@type": [
+"doc:ExternalFragment",
+"doc:Fragment",
+"doc:Unit"
+],
+"doc:encodes": [
+{
+"@id": "#4",
+"@type": [
+"doc:ExternalDomainElement",
+"doc:DomainElement"
+],
+"doc:raw": [
+{
+"@value": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"description\": \"Describes the probably most simple representation of a CANDA company.\",\n  \"additionalProperties\": false,\n  \"definitions\": {},\n  \"properties\": {\n    \"companies\": {\n      \"items\": {\n        \"additionalProperties\": false,\n        \"properties\": {\n          \"code\": {\n            \"type\": \"integer\",\n\t\t  \t\"minimum\": 0,\n\t\t  \t\"maximum\": 99,\n            \"description\": \"The code of the given company is the unique identifier of the entity.\"\n          },\n          \"name\": {\n            \"type\": \"string\",\n            \"maxLength\": 50,\n            \"description\": \"The legal name of the given company.\"\n          }\n        },\n        \"required\": [\n          \"code\",\n          \"name\"\n        ],\n        \"type\": \"object\"\n      },\n      \"type\": \"array\"\n    }\n  },\n  \"required\": [\n    \"companies\"\n  ],\n  \"type\": \"object\"\n}\n"
+}
+],
+"core:mediaType": [
+{
+"@value": "application/json"
+}
+]
+}
+],
+"doc:version": [
+{
+"@value": "2.0.0"
+}
+]
+},
+{
+"@id": "#5",
+"@type": [
 "doc:Module",
 "doc:Unit"
 ],
 "doc:declares": [
 {
-"@id": "#12",
+"@id": "#14",
 "@type": [
-"doc:ResourceType",
+"apiContract:ResourceType",
 "doc:AbstractDeclaration",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "ping"
 }
 ],
 "doc:dataNode": [
 {
-"@id": "#13",
+"@id": "#15",
 "@type": [
 "data:Object",
 "data:Node",
@@ -14121,7 +14163,7 @@
 ],
 "data:description": [
 {
-"@id": "#14",
+"@id": "#16",
 "@type": [
 "data:Scalar",
 "data:Node",
@@ -14137,14 +14179,14 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_2"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#14/source-map",
+"@id": "#16/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -14152,7 +14194,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#14"
+"@value": "amf://id#16"
 }
 ],
 "sourcemaps:value": [
@@ -14168,7 +14210,7 @@
 ],
 "data:get": [
 {
-"@id": "#15",
+"@id": "#17",
 "@type": [
 "data:Object",
 "data:Node",
@@ -14176,7 +14218,7 @@
 ],
 "data:responses": [
 {
-"@id": "#16",
+"@id": "#18",
 "@type": [
 "data:Object",
 "data:Node",
@@ -14184,7 +14226,7 @@
 ],
 "data:200": [
 {
-"@id": "#17",
+"@id": "#19",
 "@type": [
 "data:Object",
 "data:Node",
@@ -14192,7 +14234,7 @@
 ],
 "data:body": [
 {
-"@id": "#18",
+"@id": "#20",
 "@type": [
 "data:Object",
 "data:Node",
@@ -14200,7 +14242,7 @@
 ],
 "data:text%2Fplain": [
 {
-"@id": "#19",
+"@id": "#21",
 "@type": [
 "data:Object",
 "data:Node",
@@ -14208,7 +14250,7 @@
 ],
 "data:example": [
 {
-"@id": "#20",
+"@id": "#22",
 "@type": [
 "data:Scalar",
 "data:Node",
@@ -14224,14 +14266,14 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_8"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#20/source-map",
+"@id": "#22/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -14239,7 +14281,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#20"
+"@value": "amf://id#22"
 }
 ],
 "sourcemaps:value": [
@@ -14253,14 +14295,14 @@
 ]
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "object_7"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#19/source-map",
+"@id": "#21/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -14280,7 +14322,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#19"
+"@value": "amf://id#21"
 }
 ],
 "sourcemaps:value": [
@@ -14294,14 +14336,14 @@
 ]
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "object_6"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#18/source-map",
+"@id": "#20/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -14321,7 +14363,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#18"
+"@value": "amf://id#20"
 }
 ],
 "sourcemaps:value": [
@@ -14335,14 +14377,14 @@
 ]
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "object_5"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#17/source-map",
+"@id": "#19/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -14362,7 +14404,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#17"
+"@value": "amf://id#19"
 }
 ],
 "sourcemaps:value": [
@@ -14376,14 +14418,14 @@
 ]
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "object_4"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#16/source-map",
+"@id": "#18/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -14403,7 +14445,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#16"
+"@value": "amf://id#18"
 }
 ],
 "sourcemaps:value": [
@@ -14417,14 +14459,14 @@
 ]
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "object_3"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#15/source-map",
+"@id": "#17/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -14444,7 +14486,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#15"
+"@value": "amf://id#17"
 }
 ],
 "sourcemaps:value": [
@@ -14458,14 +14500,14 @@
 ]
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "object_1"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#13/source-map",
+"@id": "#15/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -14485,7 +14527,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#13"
+"@value": "amf://id#15"
 }
 ],
 "sourcemaps:value": [
@@ -14513,7 +14555,7 @@
 ],
 "sourcemaps:sources": [
 {
-"@id": "#12/source-map",
+"@id": "#14/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -14521,7 +14563,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#12"
+"@value": "amf://id#14"
 }
 ],
 "sourcemaps:value": [
@@ -14535,20 +14577,20 @@
 ]
 },
 {
-"@id": "#21",
+"@id": "#23",
 "@type": [
-"doc:ResourceType",
+"apiContract:ResourceType",
 "doc:AbstractDeclaration",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "logLevel"
 }
 ],
 "doc:dataNode": [
 {
-"@id": "#22",
+"@id": "#24",
 "@type": [
 "data:Object",
 "data:Node",
@@ -14556,7 +14598,7 @@
 ],
 "data:description": [
 {
-"@id": "#23",
+"@id": "#25",
 "@type": [
 "data:Scalar",
 "data:Node",
@@ -14572,14 +14614,14 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_2"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#23/source-map",
+"@id": "#25/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -14587,7 +14629,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#23"
+"@value": "amf://id#25"
 }
 ],
 "sourcemaps:value": [
@@ -14603,7 +14645,7 @@
 ],
 "data:uriParameters": [
 {
-"@id": "#24",
+"@id": "#26",
 "@type": [
 "data:Object",
 "data:Node",
@@ -14611,7 +14653,7 @@
 ],
 "data:loggerName": [
 {
-"@id": "#25",
+"@id": "#27",
 "@type": [
 "data:Object",
 "data:Node",
@@ -14619,7 +14661,7 @@
 ],
 "data:description": [
 {
-"@id": "#26",
+"@id": "#28",
 "@type": [
 "data:Scalar",
 "data:Node",
@@ -14635,103 +14677,9 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_5"
-}
-],
-"sourcemaps:sources": [
-{
-"@id": "#26/source-map",
-"@type": [
-"sourcemaps:SourceMap"
-],
-"sourcemaps:lexical": [
-{
-"sourcemaps:element": [
-{
-"@value": "amf://id#26"
-}
-],
-"sourcemaps:value": [
-{
-"@value": "[(18,23)-(18,71)]"
-}
-]
-}
-]
-}
-]
-}
-],
-"data:type": [
-{
-"@id": "#27",
-"@type": [
-"data:Scalar",
-"data:Node",
-"doc:DomainElement"
-],
-"data:value": [
-{
-"@value": "string"
-}
-],
-"shacl:datatype": [
-{
-"@id": "http://www.w3.org/2001/XMLSchema#string"
-}
-],
-"schema-org:name": [
-{
-"@value": "scalar_6"
-}
-],
-"sourcemaps:sources": [
-{
-"@id": "#27/source-map",
-"@type": [
-"sourcemaps:SourceMap"
-],
-"sourcemaps:lexical": [
-{
-"sourcemaps:element": [
-{
-"@value": "amf://id#27"
-}
-],
-"sourcemaps:value": [
-{
-"@value": "[(19,16)-(19,22)]"
-}
-]
-}
-]
-}
-]
-}
-],
-"data:required": [
-{
-"@id": "#28",
-"@type": [
-"data:Scalar",
-"data:Node",
-"doc:DomainElement"
-],
-"data:value": [
-{
-"@value": "true"
-}
-],
-"shacl:datatype": [
-{
-"@id": "http://www.w3.org/2001/XMLSchema#boolean"
-}
-],
-"schema-org:name": [
-{
-"@value": "scalar_7"
 }
 ],
 "sourcemaps:sources": [
@@ -14749,7 +14697,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "[(20,20)-(20,24)]"
+"@value": "[(18,23)-(18,71)]"
 }
 ]
 }
@@ -14758,7 +14706,7 @@
 ]
 }
 ],
-"data:example": [
+"data:type": [
 {
 "@id": "#29",
 "@type": [
@@ -14768,7 +14716,7 @@
 ],
 "data:value": [
 {
-"@value": "org.apache"
+"@value": "string"
 }
 ],
 "shacl:datatype": [
@@ -14776,9 +14724,9 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
-"@value": "scalar_8"
+"@value": "scalar_6"
 }
 ],
 "sourcemaps:sources": [
@@ -14796,6 +14744,100 @@
 ],
 "sourcemaps:value": [
 {
+"@value": "[(19,16)-(19,22)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"data:required": [
+{
+"@id": "#30",
+"@type": [
+"data:Scalar",
+"data:Node",
+"doc:DomainElement"
+],
+"data:value": [
+{
+"@value": "true"
+}
+],
+"shacl:datatype": [
+{
+"@id": "http://www.w3.org/2001/XMLSchema#boolean"
+}
+],
+"core:name": [
+{
+"@value": "scalar_7"
+}
+],
+"sourcemaps:sources": [
+{
+"@id": "#30/source-map",
+"@type": [
+"sourcemaps:SourceMap"
+],
+"sourcemaps:lexical": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#30"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(20,20)-(20,24)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"data:example": [
+{
+"@id": "#31",
+"@type": [
+"data:Scalar",
+"data:Node",
+"doc:DomainElement"
+],
+"data:value": [
+{
+"@value": "org.apache"
+}
+],
+"shacl:datatype": [
+{
+"@id": "http://www.w3.org/2001/XMLSchema#string"
+}
+],
+"core:name": [
+{
+"@value": "scalar_8"
+}
+],
+"sourcemaps:sources": [
+{
+"@id": "#31/source-map",
+"@type": [
+"sourcemaps:SourceMap"
+],
+"sourcemaps:lexical": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#31"
+}
+],
+"sourcemaps:value": [
+{
 "@value": "[(21,19)-(21,31)]"
 }
 ]
@@ -14805,14 +14847,14 @@
 ]
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "object_4"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#25/source-map",
+"@id": "#27/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -14844,7 +14886,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#25"
+"@value": "amf://id#27"
 }
 ],
 "sourcemaps:value": [
@@ -14882,14 +14924,14 @@
 ]
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "object_3"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#24/source-map",
+"@id": "#26/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -14909,7 +14951,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#24"
+"@value": "amf://id#26"
 }
 ],
 "sourcemaps:value": [
@@ -14925,7 +14967,7 @@
 ],
 "data:put": [
 {
-"@id": "#30",
+"@id": "#32",
 "@type": [
 "data:Object",
 "data:Node",
@@ -14933,7 +14975,7 @@
 ],
 "data:body": [
 {
-"@id": "#31",
+"@id": "#33",
 "@type": [
 "data:Object",
 "data:Node",
@@ -14941,7 +14983,7 @@
 ],
 "data:application%2Fjson": [
 {
-"@id": "#32",
+"@id": "#34",
 "@type": [
 "data:Object",
 "data:Node",
@@ -14949,7 +14991,7 @@
 ],
 "data:example": [
 {
-"@id": "#33",
+"@id": "#35",
 "@type": [
 "data:Scalar",
 "data:Node",
@@ -14965,14 +15007,14 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_12"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#33/source-map",
+"@id": "#35/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -14980,7 +15022,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#33"
+"@value": "amf://id#35"
 }
 ],
 "sourcemaps:value": [
@@ -14996,7 +15038,7 @@
 ],
 "data:type": [
 {
-"@id": "#34",
+"@id": "#36",
 "@type": [
 "data:Scalar",
 "data:Node",
@@ -15012,14 +15054,14 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_13"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#34/source-map",
+"@id": "#36/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -15027,7 +15069,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#34"
+"@value": "amf://id#36"
 }
 ],
 "sourcemaps:value": [
@@ -15041,14 +15083,14 @@
 ]
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "object_11"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#32/source-map",
+"@id": "#34/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -15068,7 +15110,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#32"
+"@value": "amf://id#34"
 }
 ],
 "sourcemaps:value": [
@@ -15094,14 +15136,14 @@
 ]
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "object_10"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#31/source-map",
+"@id": "#33/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -15121,7 +15163,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#31"
+"@value": "amf://id#33"
 }
 ],
 "sourcemaps:value": [
@@ -15137,7 +15179,7 @@
 ],
 "data:responses": [
 {
-"@id": "#35",
+"@id": "#37",
 "@type": [
 "data:Object",
 "data:Node",
@@ -15145,7 +15187,7 @@
 ],
 "data:200": [
 {
-"@id": "#36",
+"@id": "#38",
 "@type": [
 "data:Object",
 "data:Node",
@@ -15153,7 +15195,7 @@
 ],
 "data:body": [
 {
-"@id": "#37",
+"@id": "#39",
 "@type": [
 "data:Object",
 "data:Node",
@@ -15161,7 +15203,7 @@
 ],
 "data:application%2Fjson": [
 {
-"@id": "#38",
+"@id": "#40",
 "@type": [
 "data:Object",
 "data:Node",
@@ -15169,7 +15211,7 @@
 ],
 "data:description": [
 {
-"@id": "#39",
+"@id": "#41",
 "@type": [
 "data:Scalar",
 "data:Node",
@@ -15185,103 +15227,9 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_18"
-}
-],
-"sourcemaps:sources": [
-{
-"@id": "#39/source-map",
-"@type": [
-"sourcemaps:SourceMap"
-],
-"sourcemaps:lexical": [
-{
-"sourcemaps:element": [
-{
-"@value": "amf://id#39"
-}
-],
-"sourcemaps:value": [
-{
-"@value": "[(31,29)-(35,0)]"
-}
-]
-}
-]
-}
-]
-}
-],
-"data:example": [
-{
-"@id": "#40",
-"@type": [
-"data:Scalar",
-"data:Node",
-"doc:DomainElement"
-],
-"data:value": [
-{
-"@value": "{\n  \"message\" : \"TODO you need to replace this generated setpayload by #[com.canda.mulestac.logging.ChangeLogLevel.changeWithJson(flowVars.loggerName, payload)] in the api.xml\"\n}"
-}
-],
-"shacl:datatype": [
-{
-"@id": "http://www.w3.org/2001/XMLSchema#string"
-}
-],
-"schema-org:name": [
-{
-"@value": "scalar_19"
-}
-],
-"sourcemaps:sources": [
-{
-"@id": "#40/source-map",
-"@type": [
-"sourcemaps:SourceMap"
-],
-"sourcemaps:lexical": [
-{
-"sourcemaps:element": [
-{
-"@value": "amf://id#40"
-}
-],
-"sourcemaps:value": [
-{
-"@value": "[(1,0)-(1,0)]"
-}
-]
-}
-]
-}
-]
-}
-],
-"data:type": [
-{
-"@id": "#41",
-"@type": [
-"data:Scalar",
-"data:Node",
-"doc:DomainElement"
-],
-"data:value": [
-{
-"@value": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"message\": {\n      \"description\":\"the human readable result of the changeLogLevel operation.\",\n      \"type\": \"string\"\n    }\n  }\n}"
-}
-],
-"shacl:datatype": [
-{
-"@id": "http://www.w3.org/2001/XMLSchema#string"
-}
-],
-"schema-org:name": [
-{
-"@value": "scalar_20"
 }
 ],
 "sourcemaps:sources": [
@@ -15299,6 +15247,53 @@
 ],
 "sourcemaps:value": [
 {
+"@value": "[(31,29)-(35,0)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"data:example": [
+{
+"@id": "#42",
+"@type": [
+"data:Scalar",
+"data:Node",
+"doc:DomainElement"
+],
+"data:value": [
+{
+"@value": "{\n  \"message\" : \"TODO you need to replace this generated setpayload by #[com.canda.mulestac.logging.ChangeLogLevel.changeWithJson(flowVars.loggerName, payload)] in the api.xml\"\n}"
+}
+],
+"shacl:datatype": [
+{
+"@id": "http://www.w3.org/2001/XMLSchema#string"
+}
+],
+"core:name": [
+{
+"@value": "scalar_19"
+}
+],
+"sourcemaps:sources": [
+{
+"@id": "#42/source-map",
+"@type": [
+"sourcemaps:SourceMap"
+],
+"sourcemaps:lexical": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#42"
+}
+],
+"sourcemaps:value": [
+{
 "@value": "[(1,0)-(1,0)]"
 }
 ]
@@ -15308,14 +15303,61 @@
 ]
 }
 ],
-"schema-org:name": [
+"data:type": [
+{
+"@id": "#43",
+"@type": [
+"data:Scalar",
+"data:Node",
+"doc:DomainElement"
+],
+"data:value": [
+{
+"@value": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"message\": {\n      \"description\":\"the human readable result of the changeLogLevel operation.\",\n      \"type\": \"string\"\n    }\n  }\n}"
+}
+],
+"shacl:datatype": [
+{
+"@id": "http://www.w3.org/2001/XMLSchema#string"
+}
+],
+"core:name": [
+{
+"@value": "scalar_20"
+}
+],
+"sourcemaps:sources": [
+{
+"@id": "#43/source-map",
+"@type": [
+"sourcemaps:SourceMap"
+],
+"sourcemaps:lexical": [
+{
+"sourcemaps:element": [
+{
+"@value": "amf://id#43"
+}
+],
+"sourcemaps:value": [
+{
+"@value": "[(1,0)-(1,0)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"core:name": [
 {
 "@value": "object_17"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#38/source-map",
+"@id": "#40/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -15347,7 +15389,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#38"
+"@value": "amf://id#40"
 }
 ],
 "sourcemaps:value": [
@@ -15373,14 +15415,14 @@
 ]
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "object_16"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#37/source-map",
+"@id": "#39/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -15400,7 +15442,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#37"
+"@value": "amf://id#39"
 }
 ],
 "sourcemaps:value": [
@@ -15414,14 +15456,14 @@
 ]
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "object_15"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#36/source-map",
+"@id": "#38/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -15441,7 +15483,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#36"
+"@value": "amf://id#38"
 }
 ],
 "sourcemaps:value": [
@@ -15455,14 +15497,14 @@
 ]
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "object_14"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#35/source-map",
+"@id": "#37/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -15482,7 +15524,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#35"
+"@value": "amf://id#37"
 }
 ],
 "sourcemaps:value": [
@@ -15496,14 +15538,14 @@
 ]
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "object_9"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#30/source-map",
+"@id": "#32/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -15523,7 +15565,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#30"
+"@value": "amf://id#32"
 }
 ],
 "sourcemaps:value": [
@@ -15549,14 +15591,14 @@
 ]
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "object_1"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#22/source-map",
+"@id": "#24/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -15588,7 +15630,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#22"
+"@value": "amf://id#24"
 }
 ],
 "sourcemaps:value": [
@@ -15616,7 +15658,7 @@
 ],
 "sourcemaps:sources": [
 {
-"@id": "#21/source-map",
+"@id": "#23/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -15624,7 +15666,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#21"
+"@value": "amf://id#23"
 }
 ],
 "sourcemaps:value": [
@@ -15638,12 +15680,12 @@
 ]
 },
 {
-"@id": "#42",
+"@id": "#44",
 "@type": [
 "security:SecurityScheme",
 "doc:DomainElement"
 ],
-"security:name": [
+"core:name": [
 {
 "@value": "basicAuth"
 }
@@ -15653,51 +15695,51 @@
 "@value": "Basic Authentication"
 }
 ],
-"schema-org:displayName": [
+"core:displayName": [
 {
 "@value": "Basic Authentication"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "This API supports Basic Authentication. The client has to provide an \"Authorization\" header with valid credentials."
 }
 ],
-"raml-http:header": [
+"apiContract:header": [
 {
-"@id": "#43",
+"@id": "#45",
 "@type": [
-"raml-http:Parameter",
+"apiContract:Parameter",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "Authorization"
 }
 ],
-"raml-http:paramName": [
+"apiContract:paramName": [
 {
 "@value": "Authorization"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Used to send valid credentials."
 }
 ],
-"hydra:required": [
+"apiContract:required": [
 {
 "@value": true
 }
 ],
-"raml-http:binding": [
+"apiContract:binding": [
 {
 "@value": "header"
 }
 ],
-"raml-http:schema": [
+"raml-shapes:schema": [
 {
-"@id": "#44",
+"@id": "#46",
 "@type": [
 "raml-shapes:ScalarShape",
 "raml-shapes:AnyShape",
@@ -15715,16 +15757,16 @@
 "@value": "schema"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Used to send valid credentials."
 }
 ],
-"doc:examples": [
+"apiContract:examples": [
 {
-"@id": "#45",
+"@id": "#47",
 "@type": [
-"doc:Example",
+"apiContract:Example",
 "doc:DomainElement"
 ],
 "doc:strict": [
@@ -15734,7 +15776,7 @@
 ],
 "doc:structuredValue": [
 {
-"@id": "#45",
+"@id": "#47",
 "@type": [
 "data:Scalar",
 "data:Node",
@@ -15750,14 +15792,14 @@
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "scalar_1"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#45/source-map",
+"@id": "#47/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -15765,7 +15807,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#45"
+"@value": "amf://id#47"
 }
 ],
 "sourcemaps:value": [
@@ -15779,14 +15821,14 @@
 ]
 }
 ],
-"shacl:raw": [
+"doc:raw": [
 {
 "@value": "Basic ax5Gdza5OnJpZnG4Z2ok"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#45/source-map",
+"@id": "#47/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -15808,7 +15850,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "shacl:raw"
+"@value": "doc:raw"
 }
 ],
 "sourcemaps:value": [
@@ -15820,7 +15862,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#45"
+"@value": "amf://id#47"
 }
 ],
 "sourcemaps:value": [
@@ -15846,12 +15888,12 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#45"
+"@value": "amf://id#47"
 }
 ],
 "sourcemaps:value": [
 {
-"@value": "amf://id#43"
+"@value": "amf://id#45"
 }
 ]
 }
@@ -15862,7 +15904,7 @@
 ],
 "sourcemaps:sources": [
 {
-"@id": "#44/source-map",
+"@id": "#46/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -15870,7 +15912,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#44"
+"@value": "amf://id#46"
 }
 ],
 "sourcemaps:value": [
@@ -15884,7 +15926,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -15896,7 +15938,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#44"
+"@value": "amf://id#46"
 }
 ],
 "sourcemaps:value": [
@@ -15924,7 +15966,7 @@
 ],
 "sourcemaps:sources": [
 {
-"@id": "#43/source-map",
+"@id": "#45/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -15932,7 +15974,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:schema"
+"@value": "raml-shapes:schema"
 }
 ],
 "sourcemaps:value": [
@@ -15944,7 +15986,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#43"
+"@value": "amf://id#45"
 }
 ],
 "sourcemaps:value": [
@@ -15956,7 +15998,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -15970,31 +16012,31 @@
 ]
 }
 ],
-"hydra:response": [
+"apiContract:response": [
 {
-"@id": "#46",
+"@id": "#48",
 "@type": [
-"raml-http:Response",
+"apiContract:Response",
 "doc:DomainElement"
 ],
-"schema-org:name": [
+"core:name": [
 {
 "@value": "401"
 }
 ],
-"schema-org:description": [
+"core:description": [
 {
 "@value": "Credentials are missing or could not be validated by the server."
 }
 ],
-"hydra:statusCode": [
+"apiContract:statusCode": [
 {
 "@value": "401"
 }
 ],
 "sourcemaps:sources": [
 {
-"@id": "#46/source-map",
+"@id": "#48/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -16002,7 +16044,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -16014,7 +16056,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#46"
+"@value": "amf://id#48"
 }
 ],
 "sourcemaps:value": [
@@ -16030,7 +16072,7 @@
 ],
 "sourcemaps:sources": [
 {
-"@id": "#42/source-map",
+"@id": "#44/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -16038,7 +16080,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#42"
+"@value": "amf://id#44"
 }
 ],
 "sourcemaps:value": [
@@ -16052,7 +16094,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "hydra:response"
+"@value": "apiContract:response"
 }
 ],
 "sourcemaps:value": [
@@ -16064,7 +16106,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:description"
+"@value": "core:description"
 }
 ],
 "sourcemaps:value": [
@@ -16088,7 +16130,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#42"
+"@value": "amf://id#44"
 }
 ],
 "sourcemaps:value": [
@@ -16100,7 +16142,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "security:name"
+"@value": "core:name"
 }
 ],
 "sourcemaps:value": [
@@ -16112,7 +16154,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "schema-org:displayName"
+"@value": "core:displayName"
 }
 ],
 "sourcemaps:value": [
@@ -16124,7 +16166,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "raml-http:header"
+"@value": "apiContract:header"
 }
 ],
 "sourcemaps:value": [
@@ -16138,34 +16180,12 @@
 ]
 }
 ],
+"doc:version": [
+{
+"@value": "2.0.0"
+}
+],
 "doc:references": [
-{
-"@id": "#4",
-"@type": [
-"doc:ExternalFragment",
-"doc:Fragment",
-"doc:Unit"
-],
-"doc:encodes": [
-{
-"@id": "#5",
-"@type": [
-"doc:ExternalDomainElement",
-"doc:DomainElement"
-],
-"doc:raw": [
-{
-"@value": "{\n\t\"newLevel\": \"DEBUG\"\n}"
-}
-],
-"raml-http:mediaType": [
-{
-"@value": "application/json"
-}
-]
-}
-]
-},
 {
 "@id": "#6",
 "@type": [
@@ -16182,14 +16202,19 @@
 ],
 "doc:raw": [
 {
-"@value": "{\n  \"message\" : \"TODO you need to replace this generated setpayload by #[com.canda.mulestac.logging.ChangeLogLevel.changeWithJson(flowVars.loggerName, payload)] in the api.xml\"\n}"
+"@value": "{\n\t\"newLevel\": \"DEBUG\"\n}"
 }
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/json"
 }
 ]
+}
+],
+"doc:version": [
+{
+"@value": "2.0.0"
 }
 ]
 },
@@ -16209,14 +16234,19 @@
 ],
 "doc:raw": [
 {
-"@value": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"message\": {\n      \"description\":\"the human readable result of the changeLogLevel operation.\",\n      \"type\": \"string\"\n    }\n  }\n}"
+"@value": "{\n  \"message\" : \"TODO you need to replace this generated setpayload by #[com.canda.mulestac.logging.ChangeLogLevel.changeWithJson(flowVars.loggerName, payload)] in the api.xml\"\n}"
 }
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/json"
 }
 ]
+}
+],
+"doc:version": [
+{
+"@value": "2.0.0"
 }
 ]
 },
@@ -16236,14 +16266,51 @@
 ],
 "doc:raw": [
 {
-"@value": "{\n\t\"$schema\": \"http://json-schema.org/draft-04/schema#\",\n\t\"type\": \"object\",\n\t\"title\": \"change  a certain log level\",\n\t\"properties\": {\n\t\t\"newLevel\": {\n\t\t\t\"type\": \"string\",\n\t\t\t\"description\": \"The new log level to be set.\",\n\t\t\t\"enum\": [\n\t\t\t\t\"OFF\",\n\t\t\t\t\"ERROR\",\n\t\t\t\t\"WARN\",\n\t\t\t\t\"INFO\",\n\t\t\t\t\"DEBUG\",\n\t\t\t\t\"TRACE\"\n\t\t\t]\n\t\t},\n\t\t\"createFlag\": {\n\t\t\t\"description\": \"Optional parameter to create a logger in case it does not exist (to avoid typo errors for existing loggers).\",\n\t\t\t\"type\": \"boolean\"\n\t\t},\n\t\t\"hoursToReset\": {\n\t\t\t\"description\": \"Delay in hours after which time the logger is set back to its original log level.\",\n\t\t\t\"type\": \"integer\"\n\t\t}\n\t},\n\t\"required\": [\n\t\t\"newLevel\"\n\t]\n}"
+"@value": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"message\": {\n      \"description\":\"the human readable result of the changeLogLevel operation.\",\n      \"type\": \"string\"\n    }\n  }\n}"
 }
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/json"
 }
 ]
+}
+],
+"doc:version": [
+{
+"@value": "2.0.0"
+}
+]
+},
+{
+"@id": "#12",
+"@type": [
+"doc:ExternalFragment",
+"doc:Fragment",
+"doc:Unit"
+],
+"doc:encodes": [
+{
+"@id": "#13",
+"@type": [
+"doc:ExternalDomainElement",
+"doc:DomainElement"
+],
+"doc:raw": [
+{
+"@value": "{\n\t\"$schema\": \"http://json-schema.org/draft-04/schema#\",\n\t\"type\": \"object\",\n\t\"title\": \"change  a certain log level\",\n\t\"properties\": {\n\t\t\"newLevel\": {\n\t\t\t\"type\": \"string\",\n\t\t\t\"description\": \"The new log level to be set.\",\n\t\t\t\"enum\": [\n\t\t\t\t\"OFF\",\n\t\t\t\t\"ERROR\",\n\t\t\t\t\"WARN\",\n\t\t\t\t\"INFO\",\n\t\t\t\t\"DEBUG\",\n\t\t\t\t\"TRACE\"\n\t\t\t]\n\t\t},\n\t\t\"createFlag\": {\n\t\t\t\"description\": \"Optional parameter to create a logger in case it does not exist (to avoid typo errors for existing loggers).\",\n\t\t\t\"type\": \"boolean\"\n\t\t},\n\t\t\"hoursToReset\": {\n\t\t\t\"description\": \"Delay in hours after which time the logger is set back to its original log level.\",\n\t\t\t\"type\": \"integer\"\n\t\t}\n\t},\n\t\"required\": [\n\t\t\"newLevel\"\n\t]\n}"
+}
+],
+"core:mediaType": [
+{
+"@value": "application/json"
+}
+]
+}
+],
+"doc:version": [
+{
+"@value": "2.0.0"
 }
 ]
 }
@@ -16255,7 +16322,7 @@
 ],
 "sourcemaps:sources": [
 {
-"@id": "#3/source-map",
+"@id": "#5/source-map",
 "@type": [
 "sourcemaps:SourceMap"
 ],
@@ -16263,7 +16330,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#3"
+"@value": "amf://id#5"
 }
 ],
 "sourcemaps:value": [
@@ -16289,7 +16356,7 @@
 {
 "sourcemaps:element": [
 {
-"@value": "amf://id#3"
+"@value": "amf://id#5"
 }
 ],
 "sourcemaps:value": [
@@ -16297,33 +16364,6 @@
 "@value": "[(2,0)-(51,0)]"
 }
 ]
-}
-]
-}
-]
-},
-{
-"@id": "#47",
-"@type": [
-"doc:ExternalFragment",
-"doc:Fragment",
-"doc:Unit"
-],
-"doc:encodes": [
-{
-"@id": "#48",
-"@type": [
-"doc:ExternalDomainElement",
-"doc:DomainElement"
-],
-"doc:raw": [
-{
-"@value": "{\n\t\"sum\": 7,\n\t\"summands\": [\n\t\t{\n\t\t\t\"value\": 3\n\t\t},\n\n\t\t{\n\t\t\t\"value\": 4\n\t\t}\n\t]\n}"
-}
-],
-"raml-http:mediaType": [
-{
-"@value": "application/json"
 }
 ]
 }
@@ -16345,14 +16385,19 @@
 ],
 "doc:raw": [
 {
-"@value": "{\n\t\"$schema\": \"http://json-schema.org/draft-04/schema#\",\n\t\"description\": \"Describes the representation of an addition with 1..n summands.\",\n\t\"additionalProperties\": false,\n\t\"definitions\": {\n\t\t\n\t},\n\n\t\"properties\": {\n\t\t\"sum\": {\n\t\t\t\"type\": \"integer\",\n\t\t\t\"description\": \"The result (sum) of the addition.\"\n\t\t},\n\n\t\t\"summands\": {\n\t\t\t\"additionalItems\": false,\n\t\t\t\"items\": {\n\t\t\t\t\"additionalProperties\": false,\n\t\t\t\t\"properties\": {\n\t\t\t\t\t\"value\": {\n\t\t\t\t\t\t\"type\": \"integer\",\n\t\t\t\t\t\t\"description\": \"The integer value of the summand.\"\n\t\t\t\t\t}\n\t\t\t\t},\n\n\t\t\t\t\"required\": [\n\t\t\t\t\t\"value\"\n\t\t\t\t],\n\n\t\t\t\t\"type\": \"object\"\n\t\t\t},\n\n\t\t\t\"type\": \"array\"\n\t\t}\n\t},\n\n\t\"required\": [\n\t\t\"summands\",\n\t\t\"sum\"\n\t],\n\n\t\"type\": \"object\"\n}"
+"@value": "{\n\t\"companies\": [{\n\t\t\"code\" : 2,\n\t\t\"name\": \"C & A Mode GmbH & Co. KG, Germany\"\n\t\t},\n\t\t{\n      \t\"code\" : 11,\n\t\t\"name\": \"C & A Nederland\"\n    \t}\n\t]\n}"
 }
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/json"
 }
 ]
+}
+],
+"doc:version": [
+{
+"@value": "2.0.0"
 }
 ]
 },
@@ -16372,14 +16417,19 @@
 ],
 "doc:raw": [
 {
-"@value": "{\n\t\"greetings\": [{\n\t\t\"id\": \"1568b2db-9e2f-4025-b7ae-05301901d362\",\n\t\t\"message\": \"Enjoy this wonderful day while the sun is shining on the autumn leaves.\"\n\t\t},\n\t\t{\n\t\t\"id\": \"0bde5b56-bad6-4ed8-9ac6-355587761610\",\n\t\t\"message\": \"Can you hear the waves? Most amazing sound I've ever heard.\"\n    \t},\n\t\t{\n\t\t\"id\": \"57b5673e-73f0-4512-bca1-5255dc6f25b5\",\n\t\t\"message\": \"Mindfulness is one of the secrets for a happy life.\"\n    \t}\n\t]\n}"
+"@value": "{\n\t\"$schema\": \"http://json-schema.org/draft-04/schema#\",\n\t\"description\": \"Describes the representation of an addition with 1..n summands.\",\n\t\"additionalProperties\": false,\n\t\"definitions\": {\n\t\t\n\t},\n\n\t\"properties\": {\n\t\t\"sum\": {\n\t\t\t\"type\": \"integer\",\n\t\t\t\"description\": \"The result (sum) of the addition.\"\n\t\t},\n\n\t\t\"summands\": {\n\t\t\t\"additionalItems\": false,\n\t\t\t\"items\": {\n\t\t\t\t\"additionalProperties\": false,\n\t\t\t\t\"properties\": {\n\t\t\t\t\t\"value\": {\n\t\t\t\t\t\t\"type\": \"integer\",\n\t\t\t\t\t\t\"description\": \"The integer value of the summand.\"\n\t\t\t\t\t}\n\t\t\t\t},\n\n\t\t\t\t\"required\": [\n\t\t\t\t\t\"value\"\n\t\t\t\t],\n\n\t\t\t\t\"type\": \"object\"\n\t\t\t},\n\n\t\t\t\"type\": \"array\"\n\t\t}\n\t},\n\n\t\"required\": [\n\t\t\"summands\",\n\t\t\"sum\"\n\t],\n\n\t\"type\": \"object\"\n}"
 }
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/json"
 }
 ]
+}
+],
+"doc:version": [
+{
+"@value": "2.0.0"
 }
 ]
 },
@@ -16399,14 +16449,19 @@
 ],
 "doc:raw": [
 {
-"@value": "{\n\t\"id\": \"82157f46-887e-4907-b7c6-06278b3b9ea1\",\n\t\"message\": \"Welcome and thanks for your request, mike.\"\n}"
+"@value": "{\r\n\t\"$schema\": \"http://json-schema.org/draft-04/schema#\",\r\n\t\"description\": \"Describes simple greeting representation consisting of an ID and a message.\",\r\n\t\"additionalProperties\": false,\r\n\t\"type\": \"object\",\r\n\t\"required\": [\r\n\t\t\"id\",\r\n\t\t\"message\"\r\n\t],\r\n\t\"properties\": {\r\n\t\t\"id\": {\r\n\t\t\t\"type\": \"string\",\r\n\t\t\t\"minLength\": 36,\r\n\t\t\t\"maxLength\": 36,\r\n\t\t\t\"description\": \"The ID of the representation, a randomly generated UUID.\"\r\n\t\t},\r\n\t\t\"message\": {\r\n\t\t\t\"type\": \"string\",\r\n\t\t\t\"description\": \"The text message of the greeting.\"\r\n\t\t}\r\n\t}\r\n}\r\n"
 }
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/json"
 }
 ]
+}
+],
+"doc:version": [
+{
+"@value": "2.0.0"
 }
 ]
 },
@@ -16426,14 +16481,19 @@
 ],
 "doc:raw": [
 {
-"@value": "{\r\n\t\"$schema\": \"http://json-schema.org/draft-04/schema#\",\r\n\t\"description\": \"Describes simple greeting representation consisting of an ID and a message.\",\r\n\t\"additionalProperties\": false,\r\n\t\"type\": \"object\",\r\n\t\"required\": [\r\n\t\t\"id\",\r\n\t\t\"message\"\r\n\t],\r\n\t\"properties\": {\r\n\t\t\"id\": {\r\n\t\t\t\"type\": \"string\",\r\n\t\t\t\"minLength\": 36,\r\n\t\t\t\"maxLength\": 36,\r\n\t\t\t\"description\": \"The ID of the representation, a randomly generated UUID.\"\r\n\t\t},\r\n\t\t\"message\": {\r\n\t\t\t\"type\": \"string\",\r\n\t\t\t\"description\": \"The text message of the greeting.\"\r\n\t\t}\r\n\t}\r\n}\r\n"
+"@value": "{\n\t\"greetings\": [{\n\t\t\"id\": \"1568b2db-9e2f-4025-b7ae-05301901d362\",\n\t\t\"message\": \"Enjoy this wonderful day while the sun is shining on the autumn leaves.\"\n\t\t},\n\t\t{\n\t\t\"id\": \"0bde5b56-bad6-4ed8-9ac6-355587761610\",\n\t\t\"message\": \"Can you hear the waves? Most amazing sound I've ever heard.\"\n    \t},\n\t\t{\n\t\t\"id\": \"57b5673e-73f0-4512-bca1-5255dc6f25b5\",\n\t\t\"message\": \"Mindfulness is one of the secrets for a happy life.\"\n    \t}\n\t]\n}"
 }
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/json"
 }
 ]
+}
+],
+"doc:version": [
+{
+"@value": "2.0.0"
 }
 ]
 },
@@ -16453,14 +16513,19 @@
 ],
 "doc:raw": [
 {
-"@value": "{\n\t\"companies\": [{\n\t\t\"code\" : 2,\n\t\t\"name\": \"C & A Mode GmbH & Co. KG, Germany\"\n\t\t},\n\t\t{\n      \t\"code\" : 11,\n\t\t\"name\": \"C & A Nederland\"\n    \t}\n\t]\n}"
+"@value": "{\n\t\"id\": \"82157f46-887e-4907-b7c6-06278b3b9ea1\",\n\t\"message\": \"Welcome and thanks for your request, mike.\"\n}"
 }
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/json"
 }
 ]
+}
+],
+"doc:version": [
+{
+"@value": "2.0.0"
 }
 ]
 },
@@ -16480,14 +16545,19 @@
 ],
 "doc:raw": [
 {
-"@value": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"description\": \"Describes the probably most simple representation of a CANDA company.\",\n  \"additionalProperties\": false,\n  \"definitions\": {},\n  \"properties\": {\n    \"companies\": {\n      \"items\": {\n        \"additionalProperties\": false,\n        \"properties\": {\n          \"code\": {\n            \"type\": \"integer\",\n\t\t  \t\"minimum\": 0,\n\t\t  \t\"maximum\": 99,\n            \"description\": \"The code of the given company is the unique identifier of the entity.\"\n          },\n          \"name\": {\n            \"type\": \"string\",\n            \"maxLength\": 50,\n            \"description\": \"The legal name of the given company.\"\n          }\n        },\n        \"required\": [\n          \"code\",\n          \"name\"\n        ],\n        \"type\": \"object\"\n      },\n      \"type\": \"array\"\n    }\n  },\n  \"required\": [\n    \"companies\"\n  ],\n  \"type\": \"object\"\n}\n"
+"@value": "{\n\t\"sum\": 7,\n\t\"summands\": [\n\t\t{\n\t\t\t\"value\": 3\n\t\t},\n\n\t\t{\n\t\t\t\"value\": 4\n\t\t}\n\t]\n}"
 }
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/json"
 }
 ]
+}
+],
+"doc:version": [
+{
+"@value": "2.0.0"
 }
 ]
 }
@@ -16507,7 +16577,7 @@
 ],
 "sourcemaps:value": [
 {
-"@value": "candaCommons->amf://id#3::canda-commons/canda-commons.raml"
+"@value": "candaCommons->amf://id#5::canda-commons/canda-commons.raml"
 }
 ]
 }
@@ -16516,17 +16586,16 @@
 ],
 "@context": {
 "@base": "amf://id",
-"raml-http": "http://a.ml/vocabularies/http#",
-"raml-shapes": "http://a.ml/vocabularies/shapes#",
 "shacl": "http://www.w3.org/ns/shacl#",
+"raml-shapes": "http://a.ml/vocabularies/shapes#",
 "security": "http://a.ml/vocabularies/security#",
 "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
 "data": "http://a.ml/vocabularies/data#",
 "doc": "http://a.ml/vocabularies/document#",
+"apiContract": "http://a.ml/vocabularies/apiContract#",
+"core": "http://a.ml/vocabularies/core#",
 "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-"sourcemaps": "http://a.ml/vocabularies/document-source-maps#",
-"schema-org": "http://schema.org/",
-"hydra": "http://www.w3.org/ns/hydra/core#"
+"sourcemaps": "http://a.ml/vocabularies/document-source-maps#"
 }
 }
 ]

@@ -18,7 +18,7 @@
 "@value": "#%RAML 1.0 NamedExample\n\nmessage:\n  title: Attention needed\n  body: You have been added to group 274\nrecord:\n  name: log item\n  comment: permission check\n"
 }
 ],
-"raml-http:mediaType": [
+"core:mediaType": [
 {
 "@value": "application/yaml"
 }
@@ -47,6 +47,11 @@
 ]
 }
 ],
+"doc:version": [
+{
+"@value": "2.0.0"
+}
+],
 "sourcemaps:sources": [
 {
 "@id": "#/source-map",
@@ -71,8 +76,8 @@
 ],
 "@context": {
 "@base": "amf://id",
-"raml-http": "http://a.ml/vocabularies/http#",
 "doc": "http://a.ml/vocabularies/document#",
+"core": "http://a.ml/vocabularies/core#",
 "sourcemaps": "http://a.ml/vocabularies/document-source-maps#"
 }
 }

@@ -402,7 +402,7 @@ class ApiDocumentation extends AmfHelperMixin(LitElement) {
     if (amf instanceof Array) {
       amf = amf[0];
     }
-    if (this._hasType(amf, this.ns.raml.vocabularies.document + 'Document')) {
+    if (this._hasType(amf, this.ns.aml.vocabularies.document.Document)) {
       this.__processApiSpecSelection(amf);
       return;
     }
@@ -536,7 +536,7 @@ class ApiDocumentation extends AmfHelperMixin(LitElement) {
       const references = this._computeReferences(model);
       if (references && references.length) {
         for (let i = 0, len = references.length; i < len; i++) {
-          if (!this._hasType(references[i], this.ns.raml.vocabularies.document + 'Module')) {
+          if (!this._hasType(references[i], this.ns.aml.vocabularies.document.Module)) {
             continue;
           }
           result = this._computeReferenceSecurity(references[i], selected);
@@ -721,9 +721,9 @@ class ApiDocumentation extends AmfHelperMixin(LitElement) {
     if (!item) {
       return;
     }
-    let name = this._getValue(item, this.ns.schema.schemaName);
+    let name = this._getValue(item, this.ns.aml.vocabularies.core.name);
     if (!name) {
-      name = this._getValue(item, this.ns.raml.vocabularies.http + 'path');
+      name = this._getValue(item, this.ns.aml.vocabularies.apiContract.path);
     }
     return {
       id: item['@id'],
@@ -743,14 +743,14 @@ class ApiDocumentation extends AmfHelperMixin(LitElement) {
     if (!model || !selected) {
       return;
     }
-    if (this._hasType(model, this.ns.raml.vocabularies.http + 'EndPoint')) {
+    if (this._hasType(model, this.ns.aml.vocabularies.apiContract.EndPoint)) {
       return;
     }
     const webApi = this._computeWebApi(model);
     if (!webApi) {
       return;
     }
-    const ekey = this._getAmfKey(this.ns.raml.vocabularies.http + 'endpoint');
+    const ekey = this._getAmfKey(this.ns.aml.vocabularies.apiContract.endpoint);
     const endpoints = this._ensureArray(webApi[ekey]);
     if (!endpoints) {
       return;
@@ -763,7 +763,7 @@ class ApiDocumentation extends AmfHelperMixin(LitElement) {
       if (!lookupMethods) {
         continue;
       }
-      const key = this._getAmfKey(this.ns.w3.hydra.supportedOperation);
+      const key = this._getAmfKey(this.ns.aml.vocabularies.apiContract.supportedOperation);
       const methods = this._ensureArray(endpoint[key]);
       if (!methods) {
         continue;
@@ -788,14 +788,14 @@ class ApiDocumentation extends AmfHelperMixin(LitElement) {
     if (!model || !selected) {
       return;
     }
-    if (this._hasType(model, this.ns.raml.vocabularies.http + 'EndPoint')) {
+    if (this._hasType(model, this.ns.aml.vocabularies.apiContract.EndPoint)) {
       return;
     }
     const webApi = this._computeWebApi(model);
     if (!webApi) {
       return;
     }
-    const ekey = this._getAmfKey(this.ns.raml.vocabularies.http + 'endpoint');
+    const ekey = this._getAmfKey(this.ns.aml.vocabularies.apiContract.endpoint);
     const endpoints = this._ensureArray(webApi[ekey]);
     if (!endpoints) {
       return;
@@ -808,7 +808,7 @@ class ApiDocumentation extends AmfHelperMixin(LitElement) {
       if (!lookupMethods) {
         continue;
       }
-      const key = this._getAmfKey(this.ns.w3.hydra.supportedOperation);
+      const key = this._getAmfKey(this.ns.aml.vocabularies.apiContract.supportedOperation);
       const methods = this._ensureArray(endpoint[key]);
       if (!methods) {
         continue;
@@ -831,9 +831,9 @@ class ApiDocumentation extends AmfHelperMixin(LitElement) {
     if (!item) {
       return;
     }
-    let name = this._getValue(item, this.ns.schema.schemaName);
+    let name = this._getValue(item, this.ns.aml.vocabularies.core.name);
     if (!name) {
-      name = this._getValue(item, this.ns.w3.hydra.core + 'method');
+      name = this._getValue(item, this.ns.aml.vocabularies.apiContract.method);
     }
     return {
       id: item['@id'],
@@ -851,8 +851,8 @@ class ApiDocumentation extends AmfHelperMixin(LitElement) {
    */
   _computeMethodPrevious(model, selected) {
     let methods;
-    if (this._hasType(model, this.ns.raml.vocabularies.http + 'EndPoint')) {
-      const key = this._getAmfKey(this.ns.w3.hydra.supportedOperation);
+    if (this._hasType(model, this.ns.aml.vocabularies.apiContract.EndPoint)) {
+      const key = this._getAmfKey(this.ns.aml.vocabularies.apiContract.supportedOperation);
       methods = this._ensureArray(model[key]);
     } else {
       const webApi = this._computeWebApi(model);
@@ -878,8 +878,8 @@ class ApiDocumentation extends AmfHelperMixin(LitElement) {
    */
   _computeMethodNext(model, selected) {
     let methods;
-    if (this._hasType(model, this.ns.raml.vocabularies.http + 'EndPoint')) {
-      const key = this._getAmfKey(this.ns.w3.hydra.supportedOperation);
+    if (this._hasType(model, this.ns.aml.vocabularies.apiContract.EndPoint)) {
+      const key = this._getAmfKey(this.ns.aml.vocabularies.apiContract.supportedOperation);
       methods = this._ensureArray(model[key]);
     } else {
       const webApi = this._computeWebApi(model);
@@ -901,7 +901,7 @@ class ApiDocumentation extends AmfHelperMixin(LitElement) {
    * @return {Object|undefined} Method model.
    */
   _computeMethodPartialEndpoint(api, selected) {
-    const opKey = this._getAmfKey(this.ns.w3.hydra.supportedOperation);
+    const opKey = this._getAmfKey(this.ns.aml.vocabularies.apiContract.supportedOperation);
     const ops = this._ensureArray(api[opKey]);
     if (!ops) {
       return;
@@ -928,7 +928,7 @@ class ApiDocumentation extends AmfHelperMixin(LitElement) {
     if (!model['@type']) {
       return;
     }
-    const moduleKey = this._getAmfKey(this.ns.raml.vocabularies.document + 'Module');
+    const moduleKey = this._getAmfKey(this.ns.aml.vocabularies.document.Module);
     return moduleKey === model['@type'][0];
   }
   /**
@@ -972,7 +972,7 @@ class ApiDocumentation extends AmfHelperMixin(LitElement) {
     if (model instanceof Array) {
       model = model[0];
     }
-    return this._hasType(model, this.ns.raml.vocabularies.document + 'DataType');
+    return this._hasType(model, this.ns.aml.vocabularies.shapes.DataTypeFragment);
   }
 
   _isTypePartialModel(model) {
@@ -980,7 +980,7 @@ class ApiDocumentation extends AmfHelperMixin(LitElement) {
     if (model instanceof Array) {
       model = model[0];
     }
-    return this._hasType(model, this.ns.raml.vocabularies.document + 'DomainElement');
+    return this._hasType(model, this.ns.aml.vocabularies.document.DomainElement);
   }
 
   _isSecurityFragment(model) {
@@ -988,7 +988,7 @@ class ApiDocumentation extends AmfHelperMixin(LitElement) {
     if (model instanceof Array) {
       model = model[0];
     }
-    return this._hasType(model, this.ns.raml.vocabularies.document + 'SecuritySchemeFragment');
+    return this._hasType(model, this.ns.aml.vocabularies.security.SecuritySchemeFragment);
   }
 
   _isSecurityPartialModel(model) {
@@ -996,7 +996,7 @@ class ApiDocumentation extends AmfHelperMixin(LitElement) {
     if (model instanceof Array) {
       model = model[0];
     }
-    return this._hasType(model, this.ns.raml.vocabularies.security + 'SecurityScheme');
+    return this._hasType(model, this.ns.aml.vocabularies.security.SecurityScheme);
   }
 
   _isDocumentationFragment(model) {
@@ -1004,7 +1004,7 @@ class ApiDocumentation extends AmfHelperMixin(LitElement) {
     if (model instanceof Array) {
       model = model[0];
     }
-    return this._hasType(model, this.ns.raml.vocabularies.document + 'UserDocumentation');
+    return this._hasType(model, this.ns.aml.vocabularies.apiContract.UserDocumentationFragment);
   }
 
   _isDocumentationPartialModel(model) {
@@ -1012,7 +1012,7 @@ class ApiDocumentation extends AmfHelperMixin(LitElement) {
     if (model instanceof Array) {
       model = model[0];
     }
-    return this._hasType(model, this.ns.schema.creativeWork);
+    return this._hasType(model, this.ns.aml.vocabularies.core.CreativeWork);
   }
 
   _isEndpointPartialModel(model) {
@@ -1020,7 +1020,7 @@ class ApiDocumentation extends AmfHelperMixin(LitElement) {
     if (model instanceof Array) {
       model = model[0];
     }
-    return this._hasType(model, this.ns.raml.vocabularies.http + 'EndPoint');
+    return this._hasType(model, this.ns.aml.vocabularies.apiContract.EndPoint);
   }
   /**
    * Computes API's media types when requesting type documentation view.
@@ -1041,7 +1041,7 @@ class ApiDocumentation extends AmfHelperMixin(LitElement) {
     if (webApi instanceof Array) {
       webApi = webApi[0];
     }
-    const key = this._getAmfKey(this.ns.raml.vocabularies.http + 'accepts');
+    const key = this._getAmfKey(this.ns.aml.vocabularies.apiContract.accepts);
     const value = this._ensureArray(webApi[key]);
     if (value) {
       return value.map((item) => item['@value']);
