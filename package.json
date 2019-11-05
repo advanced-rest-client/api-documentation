@@ -27,7 +27,7 @@
   "dependencies": {
     "@api-components/amf-helper-mixin": "^4.0.14",
     "@api-components/api-documentation-document": "^4.0.0",
-    "@api-components/api-endpoint-documentation": "^4.0.0",
+    "@api-components/api-endpoint-documentation": "git://github.com/advanced-rest-client/api-endpoint-documentation#embed-css-style",
     "@api-components/api-method-documentation": "^4.0.0",
     "@api-components/api-security-documentation": "^4.0.0",
     "@api-components/api-summary": "^4.0.0",
