@@ -430,12 +430,12 @@ class ApiDocumentation extends AmfHelperMixin(LitElement) {
       this._processSecurityParial(amf);
       return;
     }
-    if (this._isTypePartialModel(amf)) {
-      this._processTypeParial(amf);
-      return;
-    }
     if (this._isEndpointPartialModel(amf)) {
       this._processEndpointParial(amf);
+      return;
+    }
+    if (this._isTypePartialModel(amf)) {
+      this._processTypeParial(amf);
       return;
     }
   }
