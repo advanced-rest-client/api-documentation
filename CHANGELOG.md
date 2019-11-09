@@ -355,3 +355,18 @@
 
 
 
+## 4.0.2 (2019-11-09)
+
+
+### Bug Fixes
+
+* place endpoint partial model matcher before type partial matcher [bump-version] ([7ed8e5d](https://github.com/advanced-rest-client/api-documentation/commit/7ed8e5d6af3073bcd89ea840d32cce946ca6d0cc))
+
+
+### Features
+
+* adding `compatibility` and `graph` property ([edc43eb](https://github.com/advanced-rest-client/api-documentation/commit/edc43eb2de0b88ac8ad1b939e83a2947fc983f20))
+* adding noBottomNavigation to be passed to endpoint/method ([fbe0824](https://github.com/advanced-rest-client/api-documentation/commit/fbe08248b98a0b477574ff4ca03838d6a8f1376a))
+
+
+
