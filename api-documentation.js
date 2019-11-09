@@ -72,7 +72,7 @@ import '@api-components/api-security-documentation/api-security-documentation.js
  * @appliesMixin AmfHelperMixin
  */
 class ApiDocumentation extends AmfHelperMixin(LitElement) {
-  static get styles() {
+  get styles() {
     return css`:host {
       display: block;
     }`;
@@ -82,7 +82,7 @@ class ApiDocumentation extends AmfHelperMixin(LitElement) {
     const {
       aware
     } = this;
-    return html`
+    return html`<style>${this.styles}</style>
     ${aware ? html`<raml-aware
       .scope="${aware}"
       @api-changed="${this._apiChanged}"></raml-aware>` : ''}
