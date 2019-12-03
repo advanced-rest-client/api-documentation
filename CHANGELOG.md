@@ -370,3 +370,104 @@
 
 
 
+<a name="4.0.3"></a>
+## [4.0.3](https://github.com/advanced-rest-client/api-documentation/compare/4.0.1...4.0.3) (2019-12-03)
+
+### Build
+
+* bumping version [3354151](https://github.com/advanced-rest-client/api-documentation/commit/3354151f58a4ca2704ef12a0c61f1c8476a8fbd5) by Pawel Psztyc
+* adding "module" prop to package file [493be80](https://github.com/advanced-rest-client/api-documentation/commit/493be80d90cd2c453d24456ad3b2950e095a5fca) by Pawel Psztyc
+* bumping version [183cfc2](https://github.com/advanced-rest-client/api-documentation/commit/183cfc2b392a65352eb88b2678e16c4a397c3aed) by Pawel Psztyc
+* bumping version [f67b23c](https://github.com/advanced-rest-client/api-documentation/commit/f67b23c84b8d30ded45958e6f90275b5b7c629d6) by Pawel Psztyc
+* bumping version to stable [1394808](https://github.com/advanced-rest-client/api-documentation/commit/1394808853db51e3f3979b84035d9c0e14a1af89) by Pawel
+
+
+### Update
+
+* updating deps and adding ie11 demo [e886962](https://github.com/advanced-rest-client/api-documentation/commit/e88696293c98ffc8c24f8674e85b29af060e8acf) by Pawel Psztyc
+* removing unused file [f044caf](https://github.com/advanced-rest-client/api-documentation/commit/f044cafd2fa7c0675fe1ed8fa64b8729a1d17273) by Pawel Psztyc
+* upgrading depednenciers [5a69898](https://github.com/advanced-rest-client/api-documentation/commit/5a698980ca81565479be8ed78d82b00925e37e01) by Pawel Psztyc
+* adding types generator config file [13cb459](https://github.com/advanced-rest-client/api-documentation/commit/13cb45945818958cc42cc4dc736d59adc9c29dff) by Pawel
+
+
+### Features
+
+* adding noBottomNavigation to be passed to endpoint/method [fbe0824](https://github.com/advanced-rest-client/api-documentation/commit/fbe08248b98a0b477574ff4ca03838d6a8f1376a) by Pawel Psztyc
+* adding `compatibility` and `graph` property [edc43eb](https://github.com/advanced-rest-client/api-documentation/commit/edc43eb2de0b88ac8ad1b939e83a2947fc983f20) by Pawel Psztyc
+
+
+### Bug Fixes
+
+* place endpoint partial model matcher before type partial matcher [bump-version] [7ed8e5d](https://github.com/advanced-rest-client/api-documentation/commit/7ed8e5d6af3073bcd89ea840d32cce946ca6d0cc) by Francisco Di Giandomenico
+
+
+### Refactor
+
+* upgrading to amf VERSION 4 [7d55215](https://github.com/advanced-rest-client/api-documentation/commit/7d55215a49d150c818c97821241b2e8471cf3ab9) by Pawel
+* upgrading to final WC spec and LitElement [b542f8d](https://github.com/advanced-rest-client/api-documentation/commit/b542f8db67c8c6e68b73e541a56156e1ad414c79) by Pawel
+
+
+### Other
+
+* New: Adding media types to the type viewer from API's mediaType property
+ [590add6](https://github.com/advanced-rest-client/api-documentation/commit/590add64a7e936d95c0bdc700d800167f790c06a) by Pawel Psztyc
+* Update: Updating node version in tests
+ [bdfc4d5](https://github.com/advanced-rest-client/api-documentation/commit/bdfc4d5c506bd0e56920cdb774de9231a9216b37) by Pawel Psztyc
+* New: Adding API supported media types to the type viewer
+ [7cd575c](https://github.com/advanced-rest-client/api-documentation/commit/7cd575c84eab26fa58617317eb948c35b0eabba0) by Pawel Psztyc
+* Update: Upgrading AMF and data models
+ [159ece4](https://github.com/advanced-rest-client/api-documentation/commit/159ece4529479ef32122f9c87dafe48207272823) by Pawel Psztyc
+* Update: Upgrading dependencies
+ [a2d0cf1](https://github.com/advanced-rest-client/api-documentation/commit/a2d0cf1b774dce3d228971f1288753221a5416e6) by Pawel Psztyc
+* Update: Upgrading AMF and updating models
+ [63e91fd](https://github.com/advanced-rest-client/api-documentation/commit/63e91fdd257eaffc26d34611febf31d313ebcaed) by Pawel Psztyc
+* Update: Upgrading dependencies
+ [a0fdef4](https://github.com/advanced-rest-client/api-documentation/commit/a0fdef4ecd24821d532f6f7a089560c14f56192b) by Pawel Psztyc
+* Update: Updating tests for the component
+ [f696a52](https://github.com/advanced-rest-client/api-documentation/commit/f696a5216b8d3867ed5a19821f5027a4bf32e3d0) by Pawel Psztyc
+* Fix: Fixing issues rendering inline methods
+ [493768e](https://github.com/advanced-rest-client/api-documentation/commit/493768ed7b62fd20a9b39ed4ae26ed6b978389ee) by Pawel Psztyc
+* Update: Rewriting component logic to support: API, Fragmentsm and partial model
+ [9cc07ce](https://github.com/advanced-rest-client/api-documentation/commit/9cc07cef3c1089be70112e1e05c5dacdec61bc6f) by Pawel Psztyc
+* Fix: Fixing an issue related to rendering security scheme from fragment
+ [db74af6](https://github.com/advanced-rest-client/api-documentation/commit/db74af6f1448282d7e00eb791916f12be11654f8) by Pawel Psztyc
+* Fix: Fixing an issue for redering security scheme from a fragmnet
+ [fa04343](https://github.com/advanced-rest-client/api-documentation/commit/fa043438cd79164d94492a33e4fc4d1e68d94cc9) by Pawel Psztyc
+* Update: Updating import paths to match web spec
+ [31c2f00](https://github.com/advanced-rest-client/api-documentation/commit/31c2f00e8895e381bfe8a6e3b3ed776004cc40b3) by Pawel Psztyc
+* New: Adding NPM ignore file
+ [8745a50](https://github.com/advanced-rest-client/api-documentation/commit/8745a503502c52f7d00f93773843dc0a4f8d463e) by Pawel Psztyc
+* Breaking: Upgrading to Polymer 3
+ [1e71339](https://github.com/advanced-rest-client/api-documentation/commit/1e71339fe5116dfcbc6e5e5f01f85690d19e6db6) by Pawel Psztyc
+* New: Adding support for Type, Security, Documentation, and Library fragments
+ [ae673bd](https://github.com/advanced-rest-client/api-documentation/commit/ae673bdc2972eb291cc9f085b3a74ae4afaba326) by Pawel Psztyc
+* Fix: Adding missing method documentation properties
+ [566b381](https://github.com/advanced-rest-client/api-documentation/commit/566b381f780161718e8c9f2ee163758904797f9e) by Pawel Psztyc
+* Docs: Updating documentation
+ [3af2254](https://github.com/advanced-rest-client/api-documentation/commit/3af22545209f66baaab06f5ad88e4428f4a57c63) by Pawel Psztyc
+* New: Adding support for compact model
+ [b7d2c06](https://github.com/advanced-rest-client/api-documentation/commit/b7d2c0614390bc9d32c793eca65b97c692cb169b) by Pawel Psztyc
+* Update: The component now works with compacted AMF model
+ [eaf42d8](https://github.com/advanced-rest-client/api-documentation/commit/eaf42d8748062fe5c5f64321f1e6a746e9d3a835) by Pawel Psztyc
+* Update: Starting working on JSON-LD compact model
+ [cf9c4ec](https://github.com/advanced-rest-client/api-documentation/commit/cf9c4ec269d213dc545666f0edb72a0a2629013b) by Pawel Psztyc
+* Update: Adding `narrow` object propagation
+ [5b212d9](https://github.com/advanced-rest-client/api-documentation/commit/5b212d9bb9d8c0b1910e6393a041b42b53cfc5b6) by Pawel Psztyc
+* Docs: Updating documentation
+ [0adeed5](https://github.com/advanced-rest-client/api-documentation/commit/0adeed530f03947f93df99931588ece65b63b9e7) by Pawel Psztyc
+* Update: Removing left debug output
+ [01404c8](https://github.com/advanced-rest-client/api-documentation/commit/01404c8eebeef1c3dc718da3be3400a8505ebb56) by Pawel Psztyc
+* Docs: Updating documentation.
+ [b6d4f23](https://github.com/advanced-rest-client/api-documentation/commit/b6d4f23052c883afc825798023e24c25a2b7265b) by Pawel Psztyc
+* Docs: Updating documentation and typings
+ [fccad75](https://github.com/advanced-rest-client/api-documentation/commit/fccad75a01505c2296530682ce1c613da5d057cb) by Pawel Psztyc
+* Fix: Fixes #1 - adding support for single endpoint page with all methods included.
+ [4d38498](https://github.com/advanced-rest-client/api-documentation/commit/4d384989fc9db13e6f5311f60ec386ef57f33d05) by Pawel Psztyc
+* Fix: Fixing tests fonfiguration
+ [cc5fea3](https://github.com/advanced-rest-client/api-documentation/commit/cc5fea3d4670664a9fdbf9087f9354880a4668b9) by Pawel Psztyc
+* Fix: Fixing test
+ [7ef6120](https://github.com/advanced-rest-client/api-documentation/commit/7ef6120bd47e14c81dc8bde32e50afe77e8bbcda) by Pawel Psztyc
+* Update: Updated Travis configuration to connect to Sauce Labs.
+ [0d8ace4](https://github.com/advanced-rest-client/api-documentation/commit/0d8ace47018a5d89fde80f38cfa09d31dd5110cf) by Pawel Psztyc
+
+
