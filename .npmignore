@@ -12,3 +12,5 @@ commitlint.*
 .*
 *.config.*
 prettier.config.js
+dist/
+demo/vendor.js
