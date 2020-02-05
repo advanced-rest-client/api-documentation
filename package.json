@@ -30,7 +30,7 @@
     "@api-components/api-endpoint-documentation": "^4.0.4",
     "@api-components/api-method-documentation": "^4.0.7",
     "@api-components/api-security-documentation": "^4.0.5",
-    "@api-components/api-summary": "^4.0.2",
+    "@api-components/api-summary": "^4.0.3",
     "@api-components/api-type-documentation": "^4.0.3",
     "@api-components/raml-aware": "^3.0.0",
     "lit-element": "^2.0.1",
