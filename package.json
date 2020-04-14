@@ -25,11 +25,13 @@
     "email": "arc@mulesoft.com"
   },
   "dependencies": {
+    "@advanced-rest-client/events-target-mixin": "^3.0.0",
     "@api-components/amf-helper-mixin": "^4.0.17",
     "@api-components/api-documentation-document": "^4.0.2",
     "@api-components/api-endpoint-documentation": "^4.0.4",
     "@api-components/api-method-documentation": "^4.0.7",
     "@api-components/api-security-documentation": "^4.0.5",
+    "@api-components/api-server-selector": "^0.2.1",
     "@api-components/api-summary": "^4.0.2",
     "@api-components/api-type-documentation": "^4.0.3",
     "@api-components/raml-aware": "^3.0.0",

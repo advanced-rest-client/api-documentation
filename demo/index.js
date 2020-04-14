@@ -26,12 +26,14 @@ class ComponentDemo extends ApiDemoPageBase {
       'legacy',
       'narrow',
       'noTryit',
+      'noServerSelector',
       'inlineMethods',
       'scrollTarget',
       'selected',
       'selectedType'
     ]);
     this.noTryit = false;
+    this.noServerSelector = false;
     this.codeSnippets = true;
     this.renderSecurity = true;
 
@@ -134,7 +136,8 @@ class ComponentDemo extends ApiDemoPageBase {
       scrollTarget,
       redirectUri,
       inlineMethods,
-      noTryit
+      noTryit,
+      noServerSelector
     } = this;
     return html `
     <section class="documentation-section">
@@ -160,8 +163,10 @@ class ComponentDemo extends ApiDemoPageBase {
             .redirectUri="${redirectUri}"
             .inlineMethods="${inlineMethods}"
             .noTryIt="${noTryit}"
+            .noServerSelector="${noServerSelector}"
             ?narrow="${narrow}"
             ?legacy="${legacy}"
+            ?handleNavigationEvents="true"
             @tryit-requested="${this._tryitRequested}"></api-documentation>
         </div>
         <label slot="options" id="mainOptionsLabel">Options</label>
@@ -186,6 +191,13 @@ class ComponentDemo extends ApiDemoPageBase {
           name="inlineMethods"
           @change="${this._toggleMainOption}"
           >Render methods</anypoint-checkbox
+        >
+        <anypoint-checkbox
+          aria-describedby="mainOptionsLabel"
+          slot="options"
+          name="noServerSelector"
+          @change="${this._toggleMainOption}"
+          >No server selector</anypoint-checkbox
         >
       </arc-interactive-demo>
     </section>`;
