@@ -638,7 +638,7 @@ describe('<api-documentation>', function() {
             assert.isFalse(element.shadowRoot.querySelector('api-server-selector').hidden);
           });
 
-          describe('when navigating to something other than a method or an endpoint', () => {
+          describe('navigating to something other than a method or an endpoint', () => {
             beforeEach(async () => {
               element.selectedType = 'summary';
               element.selected = 'summary';
@@ -651,7 +651,7 @@ describe('<api-documentation>', function() {
             });
           });
 
-          describe('when serverCount changes to less than 2', () => {
+          describe('serverCount changes to less than 2', () => {
             let serverSelector;
 
             beforeEach(async () => {
@@ -671,7 +671,7 @@ describe('<api-documentation>', function() {
             });
           });
 
-          describe('when selecting a slot server', () => {
+          describe('selecting a slot server', () => {
             beforeEach(() => {
               const event = {
                 detail: {
@@ -679,7 +679,7 @@ describe('<api-documentation>', function() {
                   selectedType: 'slot'
                 }
               };
-              element.dispatchEvent(new CustomEvent('api-server-changed', event));
+              window.dispatchEvent(new CustomEvent('api-server-changed', event));
             });
 
             it('should update selectedServerValue and selectedServerType', () => {
@@ -688,7 +688,7 @@ describe('<api-documentation>', function() {
             });
           });
 
-          describe('when selecting a custom base uri', () => {
+          describe('selecting a custom base uri', () => {
             beforeEach(async () => {
               const event = {
                 detail: {
@@ -696,7 +696,7 @@ describe('<api-documentation>', function() {
                   selectedType: 'custom'
                 }
               };
-              element.dispatchEvent(new CustomEvent('api-server-changed', event));
+              window.dispatchEvent(new CustomEvent('api-server-changed', event));
             });
 
             it('should update selectedServerValue and selectedServerType', () => {
@@ -704,7 +704,7 @@ describe('<api-documentation>', function() {
               assert.equal(element.selectedServerType, 'custom');
             });
 
-            describe('and then clearing the selection', () => {
+            describe('clearing the selection', () => {
               beforeEach(() => {
                 const event = {
                   detail: {
@@ -712,7 +712,7 @@ describe('<api-documentation>', function() {
                     selectedType: undefined
                   }
                 };
-                element.dispatchEvent(new CustomEvent('api-server-changed', event));
+                window.dispatchEvent(new CustomEvent('api-server-changed', event));
               });
 
               it('should update selectedServerValue and selectedServerType', () => {
@@ -720,7 +720,7 @@ describe('<api-documentation>', function() {
                 assert.equal(element.selectedServerType, undefined);
               });
 
-              describe('and then selecting an existing server', () => {
+              describe('selecting an existing server', () => {
                 beforeEach(() => {
                   const event = {
                     detail: {
@@ -728,7 +728,7 @@ describe('<api-documentation>', function() {
                       selectedType: 'server'
                     }
                   };
-                  element.dispatchEvent(new CustomEvent('api-server-changed', event));
+                  window.dispatchEvent(new CustomEvent('api-server-changed', event));
                 });
 
                 it('should update selectedServerValue and selectedServerType', () => {
@@ -739,7 +739,7 @@ describe('<api-documentation>', function() {
             });
           });
 
-          describe('when navigating to a method', () => {
+          describe('navigating to a method', () => {
             let _getServersStub;
             let _updateServerValuesSpy;
             let servers;
@@ -766,7 +766,7 @@ describe('<api-documentation>', function() {
             });
           });
 
-          describe('when navigating to an endpoint', () => {
+          describe('navigating to an endpoint', () => {
             let _getServersStub;
             let _updateServerValuesSpy;
             let servers;
@@ -794,7 +794,7 @@ describe('<api-documentation>', function() {
           });
         });
 
-        describe('when not in narrow mode', () => {
+        describe('not in narrow mode', () => {
           beforeEach(async () => {
             element = await partialFixture(amf);
           });
@@ -804,7 +804,7 @@ describe('<api-documentation>', function() {
           });
         });
 
-        describe('when noServerSelector is true', () => {
+        describe('noServerSelector is true', () => {
           beforeEach(async () => {
             element = await partialFixture(amf);
             element.noServerSelector = true;

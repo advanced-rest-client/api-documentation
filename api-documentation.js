@@ -230,12 +230,12 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
       ></api-endpoint-documentation>`;
   }
 
-  _attachListeners() {
-    this.addEventListener('api-server-changed', this._handleServerChange);
+  _attachListeners(node) {
+    node.addEventListener('api-server-changed', this._handleServerChange);
   }
 
-  _detachListeners() {
-    this.removeEventListener('api-server-changed', this._handleServerChange);
+  _detachListeners(node) {
+    node.removeEventListener('api-server-changed', this._handleServerChange);
   }
 
   static get properties() {
