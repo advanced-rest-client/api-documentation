@@ -347,7 +347,15 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
       /**
        * If true, the server selector custom option is not rendered
        */
-      noCustomServer: { type: Boolean }
+      noCustomServer: { type: Boolean },
+      /**
+       * The URI of the server currently selected in the server selector
+       */
+      selectedServerValue: { type: String },
+      /**
+       * The type of the server currently selected in the server selector
+       */
+      selectedServerType: { type: String }
     };
   }
 
@@ -396,34 +404,6 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
     }
 
     this._selectedType = value;
-  }
-
-  get selectedServerValue() {
-    return this._selectedServerValue;
-  }
-
-  set selectedServerValue(value) {
-    const old = this._selectedServerValue;
-    /* istanbul ignore if */
-    if (old === value) {
-      return;
-    }
-    this._selectedServerValue = value;
-    this.requestUpdate('selectedServerValue', old);
-  }
-
-  get selectedServerType() {
-    return this._selectedServerType;
-  }
-
-  set selectedServerType(value) {
-    const old = this._selectedServerType;
-    /* istanbul ignore if */
-    if (old === value) {
-      return;
-    }
-    this._selectedServerType = value;
-    this.requestUpdate('selectedServerType', old);
   }
 
   get serversCount() {
