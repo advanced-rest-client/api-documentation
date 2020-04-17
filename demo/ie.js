@@ -24,6 +24,8 @@ class ComponentDemo extends ApiDemoPageBase {
       'legacy',
       'narrow',
       'noTryit',
+      'noServerSelector',
+      'noCustomServer',
       'inlineMethods',
       'scrollTarget',
       'selected',
@@ -32,7 +34,8 @@ class ComponentDemo extends ApiDemoPageBase {
     this.noTryit = false;
     this.codeSnippets = true;
     this.renderSecurity = true;
-
+    this.noServerSelector = false;
+    this.noCustomServer = false;
     this.redirectUri = 'https://auth.advancedrestclient.com/oauth-popup.html';
     this.scrollTarget = window;
 
@@ -130,7 +133,9 @@ class ComponentDemo extends ApiDemoPageBase {
       scrollTarget,
       redirectUri,
       inlineMethods,
-      noTryit
+      noTryit,
+      noServerSelector,
+      noCustomServer
     } = this;
     return html `
     <section class="documentation-section">
@@ -150,9 +155,19 @@ class ComponentDemo extends ApiDemoPageBase {
             .redirectUri="${redirectUri}"
             .inlineMethods="${inlineMethods}"
             .noTryIt="${noTryit}"
+            .noServerSelector="${noServerSelector}"
+            .noCustomServer="${noCustomServer}"
             ?narrow="${narrow}"
             ?legacy="${legacy}"
-            @tryit-requested="${this._tryitRequested}"></api-documentation>
+            handleNavigationEvents
+            @tryit-requested="${this._tryitRequested}">
+              <anypoint-item slot="custom-base-uri" value="http://customServer.com">
+                Server 1 - http://customServer.com
+              </anypoint-item>
+              <anypoint-item slot="custom-base-uri" value="http://customServer.com/{version}">
+                Server 2 - http://customServer.com/{version}
+              </anypoint-item>
+            </api-documentation>
         </div>
     </section>`;
   }
