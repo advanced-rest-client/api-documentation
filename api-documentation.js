@@ -130,7 +130,7 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
   _summaryTemplate() {
     const { _docsModel } = this;
 
-    return html`<api-summary .amf="${_docsModel}" .baseUri="${this._getBaseUri()}"></api-summary>`;
+    return html`<api-summary .amf="${_docsModel}" .baseUri="${this.effectiveBaseUri}"></api-summary>`;
   }
 
   _securityTemplate() {
@@ -173,7 +173,7 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
       .method="${_docsModel}"
       .previous="${prev}"
       .next="${next}"
-      .baseUri="${this._getBaseUri()}"
+      .baseUri="${this.effectiveBaseUri}"
       .noTryIt="${noTryIt}"
       ?graph="${graph}"
       ?noNavigation="${noBottomNavigation}"
@@ -201,7 +201,7 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
       .endpoint="${_docsModel}"
       .previous="${prev}"
       .next="${next}"
-      .baseUri="${this._getBaseUri()}"
+      .baseUri="${this.effectiveBaseUri}"
       .scrollTarget="${scrollTarget}"
       .redirectUri="${redirectUri}"
       .noUrlEditor="${noUrlEditor}"
@@ -224,16 +224,10 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
       .endpoint="${_docsModel}"
       .previous="${prev}"
       .next="${next}"
-      .baseUri="${this._getBaseUri()}"
+      .baseUri="${this.effectiveBaseUri}"
       ?graph="${graph}"
       ?noNavigation="${noBottomNavigation}"
       ></api-endpoint-documentation>`;
-  }
-
-  _getBaseUri() {
-    const { baseUri, selectedServerValue } = this;
-
-    return baseUri || selectedServerValue;
   }
 
   _attachListeners() {
@@ -459,6 +453,12 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
     const moreThanOneServer = serversCount >= 2;
 
     return isMethodOrEndpoint && moreThanOneServer;
+  }
+
+  get effectiveBaseUri() {
+    const { baseUri, selectedServerValue } = this;
+
+    return baseUri || selectedServerValue;
   }
 
   get inlineMethods() {
