@@ -379,10 +379,7 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
     }
     this._selected = value;
     this.__amfChanged();
-
-    if (!this.handleNavigationEvents) {
-      this._updateServers();
-    }
+    this._updateServers();
 
     this.requestUpdate('selected', old);
   }
@@ -398,10 +395,7 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
       return;
     }
     this.__amfChanged();
-
-    if (!this.handleNavigationEvents) {
-      this._updateServers();
-    }
+    this._updateServers();
 
     this._selectedType = value;
   }
