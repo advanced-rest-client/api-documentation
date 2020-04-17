@@ -594,8 +594,7 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
 
     if (this.selectedType === 'method') {
       methodId = this.selected;
-    }
-    if (this.selectedType === 'endpoint') {
+    } else if (this.selectedType === 'endpoint') {
       endpointId = this.selected;
     }
 
