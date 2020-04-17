@@ -1,40 +1,38 @@
-import { fixture, assert, html, aTimeout } from '@open-wc/testing';
+import { fixture, assert, html, aTimeout, nextFrame } from '@open-wc/testing';
 import * as sinon from 'sinon/pkg/sinon-esm.js';
 import { AmfLoader } from './amf-loader.js';
 import '../api-documentation.js';
 
 describe('<api-documentation>', function() {
   async function basicFixture() {
-    return (await fixture(`<api-documentation></api-documentation>`));
+    return await fixture(`<api-documentation></api-documentation>`);
   }
 
   async function awareFixture() {
-    return (await fixture(`<api-documentation aware="test"></api-documentation>`));
+    return await fixture(`<api-documentation aware="test"></api-documentation>`);
   }
 
   async function inlineFixture(amf, type, selected) {
-    return (await fixture(html`  <api-documentation
+    return await fixture(html`
+      <api-documentation
         .amf="${amf}"
         .selectedType="${type}"
         .selected="${selected}"
         inlinemethods
-      ></api-documentation>`));
+      ></api-documentation>
+    `);
   }
 
   async function modelFixture(amf, type, selected) {
-    return (await fixture(html`
-      <api-documentation
-        .amf="${amf}"
-        .selectedType="${type}"
-        .selected="${selected}"
-      ></api-documentation>`));
+    return await fixture(html`
+      <api-documentation .amf="${amf}" .selectedType="${type}" .selected="${selected}"></api-documentation>
+    `);
   }
 
   async function partialFixture(amf) {
-    return (await fixture(html`
-      <api-documentation
-        .amf="${amf}"
-      ></api-documentation>`));
+    return await fixture(html`
+      <api-documentation .amf="${amf}"></api-documentation>
+    `);
   }
 
   const demoApi = 'demo-api';
@@ -136,6 +134,13 @@ describe('<api-documentation>', function() {
           assert.isTrue(spy.called);
         });
 
+        it('calls _updateServers() when selected is set', async () => {
+          const spy = sinon.spy(element, '_updateServers');
+          element.selected = 'summary';
+          await aTimeout();
+          assert.isTrue(spy.called);
+        });
+
         it('calls _processModelChange() when selected is set', async () => {
           const spy = sinon.spy(element, '_processModelChange');
           element.selected = 'test';
@@ -145,7 +150,14 @@ describe('<api-documentation>', function() {
 
         it('calls _processModelChange() when selectedType is set', async () => {
           const spy = sinon.spy(element, '_processModelChange');
-          element.selectedType = 'summary';
+          element.selectedType = 'method';
+          await aTimeout();
+          assert.isTrue(spy.called);
+        });
+
+        it('calls _updateServers() when selectedType is set', async () => {
+          const spy = sinon.spy(element, '_updateServers');
+          element.selectedType = 'method';
           await aTimeout();
           assert.isTrue(spy.called);
         });
@@ -569,6 +581,249 @@ describe('<api-documentation>', function() {
       await aTimeout();
       const node = element.shadowRoot.querySelector('api-method-documentation');
       assert.notOk(node, 'method is not endered');
+    });
+  });
+
+  [
+    ['Compact model', true],
+    ['Regular model', false]
+  ].forEach(([name, compact]) => {
+    describe(name, () => {
+      async function narrowFixture({ amf, selectedType, renderSlots = true }){
+        return await fixture(html`
+          <api-documentation .amf="${amf}" .selectedType="${selectedType}" narrow>
+            ${renderSlots
+              ? html`
+                <anypoint-item slot="custom-base-uri" value="http://customServer.com">
+                  Server 1 - http://customServer.com
+                </anypoint-item>
+                <anypoint-item slot="custom-base-uri" value="http://customServer.com/{version}">
+                  Server 2 - http://customServer.com/{version}
+                </anypoint-item>`
+              : ""
+            }
+          </api-documentation>
+        `);
+      }
+
+      describe('Server selection', () => {
+        let element;
+        let amf;
+        let selectedType;
+
+        describe('in narrow mode', () => {
+          beforeEach(async () => {
+            amf = await AmfLoader.load(null, compact);
+            selectedType = 'method';
+
+            element = await narrowFixture({ amf, selectedType })
+
+            await nextFrame();
+          });
+
+          it('should load servers', () => {
+            assert.lengthOf(element.servers, 1);
+          });
+
+          it('should set serversCount', () => {
+            assert.equal(element.serversCount, 4);
+          });
+
+          it('should update selectedServerValue and selectedServerType using the first available server', () => {
+            assert.equal(element.selectedServerValue, 'http://{instance}.domain.com/');
+            assert.equal(element.selectedServerType, 'server');
+          });
+
+          it('should not change the baseUri property', () => {
+            assert.isUndefined(element.baseUri);
+          });
+
+          it('should render api-server-selector', () => {
+            assert.exists(element.shadowRoot.querySelector('api-server-selector'));
+          });
+
+          it('should not hide api-server-selector', () => {
+            assert.isFalse(element.shadowRoot.querySelector('api-server-selector').hidden);
+          });
+
+          describe('navigating to something other than a method or an endpoint', () => {
+            beforeEach(async () => {
+              element.selectedType = 'summary';
+              element.selected = 'summary';
+
+              await aTimeout();
+            });
+
+            it('should hide api-server-selector', () => {
+              assert.isTrue(element.shadowRoot.querySelector('api-server-selector').hidden);
+            });
+          });
+
+          describe('serverCount changes to less than 2', () => {
+            let serverSelector;
+
+            beforeEach(async () => {
+              element = await narrowFixture({ amf, selectedType, renderSlots: false });
+
+              serverSelector = element.shadowRoot.querySelector('api-server-selector');
+              serverSelector.servers = [];
+
+              await nextFrame();
+            });
+
+            it('should set serversCount', () => {
+              assert.equal(element.serversCount, 1);
+            });
+
+            it('should hide api-server-selector', () => {
+              assert.isTrue(serverSelector.hidden);
+            });
+          });
+
+          describe('selecting a slot server', () => {
+            beforeEach(() => {
+              const event = {
+                detail: {
+                  selectedValue: 'http://customServer.com',
+                  selectedType: 'slot'
+                }
+              };
+              window.dispatchEvent(new CustomEvent('api-server-changed', event));
+            });
+
+            it('should update selectedServerValue and selectedServerType', () => {
+              assert.equal(element.selectedServerValue, 'http://customServer.com');
+              assert.equal(element.selectedServerType, 'slot');
+            });
+          });
+
+          describe('selecting a custom base uri', () => {
+            beforeEach(async () => {
+              const event = {
+                detail: {
+                  selectedValue: 'https://www.google.com',
+                  selectedType: 'custom'
+                }
+              };
+              window.dispatchEvent(new CustomEvent('api-server-changed', event));
+            });
+
+            it('should update selectedServerValue and selectedServerType', () => {
+              assert.equal(element.selectedServerValue, 'https://www.google.com');
+              assert.equal(element.selectedServerType, 'custom');
+            });
+
+            describe('clearing the selection', () => {
+              beforeEach(() => {
+                const event = {
+                  detail: {
+                    selectedValue: undefined,
+                    selectedType: undefined
+                  }
+                };
+                window.dispatchEvent(new CustomEvent('api-server-changed', event));
+              });
+
+              it('should update selectedServerValue and selectedServerType', () => {
+                assert.equal(element.selectedServerValue, undefined);
+                assert.equal(element.selectedServerType, undefined);
+              });
+
+              describe('selecting an existing server', () => {
+                beforeEach(() => {
+                  const event = {
+                    detail: {
+                      selectedValue: 'http://{instance}.domain.com/',
+                      selectedType: 'server'
+                    }
+                  };
+                  window.dispatchEvent(new CustomEvent('api-server-changed', event));
+                });
+
+                it('should update selectedServerValue and selectedServerType', () => {
+                  assert.equal(element.selectedServerValue, 'http://{instance}.domain.com/');
+                  assert.equal(element.selectedServerType, 'server');
+                });
+              });
+            });
+          });
+
+          describe('navigating to a method', () => {
+            let _getServersStub;
+            let _updateServerValuesSpy;
+            let servers;
+
+            beforeEach(() => {
+              servers = [];
+              _getServersStub = sinon.stub(element, '_getServers').returns(servers);
+              _updateServerValuesSpy = sinon.spy(element, '_updateServerValues');
+
+              element.selectedType = 'method';
+              element.selected = '#505';
+            });
+
+            it('should call getServers with the methodId', () => {
+              assert.isTrue(_getServersStub.calledWith({ methodId: '#505', endpointId: undefined }));
+            });
+
+            it('should set the servers', () => {
+              assert.equal(element.servers, servers);
+            });
+
+            it('calls _updateServerValues', () => {
+              assert.isTrue(_updateServerValuesSpy.called);
+            });
+          });
+
+          describe('navigating to an endpoint', () => {
+            let _getServersStub;
+            let _updateServerValuesSpy;
+            let servers;
+
+            beforeEach(() => {
+              servers = [];
+              _getServersStub = sinon.stub(element, '_getServers').returns(servers);
+              _updateServerValuesSpy = sinon.spy(element, '_updateServerValues');
+
+              element.selectedType = 'endpoint';
+              element.selected = '#1010';
+            });
+
+            it('should call getServers with the endpointId', () => {
+              assert.isTrue(_getServersStub.calledWith({ methodId: undefined, endpointId: '#1010' }));
+            });
+
+            it('should set the servers', () => {
+              assert.equal(element.servers, servers);
+            });
+
+            it('calls _updateServerValues', () => {
+              assert.isTrue(_updateServerValuesSpy.called);
+            });
+          });
+        });
+
+        describe('not in narrow mode', () => {
+          beforeEach(async () => {
+            element = await partialFixture(amf);
+          });
+
+          it('should not render api-server-selector', () => {
+            assert.notExists(element.shadowRoot.querySelector('api-server-selector'));
+          });
+        });
+
+        describe('noServerSelector is true', () => {
+          beforeEach(async () => {
+            element = await partialFixture(amf);
+            element.noServerSelector = true;
+          });
+
+          it('should not render api-server-selector', () => {
+            assert.notExists(element.shadowRoot.querySelector('api-server-selector'));
+          });
+        });
+      });
     });
   });
 });

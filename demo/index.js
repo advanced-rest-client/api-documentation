@@ -26,12 +26,16 @@ class ComponentDemo extends ApiDemoPageBase {
       'legacy',
       'narrow',
       'noTryit',
+      'noServerSelector',
+      'noCustomServer',
       'inlineMethods',
       'scrollTarget',
       'selected',
       'selectedType'
     ]);
     this.noTryit = false;
+    this.noServerSelector = false;
+    this.noCustomServer = false;
     this.codeSnippets = true;
     this.renderSecurity = true;
 
@@ -134,7 +138,9 @@ class ComponentDemo extends ApiDemoPageBase {
       scrollTarget,
       redirectUri,
       inlineMethods,
-      noTryit
+      noTryit,
+      noServerSelector,
+      noCustomServer
     } = this;
     return html `
     <section class="documentation-section">
@@ -160,9 +166,19 @@ class ComponentDemo extends ApiDemoPageBase {
             .redirectUri="${redirectUri}"
             .inlineMethods="${inlineMethods}"
             .noTryIt="${noTryit}"
+            .noServerSelector="${noServerSelector}"
+            .noCustomServer="${noCustomServer}"
             ?narrow="${narrow}"
             ?legacy="${legacy}"
-            @tryit-requested="${this._tryitRequested}"></api-documentation>
+            handleNavigationEvents
+            @tryit-requested="${this._tryitRequested}">
+              <anypoint-item slot="custom-base-uri" value="http://customServer.com">
+                Server 1 - http://customServer.com
+              </anypoint-item>
+              <anypoint-item slot="custom-base-uri" value="http://customServer.com/{version}">
+                Server 2 - http://customServer.com/{version}
+              </anypoint-item>
+            </api-documentation>
         </div>
         <label slot="options" id="mainOptionsLabel">Options</label>
 
@@ -186,6 +202,20 @@ class ComponentDemo extends ApiDemoPageBase {
           name="inlineMethods"
           @change="${this._toggleMainOption}"
           >Render methods</anypoint-checkbox
+        >
+        <anypoint-checkbox
+          aria-describedby="mainOptionsLabel"
+          slot="options"
+          name="noServerSelector"
+          @change="${this._toggleMainOption}"
+          >No server selector</anypoint-checkbox
+        >
+        <anypoint-checkbox
+          aria-describedby="mainOptionsLabel"
+          slot="options"
+          name="noCustomServer"
+          @change="${this._toggleMainOption}"
+          >No custom server</anypoint-checkbox
         >
       </arc-interactive-demo>
     </section>`;

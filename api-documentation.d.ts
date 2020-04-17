@@ -164,6 +164,16 @@ declare namespace ApiElements {
     noUrlEditor: boolean|null|undefined;
 
     /**
+     * Hide OAS 3.0 server selector
+     */
+    noServerSelector: boolean|null|undefined;
+
+    /**
+     * Do not allow entering custom uris in server selector
+     */
+    noCustomServer: boolean|null|undefined;
+
+    /**
      * Currently rendered view type
      */
     _viewType: string|null|undefined;

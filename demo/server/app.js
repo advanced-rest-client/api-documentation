@@ -23,6 +23,7 @@ async function proxy(ctx, next) {
 const config = createConfig({
   // port: 8001,
   watch: true,
+  preserveSymlinks: true,
   nodeResolve: true,
   appIndex: 'demo/index.html',
   moduleDirs: ['node_modules'],
