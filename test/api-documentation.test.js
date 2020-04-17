@@ -589,6 +589,23 @@ describe('<api-documentation>', function() {
     ['Regular model', false]
   ].forEach(([name, compact]) => {
     describe(name, () => {
+      async function narrowFixture({ amf, selectedType, renderSlots = true }){
+        return await fixture(html`
+          <api-documentation .amf="${amf}" .selectedType="${selectedType}" narrow>
+            ${renderSlots
+              ? html`
+                <anypoint-item slot="custom-base-uri" value="http://customServer.com">
+                  Server 1 - http://customServer.com
+                </anypoint-item>
+                <anypoint-item slot="custom-base-uri" value="http://customServer.com/{version}">
+                  Server 2 - http://customServer.com/{version}
+                </anypoint-item>`
+              : ""
+            }
+          </api-documentation>
+        `);
+      }
+
       describe('Server selection', () => {
         let element;
         let amf;
@@ -599,16 +616,7 @@ describe('<api-documentation>', function() {
             amf = await AmfLoader.load(null, compact);
             selectedType = 'method';
 
-            element = await fixture(html`
-              <api-documentation .amf="${amf}" .selectedType="${selectedType}" narrow>
-                <anypoint-item slot="custom-base-uri" value="http://customServer.com">
-                  Server 1 - http://customServer.com
-                </anypoint-item>
-                <anypoint-item slot="custom-base-uri" value="http://customServer.com/{version}">
-                  Server 2 - http://customServer.com/{version}
-                </anypoint-item>
-              </api-documentation>
-            `);
+            element = await narrowFixture({ amf, selectedType })
 
             await nextFrame();
           });
@@ -655,11 +663,12 @@ describe('<api-documentation>', function() {
             let serverSelector;
 
             beforeEach(async () => {
+              element = await narrowFixture({ amf, selectedType, renderSlots: false });
+
               serverSelector = element.shadowRoot.querySelector('api-server-selector');
+              serverSelector.servers = [];
 
-              serverSelector.dispatchEvent(new CustomEvent('servers-count-changed', { detail: { serversCount: 1 } }));
-
-              await aTimeout();
+              await nextFrame();
             });
 
             it('should set serversCount', () => {
