@@ -616,8 +616,6 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
     if (!serverExists && this.selectedServerType === "server"){
       this.selectedServerValue = undefined;
       this.selectedServerType = undefined;
-
-      return;
     }
   }
 
