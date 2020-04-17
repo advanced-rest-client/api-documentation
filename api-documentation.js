@@ -99,22 +99,16 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
   }
 
   _renderServerSelector() {
-    const { amf, narrow, noServerSelector, selectedServerType, selectedServerValue, selectedType, serversCount, noCustomServer } = this;
-    
-    const isMethodOrEndpoint = selectedType && (selectedType === "method" || selectedType === "endpoint");
-    const moreThanOneServer = serversCount >= 2;
+    const { amf, selectedServerType, selectedServerValue, noCustomServer } = this;
 
-    const shouldRenderSelector = !noServerSelector && narrow;
-    const shouldShowSelector =  isMethodOrEndpoint && moreThanOneServer;
-
-    return shouldRenderSelector   
+    return this.shouldRenderSelector
       ? html`<api-server-selector
         class="server-selector"
         slot="content"
         .amf="${amf}"
         .selectedValue="${selectedServerValue}"
         .selectedType="${selectedServerType}"
-        ?hidden=${!shouldShowSelector}
+        ?hidden=${!this.shouldShowSelector}
         ?noCustom="${noCustomServer}"
         @servers-count-changed="${this._handleServersCountChange}">
           <slot name="custom-base-uri" slot="custom-base-uri"></slot>
@@ -450,6 +444,21 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
     this._serversCount = value;
     this._updateServers();
     this.requestUpdate('serversCount', old);
+  }
+
+  get shouldRenderSelector() {
+    const { noServerSelector, narrow } = this;
+
+    return !noServerSelector && narrow;
+  }
+
+  get shouldShowSelector() {
+    const { selectedType, serversCount } = this;
+
+    const isMethodOrEndpoint = selectedType && (selectedType === "method" || selectedType === "endpoint");
+    const moreThanOneServer = serversCount >= 2;
+
+    return isMethodOrEndpoint && moreThanOneServer;
   }
 
   get inlineMethods() {
