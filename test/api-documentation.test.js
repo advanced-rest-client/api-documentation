@@ -35,12 +35,6 @@ describe('<api-documentation>', function() {
     `);
   }
 
-  async function narrowFixture(amf, selectedType, slot) {
-    return await fixture(html`
-      <api-documentation .amf="${amf}" .selectedType="${selectedType}" narrow>${slot}</api-documentation>
-    `);
-  }
-
   const demoApi = 'demo-api';
   const libraryFragment = 'lib-fragment';
   const securityFragment = 'oauth2-fragment';
@@ -598,22 +592,23 @@ describe('<api-documentation>', function() {
       describe('Server selection', () => {
         let element;
         let amf;
+        let selectedType;
 
         describe('in narrow mode', () => {
           beforeEach(async () => {
             amf = await AmfLoader.load(null, compact);
-            element = await narrowFixture(
-              amf,
-              'method',
-              html`
+            selectedType = 'method';
+
+            element = await fixture(html`
+              <api-documentation .amf="${amf}" .selectedType="${selectedType}" narrow>
                 <anypoint-item slot="custom-base-uri" value="http://customServer.com">
                   Server 1 - http://customServer.com
                 </anypoint-item>
                 <anypoint-item slot="custom-base-uri" value="http://customServer.com/{version}">
                   Server 2 - http://customServer.com/{version}
                 </anypoint-item>
-              `
-            );
+              </api-documentation>
+            `);
 
             await nextFrame();
           });
