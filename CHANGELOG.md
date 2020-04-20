@@ -679,3 +679,27 @@
  [0d8ace4](https://github.com/advanced-rest-client/api-documentation/commit/0d8ace47018a5d89fde80f38cfa09d31dd5110cf) by Pawel Psztyc
 
 
+<a name="4.1.1"></a>
+## [4.1.1](https://github.com/advanced-rest-client/api-documentation/compare/4.0.4...4.1.1) (2020-04-20)
+
+### Build
+
+* bumping version [4801a9b](https://github.com/advanced-rest-client/api-documentation/commit/4801a9bd7f452242037707c66702e4aab6836f0a) by Pawel Psztyc
+
+
+### Update
+
+* [ci skip] automated merge master->stage. syncing main branches [1ca06fd](https://github.com/advanced-rest-client/api-documentation/commit/1ca06fdd13f8375cd74734f4ee0d4d1299d6d17b) by Ci agent
+* updating components with several bug fixes [d16c5ee](https://github.com/advanced-rest-client/api-documentation/commit/d16c5eece6f1cbd2ac71d7c03138bd4f7182129d) by Pawel Psztyc
+
+
+### Features
+
+* [APIC-372][EXC-5379] Add api-server-selector (#9) [286537b](https://github.com/advanced-rest-client/api-documentation/commit/286537b7035feb71fa76f4cb5d56e62c7439804d) by Joaquin Stankus
+
+
+### Bug Fixes
+
+* do not depend on narrow mode to render server selector (#10) [20340c1](https://github.com/advanced-rest-client/api-documentation/commit/20340c1fe905af2064ba5e0effa4f8e5f7fdbaa6) by Joaquin Stankus
+
+
