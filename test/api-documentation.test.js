@@ -800,6 +800,8 @@ describe('<api-documentation>', function() {
           beforeEach(async () => {
             element = await partialFixture(amf);
             element.noServerSelector = true;
+
+            await nextFrame();
           });
 
           it('should not render api-server-selector', () => {
