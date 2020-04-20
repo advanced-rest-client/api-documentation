@@ -99,10 +99,11 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
   }
 
   _renderServerSelector() {
-    const { amf, selectedServerType, selectedServerValue, noCustomServer } = this;
+    const { amf, selectedServerType, selectedServerValue, noCustomServer, noServerSelector } = this;
 
-    return this.rendersSelector
-      ? html`<api-server-selector
+    return noServerSelector
+      ? ""
+      : html`<api-server-selector
         class="server-selector"
         slot="content"
         .amf="${amf}"
@@ -112,8 +113,7 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
         ?noCustom="${noCustomServer}"
         @servers-count-changed="${this._handleServersCountChange}">
           <slot name="custom-base-uri" slot="custom-base-uri"></slot>
-        </api-server-selector>`
-      : "" 
+        </api-server-selector>`;
   }
 
   _renderView() {
@@ -412,12 +412,6 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
     this._serversCount = value;
     this._updateServers();
     this.requestUpdate('serversCount', old);
-  }
-
-  get rendersSelector() {
-    const { noServerSelector, narrow } = this;
-
-    return !noServerSelector && !!narrow;
   }
 
   get showsSelector() {
