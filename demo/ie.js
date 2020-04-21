@@ -25,7 +25,7 @@ class ComponentDemo extends ApiDemoPageBase {
       'narrow',
       'noTryit',
       'noServerSelector',
-      'noCustomServer',
+      'allowCustomBaseUri',
       'inlineMethods',
       'scrollTarget',
       'selected',
@@ -35,7 +35,7 @@ class ComponentDemo extends ApiDemoPageBase {
     this.codeSnippets = true;
     this.renderSecurity = true;
     this.noServerSelector = false;
-    this.noCustomServer = false;
+    this.allowCustomBaseUri = false;
     this.redirectUri = 'https://auth.advancedrestclient.com/oauth-popup.html';
     this.scrollTarget = window;
 
@@ -135,7 +135,7 @@ class ComponentDemo extends ApiDemoPageBase {
       inlineMethods,
       noTryit,
       noServerSelector,
-      noCustomServer
+      allowCustomBaseUri
     } = this;
     return html `
     <section class="documentation-section">
@@ -156,7 +156,7 @@ class ComponentDemo extends ApiDemoPageBase {
             .inlineMethods="${inlineMethods}"
             .noTryIt="${noTryit}"
             .noServerSelector="${noServerSelector}"
-            .noCustomServer="${noCustomServer}"
+            .allowCustomBaseUri="${allowCustomBaseUri}"
             ?narrow="${narrow}"
             ?legacy="${legacy}"
             handleNavigationEvents

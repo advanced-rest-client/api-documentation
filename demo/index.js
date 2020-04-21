@@ -27,7 +27,7 @@ class ComponentDemo extends ApiDemoPageBase {
       'narrow',
       'noTryit',
       'noServerSelector',
-      'noCustomServer',
+      'allowCustomBaseUri',
       'inlineMethods',
       'scrollTarget',
       'selected',
@@ -35,7 +35,7 @@ class ComponentDemo extends ApiDemoPageBase {
     ]);
     this.noTryit = false;
     this.noServerSelector = false;
-    this.noCustomServer = false;
+    this.allowCustomBaseUri = false;
     this.codeSnippets = true;
     this.renderSecurity = true;
 
@@ -140,7 +140,7 @@ class ComponentDemo extends ApiDemoPageBase {
       inlineMethods,
       noTryit,
       noServerSelector,
-      noCustomServer
+      allowCustomBaseUri
     } = this;
     return html `
     <section class="documentation-section">
@@ -167,7 +167,7 @@ class ComponentDemo extends ApiDemoPageBase {
             .inlineMethods="${inlineMethods}"
             .noTryIt="${noTryit}"
             .noServerSelector="${noServerSelector}"
-            .noCustomServer="${noCustomServer}"
+            .allowCustomBaseUri="${allowCustomBaseUri}"
             ?narrow="${narrow}"
             ?legacy="${legacy}"
             handleNavigationEvents
@@ -213,9 +213,9 @@ class ComponentDemo extends ApiDemoPageBase {
         <anypoint-checkbox
           aria-describedby="mainOptionsLabel"
           slot="options"
-          name="noCustomServer"
+          name="allowCustomBaseUri"
           @change="${this._toggleMainOption}"
-          >No custom server</anypoint-checkbox
+          >Allow custom base URI</anypoint-checkbox
         >
       </arc-interactive-demo>
     </section>`;

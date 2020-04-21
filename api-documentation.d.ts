@@ -169,9 +169,9 @@ declare namespace ApiElements {
     noServerSelector: boolean|null|undefined;
 
     /**
-     * Do not allow entering custom uris in server selector
+     * Allow entering custom uris in server selector
      */
-    noCustomServer: boolean|null|undefined;
+    allowCustomBaseUri: boolean|null|undefined;
 
     /**
      * Currently rendered view type

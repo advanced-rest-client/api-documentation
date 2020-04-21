@@ -99,7 +99,7 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
   }
 
   _renderServerSelector() {
-    const { amf, selectedServerType, selectedServerValue, noCustomServer, noServerSelector } = this;
+    const { amf, selectedServerType, selectedServerValue, allowCustomBaseUri, noServerSelector } = this;
 
     return noServerSelector
       ? ""
@@ -110,7 +110,7 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
         .selectedType="${selectedServerType}"
         .selectedValue="${selectedServerValue}"
         ?hidden=${!this.showsSelector}
-        ?noCustom="${noCustomServer}"
+        ?allowCustom="${allowCustomBaseUri}"
         @servers-count-changed="${this._handleServersCountChange}">
           <slot name="custom-base-uri" slot="custom-base-uri"></slot>
         </api-server-selector>`;
@@ -345,9 +345,9 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
        */
       noServerSelector: { type: Boolean },
       /**
-       * If true, the server selector custom option is not rendered
+       * If true, the server selector custom base URI option is rendered
        */
-      noCustomServer: { type: Boolean },
+      allowCustomBaseUri: { type: Boolean },
       /**
        * The URI of the server currently selected in the server selector
        */
