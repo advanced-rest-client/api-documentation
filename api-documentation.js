@@ -107,8 +107,8 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
         class="server-selector"
         slot="content"
         .amf="${amf}"
-        .selectedValue="${selectedServerValue}"
         .selectedType="${selectedServerType}"
+        .selectedValue="${selectedServerValue}"
         ?hidden=${!this.showsSelector}
         ?noCustom="${noCustomServer}"
         @servers-count-changed="${this._handleServersCountChange}">
@@ -128,9 +128,9 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
   }
 
   _summaryTemplate() {
-    const { _docsModel } = this;
+    const { _docsModel, baseUri } = this;
 
-    return html`<api-summary .amf="${_docsModel}" .baseUri="${this.effectiveBaseUri}"></api-summary>`;
+    return html`<api-summary .amf="${_docsModel}" .baseUri="${baseUri}"></api-summary>`;
   }
 
   _securityTemplate() {
@@ -414,6 +414,34 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
     this.requestUpdate('serversCount', old);
   }
 
+  get selectedServerValue() {
+    return this._selectedServerValue;
+  }
+
+  set selectedServerValue(value) {
+    const old = this._selectedServerValue;
+    if (old === value) {
+      return;
+    }
+    this._selectedServerValue = value;
+    this._notifyServerChanged();
+    this.requestUpdate('selectedServerValue', old);
+  }
+
+  get selectedServerType() {
+    return this._selectedServerType;
+  }
+
+  set selectedServerType(value) {
+    const old = this._selectedServerType;
+    if (old === value) {
+      return;
+    }
+    this._selectedServerType = value;
+    this._notifyServerChanged();
+    this.requestUpdate('selectedServerType', old);
+  }
+
   get showsSelector() {
     const { selectedType, serversCount } = this;
 
@@ -545,6 +573,18 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
     window.removeEventListener('api-navigation-selection-changed', this._navigationHandler);
   }
 
+  _notifyServerChanged() {
+    this.dispatchEvent(
+      new CustomEvent('api-server-changed', {
+        detail: {
+          selectedValue: this.selectedServerValue,
+          selectedType: this.selectedServerType
+        },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
   /**
    * Registers / unregisters event listeners depending on `state`
    *
@@ -593,8 +633,8 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
 
   _updateServerValues() {
     if (this.servers && !this.selectedServerValue && this.selectedServerType !== "custom") {
-      this.selectedServerValue = this._getServerUri(this.servers[0]);
       this.selectedServerType = "server"
+      this.selectedServerValue = this._getServerUri(this.servers[0]);
 
       return;
     }
@@ -602,8 +642,8 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
     const serverExists = !!(this.servers || []).find(server => this._getServerUri(server) === this.selectedServerValue);
 
     if (!serverExists && this.selectedServerType === "server"){
-      this.selectedServerValue = undefined;
       this.selectedServerType = undefined;
+      this.selectedServerValue = undefined;
     }
   }
 

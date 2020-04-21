@@ -594,7 +594,6 @@ describe('<api-documentation>', function() {
         let amf;
         let selectedType;
 
-        
         beforeEach(async () => {
           amf = await AmfLoader.load(null, compact);
           selectedType = 'method';
@@ -675,19 +674,38 @@ describe('<api-documentation>', function() {
         });
 
         describe('selecting a slot server', () => {
-          beforeEach(() => {
+          let handler;
+          let dispatchedEvent;
+
+          beforeEach(async () => {
             const event = {
               detail: {
                 selectedValue: 'http://customServer.com',
                 selectedType: 'slot'
               }
             };
+
+            handler = (e) => (dispatchedEvent = e);
+            element.addEventListener('api-server-changed', handler);
             window.dispatchEvent(new CustomEvent('api-server-changed', event));
+
+            await nextFrame();
+          });
+
+          afterEach(() => {
+            element.removeEventListener('api-server-changed', handler);
           });
 
           it('should update selectedServerValue and selectedServerType', () => {
             assert.equal(element.selectedServerValue, 'http://customServer.com');
             assert.equal(element.selectedServerType, 'slot');
+          });
+
+          it('should dispatch the "api-server-changed event"', () => {
+            assert.deepEqual(dispatchedEvent.detail, {
+              selectedValue: 'http://customServer.com',
+              selectedType: 'slot'
+            });
           });
         });
 
@@ -795,7 +813,7 @@ describe('<api-documentation>', function() {
             assert.isTrue(_updateServerValuesSpy.called);
           });
         });
-      
+
         describe('noServerSelector is true', () => {
           beforeEach(async () => {
             element = await partialFixture(amf);
