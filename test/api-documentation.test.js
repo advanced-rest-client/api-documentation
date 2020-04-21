@@ -673,6 +673,32 @@ describe('<api-documentation>', function() {
           });
         });
 
+        describe('allowCustomBaseUri is true', () => {
+          let serverSelector;
+
+          beforeEach(async () => {
+            element = await fixture(html`
+              <api-documentation 
+                .amf="${amf}" 
+                .selectedType="${selectedType}"
+                narrow allowCustomBaseUri></api-documentation>
+            `);
+
+            serverSelector = element.shadowRoot.querySelector('api-server-selector');
+            serverSelector.servers = [];
+
+            await nextFrame();
+          });
+
+          it('should set serversCount to one', () => {
+            assert.equal(element.serversCount, 1);
+          });
+
+          it('should hide api-server-selector', () => {
+            assert.isTrue(serverSelector.hidden);
+          });
+        });
+
         describe('selecting a slot server', () => {
           let handler;
           let dispatchedEvent;
