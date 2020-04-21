@@ -580,8 +580,7 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
           selectedValue: this.selectedServerValue,
           selectedType: this.selectedServerType
         },
-        bubbles: true,
-        composed: true,
+        composed: true
       })
     );
   }
