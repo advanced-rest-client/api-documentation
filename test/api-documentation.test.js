@@ -594,7 +594,6 @@ describe('<api-documentation>', function() {
         let amf;
         let selectedType;
 
-        
         beforeEach(async () => {
           amf = await AmfLoader.load(null, compact);
           selectedType = 'method';
@@ -618,7 +617,7 @@ describe('<api-documentation>', function() {
         });
 
         it('should set serversCount', () => {
-          assert.equal(element.serversCount, 4);
+          assert.equal(element.serversCount, 3);
         });
 
         it('should update selectedServerValue and selectedServerType using the first available server', () => {
@@ -666,6 +665,32 @@ describe('<api-documentation>', function() {
           });
 
           it('should set serversCount', () => {
+            assert.equal(element.serversCount, 0);
+          });
+
+          it('should hide api-server-selector', () => {
+            assert.isTrue(serverSelector.hidden);
+          });
+        });
+
+        describe('allowCustomBaseUri is true', () => {
+          let serverSelector;
+
+          beforeEach(async () => {
+            element = await fixture(html`
+              <api-documentation 
+                .amf="${amf}" 
+                .selectedType="${selectedType}"
+                narrow allowCustomBaseUri></api-documentation>
+            `);
+
+            serverSelector = element.shadowRoot.querySelector('api-server-selector');
+            serverSelector.servers = [];
+
+            await nextFrame();
+          });
+
+          it('should set serversCount to one', () => {
             assert.equal(element.serversCount, 1);
           });
 
@@ -675,19 +700,38 @@ describe('<api-documentation>', function() {
         });
 
         describe('selecting a slot server', () => {
-          beforeEach(() => {
+          let handler;
+          let dispatchedEvent;
+
+          beforeEach(async () => {
             const event = {
               detail: {
                 selectedValue: 'http://customServer.com',
                 selectedType: 'slot'
               }
             };
+
+            handler = (e) => (dispatchedEvent = e);
+            element.addEventListener('api-server-changed', handler);
             window.dispatchEvent(new CustomEvent('api-server-changed', event));
+
+            await nextFrame();
+          });
+
+          afterEach(() => {
+            element.removeEventListener('api-server-changed', handler);
           });
 
           it('should update selectedServerValue and selectedServerType', () => {
             assert.equal(element.selectedServerValue, 'http://customServer.com');
             assert.equal(element.selectedServerType, 'slot');
+          });
+
+          it('should dispatch the "api-server-changed event"', () => {
+            assert.deepEqual(dispatchedEvent.detail, {
+              selectedValue: 'http://customServer.com',
+              selectedType: 'slot'
+            });
           });
         });
 
@@ -795,7 +839,7 @@ describe('<api-documentation>', function() {
             assert.isTrue(_updateServerValuesSpy.called);
           });
         });
-      
+
         describe('noServerSelector is true', () => {
           beforeEach(async () => {
             element = await partialFixture(amf);
