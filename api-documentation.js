@@ -99,21 +99,25 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
   }
 
   _renderServerSelector() {
-    const { amf, selectedServerType, selectedServerValue, allowCustomBaseUri, noServerSelector } = this;
+    const { amf, compatibility, outlined, selectedServerType, selectedServerValue, allowCustomBaseUri, noServerSelector } = this;
 
     return noServerSelector
       ? ""
       : html`<api-server-selector
         class="server-selector"
-        slot="content"
         .amf="${amf}"
-        .selectedType="${selectedServerType}"
-        .selectedValue="${selectedServerValue}"
-        ?hidden=${!this.showsSelector}
+        .value="${selectedServerValue}"
+        .type="${selectedServerType}"
+        ?hidden="${!this.showsSelector}"
         ?allowCustom="${allowCustomBaseUri}"
-        @servers-count-changed="${this._handleServersCountChange}">
-          <slot name="custom-base-uri" slot="custom-base-uri"></slot>
-        </api-server-selector>`;
+        ?compatibility="${compatibility}"
+        ?outlined="${outlined}"
+        autoselect
+        @serverscountchanged="${this._handleServersCountChange}"
+        @apiserverchanged="${this._handleServerChange}"
+      >
+        <slot name="custom-base-uri" slot="custom-base-uri"></slot>
+      </api-server-selector>`;
   }
 
   _renderView() {
@@ -228,14 +232,6 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
       ?graph="${graph}"
       ?noNavigation="${noBottomNavigation}"
       ></api-endpoint-documentation>`;
-  }
-
-  _attachListeners(node) {
-    node.addEventListener('api-server-changed', this._handleServerChange);
-  }
-
-  _detachListeners(node) {
-    node.removeEventListener('api-server-changed', this._handleServerChange);
   }
 
   static get properties() {
@@ -448,6 +444,7 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
     const isMethodOrEndpoint = !!selectedType && (selectedType === "method" || selectedType === "endpoint");
     const moreThanOneServer = serversCount >= 2;
 
+
     return isMethodOrEndpoint && moreThanOneServer;
   }
 
@@ -575,10 +572,10 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
 
   _notifyServerChanged() {
     this.dispatchEvent(
-      new CustomEvent('api-server-changed', {
+      new CustomEvent('apiserverchanged', {
         detail: {
-          selectedValue: this.selectedServerValue,
-          selectedType: this.selectedServerType
+          value: this.selectedServerValue,
+          type: this.selectedServerType
         },
         composed: true
       })
@@ -612,7 +609,7 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
   }
 
   _handleServersCountChange(e) {
-    this.serversCount = e.detail.serversCount;
+    this.serversCount = e.detail.value;
   }
 
   _updateServers() {
@@ -626,24 +623,6 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
     }
 
     this.servers = this._getServers({ endpointId, methodId });
-
-    this._updateServerValues();
-  }
-
-  _updateServerValues() {
-    if (this.servers && !this.selectedServerValue && this.selectedServerType !== "custom") {
-      this.selectedServerType = "server"
-      this.selectedServerValue = this._getServerUri(this.servers[0]);
-
-      return;
-    }
-
-    const serverExists = !!(this.servers || []).find(server => this._getServerUri(server) === this.selectedServerValue);
-
-    if (!serverExists && this.selectedServerType === "server"){
-      this.selectedServerType = undefined;
-      this.selectedServerValue = undefined;
-    }
   }
 
   _getServerUri(server) {
@@ -653,8 +632,8 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
   }
 
   _handleServerChange(e) {
-    this.selectedServerValue = e.detail.selectedValue;
-    this.selectedServerType = e.detail.selectedType;
+    this.selectedServerValue = e.detail.value;
+    this.selectedServerType = e.detail.type;
   }
 
   /**
