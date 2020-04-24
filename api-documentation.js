@@ -444,7 +444,6 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
     const isMethodOrEndpoint = !!selectedType && (selectedType === "method" || selectedType === "endpoint");
     const moreThanOneServer = serversCount >= 2;
 
-
     return isMethodOrEndpoint && moreThanOneServer;
   }
 
