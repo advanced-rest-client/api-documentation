@@ -703,3 +703,32 @@
 * do not depend on narrow mode to render server selector (#10) [20340c1](https://github.com/advanced-rest-client/api-documentation/commit/20340c1fe905af2064ba5e0effa4f8e5f7fdbaa6) by Joaquin Stankus
 
 
+<a name="5.0.0"></a>
+# [5.0.0](https://github.com/advanced-rest-client/api-documentation/compare/4.0.5...5.0.0) (2020-04-27)
+
+## Update
+
+* [ci skip] automated merge master->stage. syncing main branches [d9e1c5c](https://github.com/advanced-rest-client/api-documentation/commit/d9e1c5cf6cfbd22db84e94fe7cba9e8867e1f85b) by Ci agent
+* [ci skip] automated merge master->stage. syncing main branches [1ca06fd](https://github.com/advanced-rest-client/api-documentation/commit/1ca06fdd13f8375cd74734f4ee0d4d1299d6d17b) by Ci agent
+
+
+## Features
+
+* [APIC-372][EXC-5379] Add api-server-selector (#9) [286537b](https://github.com/advanced-rest-client/api-documentation/commit/286537b7035feb71fa76f4cb5d56e62c7439804d) by Joaquin Stankus
+
+
+## Bug Fixes
+
+* [APIC-397] update server selector due to redesign (#12) [a7f7e0f](https://github.com/advanced-rest-client/api-documentation/commit/a7f7e0f502a32d1f0066f92c78e37aee9a2fd453) by Joaquin Stankus
+* bump api-server-selector and added allowCustomBaseUri prop [def2058](https://github.com/advanced-rest-client/api-documentation/commit/def20585f16e5bcd973f83378bc2638bbfab1e1e) by Leandro Bauret
+* remove bubble:true [2750c64](https://github.com/advanced-rest-client/api-documentation/commit/2750c64674c2173928518f28f7eba19c531cbce2) by Joaquin Stankus
+* dispatch server changed event [0c58c10](https://github.com/advanced-rest-client/api-documentation/commit/0c58c1005a4a81224841b83b66d6bbf50bb6b77d) by Joaquin Stankus
+* do not depend on narrow mode to render server selector (#10) [20340c1](https://github.com/advanced-rest-client/api-documentation/commit/20340c1fe905af2064ba5e0effa4f8e5f7fdbaa6) by Joaquin Stankus
+
+
+## Testing
+
+* add test for allowCustomBaseUri property [bba2edf](https://github.com/advanced-rest-client/api-documentation/commit/bba2edf2f53cab19ee49740794b3569585e21901) by Leandro Bauret
+* update server count in tests [9ac0ae2](https://github.com/advanced-rest-client/api-documentation/commit/9ac0ae2e69ddd90422f338e03a91834d5cb2ae0e) by Leandro Bauret
+
+
