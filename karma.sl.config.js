@@ -8,11 +8,11 @@ module.exports = (config) => {
     sauceLabs: {
       testName: 'api-documentation',
     },
-    // client: {
-    //   mocha: {
-    //     timeout : 6000
-    //   }
-    // }
+    client: {
+      mocha: {
+        timeout : 15000
+      }
+    }
   });
   // if you want to change default browsers
   slConfig.browsers = [

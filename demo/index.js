@@ -1,7 +1,5 @@
-import { html, render } from 'lit-html';
-import { LitElement } from 'lit-element';
-import { ApiDemoPageBase } from '@advanced-rest-client/arc-demo-helper/ApiDemoPage.js';
-import { AmfHelperMixin } from '@api-components/amf-helper-mixin/amf-helper-mixin.js';
+import { html } from 'lit-html';
+import { ApiDemoPage } from '@advanced-rest-client/arc-demo-helper';
 import '@anypoint-web-components/anypoint-checkbox/anypoint-checkbox.js';
 import '@advanced-rest-client/arc-demo-helper/arc-demo-helper.js';
 import '@advanced-rest-client/arc-demo-helper/arc-interactive-demo.js';
@@ -14,16 +12,11 @@ import '@advanced-rest-client/oauth-authorization/oauth1-authorization.js';
 import '@advanced-rest-client/xhr-simple-request/xhr-simple-request.js';
 import '../api-documentation.js';
 
-class DemoElement extends AmfHelperMixin(LitElement) {}
-window.customElements.define('demo-element', DemoElement);
-
-class ComponentDemo extends ApiDemoPageBase {
+class ComponentDemo extends ApiDemoPage {
   constructor() {
     super();
-    this._componentName = 'api-documentation';
 
     this.initObservableProperties([
-      'legacy',
       'narrow',
       'noTryit',
       'noServerSelector',
@@ -31,9 +24,17 @@ class ComponentDemo extends ApiDemoPageBase {
       'inlineMethods',
       'scrollTarget',
       'selected',
-      'selectedType'
+      'selectedType',
+      'serverType',
+      'serverValue',
+      'compatibility',
+      'renderCustomServer',
     ]);
+    this.componentName = 'api-documentation';
     this.noTryit = false;
+    this.compatibility = false;
+    this.inlineMethods = false;
+    this.renderCustomServer = false;
     this.noServerSelector = false;
     this.allowCustomBaseUri = false;
     this.codeSnippets = true;
@@ -43,38 +44,8 @@ class ComponentDemo extends ApiDemoPageBase {
     this.scrollTarget = window;
 
     this.demoStates = ['Material', 'Anypoint'];
-    this._demoStateHandler = this._demoStateHandler.bind(this);
-    this._toggleMainOption = this._toggleMainOption.bind(this);
     this._tryitRequested = this._tryitRequested.bind(this);
-  }
-
-  _demoStateHandler(e) {
-    const state = e.detail.value;
-    switch (state) {
-      case 0:
-        this.legacy = false;
-        break;
-      case 1:
-        this.legacy = true;
-        break;
-    }
-    if (this.legacy) {
-      document.body.classList.add('anypoint');
-    } else {
-      document.body.classList.remove('anypoint');
-    }
-  }
-
-  _toggleMainOption(e) {
-    const { name, checked } = e.target;
-    this[name] = checked;
-  }
-
-  get helper() {
-    if (!this.__helper) {
-      this.__helper = document.getElementById('helper');
-    }
-    return this.__helper;
+    this._serverHandler = this._serverHandler.bind(this);
   }
 
   _navChanged(e) {
@@ -91,6 +62,7 @@ class ComponentDemo extends ApiDemoPageBase {
 
     [
       ['google-drive-api', 'Google Drive'],
+      ['multi-server', 'Multiple servers'],
       ['exchange-experience-api', 'Exchange xAPI'],
       ['demo-api', 'Demo API'],
       ['array-body', 'Body with array test case'],
@@ -106,17 +78,17 @@ class ComponentDemo extends ApiDemoPageBase {
       ['SE-11415', 'SE-11415'],
     ].forEach(([file, label]) => {
       result[result.length] = html`
-      <paper-item data-src="${file}-compact.json">${label} - compact model</paper-item>
-      <paper-item data-src="${file}.json">${label}</paper-item>`;
+      <anypoint-item data-src="${file}-compact.json">${label} - compact model</anypoint-item>
+      <anypoint-item data-src="${file}.json">${label}</anypoint-item>`;
     });
 
     [
       ['partial-model/documentation', 'Partial model: Documentation'],
       ['partial-model/endpoint', 'Partial model: Endpoint'],
       ['partial-model/security', 'Partial model: Security'],
-      ['partial-model/type', 'Partial model: Type']
+      ['partial-model/type', 'Partial model: Type'],
     ].forEach(([file, label]) => {
-      result[result.length] = html`<paper-item data-src="${file}.json">${label}</paper-item>`;
+      result[result.length] = html`<anypoint-item data-src="${file}.json">${label}</anypoint-item>`;
     });
     return result;
   }
@@ -126,11 +98,17 @@ class ComponentDemo extends ApiDemoPageBase {
     toast.opened = true;
   }
 
+  _serverHandler(e) {
+    const { value, type } = e.detail;
+    this.serverType = type;
+    this.serverValue = value;
+  }
+
   _demoTemplate() {
     const {
       demoStates,
       darkThemeActive,
-      legacy,
+      compatibility,
       amf,
       narrow,
       selected,
@@ -140,7 +118,9 @@ class ComponentDemo extends ApiDemoPageBase {
       inlineMethods,
       noTryit,
       noServerSelector,
-      allowCustomBaseUri
+      allowCustomBaseUri,
+      serverType,
+      serverValue,
     } = this;
     return html `
     <section class="documentation-section">
@@ -155,31 +135,27 @@ class ComponentDemo extends ApiDemoPageBase {
         @state-chanegd="${this._demoStateHandler}"
         ?dark="${darkThemeActive}"
       >
-
-        <div slot="content" class="doc-container">
-          ${this._apiNavigationTemplate()}
-          <api-documentation
-            .amf="${amf}"
-            .selected="${selected}"
-            .selectedType="${selectedType}"
-            .scrollTarget="${scrollTarget}"
-            .redirectUri="${redirectUri}"
-            .inlineMethods="${inlineMethods}"
-            .noTryIt="${noTryit}"
-            .noServerSelector="${noServerSelector}"
-            .allowCustomBaseUri="${allowCustomBaseUri}"
-            ?narrow="${narrow}"
-            ?legacy="${legacy}"
-            handleNavigationEvents
-            @tryit-requested="${this._tryitRequested}">
-              <anypoint-item slot="custom-base-uri" value="http://customServer.com">
-                Server 1 - http://customServer.com
-              </anypoint-item>
-              <anypoint-item slot="custom-base-uri" value="http://customServer.com/{version}">
-                Server 2 - http://customServer.com/{version}
-              </anypoint-item>
-            </api-documentation>
-        </div>
+        <api-documentation
+          slot="content"
+          .amf="${amf}"
+          .selected="${selected}"
+          .selectedType="${selectedType}"
+          .scrollTarget="${scrollTarget}"
+          .redirectUri="${redirectUri}"
+          .inlineMethods="${inlineMethods}"
+          .noTryIt="${noTryit}"
+          .noServerSelector="${noServerSelector}"
+          .allowCustomBaseUri="${allowCustomBaseUri}"
+          .serverValue="${serverValue}"
+          .serverType="${serverType}"
+          ?narrow="${narrow}"
+          ?compatibility="${compatibility}"
+          @apiserverchanged="${this._serverHandler}"
+          handleNavigationEvents
+          @tryit-requested="${this._tryitRequested}"
+        >
+          ${this._addCustomServers()}
+        </api-documentation>
         <label slot="options" id="mainOptionsLabel">Options</label>
 
         <anypoint-checkbox
@@ -217,8 +193,34 @@ class ComponentDemo extends ApiDemoPageBase {
           @change="${this._toggleMainOption}"
           >Allow custom base URI</anypoint-checkbox
         >
+        <anypoint-checkbox
+          aria-describedby="mainOptionsLabel"
+          slot="options"
+          name="renderCustomServer"
+          @change="${this._toggleMainOption}"
+          >Custom servers</anypoint-checkbox
+        >
       </arc-interactive-demo>
     </section>`;
+  }
+
+  _addCustomServers() {
+    if (!this.renderCustomServer) {
+      return;
+    }
+    const { compatibility } = this;
+    return html`
+    <div class="other-section" slot="custom-base-uri">Other options</div>
+    <anypoint-item
+      slot="custom-base-uri"
+      value="http://mocking.com"
+      ?compatibility="${compatibility}"
+    >Mocking service</anypoint-item>
+    <anypoint-item
+      slot="custom-base-uri"
+      value="http://customServer.com2"
+      ?compatibility="${compatibility}"
+    >Custom instance</anypoint-item>`;
   }
 
   _introductionTemplate() {
@@ -248,27 +250,20 @@ class ComponentDemo extends ApiDemoPageBase {
       </section>`;
   }
 
-  _render() {
-    const { amf } = this;
-    render(html`
-      ${this.headerTemplate()}
+  contentTemplate() {
+    return html`
+    <xhr-simple-request></xhr-simple-request>
+    <oauth2-authorization></oauth2-authorization>
+    <oauth1-authorization></oauth1-authorization>
+    <paper-toast id="navToast"></paper-toast>
+    <paper-toast id="tryItToast" text="Try it panel requested"></paper-toast>
 
-      <demo-element id="helper" .amf="${amf}"></demo-element>
-      <xhr-simple-request></xhr-simple-request>
-      <oauth2-authorization></oauth2-authorization>
-      <oauth1-authorization></oauth1-authorization>
-      <paper-toast id="navToast"></paper-toast>
-      <paper-toast id="tryItToast" text="Try it panel requested"></paper-toast>
-
-      <div role="main">
-        <h2 class="centered main">API endpoint documentation</h2>
-        ${this._demoTemplate()}
-        ${this._introductionTemplate()}
-        ${this._usageTemplate()}
-      </div>
-      `, document.querySelector('#demo'));
+    <h2 class="centered main">API documentation</h2>
+    ${this._demoTemplate()}
+    ${this._introductionTemplate()}
+    ${this._usageTemplate()}
+    `;
   }
 }
 const instance = new ComponentDemo();
 instance.render();
-window.demo = instance;

@@ -26,12 +26,12 @@
   },
   "dependencies": {
     "@advanced-rest-client/events-target-mixin": "^3.0.0",
-    "@api-components/amf-helper-mixin": "^4.0.17",
+    "@api-components/amf-helper-mixin": "^4.1.1",
     "@api-components/api-documentation-document": "^4.0.2",
-    "@api-components/api-endpoint-documentation": "^4.0.4",
-    "@api-components/api-method-documentation": "^4.0.7",
+    "@api-components/api-endpoint-documentation": "^5.0.0",
+    "@api-components/api-method-documentation": "^5.0.0",
     "@api-components/api-security-documentation": "^4.0.5",
-    "@api-components/api-server-selector": "^0.4.0",
+    "@api-components/api-server-selector": "^0.4.1",
     "@api-components/api-summary": "^4.0.2",
     "@api-components/api-type-documentation": "^4.0.3",
     "@api-components/raml-aware": "^3.0.0",
@@ -39,9 +39,9 @@
     "lit-html": "^1.1.2"
   },
   "devDependencies": {
-    "@advanced-rest-client/arc-demo-helper": "^1.0.17",
+    "@advanced-rest-client/arc-demo-helper": "^2.1.4",
     "@advanced-rest-client/eslint-config": "^1.1.4",
-    "@advanced-rest-client/oauth-authorization": "^3.0.1",
+    "@advanced-rest-client/oauth-authorization": "^4.0.2",
     "@advanced-rest-client/prettier-config": "^0.1.0",
     "@advanced-rest-client/testing-karma-sl": "^1.1.0",
     "@advanced-rest-client/xhr-simple-request": "^3.0.1",
@@ -52,21 +52,18 @@
     "@api-components/api-navigation": "^4.0.2",
     "@commitlint/cli": "^8.3.4",
     "@commitlint/config-conventional": "^8.3.4",
-    "@open-wc/building-rollup": "^0.17.5",
-    "@open-wc/testing": "^2.4.2",
-    "@open-wc/testing-karma": "^3.2.25",
+    "@open-wc/testing": "^2.5.15",
+    "@open-wc/testing-karma": "^3.3.17",
     "@polymer/gen-typescript-declarations": "^1.6.2",
     "@polymer/iron-test-helpers": "^3.0.1",
     "@polymer/paper-toast": "^3.0.0",
     "deepmerge": "^4.2.2",
-    "es-dev-server": "^1.35.0",
+    "es-dev-server": "^1.47.0",
     "esm": "^3.2.25",
-    "husky": "^3.1.0",
-    "karma": "^4.4.1",
-    "lint-staged": "^9.5.0",
-    "rimraf": "^3.0.0",
-    "rollup-plugin-cpy": "^2.0.1",
-    "sinon": "^8.0.4"
+    "husky": "^4.2.5",
+    "lint-staged": "^10.1.7",
+    "sinon": "^9.0.2",
+    "typescript-lit-html-plugin": "^0.9.0"
   },
   "scripts": {
     "update-types": "gen-typescript-declarations --deleteExisting --outDir .",
@@ -83,16 +80,12 @@
     "test:watch": "karma start --auto-watch=true --single-run=false",
     "test:update-snapshots": "karma start --update-snapshots",
     "test:prune-snapshots": "karma start --prune-snapshots",
-    "test:compatibility": "karma start --compatibility auto --coverage",
-    "test:compatibility:watch": "karma start --compatibility auto --auto-watch=true --single-run=false",
     "test:sl": "karma start karma.sl.config.js --compatibility auto --coverage",
-    "prepare": "node demo/prepare.js",
-    "build": "rimraf dist && rollup -c rollup.config.js"
+    "prepare": "node demo/prepare.js && node demo/model.js"
   },
   "lint-staged": {
     "*.js": [
-      "eslint --fix",
-      "git add"
+      "eslint --fix"
     ]
   }
 }
