@@ -66,12 +66,9 @@ import '@api-components/api-server-selector/api-server-selector.js'
  * Note: The element will not be notified about the change when `iron-meta` value change.
  * The change will be reflected when `amf` or `endpoint` property chnage.
  *
- *
- * @customElement
- * @polymer
- * @demo demo/index.html
- * @memberof ApiElements
- * @appliesMixin AmfHelperMixin
+ * @mixes AmfHelperMixin
+ * @mixes EventsTargetMixin
+ * @extends LitElement
  */
 class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
   get styles() {
@@ -87,9 +84,7 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
   }
 
   render() {
-    const {
-      aware
-    } = this;
+    const { aware } = this;
     return html`<style>${this.styles}</style>
     ${aware ? html`<raml-aware
       .scope="${aware}"
@@ -99,21 +94,27 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
   }
 
   _renderServerSelector() {
-    const { amf, selectedServerType, selectedServerValue, allowCustomBaseUri, noServerSelector } = this;
+    if (this.noServerSelector) {
+      return '';
+    }
+    const { amf, compatibility, outlined, serverType, serverValue, allowCustomBaseUri, showsSelector } = this;
 
-    return noServerSelector
-      ? ""
-      : html`<api-server-selector
+    return html`
+      <api-server-selector
         class="server-selector"
-        slot="content"
         .amf="${amf}"
-        .selectedType="${selectedServerType}"
-        .selectedValue="${selectedServerValue}"
-        ?hidden=${!this.showsSelector}
+        .value="${serverValue}"
+        .type="${serverType}"
+        ?hidden="${!showsSelector}"
         ?allowCustom="${allowCustomBaseUri}"
-        @servers-count-changed="${this._handleServersCountChange}">
-          <slot name="custom-base-uri" slot="custom-base-uri"></slot>
-        </api-server-selector>`;
+        ?compatibility="${compatibility}"
+        ?outlined="${outlined}"
+        autoselect
+        @serverscountchanged="${this._handleServersCountChange}"
+        @apiserverchanged="${this._handleServerChange}"
+      >
+        <slot name="custom-base-uri" slot="custom-base-uri"></slot>
+      </api-server-selector>`;
   }
 
   _renderView() {
@@ -161,7 +162,7 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
   }
 
   _methodTemplate() {
-    const { amf, _docsModel, narrow, compatibility, _endpoint, selected, noTryIt, graph, noBottomNavigation } = this;
+    const { amf, _docsModel, narrow, compatibility, _endpoint, selected, noTryIt, graph, noBottomNavigation, server } = this;
     const prev = this._computeMethodPrevious(amf, selected);
     const next = this._computeMethodNext(amf, selected);
 
@@ -170,11 +171,12 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
       .narrow="${narrow}"
       .compatibility="${compatibility}"
       .endpoint="${_endpoint}"
+      .server="${server}"
       .method="${_docsModel}"
       .previous="${prev}"
       .next="${next}"
       .baseUri="${this.effectiveBaseUri}"
-      .noTryIt="${noTryIt}"
+      ?noTryIt="${noTryIt}"
       ?graph="${graph}"
       ?noNavigation="${noBottomNavigation}"
       rendersecurity
@@ -188,7 +190,7 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
   }
 
   _inlineEndpointTemplate() {
-    const { amf, _docsModel, narrow, compatibility, outlined, selected, scrollTarget, redirectUri, noUrlEditor, graph, noBottomNavigation } = this;
+    const { amf, _docsModel, narrow, compatibility, outlined, selected, scrollTarget, redirectUri, noUrlEditor, graph, noBottomNavigation, server } = this;
     const prev = this._computeEndpointPrevious(amf, selected, true);
     const next = this._computeEndpointNext(amf, selected, true);
 
@@ -198,6 +200,7 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
       .compatibility="${compatibility}"
       .outlined="${outlined}"
       .selected="${selected}"
+      .server="${server}"
       .endpoint="${_docsModel}"
       .previous="${prev}"
       .next="${next}"
@@ -212,7 +215,7 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
   }
 
   _simpleEndpointTemplate() {
-    const { amf, _docsModel, narrow, compatibility, selected, graph, noBottomNavigation } = this;
+    const { amf, _docsModel, narrow, compatibility, selected, graph, noBottomNavigation, server } = this;
     const prev = this._computeEndpointPrevious(amf, selected);
     const next = this._computeEndpointNext(amf, selected);
 
@@ -220,6 +223,7 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
       .amf="${amf}"
       .narrow="${narrow}"
       .compatibility="${compatibility}"
+      .server="${server}"
       .selected="${selected}"
       .endpoint="${_docsModel}"
       .previous="${prev}"
@@ -228,14 +232,6 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
       ?graph="${graph}"
       ?noNavigation="${noBottomNavigation}"
       ></api-endpoint-documentation>`;
-  }
-
-  _attachListeners(node) {
-    node.addEventListener('api-server-changed', this._handleServerChange);
-  }
-
-  _detachListeners(node) {
-    node.removeEventListener('api-server-changed', this._handleServerChange);
   }
 
   static get properties() {
@@ -351,11 +347,11 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
       /**
        * The URI of the server currently selected in the server selector
        */
-      selectedServerValue: { type: String },
+      serverValue: { type: String },
       /**
        * The type of the server currently selected in the server selector
        */
-      selectedServerType: { type: String }
+      serverType: { type: String }
     };
   }
 
@@ -379,8 +375,6 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
     }
     this._selected = value;
     this.__amfChanged();
-    this._updateServers();
-
     this.requestUpdate('selected', old);
   }
 
@@ -395,51 +389,7 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
       return;
     }
     this.__amfChanged();
-    this._updateServers();
-
     this._selectedType = value;
-  }
-
-  get serversCount() {
-    return this._serversCount;
-  }
-
-  set serversCount(value) {
-    const old = this._serversCount;
-    if (old === value) {
-      return;
-    }
-    this._serversCount = value;
-    this._updateServers();
-    this.requestUpdate('serversCount', old);
-  }
-
-  get selectedServerValue() {
-    return this._selectedServerValue;
-  }
-
-  set selectedServerValue(value) {
-    const old = this._selectedServerValue;
-    if (old === value) {
-      return;
-    }
-    this._selectedServerValue = value;
-    this._notifyServerChanged();
-    this.requestUpdate('selectedServerValue', old);
-  }
-
-  get selectedServerType() {
-    return this._selectedServerType;
-  }
-
-  set selectedServerType(value) {
-    const old = this._selectedServerType;
-    if (old === value) {
-      return;
-    }
-    this._selectedServerType = value;
-    this._notifyServerChanged();
-    this.requestUpdate('selectedServerType', old);
   }
 
   get showsSelector() {
@@ -452,9 +402,9 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
   }
 
   get effectiveBaseUri() {
-    const { baseUri, selectedServerValue } = this;
+    const { baseUri, serverValue } = this;
 
-    return baseUri || selectedServerValue;
+    return baseUri || serverValue;
   }
 
   get inlineMethods() {
@@ -573,17 +523,6 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
     window.removeEventListener('api-navigation-selection-changed', this._navigationHandler);
   }
 
-  _notifyServerChanged() {
-    this.dispatchEvent(
-      new CustomEvent('api-server-changed', {
-        detail: {
-          selectedValue: this.selectedServerValue,
-          selectedType: this.selectedServerType
-        },
-        composed: true
-      })
-    );
-  }
   /**
    * Registers / unregisters event listeners depending on `state`
    *
@@ -596,6 +535,34 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
       this._unregisterNavigationEvents();
     }
   }
+
+  get server() {
+    const { serverValue, serverType, selectedType, endpointId: eid, selected: mid } = this;
+    if (serverType && serverType !== 'server') {
+      return null;
+    }
+    if (['method', 'endpoint'].indexOf(selectedType) === -1) {
+      return null;
+    }
+    let endpointId;
+    let methodId;
+    if (selectedType === 'method') {
+      endpointId = eid;
+      methodId = mid;
+    } else {
+      endpointId = mid;
+    }
+
+    const servers = this._getServers({ endpointId, methodId });
+    if (!servers || !servers.length) {
+      return null;
+    }
+    if (!serverValue && servers.length) {
+      return servers[0];
+    }
+    return servers.find((server) => this._getServerUri(server) === serverValue);
+  }
+
   /**
    * Handler for `api-navigation-selection-changed` event.
    *
@@ -605,56 +572,26 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
     if (e.detail.passive === true) {
       return;
     }
-    this.selected = e.detail.selected;
-    this.selectedType = e.detail.type;
-    
-    this._updateServers();
+    const { selected, type, endpointId } = e.detail;
+    this.selected = selected;
+    this.selectedType = type;
+    this.endpointId = type === 'method' ? endpointId : null;
+
+    this.requestUpdate();
   }
 
   _handleServersCountChange(e) {
-    this.serversCount = e.detail.serversCount;
-  }
-
-  _updateServers() {
-    let methodId;
-    let endpointId;
-
-    if (this.selectedType === 'method') {
-      methodId = this.selected;
-    } else if (this.selectedType === 'endpoint') {
-      endpointId = this.selected;
-    }
-
-    this.servers = this._getServers({ endpointId, methodId });
-
-    this._updateServerValues();
-  }
-
-  _updateServerValues() {
-    if (this.servers && !this.selectedServerValue && this.selectedServerType !== "custom") {
-      this.selectedServerType = "server"
-      this.selectedServerValue = this._getServerUri(this.servers[0]);
-
-      return;
-    }
-
-    const serverExists = !!(this.servers || []).find(server => this._getServerUri(server) === this.selectedServerValue);
-
-    if (!serverExists && this.selectedServerType === "server"){
-      this.selectedServerType = undefined;
-      this.selectedServerValue = undefined;
-    }
+    this.serversCount = e.detail.value;
   }
 
   _getServerUri(server) {
     const key = this._getAmfKey(this.ns.aml.vocabularies.core.urlTemplate);
-
     return this._getValue(server, key);
   }
 
   _handleServerChange(e) {
-    this.selectedServerValue = e.detail.selectedValue;
-    this.selectedServerType = e.detail.selectedType;
+    this.serverValue = e.detail.value;
+    this.serverType = e.detail.type;
   }
 
   /**

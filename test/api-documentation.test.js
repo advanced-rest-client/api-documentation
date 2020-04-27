@@ -134,13 +134,6 @@ describe('<api-documentation>', function() {
           assert.isTrue(spy.called);
         });
 
-        it('calls _updateServers() when selected is set', async () => {
-          const spy = sinon.spy(element, '_updateServers');
-          element.selected = 'summary';
-          await aTimeout();
-          assert.isTrue(spy.called);
-        });
-
         it('calls _processModelChange() when selected is set', async () => {
           const spy = sinon.spy(element, '_processModelChange');
           element.selected = 'test';
@@ -150,13 +143,6 @@ describe('<api-documentation>', function() {
 
         it('calls _processModelChange() when selectedType is set', async () => {
           const spy = sinon.spy(element, '_processModelChange');
-          element.selectedType = 'method';
-          await aTimeout();
-          assert.isTrue(spy.called);
-        });
-
-        it('calls _updateServers() when selectedType is set', async () => {
-          const spy = sinon.spy(element, '_updateServers');
           element.selectedType = 'method';
           await aTimeout();
           assert.isTrue(spy.called);
@@ -590,68 +576,61 @@ describe('<api-documentation>', function() {
   ].forEach(([name, compact]) => {
     describe(name, () => {
       describe('Server selection', () => {
-        let element;
-        let amf;
-        let selectedType;
+        const selectedType = 'method';
 
-        beforeEach(async () => {
-          amf = await AmfLoader.load(null, compact);
-          selectedType = 'method';
+        describe('basics', () => {
+          let element;
+          let amf;
 
-          element = await fixture(html`
-            <api-documentation .amf="${amf}" .selectedType="${selectedType}" narrow>
-              <anypoint-item slot="custom-base-uri" value="http://customServer.com">
-                Server 1 - http://customServer.com
-              </anypoint-item>
-              <anypoint-item slot="custom-base-uri" value="http://customServer.com/{version}">
-                Server 2 - http://customServer.com/{version}
-              </anypoint-item>
-            </api-documentation>
-          `);
-
-          await nextFrame();
-        });
-
-        it('should load servers', () => {
-          assert.lengthOf(element.servers, 1);
-        });
-
-        it('should set serversCount', () => {
-          assert.equal(element.serversCount, 3);
-        });
-
-        it('should update selectedServerValue and selectedServerType using the first available server', () => {
-          assert.equal(element.selectedServerValue, 'http://{instance}.domain.com/');
-          assert.equal(element.selectedServerType, 'server');
-        });
-
-        it('should not change the baseUri property', () => {
-          assert.isUndefined(element.baseUri);
-        });
-
-        it('should render api-server-selector', () => {
-          assert.exists(element.shadowRoot.querySelector('api-server-selector'));
-        });
-
-        it('should not hide api-server-selector', () => {
-          assert.isFalse(element.shadowRoot.querySelector('api-server-selector').hidden);
-        });
-
-        describe('navigating to something other than a method or an endpoint', () => {
-          beforeEach(async () => {
-            element.selectedType = 'summary';
-            element.selected = 'summary';
-
-            await aTimeout();
+          before(async () => {
+            amf = await AmfLoader.load(null, compact);
           });
 
-          it('should hide api-server-selector', () => {
-            assert.isTrue(element.shadowRoot.querySelector('api-server-selector').hidden);
+          beforeEach(async () => {
+            element = await fixture(html`
+              <api-documentation .amf="${amf}" selectedType="${selectedType}">
+                <anypoint-item slot="custom-base-uri" value="http://customServer.com">
+                  Server 1 - http://customServer.com
+                </anypoint-item>
+                <anypoint-item slot="custom-base-uri" value="http://customServer.com/{version}">
+                  Server 2 - http://customServer.com/{version}
+                </anypoint-item>
+              </api-documentation>
+            `);
+
+            await nextFrame();
+          });
+
+          it('should set serversCount', () => {
+            assert.equal(element.serversCount, 3);
+          });
+
+          it('should update serverValue and serverType using the first available server', () => {
+            assert.equal(element.serverValue, 'http://{instance}.domain.com/');
+            assert.equal(element.serverType, 'server');
+          });
+
+          it('should not change the baseUri property', () => {
+            assert.isUndefined(element.baseUri);
+          });
+
+          it('should render api-server-selector', () => {
+            assert.exists(element.shadowRoot.querySelector('api-server-selector'));
+          });
+
+          it('should not hide api-server-selector', () => {
+            assert.isFalse(element.shadowRoot.querySelector('api-server-selector').hidden);
           });
         });
 
         describe('serverCount changes to less than 2', () => {
           let serverSelector;
+          let element;
+          let amf;
+
+          before(async () => {
+            amf = await AmfLoader.load(null, compact);
+          });
 
           beforeEach(async () => {
             element = await fixture(html`
@@ -675,13 +654,21 @@ describe('<api-documentation>', function() {
 
         describe('allowCustomBaseUri is true', () => {
           let serverSelector;
+          let element;
+          let amf;
+
+          before(async () => {
+            amf = await AmfLoader.load(null, compact);
+          });
 
           beforeEach(async () => {
             element = await fixture(html`
-              <api-documentation 
-                .amf="${amf}" 
+              <api-documentation
+                .amf="${amf}"
                 .selectedType="${selectedType}"
-                narrow allowCustomBaseUri></api-documentation>
+                narrow
+                allowCustomBaseUri
+              ></api-documentation>
             `);
 
             serverSelector = element.shadowRoot.querySelector('api-server-selector');
@@ -700,147 +687,281 @@ describe('<api-documentation>', function() {
         });
 
         describe('selecting a slot server', () => {
-          let handler;
-          let dispatchedEvent;
+          let serverSelector;
+          let element;
+          let amf;
+
+          before(async () => {
+            amf = await AmfLoader.load(null, compact);
+          });
 
           beforeEach(async () => {
+            element = await fixture(html`
+              <api-documentation .amf="${amf}" selectedType="${selectedType}">
+                <anypoint-item slot="custom-base-uri" value="http://customServer.com">
+                  Server 1 - http://customServer.com
+                </anypoint-item>
+                <anypoint-item slot="custom-base-uri" value="http://customServer.com/{version}">
+                  Server 2 - http://customServer.com/{version}
+                </anypoint-item>
+              </api-documentation>
+            `);
+
+            await nextFrame();
+
             const event = {
               detail: {
-                selectedValue: 'http://customServer.com',
-                selectedType: 'slot'
+                value: 'http://customServer.com',
+                type: 'uri'
               }
             };
 
-            handler = (e) => (dispatchedEvent = e);
-            element.addEventListener('api-server-changed', handler);
-            window.dispatchEvent(new CustomEvent('api-server-changed', event));
+            serverSelector = element.shadowRoot.querySelector('api-server-selector');
+            serverSelector.dispatchEvent(new CustomEvent('apiserverchanged', event));
 
             await nextFrame();
           });
 
-          afterEach(() => {
-            element.removeEventListener('api-server-changed', handler);
-          });
-
-          it('should update selectedServerValue and selectedServerType', () => {
-            assert.equal(element.selectedServerValue, 'http://customServer.com');
-            assert.equal(element.selectedServerType, 'slot');
-          });
-
-          it('should dispatch the "api-server-changed event"', () => {
-            assert.deepEqual(dispatchedEvent.detail, {
-              selectedValue: 'http://customServer.com',
-              selectedType: 'slot'
-            });
+          it('should update serverValue and serverType', () => {
+            assert.equal(element.serverValue, 'http://customServer.com');
+            assert.equal(element.serverType, 'uri');
           });
         });
 
         describe('selecting a custom base uri', () => {
+          let serverSelector;
+          let element;
+
+          let amf;
+
+          before(async () => {
+            amf = await AmfLoader.load(null, compact);
+          });
+
           beforeEach(async () => {
             const event = {
               detail: {
-                selectedValue: 'https://www.google.com',
-                selectedType: 'custom'
+                value: 'https://www.google.com',
+                type: 'custom'
               }
             };
-            window.dispatchEvent(new CustomEvent('api-server-changed', event));
+
+            element = await fixture(html`
+              <api-documentation .amf="${amf}" selectedType="${selectedType}">
+                <anypoint-item slot="custom-base-uri" value="http://customServer.com">
+                  Server 1 - http://customServer.com
+                </anypoint-item>
+                <anypoint-item slot="custom-base-uri" value="http://customServer.com/{version}">
+                  Server 2 - http://customServer.com/{version}
+                </anypoint-item>
+              </api-documentation>
+            `);
+
+            serverSelector = element.shadowRoot.querySelector('api-server-selector');
+            serverSelector.dispatchEvent(new CustomEvent('apiserverchanged', event));
           });
 
-          it('should update selectedServerValue and selectedServerType', () => {
-            assert.equal(element.selectedServerValue, 'https://www.google.com');
-            assert.equal(element.selectedServerType, 'custom');
+          it('should update serverValue and serverType', () => {
+            assert.equal(element.serverValue, 'https://www.google.com');
+            assert.equal(element.serverType, 'custom');
           });
 
           describe('clearing the selection', () => {
             beforeEach(() => {
               const event = {
                 detail: {
-                  selectedValue: undefined,
-                  selectedType: undefined
+                  value: undefined,
+                  type: undefined
                 }
               };
-              window.dispatchEvent(new CustomEvent('api-server-changed', event));
+
+              serverSelector.dispatchEvent(new CustomEvent('apiserverchanged', event));
             });
 
-            it('should update selectedServerValue and selectedServerType', () => {
-              assert.equal(element.selectedServerValue, undefined);
-              assert.equal(element.selectedServerType, undefined);
+            it('should update serverValue and serverType', () => {
+              assert.equal(element.serverValue, undefined);
+              assert.equal(element.serverType, undefined);
             });
 
             describe('selecting an existing server', () => {
               beforeEach(() => {
                 const event = {
                   detail: {
-                    selectedValue: 'http://{instance}.domain.com/',
-                    selectedType: 'server'
+                    value: 'http://{instance}.domain.com/',
+                    type: 'server'
                   }
                 };
-                window.dispatchEvent(new CustomEvent('api-server-changed', event));
+
+                serverSelector.dispatchEvent(new CustomEvent('apiserverchanged', event));
               });
 
-              it('should update selectedServerValue and selectedServerType', () => {
-                assert.equal(element.selectedServerValue, 'http://{instance}.domain.com/');
-                assert.equal(element.selectedServerType, 'server');
+              it('should update serverValue and serverType', () => {
+                assert.equal(element.serverValue, 'http://{instance}.domain.com/');
+                assert.equal(element.serverType, 'server');
               });
             });
           });
         });
 
-        describe('navigating to a method', () => {
-          let _getServersStub;
-          let _updateServerValuesSpy;
-          let servers;
+        describe('when serverType is not server', () => {
+          let server;
+          let element;
+          let amf;
 
-          beforeEach(() => {
-            servers = [];
-            _getServersStub = sinon.stub(element, '_getServers').returns(servers);
-            _updateServerValuesSpy = sinon.spy(element, '_updateServerValues');
-
-            element.selectedType = 'method';
-            element.selected = '#505';
+          before(async () => {
+            amf = await AmfLoader.load(null, compact);
           });
 
-          it('should call getServers with the methodId', () => {
-            assert.isTrue(_getServersStub.calledWith({ methodId: '#505', endpointId: undefined }));
+          beforeEach(async () => {
+            element = await fixture(html`
+              <api-documentation .amf="${amf}" selectedType="custom">
+                <anypoint-item slot="custom-base-uri" value="http://customServer.com">
+                  Server 1 - http://customServer.com
+                </anypoint-item>
+                <anypoint-item slot="custom-base-uri" value="http://customServer.com/{version}">
+                  Server 2 - http://customServer.com/{version}
+                </anypoint-item>
+              </api-documentation>
+            `);
+
+            server =  element.server;
           });
 
-          it('should set the servers', () => {
-            assert.equal(element.servers, servers);
+          it('should return server null', () => {
+            assert.equal(server, null);
+          })
+        });
+
+        describe('navigating to something other than a method or an endpoint', () => {
+          let server;
+          let element;
+          let amf;
+
+          before(async () => {
+            amf = await AmfLoader.load(null, compact);
           });
 
-          it('calls _updateServerValues', () => {
-            assert.isTrue(_updateServerValuesSpy.called);
+          beforeEach(async () => {
+            element = await fixture(html`
+              <api-documentation .amf="${amf}" selectedType="summary" selected="summary">
+                <anypoint-item slot="custom-base-uri" value="http://customServer.com">
+                  Server 1 - http://customServer.com
+                </anypoint-item>
+                <anypoint-item slot="custom-base-uri" value="http://customServer.com/{version}">
+                  Server 2 - http://customServer.com/{version}
+                </anypoint-item>
+              </api-documentation>
+            `);
+
+            server =  element.server;
+          });
+
+          it('should return server null', () => {
+            assert.equal(server, null);
+          })
+
+          it('should hide api-server-selector', () => {
+            assert.isTrue(element.shadowRoot.querySelector('api-server-selector').hidden);
           });
         });
 
-        describe('navigating to an endpoint', () => {
-          let _getServersStub;
-          let _updateServerValuesSpy;
-          let servers;
+        [
+          ['method', '#505', { methodId: '#505', endpointId: undefined }],
+          ['endpoint', '#1010', { methodId: undefined, endpointId: '#1010' }]
+        ].forEach(([navigationType, navigationId, serversCallParams]) => {
+          describe(`navigating to a ${navigationType}`, () => {
+            let _getServersStub;
+            let servers;
+            let server;
+            let element;
+            let amf;
 
-          beforeEach(() => {
-            servers = [];
-            _getServersStub = sinon.stub(element, '_getServers').returns(servers);
-            _updateServerValuesSpy = sinon.spy(element, '_updateServerValues');
+            before(async () => {
+              amf = await AmfLoader.load(null, compact);
+            });
 
-            element.selectedType = 'endpoint';
-            element.selected = '#1010';
-          });
+            beforeEach(async () => {
+              element = await fixture(html`
+                <api-documentation .amf="${amf}" selectedType="${navigationType}" selected="${navigationId}">
+                  <anypoint-item slot="custom-base-uri" value="http://customServer.com">
+                    Server 1 - http://customServer.com
+                  </anypoint-item>
+                  <anypoint-item slot="custom-base-uri" value="http://customServer.com/{version}">
+                    Server 2 - http://customServer.com/{version}
+                  </anypoint-item>
+                </api-documentation>
+              `);
+            });
 
-          it('should call getServers with the endpointId', () => {
-            assert.isTrue(_getServersStub.calledWith({ methodId: undefined, endpointId: '#1010' }));
-          });
+            describe('with no servers', () => {
+              beforeEach(() => {
+                servers = [];
+                _getServersStub = sinon.stub(element, '_getServers').returns(servers);
 
-          it('should set the servers', () => {
-            assert.equal(element.servers, servers);
-          });
+                server = element.server;
+              });
 
-          it('calls _updateServerValues', () => {
-            assert.isTrue(_updateServerValuesSpy.called);
+              it(`should call getServers with the ${navigationType}Id`, () => {
+                assert.isTrue(_getServersStub.calledWith());
+              });
+
+              it('should set the server to null', () => {
+                assert.equal(server, null);
+              });
+            });
+
+            describe('with one server', () => {
+              beforeEach(() => {
+                servers = [{}];
+                _getServersStub = sinon.stub(element, '_getServers').returns(servers);
+
+                sinon
+                  .stub(element, '_getServerUri')
+                  .withArgs(servers[0])
+                  .returns('http://{instance}.domain.com/');
+              });
+
+              describe('with a serverValue', () => {
+                beforeEach(() => {
+                  server = element.server;
+                });
+
+                it(`should call getServers with the ${navigationType}Id`, () => {
+                  assert.isTrue(_getServersStub.calledWith(serversCallParams));
+                });
+
+                it('should return the first server', () => {
+                  assert.equal(server, servers[0]);
+                });
+              });
+
+              describe('with no serverValue', () => {
+                beforeEach(() => {
+                  element.serverValue = '';
+
+                  server = element.server;
+                });
+
+                it(`should call getServers with the ${navigationType}Id`, () => {
+                  assert.isTrue(_getServersStub.calledWith(serversCallParams));
+                });
+
+                it('should return the first server', () => {
+                  assert.equal(server, servers[0]);
+                });
+              });
+            });
           });
         });
 
         describe('noServerSelector is true', () => {
+          let element;
+          let amf;
+
+          before(async () => {
+            amf = await AmfLoader.load(null, compact);
+          });
+
           beforeEach(async () => {
             element = await partialFixture(amf);
             element.noServerSelector = true;
