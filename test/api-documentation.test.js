@@ -134,13 +134,6 @@ describe('<api-documentation>', function() {
           assert.isTrue(spy.called);
         });
 
-        it('calls _updateServers() when selected is set', async () => {
-          const spy = sinon.spy(element, '_updateServers');
-          element.selected = 'summary';
-          await aTimeout();
-          assert.isTrue(spy.called);
-        });
-
         it('calls _processModelChange() when selected is set', async () => {
           const spy = sinon.spy(element, '_processModelChange');
           element.selected = 'test';
@@ -150,13 +143,6 @@ describe('<api-documentation>', function() {
 
         it('calls _processModelChange() when selectedType is set', async () => {
           const spy = sinon.spy(element, '_processModelChange');
-          element.selectedType = 'method';
-          await aTimeout();
-          assert.isTrue(spy.called);
-        });
-
-        it('calls _updateServers() when selectedType is set', async () => {
-          const spy = sinon.spy(element, '_updateServers');
           element.selectedType = 'method';
           await aTimeout();
           assert.isTrue(spy.called);
@@ -612,17 +598,13 @@ describe('<api-documentation>', function() {
           await nextFrame();
         });
 
-        it('should load servers', () => {
-          assert.lengthOf(element.servers, 1);
-        });
-
         it('should set serversCount', () => {
           assert.equal(element.serversCount, 3);
         });
 
-        it('should update selectedServerValue and selectedServerType using the first available server', () => {
-          assert.equal(element.selectedServerValue, 'http://{instance}.domain.com/');
-          assert.equal(element.selectedServerType, 'server');
+        it('should update serverValue and serverType using the first available server', () => {
+          assert.equal(element.serverValue, 'http://{instance}.domain.com/');
+          assert.equal(element.serverType, 'server');
         });
 
         it('should not change the baseUri property', () => {
@@ -635,19 +617,6 @@ describe('<api-documentation>', function() {
 
         it('should not hide api-server-selector', () => {
           assert.isFalse(element.shadowRoot.querySelector('api-server-selector').hidden);
-        });
-
-        describe('navigating to something other than a method or an endpoint', () => {
-          beforeEach(async () => {
-            element.selectedType = 'summary';
-            element.selected = 'summary';
-
-            await aTimeout();
-          });
-
-          it('should hide api-server-selector', () => {
-            assert.isTrue(element.shadowRoot.querySelector('api-server-selector').hidden);
-          });
         });
 
         describe('serverCount changes to less than 2', () => {
@@ -678,10 +647,12 @@ describe('<api-documentation>', function() {
 
           beforeEach(async () => {
             element = await fixture(html`
-              <api-documentation 
-                .amf="${amf}" 
+              <api-documentation
+                .amf="${amf}"
                 .selectedType="${selectedType}"
-                narrow allowCustomBaseUri></api-documentation>
+                narrow
+                allowCustomBaseUri
+              ></api-documentation>
             `);
 
             serverSelector = element.shadowRoot.querySelector('api-server-selector');
@@ -700,8 +671,6 @@ describe('<api-documentation>', function() {
         });
 
         describe('selecting a slot server', () => {
-          let handler;
-          let dispatchedEvent;
           let serverSelector;
 
           beforeEach(async () => {
@@ -712,29 +681,15 @@ describe('<api-documentation>', function() {
               }
             };
 
-            handler = (e) => (dispatchedEvent = e);
-            element.addEventListener('apiserverchanged', handler);
-
             serverSelector = element.shadowRoot.querySelector('api-server-selector');
             serverSelector.dispatchEvent(new CustomEvent('apiserverchanged', event));
 
             await nextFrame();
           });
 
-          afterEach(() => {
-            element.removeEventListener('apiserverchanged', handler);
-          });
-
-          it('should update selectedServerValue and selectedServerType', () => {
-            assert.equal(element.selectedServerValue, 'http://customServer.com');
-            assert.equal(element.selectedServerType, 'uri');
-          });
-
-          it('should dispatch the "apiserverchanged event"', () => {
-            assert.deepEqual(dispatchedEvent.detail, {
-              value: 'http://customServer.com',
-              type: 'uri'
-            });
+          it('should update serverValue and serverType', () => {
+            assert.equal(element.serverValue, 'http://customServer.com');
+            assert.equal(element.serverType, 'uri');
           });
         });
 
@@ -748,14 +703,14 @@ describe('<api-documentation>', function() {
                 type: 'custom'
               }
             };
-            
+
             serverSelector = element.shadowRoot.querySelector('api-server-selector');
             serverSelector.dispatchEvent(new CustomEvent('apiserverchanged', event));
           });
 
-          it('should update selectedServerValue and selectedServerType', () => {
-            assert.equal(element.selectedServerValue, 'https://www.google.com');
-            assert.equal(element.selectedServerType, 'custom');
+          it('should update serverValue and serverType', () => {
+            assert.equal(element.serverValue, 'https://www.google.com');
+            assert.equal(element.serverType, 'custom');
           });
 
           describe('clearing the selection', () => {
@@ -770,9 +725,9 @@ describe('<api-documentation>', function() {
               serverSelector.dispatchEvent(new CustomEvent('apiserverchanged', event));
             });
 
-            it('should update selectedServerValue and selectedServerType', () => {
-              assert.equal(element.selectedServerValue, undefined);
-              assert.equal(element.selectedServerType, undefined);
+            it('should update serverValue and serverType', () => {
+              assert.equal(element.serverValue, undefined);
+              assert.equal(element.serverType, undefined);
             });
 
             describe('selecting an existing server', () => {
@@ -787,53 +742,119 @@ describe('<api-documentation>', function() {
                 serverSelector.dispatchEvent(new CustomEvent('apiserverchanged', event));
               });
 
-              it('should update selectedServerValue and selectedServerType', () => {
-                assert.equal(element.selectedServerValue, 'http://{instance}.domain.com/');
-                assert.equal(element.selectedServerType, 'server');
+              it('should update serverValue and serverType', () => {
+                assert.equal(element.serverValue, 'http://{instance}.domain.com/');
+                assert.equal(element.serverType, 'server');
               });
             });
           });
         });
 
-        describe('navigating to a method', () => {
-          let _getServersStub;
-          let servers;
+        describe('when serverType is not server', () => {
+          let server;
 
-          beforeEach(() => {
-            servers = [];
-            _getServersStub = sinon.stub(element, '_getServers').returns(servers);
+          beforeEach(async () => {
+            element.serverType = 'custom';
 
-            element.selectedType = 'method';
-            element.selected = '#505';
+            server =  element.server;
           });
 
-          it('should call getServers with the methodId', () => {
-            assert.isTrue(_getServersStub.calledWith({ methodId: '#505', endpointId: undefined }));
+          it('should return server null', () => {
+            assert.equal(server, null);
+          })
+        });
+
+        describe('navigating to something other than a method or an endpoint', () => {
+          let server;
+
+          beforeEach(async () => {
+            element.selectedType = 'summary';
+            element.selected = 'summary';
+
+            server =  element.server;
           });
 
-          it('should set the servers', () => {
-            assert.equal(element.servers, servers);
+          it('should return server null', () => {
+            assert.equal(server, null);
+          })
+
+          it('should hide api-server-selector', () => {
+            assert.isTrue(element.shadowRoot.querySelector('api-server-selector').hidden);
           });
         });
 
-        describe('navigating to an endpoint', () => {
-          let _getServersStub;
-          let servers;
+        [
+          ['method', '#505', { methodId: '#505', endpointId: undefined }],
+          ['endpoint', '#1010', { methodId: undefined, endpointId: '#1010' }]
+        ].forEach(([navigationType, navigationId, serversCallParams]) => {
+          describe(`navigating to a ${navigationType}`, () => {
+            let _getServersStub;
+            let servers;
+            let server;
 
-          beforeEach(() => {
-            servers = [];
-            _getServersStub = sinon.stub(element, '_getServers').returns(servers);
+            beforeEach(() => {
+              element.selectedType = navigationType;
+              element.selected = navigationId;
+            });
 
-            element.selectedType = 'endpoint';
-            element.selected = '#1010';
-          });
+            describe('with no servers', () => {
+              beforeEach(() => {
+                servers = [];
+                _getServersStub = sinon.stub(element, '_getServers').returns(servers);
 
-          it('should call getServers with the endpointId', () => {
-            assert.isTrue(_getServersStub.calledWith({ methodId: undefined, endpointId: '#1010' }));
-          });
+                server = element.server;
+              });
 
-          it('should set the servers', () => {
-            assert.equal(element.servers, servers);
+              it(`should call getServers with the ${navigationType}Id`, () => {
+                assert.isTrue(_getServersStub.calledWith());
+              });
+
+              it('should set the server to null', () => {
+                assert.equal(server, null);
+              });
+            });
+
+            describe('with one server', () => {
+              beforeEach(() => {
+                servers = [{}];
+                _getServersStub = sinon.stub(element, '_getServers').returns(servers);
+
+                sinon
+                  .stub(element, '_getServerUri')
+                  .withArgs(servers[0])
+                  .returns('http://{instance}.domain.com/');
+              });
+
+              describe('with a serverValue', () => {
+                beforeEach(() => {
+                  server = element.server;
+                });
+
+                it(`should call getServers with the ${navigationType}Id`, () => {
+                  assert.isTrue(_getServersStub.calledWith(serversCallParams));
+                });
+
+                it('should return the first server', () => {
+                  assert.equal(server, servers[0]);
+                });
+              });
+
+              describe('with no serverValue', () => {
+                beforeEach(() => {
+                  element.serverValue = '';
+
+                  server = element.server;
+                });
+
+                it(`should call getServers with the ${navigationType}Id`, () => {
+                  assert.isTrue(_getServersStub.calledWith(serversCallParams));
+                });
+
+                it('should return the first server', () => {
+                  assert.equal(server, servers[0]);
+                });
+              });
+            });
           });
         });
 
