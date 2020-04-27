@@ -97,14 +97,15 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
     if (this.noServerSelector) {
       return '';
     }
-    const { amf, compatibility, outlined, serverType, serverValue, allowCustomBaseUri } = this;
+    const { amf, compatibility, outlined, serverType, serverValue, allowCustomBaseUri, showsSelector } = this;
+
     return html`
       <api-server-selector
         class="server-selector"
         .amf="${amf}"
         .value="${serverValue}"
         .type="${serverType}"
-        ?hidden="${!this.showsSelector}"
+        ?hidden="${!showsSelector}"
         ?allowCustom="${allowCustomBaseUri}"
         ?compatibility="${compatibility}"
         ?outlined="${outlined}"

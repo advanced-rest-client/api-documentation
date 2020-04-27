@@ -576,51 +576,61 @@ describe('<api-documentation>', function() {
   ].forEach(([name, compact]) => {
     describe(name, () => {
       describe('Server selection', () => {
-        let element;
-        let amf;
-        let selectedType;
+        const selectedType = 'method';
 
-        beforeEach(async () => {
-          amf = await AmfLoader.load(null, compact);
-          selectedType = 'method';
+        describe('basics', () => {
+          let element;
+          let amf;
 
-          element = await fixture(html`
-            <api-documentation .amf="${amf}" .selectedType="${selectedType}" narrow>
-              <anypoint-item slot="custom-base-uri" value="http://customServer.com">
-                Server 1 - http://customServer.com
-              </anypoint-item>
-              <anypoint-item slot="custom-base-uri" value="http://customServer.com/{version}">
-                Server 2 - http://customServer.com/{version}
-              </anypoint-item>
-            </api-documentation>
-          `);
+          before(async () => {
+            amf = await AmfLoader.load(null, compact);
+          });
 
-          await nextFrame();
-        });
+          beforeEach(async () => {
+            element = await fixture(html`
+              <api-documentation .amf="${amf}" selectedType="${selectedType}">
+                <anypoint-item slot="custom-base-uri" value="http://customServer.com">
+                  Server 1 - http://customServer.com
+                </anypoint-item>
+                <anypoint-item slot="custom-base-uri" value="http://customServer.com/{version}">
+                  Server 2 - http://customServer.com/{version}
+                </anypoint-item>
+              </api-documentation>
+            `);
 
-        it('should set serversCount', () => {
-          assert.equal(element.serversCount, 3);
-        });
+            await nextFrame();
+          });
 
-        it('should update serverValue and serverType using the first available server', () => {
-          assert.equal(element.serverValue, 'http://{instance}.domain.com/');
-          assert.equal(element.serverType, 'server');
-        });
+          it('should set serversCount', () => {
+            assert.equal(element.serversCount, 3);
+          });
 
-        it('should not change the baseUri property', () => {
-          assert.isUndefined(element.baseUri);
-        });
+          it('should update serverValue and serverType using the first available server', () => {
+            assert.equal(element.serverValue, 'http://{instance}.domain.com/');
+            assert.equal(element.serverType, 'server');
+          });
 
-        it('should render api-server-selector', () => {
-          assert.exists(element.shadowRoot.querySelector('api-server-selector'));
-        });
+          it('should not change the baseUri property', () => {
+            assert.isUndefined(element.baseUri);
+          });
 
-        it('should not hide api-server-selector', () => {
-          assert.isFalse(element.shadowRoot.querySelector('api-server-selector').hidden);
+          it('should render api-server-selector', () => {
+            assert.exists(element.shadowRoot.querySelector('api-server-selector'));
+          });
+
+          it('should not hide api-server-selector', () => {
+            assert.isFalse(element.shadowRoot.querySelector('api-server-selector').hidden);
+          });
         });
 
         describe('serverCount changes to less than 2', () => {
           let serverSelector;
+          let element;
+          let amf;
+
+          before(async () => {
+            amf = await AmfLoader.load(null, compact);
+          });
 
           beforeEach(async () => {
             element = await fixture(html`
@@ -644,6 +654,12 @@ describe('<api-documentation>', function() {
 
         describe('allowCustomBaseUri is true', () => {
           let serverSelector;
+          let element;
+          let amf;
+
+          before(async () => {
+            amf = await AmfLoader.load(null, compact);
+          });
 
           beforeEach(async () => {
             element = await fixture(html`
@@ -672,8 +688,27 @@ describe('<api-documentation>', function() {
 
         describe('selecting a slot server', () => {
           let serverSelector;
+          let element;
+          let amf;
+
+          before(async () => {
+            amf = await AmfLoader.load(null, compact);
+          });
 
           beforeEach(async () => {
+            element = await fixture(html`
+              <api-documentation .amf="${amf}" selectedType="${selectedType}">
+                <anypoint-item slot="custom-base-uri" value="http://customServer.com">
+                  Server 1 - http://customServer.com
+                </anypoint-item>
+                <anypoint-item slot="custom-base-uri" value="http://customServer.com/{version}">
+                  Server 2 - http://customServer.com/{version}
+                </anypoint-item>
+              </api-documentation>
+            `);
+
+            await nextFrame();
+
             const event = {
               detail: {
                 value: 'http://customServer.com',
@@ -695,6 +730,13 @@ describe('<api-documentation>', function() {
 
         describe('selecting a custom base uri', () => {
           let serverSelector;
+          let element;
+
+          let amf;
+
+          before(async () => {
+            amf = await AmfLoader.load(null, compact);
+          });
 
           beforeEach(async () => {
             const event = {
@@ -703,6 +745,17 @@ describe('<api-documentation>', function() {
                 type: 'custom'
               }
             };
+
+            element = await fixture(html`
+              <api-documentation .amf="${amf}" selectedType="${selectedType}">
+                <anypoint-item slot="custom-base-uri" value="http://customServer.com">
+                  Server 1 - http://customServer.com
+                </anypoint-item>
+                <anypoint-item slot="custom-base-uri" value="http://customServer.com/{version}">
+                  Server 2 - http://customServer.com/{version}
+                </anypoint-item>
+              </api-documentation>
+            `);
 
             serverSelector = element.shadowRoot.querySelector('api-server-selector');
             serverSelector.dispatchEvent(new CustomEvent('apiserverchanged', event));
@@ -752,9 +805,24 @@ describe('<api-documentation>', function() {
 
         describe('when serverType is not server', () => {
           let server;
+          let element;
+          let amf;
+
+          before(async () => {
+            amf = await AmfLoader.load(null, compact);
+          });
 
           beforeEach(async () => {
-            element.serverType = 'custom';
+            element = await fixture(html`
+              <api-documentation .amf="${amf}" selectedType="custom">
+                <anypoint-item slot="custom-base-uri" value="http://customServer.com">
+                  Server 1 - http://customServer.com
+                </anypoint-item>
+                <anypoint-item slot="custom-base-uri" value="http://customServer.com/{version}">
+                  Server 2 - http://customServer.com/{version}
+                </anypoint-item>
+              </api-documentation>
+            `);
 
             server =  element.server;
           });
@@ -766,10 +834,24 @@ describe('<api-documentation>', function() {
 
         describe('navigating to something other than a method or an endpoint', () => {
           let server;
+          let element;
+          let amf;
+
+          before(async () => {
+            amf = await AmfLoader.load(null, compact);
+          });
 
           beforeEach(async () => {
-            element.selectedType = 'summary';
-            element.selected = 'summary';
+            element = await fixture(html`
+              <api-documentation .amf="${amf}" selectedType="summary" selected="summary">
+                <anypoint-item slot="custom-base-uri" value="http://customServer.com">
+                  Server 1 - http://customServer.com
+                </anypoint-item>
+                <anypoint-item slot="custom-base-uri" value="http://customServer.com/{version}">
+                  Server 2 - http://customServer.com/{version}
+                </anypoint-item>
+              </api-documentation>
+            `);
 
             server =  element.server;
           });
@@ -791,10 +873,24 @@ describe('<api-documentation>', function() {
             let _getServersStub;
             let servers;
             let server;
+            let element;
+            let amf;
 
-            beforeEach(() => {
-              element.selectedType = navigationType;
-              element.selected = navigationId;
+            before(async () => {
+              amf = await AmfLoader.load(null, compact);
+            });
+
+            beforeEach(async () => {
+              element = await fixture(html`
+                <api-documentation .amf="${amf}" selectedType="${navigationType}" selected="${navigationId}">
+                  <anypoint-item slot="custom-base-uri" value="http://customServer.com">
+                    Server 1 - http://customServer.com
+                  </anypoint-item>
+                  <anypoint-item slot="custom-base-uri" value="http://customServer.com/{version}">
+                    Server 2 - http://customServer.com/{version}
+                  </anypoint-item>
+                </api-documentation>
+              `);
             });
 
             describe('with no servers', () => {
@@ -859,6 +955,13 @@ describe('<api-documentation>', function() {
         });
 
         describe('noServerSelector is true', () => {
+          let element;
+          let amf;
+
+          before(async () => {
+            amf = await AmfLoader.load(null, compact);
+          });
+
           beforeEach(async () => {
             element = await partialFixture(amf);
             element.noServerSelector = true;
