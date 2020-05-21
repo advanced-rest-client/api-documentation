@@ -394,6 +394,20 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
     this._selectedType = value;
   }
 
+  get baseUri() {
+    return this._baseUri;
+  }
+
+  set baseUri(value) {
+    const old = this._baseUri;
+    /* istanbul ignore if */
+    if (old === value) {
+      return;
+    }
+    this._baseUri = value;
+    this.requestUpdate('baseUri', old);
+  }
+
   get showsSelector() {
     const { selectedType, serversCount } = this;
 

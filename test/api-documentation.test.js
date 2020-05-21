@@ -166,6 +166,13 @@ describe('<api-documentation>', function() {
           await aTimeout();
           assert.isFalse(element.__amfProcessingDebouncer);
         });
+
+        it('calls requestUpdate when baseUri is set', async () => {
+          element.baseUri = 'oldBaseUri';
+          const spy = sinon.spy(element, 'requestUpdate');
+          element.baseUri = 'newBaseUri';
+          assert(spy.calledWith('baseUri', 'oldBaseUri'), 'hasOldValue')
+        });
       });
 
       describe('API model processing', () => {
