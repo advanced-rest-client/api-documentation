@@ -36,6 +36,7 @@ describe('<api-documentation>', function() {
   }
 
   const demoApi = 'demo-api';
+  const multiServerApi = 'multi-server';
   const libraryFragment = 'lib-fragment';
   const securityFragment = 'oauth2-fragment';
 
@@ -971,6 +972,33 @@ describe('<api-documentation>', function() {
 
           it('should not render api-server-selector', () => {
             assert.notExists(element.shadowRoot.querySelector('api-server-selector'));
+          });
+        });
+
+        describe('initial selected node', () => {
+          let model;
+          let element;
+          let selected;
+          let selectedType;
+
+          before(async () => {
+            model = await AmfLoader.load(multiServerApi, compact);
+          });
+
+          it('selects operation servers', async () => {
+            selectedType = 'method';
+            selected = AmfLoader.lookupOperation(model, '/ping', 'get')['@id'];
+            element = await modelFixture(model, selectedType, selected);
+            const serverSelector = element.shadowRoot.querySelector('api-server-selector');
+            assert.lengthOf(serverSelector.servers, 2);
+          });
+
+          it('selects endpoint servers', async () => {
+            selectedType = 'endpoint';
+            selected = AmfLoader.lookupEndpoint(model, '/ping')['@id'];
+            element = await modelFixture(model, selectedType, selected);
+            const serverSelector = element.shadowRoot.querySelector('api-server-selector');
+            assert.lengthOf(serverSelector.servers, 1);
           });
         });
       });

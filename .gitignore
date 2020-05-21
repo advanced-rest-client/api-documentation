@@ -61,3 +61,5 @@ demo/vendor.js
 # AMF models
 /demo/*.json
 !demo/apis.json
+
+.idea/
