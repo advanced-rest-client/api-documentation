@@ -985,10 +985,6 @@ describe('<api-documentation>', function() {
             model = await AmfLoader.load(multiServerApi, compact);
           });
 
-          beforeEach(async () => {
-            element = modelFixture(model);
-          });
-
           it('selects operation servers', async () => {
             selectedType = 'method';
             selected = AmfLoader.lookupOperation(model, '/ping', 'get')['@id'];
