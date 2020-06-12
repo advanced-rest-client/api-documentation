@@ -1,0 +1,14 @@
+#%RAML 1.0
+title: test
+
+traits:
+  testtrait: !include trait/testtrait.raml
+
+/testrequest:
+  displayName: Company Monitoring
+  is: [testtrait]   
+  get:
+    displayName: simple Get
+    description: Adds an organisation to Monitoring for the given profile
+    responses: 
+      202:

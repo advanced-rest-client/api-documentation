@@ -166,6 +166,17 @@ describe('<api-documentation>', function() {
           await aTimeout();
           assert.isFalse(element.__amfProcessingDebouncer);
         });
+
+        it('calls _processModelChange() and restores selected to summary when current is invalid', async () => {
+          const spy = sinon.spy(element, '_processModelChange');
+          element.selectedType = 'method';
+          element.selected = '#invalid';
+          element.amf = amf;
+          await aTimeout();
+          assert.isTrue(spy.called);
+          assert.equal(element.selected, 'summary');
+          assert.equal(element.selectedType, 'summary');
+        });
       });
 
       describe('API model processing', () => {
@@ -867,8 +878,8 @@ describe('<api-documentation>', function() {
         });
 
         [
-          ['method', '#505', { methodId: '#505', endpointId: undefined }],
-          ['endpoint', '#1010', { methodId: undefined, endpointId: '#1010' }]
+          ['method', '#850', { methodId: '#850', endpointId: undefined }],
+          ['endpoint', '#849', { methodId: undefined, endpointId: '#849' }]
         ].forEach(([navigationType, navigationId, serversCallParams]) => {
           describe(`navigating to a ${navigationType}`, () => {
             let _getServersStub;
@@ -877,13 +888,23 @@ describe('<api-documentation>', function() {
             let element;
             let amf;
 
+            const selected = `${compact ? '' : 'amf://id'}${navigationId}`
+            const callMethodId = serversCallParams.methodId
+            const callEndpointId = serversCallParams.endpointId
+            const callParams = compact
+              ? serversCallParams
+              : {
+                  methodId: callMethodId ? 'amf://id' + callMethodId : undefined,
+                  endpointId: callEndpointId ? 'amf://id' + callEndpointId : undefined
+                };
+
             before(async () => {
               amf = await AmfLoader.load(null, compact);
             });
 
             beforeEach(async () => {
               element = await fixture(html`
-                <api-documentation .amf="${amf}" selectedType="${navigationType}" selected="${navigationId}">
+                <api-documentation .amf="${amf}" selectedType="${navigationType}" selected="${selected}">
                   <anypoint-item slot="custom-base-uri" value="http://customServer.com">
                     Server 1 - http://customServer.com
                   </anypoint-item>
@@ -928,7 +949,7 @@ describe('<api-documentation>', function() {
                 });
 
                 it(`should call getServers with the ${navigationType}Id`, () => {
-                  assert.isTrue(_getServersStub.calledWith(serversCallParams));
+                  assert.isTrue(_getServersStub.calledWith(callParams));
                 });
 
                 it('should return the first server', () => {
@@ -944,7 +965,7 @@ describe('<api-documentation>', function() {
                 });
 
                 it(`should call getServers with the ${navigationType}Id`, () => {
-                  assert.isTrue(_getServersStub.calledWith(serversCallParams));
+                  assert.isTrue(_getServersStub.calledWith(callParams));
                 });
 
                 it('should return the first server', () => {

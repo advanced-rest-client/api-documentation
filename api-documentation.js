@@ -609,8 +609,9 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
       return;
     }
     let result;
+    const summary = 'summary'
     switch (selectedType) {
-      case 'summary': result = model; break;
+      case summary: result = model; break;
       case 'security': result = this._computeSecurityApiModel(model, selected); break;
       case 'type': result = this._computeTypeApiModel(model, selected); break;
       case 'documentation': result = this._computeDocsApiModel(model, selected); break;
@@ -625,6 +626,10 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
         } else {
           result = this._computeMethodApiModel(model, selected);
           this._endpoint = this._computeEndpointApiMethodModel(model, selected);
+        }
+        if (!result) { // if method does not exist in model should navigate to summary
+          this.selected = summary;
+          this.selectedType = summary;
         }
         break;
       default:
