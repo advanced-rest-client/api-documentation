@@ -1,0 +1,30 @@
+#%RAML 1.0 Library
+
+types:
+  Language:
+    description: |-
+      A two letter lowercase language code conforming to the [ISO 639-1](https://www.iso.org/iso-639-language-codes.html) standard. Additionally, this may be used to submit requests with the header parameter `Accept-Language`, following [RFC 2616](https://tools.ietf.org/html/rfc2616) & [RFC 1766](https://tools.ietf.org/html/rfc1766).
+    type: string
+    pattern: ^[a-z][a-z]$
+    example:
+      en
+  
+  LanguageCountry:
+    description: |-
+      A concatenated version of the standard Language and Country codes, combined with a hyphen '`-`'.
+    type: string
+    pattern: ^[a-z][a-z]-[A-Z][A-Z]$
+    example: en-US
+
+  Locale:
+    description: |-
+      A descriptor for a geographical region by both a language and country code. By combining these two, regional differences in a language can be addressed, such as with the request header parameter `Accept-Language` following [RFC 2616](https://tools.ietf.org/html/rfc2616) & [RFC 1766](https://tools.ietf.org/html/rfc1766). This can also just refer to a language code, also RFC 2616/1766 compliant, as a default if there is no specific match for a country. Finally, can also be used to define default behavior if there is no locale specified.
+    type: LanguageCountry | Language | DefaultFallback
+
+  DefaultFallback:
+    description: A specialized value indicating the system default values for locales.
+    type: string
+    example: default
+    default: default
+    enum: 
+      - default
