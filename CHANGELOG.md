@@ -732,3 +732,33 @@
 * update server count in tests [9ac0ae2](https://github.com/advanced-rest-client/api-documentation/commit/9ac0ae2e69ddd90422f338e03a91834d5cb2ae0e) by Leandro Bauret
 
 
+<a name="5.0.2"></a>
+## [5.0.2](https://github.com/advanced-rest-client/api-documentation/compare/4.1.1...5.0.2) (2020-06-22)
+
+### Build
+
+* bump version [13ae3f7](https://github.com/advanced-rest-client/api-documentation/commit/13ae3f7ec4d6f274c60351d19a4ae522524735de) by Carolina Wright
+
+
+### Update
+
+* [ci skip] automated merge master->stage. syncing main branches [ab27824](https://github.com/advanced-rest-client/api-documentation/commit/ab278243f8bbeb3b4019e32d15f3b0ff06dd6f7a) by Ci agent
+* [ci skip] automated merge master->stage. syncing main branches [d9e1c5c](https://github.com/advanced-rest-client/api-documentation/commit/d9e1c5cf6cfbd22db84e94fe7cba9e8867e1f85b) by Ci agent
+
+
+### Bug Fixes
+
+* improvements [3f8f7e3](https://github.com/advanced-rest-client/api-documentation/commit/3f8f7e3444722d6853a2ce5c453d2c04a46b77b7) by Carolina Wright
+* apic-390 look for library types in declares and reference nodes [5b9afc0](https://github.com/advanced-rest-client/api-documentation/commit/5b9afc01635b9d281e15220ac0a2b1e532ace71c) by Carolina Wright
+* [APIC-397] update server selector due to redesign (#12) [a7f7e0f](https://github.com/advanced-rest-client/api-documentation/commit/a7f7e0f502a32d1f0066f92c78e37aee9a2fd453) by Joaquin Stankus
+* bump api-server-selector and added allowCustomBaseUri prop [def2058](https://github.com/advanced-rest-client/api-documentation/commit/def20585f16e5bcd973f83378bc2638bbfab1e1e) by Leandro Bauret
+* remove bubble:true [2750c64](https://github.com/advanced-rest-client/api-documentation/commit/2750c64674c2173928518f28f7eba19c531cbce2) by Joaquin Stankus
+* dispatch server changed event [0c58c10](https://github.com/advanced-rest-client/api-documentation/commit/0c58c1005a4a81224841b83b66d6bbf50bb6b77d) by Joaquin Stankus
+
+
+### Testing
+
+* add test for allowCustomBaseUri property [bba2edf](https://github.com/advanced-rest-client/api-documentation/commit/bba2edf2f53cab19ee49740794b3569585e21901) by Leandro Bauret
+* update server count in tests [9ac0ae2](https://github.com/advanced-rest-client/api-documentation/commit/9ac0ae2e69ddd90422f338e03a91834d5cb2ae0e) by Leandro Bauret
+
+
