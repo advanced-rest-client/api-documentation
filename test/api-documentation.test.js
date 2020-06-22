@@ -1004,4 +1004,39 @@ describe('<api-documentation>', function() {
       });
     });
   });
+
+  [
+    ['Compact model', true],
+    ['Full model', false]
+  ].forEach(([label, compact]) => {
+    describe(String(label), () => {
+      describe('API library processing', () => {
+        let amf;
+
+        beforeEach(async () => {
+          amf = await AmfLoader.load('APIC-390', compact);
+        });
+
+        it('renders SiteId type defined in library', async () => {
+          const type = AmfLoader.lookupType(amf, 'SiteId');
+          const element = await modelFixture(amf, 'type', type['@id']);
+          await aTimeout();
+          const node = element.shadowRoot.querySelector('api-type-documentation');
+          assert.ok(node, 'type is rendered');
+          assert.typeOf(node.amf, 'array', 'amf is set');
+          assert.isTrue(node.type === type, 'type model is set');
+        });
+
+        it('renders Language type defined in uses node in library', async () => {
+          const type = AmfLoader.lookupType(amf, 'LocaleCode');
+          const element = await modelFixture(amf, 'type', type['@id']);
+          await aTimeout();
+          const node = element.shadowRoot.querySelector('api-type-documentation');
+          assert.ok(node, 'type is rendered');
+          assert.typeOf(node.amf, 'array', 'amf is set');
+          assert.isTrue(node.type === type, 'type model is set');
+        });
+      });
+    });
+  });
 });

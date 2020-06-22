@@ -1080,7 +1080,17 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
     if (!declares) {
       return;
     }
-    return declares.find((item) => item['@id'] === selected);
+    let selectedDeclaration = this._findById(declares, selected)
+
+    if (!selectedDeclaration) {
+      const references = this._computeReferences(model);
+      if (references) {
+        const declarationsInRef = references.map((r) => this._computeDeclares(r)).flat();
+        selectedDeclaration = this._findById(declarationsInRef, selected);
+      }
+    }
+
+    return selectedDeclaration;
   }
 
   _isTypeFragment(model) {
