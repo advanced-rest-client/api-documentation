@@ -359,8 +359,9 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
        */
       serverType: { type: String },
       /**
-       * If this value is set, then the documentation component will sort the list
-       * of endpoints based on the `path` value of the endpoint, keeping the order
+       * If this value is set, then the documentation component will pass it down
+       * to the `api-summary` component to sort the list of endpoints based
+       * on the `path` value of the endpoint, keeping the order
        * of which endpoint was first in the list, relative to each other
        */
       rearrangeEndpoints: { type: Boolean },
