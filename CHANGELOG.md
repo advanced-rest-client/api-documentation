@@ -762,3 +762,23 @@
 * update server count in tests [9ac0ae2](https://github.com/advanced-rest-client/api-documentation/commit/9ac0ae2e69ddd90422f338e03a91834d5cb2ae0e) by Leandro Bauret
 
 
+<a name="5.0.3"></a>
+## [5.0.3](https://github.com/advanced-rest-client/api-documentation/compare/5.0.0...5.0.3) (2020-07-14)
+
+### Build
+
+* bump version [13ae3f7](https://github.com/advanced-rest-client/api-documentation/commit/13ae3f7ec4d6f274c60351d19a4ae522524735de) by Carolina Wright
+
+
+### Update
+
+* [ci skip] automated merge master->stage. syncing main branches [4c88612](https://github.com/advanced-rest-client/api-documentation/commit/4c886121c0167149ed4a943667677bb0a27065e8) by Ci agent
+* [ci skip] automated merge master->stage. syncing main branches [ab27824](https://github.com/advanced-rest-client/api-documentation/commit/ab278243f8bbeb3b4019e32d15f3b0ff06dd6f7a) by Ci agent
+
+
+### Bug Fixes
+
+* improvements [3f8f7e3](https://github.com/advanced-rest-client/api-documentation/commit/3f8f7e3444722d6853a2ce5c453d2c04a46b77b7) by Carolina Wright
+* apic-390 look for library types in declares and reference nodes [5b9afc0](https://github.com/advanced-rest-client/api-documentation/commit/5b9afc01635b9d281e15220ac0a2b1e532ace71c) by Carolina Wright
+
+
