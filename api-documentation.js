@@ -131,9 +131,13 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
   }
 
   _summaryTemplate() {
-    const { _docsModel, baseUri } = this;
+    const { _docsModel, baseUri, rearrangeEndpoints } = this;
 
-    return html`<api-summary .amf="${_docsModel}" .baseUri="${baseUri}"></api-summary>`;
+    return html`<api-summary
+        .amf="${_docsModel}"
+        .baseUri="${baseUri}"
+        .rearrangeendpoints="${rearrangeEndpoints}"
+      ></api-summary>`;
   }
 
   _securityTemplate() {
@@ -353,7 +357,14 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
       /**
        * The type of the server currently selected in the server selector
        */
-      serverType: { type: String }
+      serverType: { type: String },
+      /**
+       * If this value is set, then the documentation component will pass it down
+       * to the `api-summary` component to sort the list of endpoints based
+       * on the `path` value of the endpoint, keeping the order
+       * of which endpoint was first in the list, relative to each other
+       */
+      rearrangeEndpoints: { type: Boolean },
     };
   }
 
@@ -441,6 +452,10 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
     super();
     this._navigationHandler = this._navigationHandler.bind(this);
     this._handleServerChange = this._handleServerChange.bind(this);
+
+    if (this.rearrangeEndpoints === undefined) {
+      this.rearrangeEndpoints = false;
+    }
   }
 
   disconnectedCallback() {

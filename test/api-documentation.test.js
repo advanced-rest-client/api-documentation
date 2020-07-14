@@ -330,6 +330,23 @@ describe('<api-documentation>', function() {
           assert.isTrue(node.inlineMethods, 'inlineMethods is set');
           assert.isTrue(node.noNavigation, 'noNavigation is set');
         });
+
+        it('renders summary with rearrangendpoints set to false by default', async () => {
+          const element = await modelFixture(amf, 'summary', 'summary');
+          element.baseUri = 'https://test.com';
+          await aTimeout(0);
+          const node = element.shadowRoot.querySelector('api-summary');
+          assert.isFalse(node.rearrangeendpoints);
+        });
+
+        it('renders summary with rearrangendpoints set to true', async () => {
+          const element = await modelFixture(amf, 'summary', 'summary');
+          element.baseUri = 'https://test.com';
+          element.rearrangeEndpoints = true;
+          await aTimeout(0);
+          const node = element.shadowRoot.querySelector('api-summary');
+          assert.isTrue(node.rearrangeendpoints);
+        });
       });
 
       describe('API library processing', () => {
