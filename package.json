@@ -3,8 +3,8 @@
   "description": "A main documentation view for AMF model",
   "version": "5.0.4",
   "license": "Apache-2.0",
-  "main": "api-documentation.js",
-  "module": "api-documentation.js",
+  "main": "index.js",
+  "module": "index.js",
   "keywords": [
     "api-components",
     "api-console",
