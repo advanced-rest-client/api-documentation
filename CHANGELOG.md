@@ -782,3 +782,12 @@
 * apic-390 look for library types in declares and reference nodes [5b9afc0](https://github.com/advanced-rest-client/api-documentation/commit/5b9afc01635b9d281e15220ac0a2b1e532ace71c) by Carolina Wright
 
 
+<a name="5.0.4"></a>
+## [5.0.4](https://github.com/advanced-rest-client/api-documentation/compare/5.0.2...5.0.4) (2020-09-11)
+
+### Update
+
+* [ci skip] automated merge master->stage. syncing main branches [0ecd9f0](https://github.com/advanced-rest-client/api-documentation/commit/0ecd9f044d395bc639544ae601fc6fe13d64cfa0) by Ci agent
+* [ci skip] automated merge master->stage. syncing main branches [4c88612](https://github.com/advanced-rest-client/api-documentation/commit/4c886121c0167149ed4a943667677bb0a27065e8) by Ci agent
+
+
