@@ -8,5 +8,19 @@ export default {
 			}
 			return next();
 		}
-	]
+	],
+	plugins: [
+		{
+		  name: 'provide-codemirror',
+		  transform(context) {
+			if (context.path === '/') {
+			  const transformedBody = context.body.replace(
+				'</head>',
+				'<script src="./node_modules/codemirror/lib/codemirror.js"></script></head>',
+			  );
+			  return transformedBody;
+			}
+		  },
+		},
+	  ],
 };
