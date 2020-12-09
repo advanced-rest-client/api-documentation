@@ -407,12 +407,13 @@ export class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElemen
 	}
 
 	get showsSelector() {
-		const { selectedType, serversCount } = this;
-
+		const { selectedType, serversCount, allowCustomBaseUri } = this;
 		const isMethodOrEndpoint = !!selectedType && (selectedType === "method" || selectedType === "endpoint");
 		const moreThanOneServer = serversCount >= 2;
-
-		return isMethodOrEndpoint && moreThanOneServer;
+		if (isMethodOrEndpoint) {
+			return allowCustomBaseUri || moreThanOneServer;
+		}
+		return false;
 	}
 
 	get effectiveBaseUri() {

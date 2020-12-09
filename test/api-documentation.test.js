@@ -670,7 +670,7 @@ describe('<api-documentation>', function() {
           });
         });
 
-        describe('allowCustomBaseUri is true', () => {
+        describe('witht allowCustomBaseUri attribute', () => {
           let serverSelector;
           let element;
           let amf;
@@ -685,7 +685,7 @@ describe('<api-documentation>', function() {
                 .amf="${amf}"
                 .selectedType="${selectedType}"
                 narrow
-                allowCustomBaseUri
+                allowcustombaseuri
               ></api-documentation>
             `);
 
@@ -699,8 +699,8 @@ describe('<api-documentation>', function() {
             assert.equal(element.serversCount, 1);
           });
 
-          it('should hide api-server-selector', () => {
-            assert.isTrue(serverSelector.hidden);
+          it('should show api-server-selector', () => {
+            assert.isFalse(serverSelector.hidden);
           });
         });
 
