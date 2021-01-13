@@ -818,3 +818,12 @@
 * [ci skip] automated merge master->stage. syncing main branches [e30777b](https://github.com/advanced-rest-client/api-documentation/commit/e30777b64b4b53b8b0eca047842a502e9a1f6056) by Ci agent
 
 
+<a name="5.1.2"></a>
+## [5.1.2](https://github.com/advanced-rest-client/api-documentation/compare/5.1.1...5.1.2) (2020-12-16)
+
+### Update
+
+* [ci skip] automated merge master->stage. syncing main branches [d97376b](https://github.com/advanced-rest-client/api-documentation/commit/d97376ba1df2de124bf800b954545aa63d2ecb4b) by Ci agent
+* [ci skip] automated merge master->stage. syncing main branches [0da538b](https://github.com/advanced-rest-client/api-documentation/commit/0da538bc57702399382e18ba83a88e25b1ef1149) by Ci agent
+
+
