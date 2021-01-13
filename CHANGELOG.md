@@ -827,3 +827,13 @@
 * [ci skip] automated merge master->stage. syncing main branches [0da538b](https://github.com/advanced-rest-client/api-documentation/commit/0da538bc57702399382e18ba83a88e25b1ef1149) by Ci agent
 
 
+<a name="6.0.0"></a>
+# [6.0.0](https://github.com/advanced-rest-client/api-documentation/compare/5.1.1...6.0.0) (2021-01-13)
+
+## Update
+
+* [ci skip] automated merge master->stage. syncing main branches [c734332](https://github.com/advanced-rest-client/api-documentation/commit/c73433252b56a6dda794d15de53ea858f89d1a86) by Ci agent
+* [ci skip] automated merge master->stage. syncing main branches [d97376b](https://github.com/advanced-rest-client/api-documentation/commit/d97376ba1df2de124bf800b954545aa63d2ecb4b) by Ci agent
+* [ci skip] automated merge master->stage. syncing main branches [0da538b](https://github.com/advanced-rest-client/api-documentation/commit/0da538bc57702399382e18ba83a88e25b1ef1149) by Ci agent
+
+
