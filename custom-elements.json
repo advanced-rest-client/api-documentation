@@ -1,0 +1,236 @@
+{
+  "version": "experimental",
+  "tags": [
+    {
+      "name": "api-documentation",
+      "path": "./api-documentation.js",
+      "description": "`api-documentation`\n\nA main documentation view for AMF model.\n\nThis element works with [AMF](https://github.com/mulesoft/amf) data model.\n\nIt works well with `api-navigation` component. When `handle-navigation-events`\nis set it listens for selection events dispatched by the navigation.\n\nTo manually steere the behavior of the component you have to set both:\n- selected\n- selectedType\n\nSelected is an `@id` of the AMF data model in json/ld representation.\nSelected type tells the component where to look for the data and which\nview to render.\n\nThe component handles data computation on selection change.\n\n## Updating API's base URI\n\nBy default the component render the documentation as it is defined\nin the AMF model. Sometimes, however, you may need to replace the base URI\nof the API with something else. It is useful when the API does not\nhave base URI property defined (therefore this component render relative\npaths instead of URIs) or when you want to manage different environments.\n\nTo update base URI value either update `baseUri` property or use\n`iron-meta` with key `ApiBaseUri`. First method is easier but the second\ngives much more flexibility since it use a\n[monostate pattern](http://wiki.c2.com/?MonostatePattern)\nto manage base URI property.\n\nWhen the component constructs the final URI for the endpoint it does the following:\n- if `baseUri` is set it uses this value as a base uri for the endpoint\n- else if `iron-meta` with key `ApiBaseUri` exists and contains a value\nit uses it uses this value as a base uri for the endpoint\n- else if `amf` is set then it computes base uri value from main\nmodel document\nThen it concatenates computed base URI with `endpoint`'s path property.\n\n### Example\n\n```html\n<iron-meta key=\"ApiBaseUri\" value=\"https://domain.com\"></iron-meta>\n```\n\nTo update value of the `iron-meta`:\n```javascript\nnew Polymer.IronMeta({key: 'ApiBaseUri'}).value = 'https://other.domain';\n```\n\nNote: The element will not be notified about the change when `iron-meta` value change.\nThe change will be reflected when `amf` or `endpoint` property change.",
+      "attributes": [
+        {
+          "name": "selected",
+          "description": "A model's `@id` of selected documentation part.\nSpecial case is for `summary` view. It's not part of an API\nbut most applications has some kind of summary view for the\nAPI.",
+          "type": "string"
+        },
+        {
+          "name": "selectedType",
+          "description": "Type of the selected item.\nOne of `documentation`, `type`, `security`, `endpoint`, `method`\nor `summary`.",
+          "type": "string"
+        },
+        {
+          "name": "handleNavigationEvents",
+          "description": "By default application hosting the element must set `selected` and\n`selectedType` properties. When using `api-navigation` element\nby setting this property the element listens for navigation events\nand updates the state",
+          "type": "boolean"
+        },
+        {
+          "name": "baseUri",
+          "description": "A property to set to override AMF's model base URI information.",
+          "type": "string"
+        },
+        {
+          "name": "noTryIt",
+          "description": "Passing value of `noTryIt` to the method documentation.\nHides \"Try it\" button.",
+          "type": "boolean"
+        },
+        {
+          "name": "narrow",
+          "description": "If set it will renders the view in the narrow layout.",
+          "type": "boolean"
+        },
+        {
+          "name": "inlineMethods",
+          "description": "If set then it renders methods documentation inline with\nthe endpoint documentation.\nWhen it's not set (or value is `false`, default) then it renders\njust a list of methods with links.",
+          "type": "boolean"
+        },
+        {
+          "name": "redirectUri",
+          "description": "OAuth2 redirect URI.\nThis value **must** be set in order for OAuth 1/2 to work properly.\nThis is only required in inline mode (`inlineMethods`).",
+          "type": "string"
+        },
+        {
+          "name": "compatibility",
+          "description": "Enables compatibility with Anypoint components.",
+          "type": "boolean"
+        },
+        {
+          "name": "graph",
+          "description": "When enabled it renders external types as links and dispatches\n`api-navigation-selection-changed` when clicked.\n\nThis property is experimental.",
+          "type": "boolean"
+        },
+        {
+          "name": "outlined",
+          "description": "Applied outlined theme to the try it panel",
+          "type": "boolean"
+        },
+        {
+          "name": "noUrlEditor",
+          "description": "In inline mode, passes the `noUrlEditor` value on the\n`api-request-panel`",
+          "type": "boolean"
+        },
+        {
+          "name": "noBottomNavigation",
+          "description": "When set it hides bottom navigation links",
+          "type": "boolean"
+        },
+        {
+          "name": "noServerSelector",
+          "description": "Hide OAS 3.0 server selector",
+          "type": "boolean"
+        },
+        {
+          "name": "allowCustomBaseUri",
+          "description": "If true, the server selector custom base URI option is rendered",
+          "type": "boolean"
+        },
+        {
+          "name": "serverValue",
+          "description": "The URI of the server currently selected in the server selector",
+          "type": "string"
+        },
+        {
+          "name": "serverType",
+          "description": "The type of the server currently selected in the server selector",
+          "type": "string"
+        }
+      ],
+      "properties": [
+        {
+          "name": "styles",
+          "type": "CSSResult"
+        },
+        {
+          "name": "selected",
+          "attribute": "selected",
+          "description": "A model's `@id` of selected documentation part.\nSpecial case is for `summary` view. It's not part of an API\nbut most applications has some kind of summary view for the\nAPI.",
+          "type": "string"
+        },
+        {
+          "name": "selectedType",
+          "attribute": "selectedType",
+          "description": "Type of the selected item.\nOne of `documentation`, `type`, `security`, `endpoint`, `method`\nor `summary`.",
+          "type": "string"
+        },
+        {
+          "name": "handleNavigationEvents",
+          "attribute": "handleNavigationEvents",
+          "description": "By default application hosting the element must set `selected` and\n`selectedType` properties. When using `api-navigation` element\nby setting this property the element listens for navigation events\nand updates the state",
+          "type": "boolean"
+        },
+        {
+          "name": "baseUri",
+          "attribute": "baseUri",
+          "description": "A property to set to override AMF's model base URI information.",
+          "type": "string"
+        },
+        {
+          "name": "noTryIt",
+          "attribute": "noTryIt",
+          "description": "Passing value of `noTryIt` to the method documentation.\nHides \"Try it\" button.",
+          "type": "boolean"
+        },
+        {
+          "name": "narrow",
+          "attribute": "narrow",
+          "description": "If set it will renders the view in the narrow layout.",
+          "type": "boolean"
+        },
+        {
+          "name": "inlineMethods",
+          "attribute": "inlineMethods",
+          "description": "If set then it renders methods documentation inline with\nthe endpoint documentation.\nWhen it's not set (or value is `false`, default) then it renders\njust a list of methods with links.",
+          "type": "boolean"
+        },
+        {
+          "name": "scrollTarget",
+          "description": "Scroll target used to observe `scroll` event.\nWhen set the element will observe scroll and inform other components\nabout changes in navigation while scrolling through methods list.\nThe navigation event contains `passive: true` property that\ndetermines that it's not user triggered navigation but rather\ncontext enforced.",
+          "type": "Window | HTMLElement"
+        },
+        {
+          "name": "redirectUri",
+          "attribute": "redirectUri",
+          "description": "OAuth2 redirect URI.\nThis value **must** be set in order for OAuth 1/2 to work properly.\nThis is only required in inline mode (`inlineMethods`).",
+          "type": "string"
+        },
+        {
+          "name": "compatibility",
+          "attribute": "compatibility",
+          "description": "Enables compatibility with Anypoint components.",
+          "type": "boolean"
+        },
+        {
+          "name": "graph",
+          "attribute": "graph",
+          "description": "When enabled it renders external types as links and dispatches\n`api-navigation-selection-changed` when clicked.\n\nThis property is experimental.",
+          "type": "boolean"
+        },
+        {
+          "name": "outlined",
+          "attribute": "outlined",
+          "description": "Applied outlined theme to the try it panel",
+          "type": "boolean"
+        },
+        {
+          "name": "noUrlEditor",
+          "attribute": "noUrlEditor",
+          "description": "In inline mode, passes the `noUrlEditor` value on the\n`api-request-panel`",
+          "type": "boolean"
+        },
+        {
+          "name": "noBottomNavigation",
+          "attribute": "noBottomNavigation",
+          "description": "When set it hides bottom navigation links",
+          "type": "boolean"
+        },
+        {
+          "name": "noServerSelector",
+          "attribute": "noServerSelector",
+          "description": "Hide OAS 3.0 server selector",
+          "type": "boolean"
+        },
+        {
+          "name": "allowCustomBaseUri",
+          "attribute": "allowCustomBaseUri",
+          "description": "If true, the server selector custom base URI option is rendered",
+          "type": "boolean"
+        },
+        {
+          "name": "serverValue",
+          "attribute": "serverValue",
+          "description": "The URI of the server currently selected in the server selector",
+          "type": "string"
+        },
+        {
+          "name": "serverType",
+          "attribute": "serverType",
+          "description": "The type of the server currently selected in the server selector",
+          "type": "string"
+        },
+        {
+          "name": "showsSelector",
+          "type": "boolean"
+        },
+        {
+          "name": "effectiveBaseUri",
+          "type": "string"
+        },
+        {
+          "name": "server"
+        },
+        {
+          "name": "eventsTarget",
+          "description": "By default the element listens on the `window` object. If this value is set,\nthen all events listeners will be attached to this object instead of `window`.",
+          "type": "EventTarget"
+        },
+        {
+          "name": "ns",
+          "description": "A namespace for AMF model.",
+          "type": "Namespace"
+        },
+        {
+          "name": "amf",
+          "description": "Generated AMF json/ld model form the API spec.\nThe element assumes the object of the first array item to be a\ntype of `\"http://raml.org/vocabularies/document#Document`\non AMF vocabulary.\n\nIt is only useful for the element to resolve references.",
+          "type": "object | object[] | undefined"
+        }
+      ]
+    }
+  ]
+}
