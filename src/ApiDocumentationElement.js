@@ -544,7 +544,7 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
    * @return {any|undefined} Model definition for a documentation fragment.
    */
   _computeDocsApiModel(model, selected) {
-    const webApi = this._computeWebApi(model);
+    const webApi = this._computeApi(model);
     return this._computeDocument(webApi, selected);
   }
 
@@ -556,7 +556,7 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
    * @return {any|undefined} Model definition for an endpoint fragment.
    */
   _computeEndpointApiModel(model, selected) {
-    const webApi = this._computeWebApi(model);
+    const webApi = this._computeApi(model);
     return this._computeEndpointModel(webApi, selected);
   }
 
@@ -568,12 +568,12 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
    * @return {any|undefined} Model definition for an endpoint fragment.
    */
   _computeMethodApiModel(model, selected) {
-    const webApi = this._computeWebApi(model);
+    const webApi = this._computeApi(model);
     return this._computeMethodModel(webApi, selected);
   }
 
   _computeEndpointApiMethodModel(model, selected) {
-    const webApi = this._computeWebApi(model);
+    const webApi = this._computeApi(model);
     return this._computeMethodEndpoint(webApi, selected);
   }
 
@@ -731,7 +731,7 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
     if (this._hasType(model, this.ns.aml.vocabularies.apiContract.EndPoint)) {
       return undefined;
     }
-    const webApi = this._computeWebApi(model);
+    const webApi = this._computeApi(model);
     if (!webApi) {
       return undefined;
     }
@@ -778,7 +778,7 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
     if (this._hasType(model, this.ns.aml.vocabularies.apiContract.EndPoint)) {
       return undefined;
     }
-    const webApi = this._computeWebApi(model);
+    const webApi = this._computeApi(model);
     if (!webApi) {
       return undefined;
     }
@@ -845,7 +845,7 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
       const key = this._getAmfKey(this.ns.aml.vocabularies.apiContract.supportedOperation);
       methods = this._ensureArray(model[key]);
     } else {
-      const webApi = this._computeWebApi(model);
+      const webApi = this._computeApi(model);
       methods = this.__computeMethodsListForMethod(webApi, selected);
     }
     if (!methods) {
@@ -874,7 +874,7 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
       const key = this._getAmfKey(this.ns.aml.vocabularies.apiContract.supportedOperation);
       methods = this._ensureArray(model[key]);
     } else {
-      const webApi = this._computeWebApi(model);
+      const webApi = this._computeApi(model);
       methods = this.__computeMethodsListForMethod(webApi, selected);
     }
     if (!methods) {
