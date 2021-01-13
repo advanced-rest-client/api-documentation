@@ -837,3 +837,18 @@
 * [ci skip] automated merge master->stage. syncing main branches [0da538b](https://github.com/advanced-rest-client/api-documentation/commit/0da538bc57702399382e18ba83a88e25b1ef1149) by Ci agent
 
 
+<a name="6.0.1"></a>
+## [6.0.1](https://github.com/advanced-rest-client/api-documentation/compare/5.1.2...6.0.1) (2021-01-13)
+
+### Update
+
+* [ci skip] automated merge master->stage. syncing main branches [12b7207](https://github.com/advanced-rest-client/api-documentation/commit/12b72078949f18bae9d351a5825d9202387301fe) by Ci agent
+* [ci skip] automated merge master->stage. syncing main branches [c734332](https://github.com/advanced-rest-client/api-documentation/commit/c73433252b56a6dda794d15de53ea858f89d1a86) by Ci agent
+* [ci skip] automated merge master->stage. syncing main branches [d97376b](https://github.com/advanced-rest-client/api-documentation/commit/d97376ba1df2de124bf800b954545aa63d2ecb4b) by Ci agent
+
+
+### Bug Fixes
+
+* fixing async API rendering [40fc2fb](https://github.com/advanced-rest-client/api-documentation/commit/40fc2fb07d1e1504e46010f1b84940227aa3858f) by Pawel Psztyc
+
+
