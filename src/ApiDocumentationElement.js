@@ -192,13 +192,6 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
        * The type of the server currently selected in the server selector
        */
       serverType: { type: String },
-      /**
-			 * If this value is set, then the documentation component will pass it down
-			 * to the `api-summary` component to sort the list of endpoints based
-			 * on the `path` value of the endpoint, keeping the order
-			 * of which endpoint was first in the list, relative to each other
-			 */
-			rearrangeEndpoints: { type: Boolean },
     };
   }
 
@@ -293,7 +286,6 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
     this.noUrlEditor = false;
     this.allowCustomBaseUri = false;
     this.noServerSelector = false;
-    this.rearrangeEndpoints = false;
     /**
      * @type {Window|HTMLElement}
      */
@@ -1132,13 +1124,12 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
   }
 
   _summaryTemplate() {
-    const { _docsModel, baseUri, rearrangeEndpoints } = this;
+    const { _docsModel, baseUri } = this;
 
     return html`
     <api-summary
       .amf="${_docsModel}"
       .baseUri="${baseUri}"
-      ?rearrangeEndpoints="${rearrangeEndpoints}"
     ></api-summary>`;
   }
 
