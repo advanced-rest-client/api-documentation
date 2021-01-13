@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import { fixture, assert, html, aTimeout, nextFrame } from '@open-wc/testing';
 import * as sinon from 'sinon/pkg/sinon-esm.js';
 import { AmfLoader } from './amf-loader.js';
@@ -46,6 +47,7 @@ describe('ApiDocumentationElement', () => {
   }
 
   const demoApi = 'demo-api';
+  const multiServerApi = 'multi-server';
   const libraryFragment = 'lib-fragment';
   const securityFragment = 'oauth2-fragment';
 
@@ -321,6 +323,23 @@ describe('ApiDocumentationElement', () => {
           assert.isTrue(node.noTryIt, 'noTryIt is set');
           assert.isTrue(node.inlineMethods, 'inlineMethods is set');
           assert.isTrue(node.noNavigation, 'noNavigation is set');
+        });
+
+        it('renders summary with rearrangeEndpoints set to false by default', async () => {
+          const element = await modelFixture(amf, 'summary', 'summary');
+          element.baseUri = 'https://test.com';
+          await aTimeout(0);
+          const node = element.shadowRoot.querySelector('api-summary');
+          assert.isFalse(node.rearrangeEndpoints);
+        });
+
+        it('renders summary with rearrangeEndpoints set to true', async () => {
+          const element = await modelFixture(amf, 'summary', 'summary');
+          element.baseUri = 'https://test.com';
+          element.rearrangeEndpoints = true;
+          await aTimeout(0);
+          const node = element.shadowRoot.querySelector('api-summary');
+          assert.isTrue(node.rearrangeEndpoints);
         });
       });
 
@@ -649,7 +668,7 @@ describe('ApiDocumentationElement', () => {
           });
         });
 
-        describe('allowCustomBaseUri is true', () => {
+        describe('witht allowCustomBaseUri attribute', () => {
           let serverSelector;
           let element;
           let amf;
@@ -664,7 +683,7 @@ describe('ApiDocumentationElement', () => {
                 .amf="${amf}"
                 .selectedType="${selectedType}"
                 narrow
-                allowCustomBaseUri
+                allowcustombaseuri
               ></api-documentation>
             `);
 
@@ -678,8 +697,8 @@ describe('ApiDocumentationElement', () => {
             assert.equal(element.serversCount, 1);
           });
 
-          it('should hide api-server-selector', () => {
-            assert.isTrue(serverSelector.hidden);
+          it('should show api-server-selector', () => {
+            assert.isFalse(serverSelector.hidden);
           });
         });
 
@@ -970,6 +989,68 @@ describe('ApiDocumentationElement', () => {
           it('should not render api-server-selector', () => {
             assert.notExists(element.shadowRoot.querySelector('api-server-selector'));
           });
+        });
+
+        describe('initial selected node', () => {
+          let model;
+          let element;
+          let selected;
+          let selectedType;
+
+          before(async () => {
+            model = await AmfLoader.load(multiServerApi, compact);
+          });
+
+          it('selects operation servers', async () => {
+            selectedType = 'method';
+            selected = AmfLoader.lookupOperation(model, '/ping', 'get')['@id'];
+            element = await modelFixture(model, selectedType, selected);
+            const serverSelector = element.shadowRoot.querySelector('api-server-selector');
+            assert.lengthOf(serverSelector.servers, 2);
+          });
+
+          it('selects endpoint servers', async () => {
+            selectedType = 'endpoint';
+            selected = AmfLoader.lookupEndpoint(model, '/ping')['@id'];
+            element = await modelFixture(model, selectedType, selected);
+            const serverSelector = element.shadowRoot.querySelector('api-server-selector');
+            assert.lengthOf(serverSelector.servers, 1);
+          });
+        });
+      });
+    });
+  });
+
+  [
+    ['Compact model', true],
+    ['Full model', false]
+  ].forEach(([label, compact]) => {
+    describe(String(label), () => {
+      describe('API library processing', () => {
+        let amf;
+
+        beforeEach(async () => {
+          amf = await AmfLoader.load('APIC-390', compact);
+        });
+
+        it('renders SiteId type defined in library', async () => {
+          const type = AmfLoader.lookupType(amf, 'SiteId');
+          const element = await modelFixture(amf, 'type', type['@id']);
+          await aTimeout();
+          const node = element.shadowRoot.querySelector('api-type-documentation');
+          assert.ok(node, 'type is rendered');
+          assert.typeOf(node.amf, 'array', 'amf is set');
+          assert.isTrue(node.type === type, 'type model is set');
+        });
+
+        it('renders Language type defined in uses node in library', async () => {
+          const type = AmfLoader.lookupType(amf, 'LocaleCode');
+          const element = await modelFixture(amf, 'type', type['@id']);
+          await aTimeout();
+          const node = element.shadowRoot.querySelector('api-type-documentation');
+          assert.ok(node, 'type is rendered');
+          assert.typeOf(node.amf, 'array', 'amf is set');
+          assert.isTrue(node.type === type, 'type model is set');
         });
       });
     });

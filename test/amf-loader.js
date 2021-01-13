@@ -25,7 +25,7 @@ AmfLoader.load = async (fileName='demo-api', compact=false) => {
 
 AmfLoader.lookupEndpoint = (model, endpoint) => {
   helper.amf = model;
-  const webApi = helper._computeWebApi(model);
+  const webApi = helper._computeApi(model);
   return helper._computeEndpointByPath(webApi, endpoint);
 };
 
@@ -53,7 +53,7 @@ AmfLoader.lookupEndpointOperation = (model, endpoint, operation) => {
 AmfLoader.lookupSecurity = (model, name) => {
   helper.amf = model;
   const webApi = helper._hasType(model, helper.ns.aml.vocabularies.document.Document) ?
-    helper._computeWebApi(model) :
+    helper._computeApi(model) :
     model;
   const declares = helper._computeDeclares(webApi) || [];
   let result = declares.find((item) => {
@@ -87,7 +87,7 @@ AmfLoader.lookupSecurity = (model, name) => {
 AmfLoader.lookupType = (model, name) => {
   helper.amf = model;
   const webApi = helper._hasType(model, helper.ns.aml.vocabularies.document.Document) ?
-    helper._computeWebApi(model) :
+    helper._computeApi(model) :
     model;
   const declares = helper._computeDeclares(webApi) || [];
   let result = declares.find((item) => {
@@ -116,7 +116,7 @@ AmfLoader.lookupType = (model, name) => {
 
 AmfLoader.lookupDocumentation = (model, name) => {
   helper.amf = model;
-  const webApi = helper._computeWebApi(model);
+  const webApi = helper._computeApi(model);
   const key = helper._getAmfKey(helper.ns.aml.vocabularies.core.documentation);
   const docs = helper._ensureArray(webApi[key]);
   return docs.find((item) => {

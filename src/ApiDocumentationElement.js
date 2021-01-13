@@ -191,7 +191,14 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
       /**
        * The type of the server currently selected in the server selector
        */
-      serverType: { type: String }
+      serverType: { type: String },
+      /**
+			 * If this value is set, then the documentation component will pass it down
+			 * to the `api-summary` component to sort the list of endpoints based
+			 * on the `path` value of the endpoint, keeping the order
+			 * of which endpoint was first in the list, relative to each other
+			 */
+			rearrangeEndpoints: { type: Boolean },
     };
   }
 
@@ -225,12 +232,13 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
   }
 
   get showsSelector() {
-    const { selectedType, serversCount } = this;
-
-    const isMethodOrEndpoint = !!selectedType && (selectedType === "method" || selectedType === "endpoint");
-    const moreThanOneServer = serversCount >= 2;
-
-    return isMethodOrEndpoint && moreThanOneServer;
+    const { selectedType, serversCount, allowCustomBaseUri } = this;
+		const isMethodOrEndpoint = !!selectedType && (selectedType === "method" || selectedType === "endpoint");
+		const moreThanOneServer = serversCount >= 2;
+		if (isMethodOrEndpoint) {
+			return allowCustomBaseUri || moreThanOneServer;
+		}
+		return false;
   }
 
   get effectiveBaseUri() {
@@ -285,6 +293,7 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
     this.noUrlEditor = false;
     this.allowCustomBaseUri = false;
     this.noServerSelector = false;
+    this.rearrangeEndpoints = false;
     /**
      * @type {Window|HTMLElement}
      */
@@ -356,7 +365,6 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
     }
     if (this._isTypePartialModel(amf)) {
       this._processTypePartial(amf);
-      
     }
   }
 
@@ -681,17 +689,17 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
    * @param {Object} model Partial model for endpoints
    */
   _processEndpointPartial(model) {
-    let { selectedType } = this;
     const { selected, inlineMethods } = this;
-    if (!selectedType || inlineMethods) {
-      selectedType = 'endpoint';
-    }
-    this._endpoint = model;
-    if (!inlineMethods && selectedType === 'method') {
-      model = this._computeMethodPartialEndpoint(model, selected);
-    }
-    this._docsModel = model;
-    this._viewType = selectedType;
+    let { selectedType } = this;
+		if (!selectedType || inlineMethods) {
+			selectedType = 'endpoint';
+		}
+		this._endpoint = model;
+		if (!inlineMethods && selectedType === 'method') {
+			model = this._computeMethodPartialEndpoint(model, selected);
+		}
+		this._docsModel = model;
+		this._viewType = selectedType;
   }
 
   /**
@@ -953,10 +961,19 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
    */
   _computeDeclById(model, selected) {
     const declares = this._computeDeclares(model);
-    if (!declares) {
-      return undefined;
-    }
-    return declares.find((item) => item['@id'] === selected);
+		if (!declares) {
+			return undefined;
+		}
+		let selectedDeclaration = this._findById(declares, selected)
+		if (!selectedDeclaration) {
+			const references = this._computeReferences(model);
+			if (references) {
+				// @ts-ignore
+				const declarationsInRef = references.map((r) => this._computeDeclares(r)).flat();
+				selectedDeclaration = this._findById(declarationsInRef, selected);
+			}
+		}
+		return selectedDeclaration;
   }
 
   /**
@@ -1080,12 +1097,14 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
     if (this.noServerSelector) {
       return '';
     }
-    const { amf, compatibility, outlined, serverType, serverValue, allowCustomBaseUri, showsSelector } = this;
+    const { amf, compatibility, outlined, serverType, serverValue, allowCustomBaseUri, showsSelector, selected, selectedType } = this;
 
     return html`
       <api-server-selector
         class="server-selector"
         .amf="${amf}"
+        .selectedShape="${selected}"
+        .selectedShapeType="${selectedType}"
         .value="${serverValue}"
         .type="${serverType}"
         ?hidden="${!showsSelector}"
@@ -1113,9 +1132,14 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
   }
 
   _summaryTemplate() {
-    const { _docsModel, baseUri } = this;
+    const { _docsModel, baseUri, rearrangeEndpoints } = this;
 
-    return html`<api-summary .amf="${_docsModel}" .baseUri="${baseUri}"></api-summary>`;
+    return html`
+    <api-summary
+      .amf="${_docsModel}"
+      .baseUri="${baseUri}"
+      ?rearrangeEndpoints="${rearrangeEndpoints}"
+    ></api-summary>`;
   }
 
   _securityTemplate() {

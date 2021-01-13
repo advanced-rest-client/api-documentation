@@ -1,0 +1,13 @@
+#%RAML 1.0 Library
+uses:
+  ISO: Types/ISO-standards.raml
+
+types:
+  SiteId:
+    description: The identifer of the site that a request is being made in the context of. Attributes might have site specific values, and some objects may only be assigned to specific sites
+    example:
+      SiteGenesis
+    type: string
+    minLength: 1
+  
+  LocaleCode: ISO.Locale

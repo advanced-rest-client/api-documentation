@@ -732,3 +732,98 @@
 * update server count in tests [9ac0ae2](https://github.com/advanced-rest-client/api-documentation/commit/9ac0ae2e69ddd90422f338e03a91834d5cb2ae0e) by Leandro Bauret
 
 
+<a name="5.0.2"></a>
+## [5.0.2](https://github.com/advanced-rest-client/api-documentation/compare/4.1.1...5.0.2) (2020-06-22)
+
+### Build
+
+* bump version [13ae3f7](https://github.com/advanced-rest-client/api-documentation/commit/13ae3f7ec4d6f274c60351d19a4ae522524735de) by Carolina Wright
+
+
+### Update
+
+* [ci skip] automated merge master->stage. syncing main branches [ab27824](https://github.com/advanced-rest-client/api-documentation/commit/ab278243f8bbeb3b4019e32d15f3b0ff06dd6f7a) by Ci agent
+* [ci skip] automated merge master->stage. syncing main branches [d9e1c5c](https://github.com/advanced-rest-client/api-documentation/commit/d9e1c5cf6cfbd22db84e94fe7cba9e8867e1f85b) by Ci agent
+
+
+### Bug Fixes
+
+* improvements [3f8f7e3](https://github.com/advanced-rest-client/api-documentation/commit/3f8f7e3444722d6853a2ce5c453d2c04a46b77b7) by Carolina Wright
+* apic-390 look for library types in declares and reference nodes [5b9afc0](https://github.com/advanced-rest-client/api-documentation/commit/5b9afc01635b9d281e15220ac0a2b1e532ace71c) by Carolina Wright
+* [APIC-397] update server selector due to redesign (#12) [a7f7e0f](https://github.com/advanced-rest-client/api-documentation/commit/a7f7e0f502a32d1f0066f92c78e37aee9a2fd453) by Joaquin Stankus
+* bump api-server-selector and added allowCustomBaseUri prop [def2058](https://github.com/advanced-rest-client/api-documentation/commit/def20585f16e5bcd973f83378bc2638bbfab1e1e) by Leandro Bauret
+* remove bubble:true [2750c64](https://github.com/advanced-rest-client/api-documentation/commit/2750c64674c2173928518f28f7eba19c531cbce2) by Joaquin Stankus
+* dispatch server changed event [0c58c10](https://github.com/advanced-rest-client/api-documentation/commit/0c58c1005a4a81224841b83b66d6bbf50bb6b77d) by Joaquin Stankus
+
+
+### Testing
+
+* add test for allowCustomBaseUri property [bba2edf](https://github.com/advanced-rest-client/api-documentation/commit/bba2edf2f53cab19ee49740794b3569585e21901) by Leandro Bauret
+* update server count in tests [9ac0ae2](https://github.com/advanced-rest-client/api-documentation/commit/9ac0ae2e69ddd90422f338e03a91834d5cb2ae0e) by Leandro Bauret
+
+
+<a name="5.0.3"></a>
+## [5.0.3](https://github.com/advanced-rest-client/api-documentation/compare/5.0.0...5.0.3) (2020-07-14)
+
+### Build
+
+* bump version [13ae3f7](https://github.com/advanced-rest-client/api-documentation/commit/13ae3f7ec4d6f274c60351d19a4ae522524735de) by Carolina Wright
+
+
+### Update
+
+* [ci skip] automated merge master->stage. syncing main branches [4c88612](https://github.com/advanced-rest-client/api-documentation/commit/4c886121c0167149ed4a943667677bb0a27065e8) by Ci agent
+* [ci skip] automated merge master->stage. syncing main branches [ab27824](https://github.com/advanced-rest-client/api-documentation/commit/ab278243f8bbeb3b4019e32d15f3b0ff06dd6f7a) by Ci agent
+
+
+### Bug Fixes
+
+* improvements [3f8f7e3](https://github.com/advanced-rest-client/api-documentation/commit/3f8f7e3444722d6853a2ce5c453d2c04a46b77b7) by Carolina Wright
+* apic-390 look for library types in declares and reference nodes [5b9afc0](https://github.com/advanced-rest-client/api-documentation/commit/5b9afc01635b9d281e15220ac0a2b1e532ace71c) by Carolina Wright
+
+
+<a name="5.0.4"></a>
+## [5.0.4](https://github.com/advanced-rest-client/api-documentation/compare/5.0.2...5.0.4) (2020-09-11)
+
+### Update
+
+* [ci skip] automated merge master->stage. syncing main branches [0ecd9f0](https://github.com/advanced-rest-client/api-documentation/commit/0ecd9f044d395bc639544ae601fc6fe13d64cfa0) by Ci agent
+* [ci skip] automated merge master->stage. syncing main branches [4c88612](https://github.com/advanced-rest-client/api-documentation/commit/4c886121c0167149ed4a943667677bb0a27065e8) by Ci agent
+
+
+<a name="5.1.0"></a>
+## [5.1.0](https://github.com/advanced-rest-client/api-documentation/compare/5.0.3...5.1.0) (2020-11-25)
+
+### Update
+
+* [ci skip] automated merge master->stage. syncing main branches [6f35c52](https://github.com/advanced-rest-client/api-documentation/commit/6f35c521db46d5b670cf95cce78599f22a632042) by Ci agent
+* [ci skip] automated merge master->stage. syncing main branches [0ecd9f0](https://github.com/advanced-rest-client/api-documentation/commit/0ecd9f044d395bc639544ae601fc6fe13d64cfa0) by Ci agent
+
+
+<a name="5.1.1"></a>
+## [5.1.1](https://github.com/advanced-rest-client/api-documentation/compare/5.0.4...5.1.1) (2020-12-09)
+
+### Update
+
+* [ci skip] automated merge master->stage. syncing main branches [e30777b](https://github.com/advanced-rest-client/api-documentation/commit/e30777b64b4b53b8b0eca047842a502e9a1f6056) by Ci agent
+* [ci skip] automated merge master->stage. syncing main branches [6f35c52](https://github.com/advanced-rest-client/api-documentation/commit/6f35c521db46d5b670cf95cce78599f22a632042) by Ci agent
+
+
+<a name="5.1.2"></a>
+## [5.1.2](https://github.com/advanced-rest-client/api-documentation/compare/5.1.0...5.1.2) (2020-12-16)
+
+### Update
+
+* [ci skip] automated merge master->stage. syncing main branches [0da538b](https://github.com/advanced-rest-client/api-documentation/commit/0da538bc57702399382e18ba83a88e25b1ef1149) by Ci agent
+* [ci skip] automated merge master->stage. syncing main branches [e30777b](https://github.com/advanced-rest-client/api-documentation/commit/e30777b64b4b53b8b0eca047842a502e9a1f6056) by Ci agent
+
+
+<a name="5.1.2"></a>
+## [5.1.2](https://github.com/advanced-rest-client/api-documentation/compare/5.1.1...5.1.2) (2020-12-16)
+
+### Update
+
+* [ci skip] automated merge master->stage. syncing main branches [d97376b](https://github.com/advanced-rest-client/api-documentation/commit/d97376ba1df2de124bf800b954545aa63d2ecb4b) by Ci agent
+* [ci skip] automated merge master->stage. syncing main branches [0da538b](https://github.com/advanced-rest-client/api-documentation/commit/0da538bc57702399382e18ba83a88e25b1ef1149) by Ci agent
+
+
