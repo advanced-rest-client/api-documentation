@@ -1,3 +1,3 @@
-import { ApiDocumentation } from './src/ApiDocumentation.js';
+import { ApiDocumentationElement } from './src/ApiDocumentationElement.js';
 
-window.customElements.define('api-documentation', ApiDocumentation);
+window.customElements.define('api-documentation', ApiDocumentationElement);

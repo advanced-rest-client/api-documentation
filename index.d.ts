@@ -1,1 +1,1 @@
-export { ApiDocumentation } from './src/ApiDocumentation'
+export { ApiDocumentationElement } from './src/ApiDocumentationElement';
