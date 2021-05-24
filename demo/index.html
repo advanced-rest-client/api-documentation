@@ -9,8 +9,8 @@
   <style>
 
   body.styled {
-    --anypoiont-dropdown-shaddow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
-    --anypoiont-autocomplete-dropdown-shaddow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+    --anypoint-dropdown-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+    --anypoint-autocomplete-dropdown-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
     --arc-font-subhead-font-size: 16px;
     --arc-font-subhead-font-weight: 400;
     --arc-font-subhead-line-height: 24px;
@@ -183,14 +183,14 @@
   <script type="module" src="index.js"></script>
   <script src="./vendor.js"></script>
   <script>
-  document.addEventListener('WebComponentsReady', function() {
+  document.addEventListener('WebComponentsReady', () => {
     if (!window.ShadyCSS) {
       return;
     }
     function shouldAddDocumentStyle(n) {
       return n.nodeType === Node.ELEMENT_NODE && n.localName === 'style' && !n.hasAttribute('scope');
     }
-    const CustomStyleInterface = window.ShadyCSS.CustomStyleInterface;
+    const {CustomStyleInterface} = window.ShadyCSS;
 
     const candidates = document.querySelectorAll('style');
     for (let i = 0; i < candidates.length; i++) {

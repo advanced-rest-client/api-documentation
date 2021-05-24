@@ -205,6 +205,11 @@
           "type": "string"
         },
         {
+          "name": "rearrangeEndpoints",
+          "description": "If this value is set, then the documentation component will pass it down\nto the `api-summary` component to sort the list of endpoints based\non the `path` value of the endpoint, keeping the order\nof which endpoint was first in the list, relative to each other",
+          "type": "boolean"
+        },
+        {
           "name": "showsSelector",
           "type": "boolean"
         },

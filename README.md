@@ -1,24 +1,21 @@
-[![Published on NPM](https://img.shields.io/npm/v/@api-components/api-documentation.svg)](https://www.npmjs.com/package/@api-components/api-documentation)
-
-[![Build Status](https://travis-ci.com/advanced-rest-client/api-documentation.svg)](https://travis-ci.org/advanced-rest-client/api-documentation)
-
-[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/advanced-rest-client/api-documentation)
-
-## &lt;api-documentation&gt;
+# api-documentation
 
 A main documentation view for AMF model generated from API spec.
-
-**See breaking changes and list of required dependencies at the bottom of this document**
 
 ## Version compatibility
 
 This version only works with AMF model version 2 (AMF parser >= 4.0.0).
 For compatibility with previous model version use `3.x.x` version of the component.
 
+[![Published on NPM](https://img.shields.io/npm/v/@api-components/api-documentation.svg)](https://www.npmjs.com/package/@api-components/api-documentation)
+
+[![Tests and publishing](https://github.com/advanced-rest-client/api-documentation/actions/workflows/deployment.yml/badge.svg)](https://github.com/advanced-rest-client/api-documentation/actions/workflows/deployment.yml)
+
 ## Usage
 
 ### Installation
-```
+
+```sh
 npm install --save @api-components/api-documentation
 ```
 
