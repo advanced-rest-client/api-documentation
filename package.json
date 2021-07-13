@@ -1,7 +1,7 @@
 {
   "name": "@api-components/api-documentation",
   "description": "A main documentation view for AMF model",
-  "version": "6.0.2",
+  "version": "6.0.3",
   "license": "Apache-2.0",
   "main": "index.js",
   "module": "index.js",
