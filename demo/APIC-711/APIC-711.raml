@@ -1,0 +1,41 @@
+#%RAML 1.0 Library
+
+types:
+  StockBalance:
+    description: Holder stock balance information.
+    properties: 
+      sourceType: 
+        type: 
+          enum: [site]
+        example: site
+      items:
+        type: StockLine[]
+        description: Individual inventories.
+        minItems: 1
+        xml:
+          wrapped: true
+          name: item
+  StockLine:
+    type: object
+    description: Stock line.
+    properties:
+      ssccNumber?:
+        type: string
+        description: Palet number
+        example: P19227
+      materialReference: 
+        type: string
+        description: Product sku.
+        example: CL54B
+      variantId?:
+        type: string
+        description: Identification of product variant (or recipe)
+        example: R0029
+      batch?:
+        type: string
+        description: Batch number.
+        example: BA02931
+      quantity:
+        type: number
+        description: Product quantity to be despatched.
+        example: 1
