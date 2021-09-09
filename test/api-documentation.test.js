@@ -418,6 +418,34 @@ describe('ApiDocumentationElement', () => {
           assert.isTrue(node.type === model, 'type model is set');
         });
       });
+
+      describe('Rendering for library', () => {
+        let element = /** @type ApiDocumentationElement */ (null);
+        let libraryAmf;
+
+        before(async () => {
+          // @ts-ignore
+          libraryAmf = await AmfLoader.load('APIC-711', compact);
+        });
+
+        beforeEach(async () => {
+          element = await basicFixture();
+          await nextFrame();
+        });
+
+        it('should clear everything when changing to amf for RAML library', async () => {
+          // @ts-ignore
+          const demoAmf = await AmfLoader.load(demoApi, compact);
+          element.amf = demoAmf;
+          element.selected = 'summary';
+          element.selectedType = 'summary';
+          const oldDocsModel = element._docsModel;
+          await aTimeout(10);
+          element.amf = libraryAmf;
+          await aTimeout(10);
+          assert.notEqual(element._docsModel, oldDocsModel);
+        });
+      });
     });
   });
 
