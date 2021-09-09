@@ -593,6 +593,7 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
       case 'security': result = this._computeSecurityLibraryModel(model, selected); break;
       case 'type': result = this._computeTypeLibraryModel(model, selected); break;
       default:
+        result = model;
         return;
     }
     this._docsModel = result;
