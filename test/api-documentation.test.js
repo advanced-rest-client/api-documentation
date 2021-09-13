@@ -618,7 +618,7 @@ describe('<api-documentation>', function() {
         });
 
         it('should set serversCount', () => {
-          assert.equal(element.serversCount, 4);
+          assert.equal(element.serversCount, 3);
         });
 
         it('should update selectedServerValue and selectedServerType using the first available server', () => {
@@ -666,7 +666,7 @@ describe('<api-documentation>', function() {
           });
 
           it('should set serversCount', () => {
-            assert.equal(element.serversCount, 1);
+            assert.equal(element.serversCount, 0);
           });
 
           it('should hide api-server-selector', () => {
