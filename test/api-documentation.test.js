@@ -811,4 +811,63 @@ describe('<api-documentation>', function() {
       });
     });
   });
+  describe('_computeApiMediaTypes()', () => {
+    it('should return undefined if no encodes', async () => {
+      const element = await basicFixture();
+
+      const model = {};
+
+      const actual = element._computeApiMediaTypes(model);
+      assert.deepEqual(actual, undefined);
+    });
+
+    it('should return undefined if no media types present', async () => {
+      const element = await basicFixture();
+
+      const encodesKey = element._getAmfKey(element.ns.aml.vocabularies.document.encodes);
+
+      const encodes = { '@type': [element._getAmfKey(element.ns.schema.webApi)] };
+
+      const model = { [encodesKey]: encodes };
+
+      const actual = element._computeApiMediaTypes(model);
+      assert.deepEqual(actual, undefined);
+    });
+
+    it('should return values when they are contained in "@value" property', async () => {
+      const expected = ['application/json', 'application/xml'];
+      const element = await basicFixture();
+
+      const encodesKey = element._getAmfKey(element.ns.aml.vocabularies.document.encodes);
+      const acceptsKey = element._getAmfKey(element.ns.aml.vocabularies.apiContract.accepts);
+
+      const encodes = {
+        '@type': [element._getAmfKey(element.ns.schema.webApi)],
+        [acceptsKey]: [{ '@value': 'application/json' }, { '@value': 'application/xml' }]
+      };
+
+      const model = { [encodesKey]: encodes };
+
+      const actual = element._computeApiMediaTypes(model);
+      assert.deepEqual(actual, expected);
+    });
+
+    it('should return values when they are not contained in "@value" property', async () => {
+      const expected = ['application/json', 'application/xml'];
+      const element = await basicFixture();
+
+      const encodesKey = element._getAmfKey(element.ns.aml.vocabularies.document.encodes);
+      const acceptsKey = element._getAmfKey(element.ns.aml.vocabularies.apiContract.accepts);
+
+      const encodes = {
+        '@type': [element._getAmfKey(element.ns.schema.webApi)],
+        [acceptsKey]: ['application/json', 'application/xml']
+      };
+
+      const model = { [encodesKey]: encodes };
+
+      const actual = element._computeApiMediaTypes(model);
+      assert.deepEqual(actual, expected);
+    });
+  });
 });

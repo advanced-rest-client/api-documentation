@@ -1182,7 +1182,7 @@ class ApiDocumentation extends EventsTargetMixin(AmfHelperMixin(LitElement)) {
     const key = this._getAmfKey(this.ns.aml.vocabularies.apiContract.accepts);
     const value = this._ensureArray(webApi[key]);
     if (value) {
-      return value.map((item) => item['@value']);
+      return value.map((item) => typeof item === 'string' ? item : item['@value']);
     }
   }
 
