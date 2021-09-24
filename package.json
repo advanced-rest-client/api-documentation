@@ -1,7 +1,7 @@
 {
   "name": "@api-components/api-documentation",
   "description": "A main documentation view for AMF model",
-  "version": "6.0.4",
+  "version": "6.0.5",
   "license": "Apache-2.0",
   "main": "index.js",
   "module": "index.js",
@@ -45,7 +45,7 @@
     "@anypoint-web-components/anypoint-styles": "^1.0.2",
     "@api-components/api-model-generator": "^0.2.14",
     "@api-components/api-navigation": "^4.3.1",
-    "@api-components/api-request": "^0.1.20",
+    "@api-components/api-request": "^0.2.1",
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.1.4",
     "@open-wc/eslint-config": "^4.3.0",
