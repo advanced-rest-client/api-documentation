@@ -25,7 +25,7 @@ export default class ApiDocumentationDocumentElement extends ApiDocumentationBas
   }
 
   /**
-   * @returns {ApiDocumentation|undefined}
+   * @returns {ApiDocumentation|undefined} The serialized to a JS object graph model
    */
   get model() {
     return this[documentationValue];
@@ -81,16 +81,18 @@ export default class ApiDocumentationDocumentElement extends ApiDocumentationBas
   }
 
   /**
-   * @returns {TemplateResult} The template for the Documentation title.
+   * @returns {TemplateResult|string} The template for the Documentation title.
    */
   [titleTemplate]() {
     const docs = this[documentationValue];
     const { title } = docs;
-    const label = title || 'Unnamed document';
+    if (!title) {
+      return '';
+    }
     return html`
     <div class="documentation-header">
       <div class="documentation-title">
-        <span class="label">${label}</span>
+        <span class="label">${title}</span>
       </div>
     </div>
     `;

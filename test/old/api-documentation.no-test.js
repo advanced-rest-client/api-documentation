@@ -1,10 +1,10 @@
 /* eslint-disable no-shadow */
 import { fixture, assert, html, aTimeout, nextFrame } from '@open-wc/testing';
 import * as sinon from 'sinon/pkg/sinon-esm.js';
-import { AmfLoader } from './amf-loader.js';
-import '../api-documentation.js';
+import { AmfLoader } from '../amf-loader.js';
+import '../../api-documentation.js';
 
-/** @typedef {import('..').ApiDocumentationElement} ApiDocumentationElement */
+/** @typedef {import('../..').ApiDocumentationElement} ApiDocumentationElement */
 
 describe('ApiDocumentationElement', () => {
   /**

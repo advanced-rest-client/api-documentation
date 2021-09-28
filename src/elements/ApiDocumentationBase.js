@@ -17,11 +17,11 @@ export const debounceValue = Symbol('debounceValue');
 export const domainIdValue = Symbol('domainIdValue');
 export const domainModelValue = Symbol('domainModelValue');
 export const serializerValue = Symbol('domainIdValue');
+export const clickHandler = Symbol('clickHandler');
 export const descriptionTemplate = Symbol('descriptionTemplate');
 export const sectionToggleTemplate = Symbol('sectionToggleTemplate');
 export const paramsSectionTemplate = Symbol('paramsSectionTemplate');
 export const schemaItemTemplate = Symbol('schemaItemTemplate');
-
 /**
  * A base class for the documentation components with common templates and functions.
  */
@@ -132,6 +132,26 @@ export class ApiDocumentationBase extends AmfHelperMixin(LitElement) {
   }
 
   /**
+   * At current state there's no way to tell where to navigate when relative
+   * link is clicked. To prevent 404 anchors this prevents any relative link click.
+   * @param {Event} e
+   */
+  [clickHandler](e) {
+    const node = /** @type HTMLElement */ (e.target);
+    if (node.localName !== 'a') {
+      return;
+    }
+    // target.href is always absolute, need attribute value to test for
+    // relative links.
+    const href = node.getAttribute('href');
+    const ch0 = href[0];
+    if (['.', '/'].indexOf(ch0) !== -1) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }
+
+  /**
    * A handler for the section toggle button click.
    * @param {Event} e
    */
@@ -209,6 +229,7 @@ export class ApiDocumentationBase extends AmfHelperMixin(LitElement) {
       <arc-marked 
         .markdown="${description}" 
         sanitize
+        @click="${this[clickHandler]}"
       >
         <div slot="markdown-html" class="markdown-body"></div>
       </arc-marked>

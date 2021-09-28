@@ -11,6 +11,11 @@ export const setModel: unique symbol;
  * the AMF graph model.
  */
 export default class ApiDocumentationDocumentElement extends ApiDocumentationBase {
+  /**
+   * @returns The serialized to a JS object graph model
+   */
+  get model(): ApiDocumentation|undefined;
+
   [documentationValue]: ApiDocumentation;
   constructor();
   domainModel: CreativeWork;
