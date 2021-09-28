@@ -33,7 +33,7 @@ export class AmfLoader extends AmfHelperMixin(Object) {
   async getGraph(compact=false, fileName='demo-api') {
     const suffix = compact ? '-compact' : '';
     const file = `${fileName}${suffix}.json`;
-    const url = `${window.location.protocol}//${window.location.host}/demo/apis/${file}`;
+    const url = `${window.location.protocol}//${window.location.host}/demo/models/${file}`;
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error('Unable to download API data model');

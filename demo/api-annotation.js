@@ -116,7 +116,7 @@ class ComponentPage extends AmfDemoBase {
       ['annotated-api', 'Annotated API'],
     ].forEach(([file, label]) => {
       result[result.length] = html`
-      <anypoint-item data-src="apis/${file}-compact.json">${label}</anypoint-item>`;
+      <anypoint-item data-src="models/${file}-compact.json">${label}</anypoint-item>`;
     });
     return result;
   }

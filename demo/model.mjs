@@ -41,5 +41,6 @@ config.set('documented-api/documented-api.raml', { type: "RAML 1.0" });
 config.set('annotated-api/annotated-api.raml', { type: "RAML 1.0" });
 
 generator.generate(config, {
-  dest: 'demo/apis/'
+  dest: 'demo/models/',
+  src: 'demo/apis/',
 });

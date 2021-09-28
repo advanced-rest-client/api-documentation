@@ -78,7 +78,7 @@ class ComponentDemo extends ApiDemoPage {
       ['async-api', 'async-api'],
     ].forEach(([file, label]) => {
       result[result.length] = html`
-      <anypoint-item data-src="apis/${file}-compact.json">${label}</anypoint-item>`;
+      <anypoint-item data-src="models/${file}-compact.json">${label}</anypoint-item>`;
     });
 
     [
@@ -87,7 +87,7 @@ class ComponentDemo extends ApiDemoPage {
       ['partial-model/security', 'Partial model: Security'],
       ['partial-model/type', 'Partial model: Type'],
     ].forEach(([file, label]) => {
-      result[result.length] = html`<anypoint-item data-src="apis/${file}.json">${label}</anypoint-item>`;
+      result[result.length] = html`<anypoint-item data-src="models/${file}.json">${label}</anypoint-item>`;
     });
     return result;
   }
