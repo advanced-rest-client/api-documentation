@@ -1,0 +1,23 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: common-parameters
+paths: {}
+components:
+  parameters:
+    UriParam1:
+      name: uriParam1
+      in: path
+      description: uri param for testEndpoint 1 
+      required: true
+      schema:
+        type: string
+        example: "uriParam1Example"
+    UriParam2:
+      name: uriParam2
+      in: path
+      description: uri param for testEndpoint 2 
+      required: true
+      schema:
+        type: string
+        example: "uriParam2Example"

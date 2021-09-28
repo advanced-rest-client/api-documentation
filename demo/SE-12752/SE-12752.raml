@@ -1,0 +1,33 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/ccc5e2f5-eff9-4cc9-acb9-203c55f08d19/trn-sys-api-gabe/{version} #
+title: One Query Param Required
+description: |
+  Rendering different types of a query string in the documentation.
+types:
+  queryParam:
+    minProperties: 1
+    properties:
+      seriesNumber?: 
+        type: number
+        description: A description of a series number
+        maximum: 1
+      featureNumber?: string
+  otherParam:
+    properties:
+      unioned: string
+/test:
+  get:
+    queryString: queryParam
+/union:
+  get:
+    queryString: queryParam | otherParam
+/scalar:
+  get:
+    queryString:
+      type: string
+      example: test
+      description: A query string with a scalar type.
+/array:
+  get:
+    queryString:
+      type: otherParam[]

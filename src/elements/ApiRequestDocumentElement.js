@@ -5,7 +5,6 @@ import '@anypoint-web-components/anypoint-listbox/anypoint-listbox.js';
 import '@anypoint-web-components/anypoint-item/anypoint-item.js';
 import commonStyles from './styles/Common.js';
 import elementStyles from './styles/ApiRequest.js';
-import '../../api-payload-document.js';
 import { 
   ApiDocumentationBase, 
   paramsSectionTemplate, 
@@ -13,6 +12,8 @@ import {
   descriptionTemplate,
   serializerValue,
 } from './ApiDocumentationBase.js';
+import { QueryParameterProcessor } from '../lib/QueryParameterProcessor.js';
+import '../../api-payload-document.js';
 import '../../api-parameter-document.js';
 
 /** @typedef {import('lit-element').TemplateResult} TemplateResult */
@@ -20,6 +21,9 @@ import '../../api-parameter-document.js';
 /** @typedef {import('@api-components/amf-helper-mixin').ApiPayload} ApiPayload */
 /** @typedef {import('@api-components/amf-helper-mixin').Request} Request */
 /** @typedef {import('@anypoint-web-components/anypoint-listbox').AnypointListbox} AnypointListbox */
+/** @typedef {import('@api-components/amf-helper-mixin').ApiNodeShape} ApiNodeShape */
+/** @typedef {import('@api-components/amf-helper-mixin').ApiArrayShape} ApiArrayShape */
+/** @typedef {import('../types').OperationParameter} OperationParameter */
 
 export const queryRequest = Symbol('queryRequest');
 export const requestValue = Symbol('requestValue');
@@ -32,6 +36,9 @@ export const cookiesTemplate = Symbol('cookiesTemplate');
 export const payloadTemplate = Symbol('payloadTemplate');
 export const payloadSelectorTemplate = Symbol('payloadSelectorTemplate');
 export const mediaTypeSelectHandler = Symbol('mediaTypeSelectHandler');
+export const processQueryParameters = Symbol('processQueryParameters');
+export const queryParametersValue = Symbol('queryParametersValue');
+export const queryStringTemplate = Symbol('queryStringTemplate');
 
 /**
  * A web component that renders the documentation page for an API request object.
@@ -72,6 +79,28 @@ export default class ApiRequestDocumentElement extends ApiDocumentationBase {
       return false;
     }
     return Array.isArray(request.queryParameters) && !!request.queryParameters.length;
+  }
+
+  /**
+   * @returns {boolean} true when has URI parameters definition
+   */
+  get hasUriParameters() {
+    const request = this[requestValue];
+    if (!request) {
+      return false;
+    }
+    return Array.isArray(request.uriParameters) && !!request.uriParameters.length;
+  }
+
+  /**
+   * @returns {boolean} true when has query string definition
+   */
+  get hasQueryString() {
+    const request = /** @type ApiRequest */ (this[requestValue]);
+    if (!request) {
+      return false;
+    }
+    return !!request.queryString;
   }
 
   /**
@@ -155,6 +184,8 @@ export default class ApiRequestDocumentElement extends ApiDocumentationBase {
     this.parametersOpened = undefined;
     /** @type Request */
     this.domainModel = undefined;
+    /** @type OperationParameter[] */
+    this[queryParametersValue] = undefined;
   }
 
   /**
@@ -167,6 +198,7 @@ export default class ApiRequestDocumentElement extends ApiDocumentationBase {
     }
     this.mimeType = undefined;
     await this[queryPayloads]();
+    await this[processQueryParameters]();
     await this.requestUpdate();
   }
 
@@ -177,6 +209,24 @@ export default class ApiRequestDocumentElement extends ApiDocumentationBase {
       return;
     }
     this[payloadsValue] = request.payloads;
+  }
+
+  /**
+   * Creates a parameter 
+   */
+  async [processQueryParameters]() {
+    this[queryParametersValue] = undefined;
+    const { request } = this;
+    if (!request) {
+      return;
+    }
+    const nodeShape = /** @type ApiNodeShape */ (request.queryString);
+    if (!nodeShape) {
+      return;
+    }
+    const factory = new QueryParameterProcessor();
+    const params = factory.collectOperationParameters(request.queryString, 'query');
+    this[queryParametersValue] = params;
   }
 
   /**
@@ -196,6 +246,7 @@ export default class ApiRequestDocumentElement extends ApiDocumentationBase {
     return html`
     ${this[descriptionTemplate](request.description)}
     ${this[queryParamsTemplate]()}
+    ${this[queryStringTemplate]()}
     ${this[headersTemplate]()}
     ${this[cookiesTemplate]()}
     ${this[payloadTemplate]()}
@@ -206,11 +257,25 @@ export default class ApiRequestDocumentElement extends ApiDocumentationBase {
    * @return {TemplateResult|string} The template for the query parameters
    */
   [queryParamsTemplate]() {
-    if (!this.hasQueryParameters) {
+    if (!this.hasQueryParameters && !this.hasUriParameters) {
       return '';
     }
     const { request } = this;
-    const content = request.queryParameters.map((id) => this[schemaItemTemplate](id));
+    const { queryParameters=[], uriParameters=[] } = request;
+    const all = uriParameters.concat(queryParameters);
+    const content = all.map((param) => this[schemaItemTemplate](param));
+    return this[paramsSectionTemplate]('Parameters', 'parametersOpened', content);
+  }
+
+  /**
+   * @return {TemplateResult|string} The template for the query parameters built form the query string.
+   */
+  [queryStringTemplate]() {
+    if (!this.hasQueryString || this.hasQueryParameters) {
+      return '';
+    }
+    const params = this[queryParametersValue];
+    const content = params.map((param) => this[schemaItemTemplate](param.parameter));
     return this[paramsSectionTemplate]('Parameters', 'parametersOpened', content);
   }
 
@@ -248,7 +313,7 @@ export default class ApiRequestDocumentElement extends ApiDocumentationBase {
     }
     const content = html`
     ${this[payloadSelectorTemplate]()}
-    <api-payload-document .payload="${payload}"></api-payload-document>
+    <api-payload-document .amf="${this.amf}" .payload="${payload}"></api-payload-document>
     `;
     return this[paramsSectionTemplate]('Request body', 'payloadOpened', content);
   }

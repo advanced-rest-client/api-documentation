@@ -27,6 +27,7 @@ import '../../api-security-requirement-document.js';
 /** @typedef {import('@api-components/amf-helper-mixin').ApiOperation} ApiOperation */
 /** @typedef {import('@api-components/amf-helper-mixin').Operation} Operation */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiResponse} ApiResponse */
+/** @typedef {import('@api-components/amf-helper-mixin').ApiCallback} ApiCallback */
 /** @typedef {import('@anypoint-web-components/anypoint-tabs').AnypointTabs} AnypointTabs */
 
 export const queryEndpoint = Symbol('queryEndpoint');
@@ -41,6 +42,8 @@ export const responsesValue = Symbol('responsesValue');
 export const computeUrlValue = Symbol('computeUrlValue');
 export const preselectResponse = Symbol('preselectResponse');
 export const titleTemplate = Symbol('titleTemplate');
+export const traitsTemplate = Symbol('extendsTemplate');
+export const summaryTemplate = Symbol('summaryTemplate');
 export const urlTemplate = Symbol('urlTemplate');
 export const requestTemplate = Symbol('requestTemplate');
 export const responseTemplate = Symbol('responseTemplate');
@@ -50,13 +53,19 @@ export const statusCodeHandler = Symbol('statusCodeHandler');
 export const securitySectionTemplate = Symbol('securitySectionTemplate');
 export const deprecatedTemplate = Symbol('deprecatedTemplate');
 export const metaDataTemplate = Symbol('metaDataTemplate');
+export const tryItTemplate = Symbol('tryItTemplate');
+export const tryItHandler = Symbol('tryItHandler');
+export const callbacksTemplate = Symbol('callbacksTemplate');
+export const callbackTemplate = Symbol('callbackTemplate');
 
 /**
  * A web component that renders the documentation page for an API operation built from 
  * the AMF graph model.
+ * 
+ * @fires tryit
  */
 export default class ApiOperationDocumentElement extends ApiDocumentationBase {
-  static get styles() {
+  get styles() {
     return [elementStyles, commonStyles, HttpStyles.default, MarkdownStyles, schemaStyles];
   }
 
@@ -137,6 +146,18 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
        * The selected status code in the responses section.
        */
       selectedStatus: { type: String },
+      /** 
+       * Whether the callbacks section is opened.
+       */
+      callbacksOpened: { type: String },
+      /** 
+       * When set it renders the "try it" button that dispatches the `tryit` event.
+       */
+      tryIt: { type: Boolean, reflect: true },
+      /** 
+       * When set it renders the view optimised for asynchronous API operation.
+       */
+      asyncApi: { type: Boolean, reflect: true },
     };
   }
 
@@ -167,7 +188,13 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
     /** @type {boolean} */
     this.responsesOpened = undefined;
     /** @type {boolean} */
+    this.callbacksOpened = undefined;
+    /** @type {boolean} */
     this.securityOpened = undefined;
+    /** @type {boolean} */
+    this.tryIt = undefined;
+    /** @type {boolean} */
+    this.asyncApi = undefined;
     /** @type {Operation} */
     this.domainModel = undefined;
   }
@@ -180,9 +207,13 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
     if (domainModel) {
       this[operationValue] = this[serializerValue].operation(domainModel);
     } else if (domainId && amf) {
-      const webApi = this._computeApi(amf);
-      const model = this._computeMethodModel(webApi, domainId);
-      this[operationValue] = this[serializerValue].operation(model);
+      if (!this[operationValue] || this[operationValue].id !== domainId) {
+        const webApi = this._computeApi(amf);
+        const model = this._computeMethodModel(webApi, domainId);
+        if (model) {
+          this[operationValue] = this[serializerValue].operation(model);
+        }
+      }
     }
     await this[queryEndpoint]();
     await this[queryServers]();
@@ -269,6 +300,9 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
    * Computes the URL value for the current serves, selected server, and endpoint's path.
    */
   [computeUrlValue]() {
+    if (this.asyncApi) {
+      return;
+    }
     const servers = this[serversValue];
     const endpoint = this[endpointValue];
     const serverId = this[serverIdValue];
@@ -309,17 +343,45 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
     this.selectedStatus = String(tabs.selected);
   }
 
+  /**
+   * A handler for the try it button click.
+   * It dispatches the `tryit` custom event.
+   */
+  [tryItHandler]() {
+    const { operation, asyncApi } = this;
+    if (!operation || asyncApi) {
+      return;
+    }
+    const { id } = operation;
+    const detail = { id };
+    const config = {
+      bubbles: true,
+      composed: true,
+      detail,
+    };
+    [
+      'tryit-requested',
+      'tryit'
+    ].forEach((name) => {
+      this.dispatchEvent(new CustomEvent(name, config));
+    });
+  }
+
   render() {
     if (!this[operationValue]) {
       return html``;
     }
     return html`
+    <style>${this.styles}</style>
     ${this[titleTemplate]()}
+    ${this[traitsTemplate]()}
+    ${this[summaryTemplate]()}
     ${this[deprecatedTemplate]()}
     ${this[descriptionTemplate](this[operationValue].description)}
     ${this[metaDataTemplate]()}
     ${this[urlTemplate]()}
     ${this[requestTemplate]()}
+    ${this[callbacksTemplate]()}
     ${this[responseTemplate]()}
     ${this[securitySectionTemplate]()}
     `;
@@ -330,19 +392,61 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
    */
   [titleTemplate]() {
     const operation = this[operationValue];
-    const { name, method, deprecated, summary } = operation;
-    const label = summary || name || method;
+    const { name, method, deprecated } = operation;
+    const label = name || method;
     const labelClasses = {
       label: true,
       deprecated,
     };
+    const subTitle = this.asyncApi ? 'Async operation' : 'API operation';
     return html`
     <div class="operation-header">
       <div class="operation-title">
         <span class="${classMap(labelClasses)}">${label}</span>
+        ${this[tryItTemplate]()}
       </div>
-      <p class="sub-header">API operation</p>
+      <p class="sub-header">${subTitle}</p>
     </div>
+    `;
+  }
+
+  /**
+   * @returns {TemplateResult|string} The template for the Operation traits.
+   */
+  [traitsTemplate]() {
+    const operation = /** @type ApiOperation */ (this[operationValue]);
+    const { traits } = operation;
+    if (!traits || !traits.length) {
+      return '';
+    }
+    const names = traits.map(trait => trait.name).filter(i => !!i);
+    let value = '';
+    if (names.length === 2) {
+      value = names.join(' and ');
+    } else if (value.length > 2) {
+      const last = names.pop();
+      value = names.join(', ');
+      value += `, and ${last}`;
+    } else {
+      value = names.join(', ');
+    }
+    return html`
+    <section class="extensions">
+      <p>Mixes in <span class="trait-name">${value}</span>.</p>
+    </section>`;
+  }
+
+  /**
+   * @returns {TemplateResult|string} The template for the operation summary filed.
+   */
+  [summaryTemplate]() {
+    const operation = this[operationValue];
+    const { summary } = operation;
+    if (!summary) {
+      return '';
+    }
+    return html`
+    <p class="summary">${summary}</p>
     `;
   }
 
@@ -383,9 +487,12 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
   }
 
   /**
-   * @returns {TemplateResult} The template for the operation's URL.
+   * @returns {TemplateResult|string} The template for the operation's URL.
    */
   [urlTemplate]() {
+    if (this.asyncApi) {
+      return '';
+    }
     const url = this[urlValue];
     const operation = this[operationValue];
     const { method } = operation;
@@ -407,11 +514,52 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
     }
     return html`
     <api-request-document 
+      .amf="${this.amf}"
       .request="${operation.request}" 
       payloadOpened 
       headersOpened 
       parametersOpened
     ></api-request-document>
+    `;
+  }
+
+  [callbacksTemplate]() {
+    const { operation } = this;
+    const { callbacks } = operation;
+    if (!Array.isArray(callbacks) || !callbacks.length) {
+      return '';
+    }
+    const content = callbacks.map(callback => this[callbackTemplate](callback));
+    return this[paramsSectionTemplate]('Callbacks', 'callbacksOpened', content);
+  }
+
+  /**
+   * @param {ApiCallback} callback
+   * @returns {TemplateResult} The template for the operation's request documentation element.
+   */
+  [callbackTemplate](callback) {
+    const { name, endpoint } = callback;
+    if (!endpoint) {
+      return html``;
+    }
+    const { operations=[] } = endpoint;
+    const [operation] = operations;
+    if (!operation) {
+      return html``;
+    }
+    return html`
+    <div class="callback-section">
+      <div class="heading4 table-title">${name}</div>
+      <api-operation-document 
+        .amf="${this.amf}"
+        .domainId="${operation.id}"
+        .operation="${operation}"
+        .serverId="${this.serverId}" 
+        data-domain-id="${operation.id}"
+        class="operation"
+        ?anypoint="${this.anypoint}"
+      ></api-operation-document>
+    </div>
     `;
   }
 
@@ -460,7 +608,7 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
       return html`<div class="empty-info">Select a response to render the documentation.</div>`;
     }
     return html`
-    <api-response-document .response="${response}" headersOpened payloadOpened></api-response-document>
+    <api-response-document .amf="${this.amf}" .response="${response}" headersOpened payloadOpened></api-response-document>
     `;
   }
 
@@ -472,7 +620,24 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
     if (!operation || !Array.isArray(operation.security) || !operation.security.length) {
       return '';
     }
-    const content = operation.security.map((model) => html`<api-security-requirement-document .securityRequirement="${model}"></api-security-requirement-document>`);
+    const content = operation.security.map((model) => html`<api-security-requirement-document .amf="${this.amf}" .securityRequirement="${model}"></api-security-requirement-document>`);
     return this[paramsSectionTemplate]('Security', 'securityOpened', content);
+  }
+
+  /**
+   * @returns {TemplateResult|string} The template for the "try it" button.
+   */
+  [tryItTemplate]() {
+    if (!this.tryIt) {
+      return '';
+    }
+    return html`
+    <anypoint-button
+      class="action-button"
+      @click="${this[tryItHandler]}"
+      emphasis="high"
+      ?compatibility="${this.anypoint}"
+    >Try it</anypoint-button>
+    `;
   }
 }

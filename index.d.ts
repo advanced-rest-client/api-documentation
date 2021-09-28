@@ -6,4 +6,5 @@ export { default as ApiResourceDocumentationElement } from './src/elements/ApiRe
 export { default as ApiResponseDocumentElement } from './src/elements/ApiResponseDocumentElement';
 export { default as ApiSchemaDocumentElement } from './src/elements/ApiSchemaDocumentElement';
 export { default as ApiDocumentationDocumentElement } from './src/elements/ApiDocumentationDocumentElement';
+export { default as ApiChannelDocumentationElement } from './src/elements/ApiChannelDocumentationElement';
 export * as Utils from './src/lib/Utils';

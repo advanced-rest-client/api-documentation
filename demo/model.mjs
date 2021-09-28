@@ -21,6 +21,7 @@ config.set('SE-11415/SE-11415.raml', { type: "RAML 1.0" });
 config.set('APIC-390/APIC-390.raml', { type: "RAML 1.0" });
 config.set('multi-server/multi-server.yaml', { type: "OAS 3.0", mime: 'application/yaml' });
 config.set('async-api/async-api.yaml', { type: "ASYNC 2.0" });
+config.set('Streetlights/Streetlights.yaml', { type: "ASYNC 2.0" });
 config.set('APIC-711/APIC-711.raml', { type: "RAML 1.0" });
 config.set('api-keys/api-keys.yaml', { type: "OAS 3.0", mime: 'application/yaml' });
 config.set('oauth-flows/oauth-flows.yaml', { type: "OAS 3.0", mime: 'application/yaml' });
@@ -28,5 +29,13 @@ config.set('oas-bearer/oas-bearer.yaml', { type: "OAS 3.0", mime: 'application/y
 config.set('oauth-pkce/oauth-pkce.raml', { type: "RAML 1.0" });
 config.set('secured-unions/secured-unions.yaml', { type: "OAS 3.0" });
 config.set('secured-api/secured-api.raml', { type: "RAML 1.0" });
+config.set('APIC-553/APIC-553.raml', { type: "RAML 1.0" });
+config.set('APIC-560/APIC-560.yaml', { type: "ASYNC 2.0" });
+config.set('APIC-582/APIC-582.yaml', { type: "ASYNC 2.0" });
+config.set('APIC-650/APIC-650.yaml', { type: "OAS 3.0" });
+config.set('SE-12957/SE-12957.json', { type: "OAS 2.0", mime: 'application/json' });
+config.set('SE-12959/SE-12959.json', { type: "OAS 2.0", mime: 'application/json' });
+config.set('SE-12752/SE-12752.raml', { type: "RAML 1.0" });
+config.set('oas-callbacks/oas-callbacks.yaml', { type: "OAS 3.0", mime: 'application/yaml' });
 
 generator.generate(config);

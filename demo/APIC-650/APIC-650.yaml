@@ -1,0 +1,24 @@
+openapi: "3.0.0"
+info:
+  version: v1
+  title: test-api-spec-for-support-case
+  description: When going back and forth between the endpoints defined in the attached spec, the generated example for URI Parameters is not populated correctly, it belongs to the other endpoint.
+
+paths: 
+  /testEndpoint1/{uriParam1}:
+    get:
+      parameters:
+        - $ref: "common-parameters.yaml#/components/parameters/UriParam1"
+      description: Test endpoint 1.
+      responses:
+        '200':
+          description: When going back and forth between the endpoints defined in the attached spec, the generated example for URI Parameters is not populated correctly, it belongs to the other endpoint.
+
+  /testEndpoint2/{uriParam2}:
+    get:
+      parameters:
+        - $ref: "common-parameters.yaml#/components/parameters/UriParam2"
+      description: Test endpoint 2.
+      responses:
+        '200':
+          description: When going back and forth between the endpoints defined in the attached spec, the generated example for URI Parameters is not populated correctly, it belongs to the other endpoint.

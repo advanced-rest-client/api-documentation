@@ -1,29 +1,21 @@
 import { html } from 'lit-html';
 import '@advanced-rest-client/arc-demo-helper/arc-interactive-demo.js';
 import '@anypoint-web-components/anypoint-checkbox/anypoint-checkbox.js';
-import '@anypoint-web-components/anypoint-dialog/anypoint-dialog.js';
-import '@anypoint-web-components/anypoint-dialog/anypoint-dialog-scrollable.js';
-import '@api-components/api-request/api-request-panel.js';
-import '@api-components/api-request/xhr-simple-request.js';
 import '@advanced-rest-client/authorization/oauth2-authorization.js';
 import { AmfDemoBase } from './lib/AmfDemoBase.js';
-import '../api-resource-document.js';
+import '../api-channel-document.js';
 
 class ComponentPage extends AmfDemoBase {
   constructor() {
     super();
     this.initObservableProperties([ 
-      'selectedId', 'selectedType', 'selectedOperation', 'tryIt',
-      'editorOpened', 'editorOperation',
+      'selectedId', 'selectedType', 'selectedOperation',
     ]);
     this.compatibility = false;
-    this.editorOpened = false;
-    this.editorOperation = undefined;
     this.selectedId = undefined;
     this.selectedType = undefined;
     this.selectedOperation = undefined;
-    this.tryIt = true;
-    this.componentName = 'api-endpoint-document';
+    this.componentName = 'api-channel-document';
     this.redirectUri = `${window.location.origin}/node_modules/@advanced-rest-client/oauth-authorization/oauth-popup.html`;
   }
 
@@ -50,15 +42,6 @@ class ComponentPage extends AmfDemoBase {
     }
   }
 
-  /**
-   * @param {CustomEvent} e
-   */
-  tryitHandler(e) {
-    const { id } = e.detail;
-    this.editorOperation = id;
-    this.editorOpened = true;
-  }
-
   editorCloseHandler() {
     this.editorOperation = undefined;
     this.editorOpened = false;
@@ -66,9 +49,7 @@ class ComponentPage extends AmfDemoBase {
 
   contentTemplate() {
     return html`
-      <oauth2-authorization></oauth2-authorization>
-      <xhr-simple-request></xhr-simple-request>
-      <h2>API endpoint</h2>
+      <h2>API channel</h2>
       ${this.demoTemplate()}
     `;
   }
@@ -79,7 +60,7 @@ class ComponentPage extends AmfDemoBase {
     <section class="documentation-section">
       <h3>Interactive demo</h3>
       <p>
-        This demo lets you preview the API endpoint document with various configuration options.
+        This demo lets you preview the API channel document with various configuration options.
       </p>
 
       <div class="api-demo-content">
@@ -92,12 +73,11 @@ class ComponentPage extends AmfDemoBase {
   loadedTemplate() {
     return html`
     ${this.componentTemplate()}
-    ${this.requestEditorDialogTemplate()}
     `;
   }
 
   componentTemplate() {
-    const { demoStates, darkThemeActive, selectedId, selectedOperation, amf, tryIt } = this;
+    const { demoStates, darkThemeActive, selectedId, selectedOperation, amf } = this;
     if (!selectedId) {
       return html`<p>Select API operation in the navigation</p>`;
     }
@@ -107,22 +87,19 @@ class ComponentPage extends AmfDemoBase {
       @state-changed="${this._demoStateHandler}"
       ?dark="${darkThemeActive}"
     >
-      <api-resource-document
+      <api-channel-document
         .amf="${amf}"
         .domainId="${selectedId}"
         .operationId="${selectedOperation}"
-        ?tryIt="${tryIt}"
         slot="content"
-        @tryit="${this.tryitHandler}"
       >
-      </api-resource-document>
+      </api-channel-document>
 
       <label slot="options" id="mainOptionsLabel">Options</label>
       <anypoint-checkbox
         aria-describedby="mainOptionsLabel"
         slot="options"
         name="tryIt"
-        .checked="${tryIt}"
         @change="${this._toggleMainOption}"
       >
         Render try it
@@ -134,59 +111,14 @@ class ComponentPage extends AmfDemoBase {
   _apiListTemplate() {
     const result = [];
     [
-      ['demo-api', 'Demo API'],
-      ['google-drive-api', 'Google Drive'],
-      ['multi-server', 'Multiple servers'],
-      ['nexmo-sms-api', 'Nexmo SMS API'],
-      ['appian-api', 'Applian API'],
-      ['APIC-15', 'APIC-15'],
-      ['SE-10469', 'SE-10469'],
-      ['SE-11415', 'SE-11415'],
-      ['async-api', 'async-api'],
-      ['api-keys', 'API key (OAS)'],
-      ['oauth-flows', 'OAuth 2 flows'],
-      ['oas-bearer', 'Bearer token'],
-      ['oauth-pkce', 'OAuth 2 PKCE'],
-      ['secured-unions', 'Secured unions'],
-      ['secured-api', 'Secured API'],
-      ['SE-12957', 'SE-12957: OAS query parameters documentation'],
-      ['SE-12959', 'SE-12959: OAS summary field'],
-      ['SE-12752', 'SE-12752: Query string (SE-12752)'],
-      ['oas-callbacks', 'OAS 3 callbacks'],
-      ['APIC-553', 'APIC-553'],
-      ['APIC-560', 'APIC-560'],
-      ['APIC-582', 'APIC-582'],
-      ['APIC-650', 'APIC-650'],
+      ['async-api', 'Demo API'],
+      ['Streetlights', 'Streetlights API'],
     ].forEach(([file, label]) => {
       result[result.length] = html`
       <anypoint-item data-src="${file}-compact.json">${label}</anypoint-item>`;
       // <anypoint-item data-src="${file}.json">${label}</anypoint-item>
     });
     return result;
-  }
-
-  requestEditorDialogTemplate() {
-    return html`
-    <anypoint-dialog modal @closed="${this.editorCloseHandler}" .opened="${this.editorOpened}" class="request-dialog">
-      <h2>API request</h2>
-      <anypoint-dialog-scrollable>
-        <api-request-panel
-          .amf="${this.amf}"
-          .selected="${this.selectedOperation}"
-          ?compatibility="${this.compatibility}"
-          urlLabel
-          applyAuthorization
-          globalCache
-          allowHideOptional
-          .redirectUri="${this.redirectUri}"
-        >
-        </api-request-panel>
-      </anypoint-dialog-scrollable>
-      <div class="buttons">
-        <anypoint-button data-dialog-dismiss>Close</anypoint-button>
-      </div>
-    </anypoint-dialog>
-    `;
   }
 }
 const instance = new ComponentPage();

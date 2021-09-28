@@ -192,7 +192,7 @@ export class ApiDocumentationBase extends AmfHelperMixin(LitElement) {
    */
   [schemaItemTemplate](model) {
     return html`
-    <api-parameter-document .parameter="${model}" class="property-item"></api-parameter-document>
+    <api-parameter-document .amf="${this.amf}" .parameter="${model}" class="property-item"></api-parameter-document>
     `;
   }
 

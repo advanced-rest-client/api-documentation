@@ -4,7 +4,10 @@ import { ns } from '@api-components/amf-helper-mixin';
 /** @typedef {import('@api-components/amf-helper-mixin').ApiScalarShape} ApiScalarShape */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiArrayShape} ApiArrayShape */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiUnionShape} ApiUnionShape */
-
+/** @typedef {import('@api-components/amf-helper-mixin').ApiParameter} ApiParameter */
+/** @typedef {import('@api-components/amf-helper-mixin').ApiPropertyShape} ApiPropertyShape */
+/** @typedef {import('@api-components/amf-helper-mixin').ApiNodeShape} ApiNodeShape */
+/** @typedef {import('../types').OperationParameter} OperationParameter */
 
 /**
  * @param {string} value The value from the graph model to use to read the value from
@@ -25,9 +28,10 @@ export function schemaToType(value) {
 /**
  * Reads the label for a data type for a shape union.
  * @param {ApiShapeUnion} schema
+ * @param {boolean=} [isArray] Used internally
  * @returns {string|undefined} Computed label for a shape.
  */
-export function readPropertyTypeLabel(schema) {
+export function readPropertyTypeLabel(schema, isArray=false) {
   if (!schema) {
     return undefined;
   }
@@ -41,11 +45,18 @@ export function readPropertyTypeLabel(schema) {
     if (!array.items) {
       return undefined;
     }
-    const label = readPropertyTypeLabel(array.items);
+    const label = readPropertyTypeLabel(array.items, true);
     return `List of ${label}`;
   }
   if (types.includes(ns.w3.shacl.NodeShape)) {
-    let { name } = schema;
+    let { name } = /** @type ApiNodeShape */ (schema);
+    const { properties } = /** @type ApiNodeShape */ (schema);
+    if (isArray && properties && properties.length === 1) {
+      const potentialScalar = /** @type ApiScalarShape */ (properties[0].range);
+      if (potentialScalar.types.includes(ns.aml.vocabularies.shapes.ScalarShape)) {
+        return schemaToType(potentialScalar.dataType || '');
+      }
+    }
     if (name === 'type') {
       // AMF seems to put `type` value into a property that is declared inline (?).
       name = undefined;
@@ -54,7 +65,7 @@ export function readPropertyTypeLabel(schema) {
   }
   if (types.includes(ns.aml.vocabularies.shapes.UnionShape)) {
     const union = /** @type ApiUnionShape */ (schema);
-    const items = union.anyOf.map(readPropertyTypeLabel);
+    const items = union.anyOf.map(i => readPropertyTypeLabel(i));
     return items.join(' or ');
   }
   if (types.includes(ns.aml.vocabularies.shapes.FileShape)) {

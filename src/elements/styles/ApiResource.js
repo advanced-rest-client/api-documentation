@@ -27,7 +27,7 @@ export default css`
   margin: 0;
 }
 
-amf-operation-document {
+.operation {
   margin: 60px 0;
 }
 `;

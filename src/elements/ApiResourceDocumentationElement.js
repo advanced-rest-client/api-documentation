@@ -24,6 +24,7 @@ export const queryEndpoint = Symbol('queryEndpoint');
 export const queryServers = Symbol('queryServers');
 export const endpointValue = Symbol('endpointValue');
 export const serversValue = Symbol('serversValue');
+export const serverValue = Symbol('serverValue');
 export const serverIdValue = Symbol('serverIdValue');
 export const urlValue = Symbol('urlValue');
 export const computeUrlValue = Symbol('computeUrlValue');
@@ -33,12 +34,16 @@ export const operationsTemplate = Symbol('operationsTemplate');
 export const operationTemplate = Symbol('operationTemplate');
 export const parametersTemplate = Symbol('parametersTemplate');
 export const operationIdChanged = Symbol('operationIdChanged');
+export const selectServer = Symbol('selectServer');
+export const processServerSelection = Symbol('processServerSelection');
 
 /**
- * A web component that renders the documentation page for an API resource built from 
+ * A web component that renders the resource documentation page for an API resource built from 
  * the AMF graph model.
+ * 
+ * @fires tryit
  */
-export default class AmfResourceDocumentationElement extends ApiDocumentationBase {
+export default class ApiResourceDocumentationElement extends ApiDocumentationBase {
   static get styles() {
     return [elementStyles, commonStyles, MarkdownStyles];
   }
@@ -90,7 +95,45 @@ export default class AmfResourceDocumentationElement extends ApiDocumentationBas
       return;
     }
     this[serverIdValue] = value;
+    this[selectServer]();
+  }
+
+  /** @returns {ApiServer|undefined} */
+  get server() {
+    if (this[serverValue]) {
+      return this[serversValue];
+    }
+    const servers = this[serversValue];
+    if (Array.isArray(servers) && servers.length) {
+      const [server] = servers;
+      if (server) {
+        this[serversValue] = server;
+      }
+    }
+    return this[serversValue];
+  }
+
+  /** @param {ApiServer} value */
+  set server(value) {
+    const old = this[serverValue];
+    if (old === value) {
+      return;
+    }
+    this[serverValue] = value;
+    this[processServerSelection]();
     this[computeUrlValue]();
+  }
+
+  /**
+   * @returns {string|undefined} The list of protocols to render.
+   */
+  get protocol() {
+    const { server } = this;
+    if (!server) {
+      return undefined;
+    }
+    const { protocol } = server;
+    return protocol;
   }
 
   static get properties() {
@@ -109,8 +152,20 @@ export default class AmfResourceDocumentationElement extends ApiDocumentationBas
        * When set it opens the parameters section
        */
       parametersOpened: { type: Boolean, reflect: true },
+      /** 
+       * When set it renders the "try it" button that dispatches the `tryit` event.
+       */
+      tryIt: { type: Boolean, reflect: true },
     };
   }
+
+  // /**
+  //  * @returns {boolean} true when the API operated over an HTTP protocol. By default it returns true.
+  //  */
+  // get isHttp() {
+  //   const { protocol } = this;
+  //   return ['http', 'https'].includes(String(protocol).toLowerCase());
+  // }
 
   constructor() {
     super();
@@ -134,6 +189,10 @@ export default class AmfResourceDocumentationElement extends ApiDocumentationBas
     this.operationId = undefined;
     /** @type {EndPoint} */
     this.domainModel = undefined;
+    /** @type {boolean} */
+    this.tryIt = undefined;
+    /** @type ApiServer */
+    this[serverValue] = undefined;
   }
 
   /**
@@ -205,21 +264,29 @@ export default class AmfResourceDocumentationElement extends ApiDocumentationBas
   }
 
   /**
+   * Sets the private server value for the current server defined by `serverId`.
+   * Calls the `[processServerSelection]()` function to set server related values.
+   * @returns {void} 
+   */
+  [selectServer]() {
+    this[serverValue] = undefined;
+    const { serverId } = this;
+    const servers = this[serversValue];
+    if (!serverId || !Array.isArray(servers)) {
+      return;
+    }
+    this[serverValue] = servers.find(s => s.id === serverId);
+    this[processServerSelection]();
+    this[computeUrlValue]();
+  }
+
+  /**
    * Computes the URL value for the current serves, selected server, and endpoint's path.
    */
   [computeUrlValue]() {
-    const servers = this[serversValue];
     const endpoint = this[endpointValue];
-    const serverId = this[serverIdValue];
     let result = '';
-    let server;
-    if (Array.isArray(servers) && servers.length) {
-      if (serverId) {
-        server = servers.find((item) => item.id === serverId);
-      } else {
-        [server] = servers;
-      }
-    }
+    const { server } = this;
     if (server) {
       result += server.url;
       if (result.endsWith('/')) {
@@ -305,10 +372,13 @@ export default class AmfResourceDocumentationElement extends ApiDocumentationBas
   [operationTemplate](operation) {
     const { serverId } = this;
     return html`<api-operation-document 
-      .operation="${operation}" 
+      .amf="${this.amf}"
+      .domainId="${operation.id}"
       .serverId="${serverId}" 
       data-domain-id="${operation.id}"
-      responsesOpened></api-operation-document>`;
+      ?tryIt="${this.tryIt}"
+      responsesOpened
+      class="operation"></api-operation-document>`;
   }
 
   /**

@@ -375,7 +375,7 @@ export default class ApiSecurityDocumentElement extends ApiDocumentationBase {
       return html`<div class="empty-info">Select a response to render the documentation.</div>`;
     }
     return html`
-    <api-response-document .response="${response}" headersOpened payloadOpened></api-response-document>
+    <api-response-document .amf="${this.amf}" .response="${response}" headersOpened payloadOpened></api-response-document>
     `;
   }
 

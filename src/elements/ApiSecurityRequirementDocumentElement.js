@@ -58,6 +58,7 @@ export default class ApiSecurityRequirementDocumentElement extends ApiDocumentat
     <div class="security-requirements">
       ${scheme.schemes.map((item) => html`
         <api-parametrized-security-scheme 
+          .amf="${this.amf}"
           .securityScheme="${item.scheme}" 
           .settings="${item.settings}"
           settingsOpened></api-parametrized-security-scheme>`)}

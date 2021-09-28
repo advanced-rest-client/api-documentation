@@ -191,7 +191,7 @@ export default class ApiResponseDocumentElement extends ApiDocumentationBase {
     }
     const content = html`
     ${this[payloadSelectorTemplate]()}
-    <api-payload-document .payload="${payload}"></api-payload-document>
+    <api-payload-document .amf="${this.amf}" .payload="${payload}"></api-payload-document>
     `;
     return this[paramsSectionTemplate]('Response body', 'payloadOpened', content);
   }

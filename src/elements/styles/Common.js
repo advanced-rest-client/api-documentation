@@ -28,6 +28,10 @@ export default css`
   text-transform: uppercase;
   white-space: nowrap;
   margin: 0;
+  font-size: var(--api-endpoint-http-method-label-font-size, var(--api-method-documentation-http-method-label-font-size, inherit));
+  font-family: var(--api-endpoint-http-method-label-font-family, var(--api-method-documentation-http-method-label-font-family));
+  font-weight: var(--api-endpoint-http-method-label-font-weight, var(--api-method-documentation-http-method-label-font-weight));
+  min-width: var(--api-endpoint-http-method-label-min-width, var(--api-method-documentation-http-method-label-min-width, inherit));
 }
 
 .endpoint-url .url-value {
