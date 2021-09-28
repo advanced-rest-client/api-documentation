@@ -24,7 +24,7 @@ export const nameTemplate = Symbol('nameTemplate');
 export const schemaTemplate = Symbol('schemaTemplate');
 
 export default class ApiPayloadDocumentElement extends ApiDocumentationBase {
-  static get styles() {
+  get styles() {
     return [commonStyles, elementStyles];
   }
 
@@ -93,6 +93,7 @@ export default class ApiPayloadDocumentElement extends ApiDocumentationBase {
     }
     // todo: render examples for the payload.
     return html`
+    <style>${this.styles}</style>
     ${this[nameTemplate]()}
     ${this[mediaTypeTemplate]()}
     ${this[schemaTemplate]()}

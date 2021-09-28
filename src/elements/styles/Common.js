@@ -49,13 +49,24 @@ export default css`
   display: flex;
   align-items: center;
   flex-direction: row;
-  border-bottom: 1px var(--operation-params-title-border-color, #D6D6D6) solid;
+  border-bottom: 1px var(--operation-params-title-border-color, var(--api-parameters-document-title-border-color, #D6D6D6)) solid;
+  cursor: default;
+  user-select: none;
+  transition: border-bottom-color 0.15s ease-in-out;
+}
+
+.params-title.opened {
+  border-bottom-color: transparent;
 }
 
 .params-title .label {
-  font-size: var(--operation-params-title-size, 22px);
-  font-weight: var(--operation-params-title-weight, 400);
   margin: 20px 0;
+  /* This is for compatibility with the old components. */
+  font-family: var(--operation-params-title-font-family, var(--api-parameters-document-h3-font-family, var(--arc-font-subhead-font-family)));
+  font-size: var(--operation-params-title-size, var(--api-parameters-document-h3-font-size, var(--arc-font-subhead-font-size, 22px)));
+  font-weight: var(--operation-params-title-weight, var(--api-parameters-document-h3-font-weight, var(--arc-font-subhead-font-weight, 400)));
+  line-height: var(--operation-params-title-line-height, var(--api-parameters-document-h3-line-height, var(--arc-font-subhead-line-height, initial)));
+  color: var(--operation-params-title-color, var(--api-parameters-document-h3-font-color, var(--arc-font-subhead-color, initial)));
 }
 
 .section-toggle {

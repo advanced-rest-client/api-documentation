@@ -9,11 +9,4 @@ export default {
       return next();
     }
   ],
-  testRunnerHtml: (testFramework) =>
-    `<html>
-		<body>
-      <script src="../demo/vendor.js"></script>
-		  <script type="module" src="${testFramework}"></script>
-		</body>
-	  </html>`
 };

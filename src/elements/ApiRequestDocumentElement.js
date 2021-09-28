@@ -44,7 +44,7 @@ export const queryStringTemplate = Symbol('queryStringTemplate');
  * A web component that renders the documentation page for an API request object.
  */
 export default class ApiRequestDocumentElement extends ApiDocumentationBase {
-  static get styles() {
+  get styles() {
     return [commonStyles, elementStyles];
   }
 
@@ -244,6 +244,7 @@ export default class ApiRequestDocumentElement extends ApiDocumentationBase {
       return html``;
     }
     return html`
+    <style>${this.styles}</style>
     ${this[descriptionTemplate](request.description)}
     ${this[queryParamsTemplate]()}
     ${this[queryStringTemplate]()}

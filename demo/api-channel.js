@@ -115,8 +115,7 @@ class ComponentPage extends AmfDemoBase {
       ['Streetlights', 'Streetlights API'],
     ].forEach(([file, label]) => {
       result[result.length] = html`
-      <anypoint-item data-src="${file}-compact.json">${label}</anypoint-item>`;
-      // <anypoint-item data-src="${file}.json">${label}</anypoint-item>
+      <anypoint-item data-src="apis/${file}-compact.json">${label}</anypoint-item>`;
     });
     return result;
   }

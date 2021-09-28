@@ -69,7 +69,7 @@ export const computeReferenceSecurity = Symbol('computeReferenceSecurity');
  * A web component that renders the documentation page for an API response object.
  */
 export default class ApiSecurityDocumentElement extends ApiDocumentationBase {
-  static get styles() {
+  get styles() {
     return [commonStyles, elementStyles, MarkdownStyles, schemaStyles];
   }
 
@@ -283,6 +283,7 @@ export default class ApiSecurityDocumentElement extends ApiDocumentationBase {
       return html``;
     }
     return html`
+    <style>${this.styles}</style>
     ${this[titleTemplate]()}
     ${this[descriptionTemplate](scheme.description)}
     ${this[queryParamsTemplate]()}

@@ -6,11 +6,10 @@ import '@advanced-rest-client/arc-demo-helper/arc-demo-helper.js';
 import '@advanced-rest-client/arc-demo-helper/arc-interactive-demo.js';
 import '@api-components/api-navigation/api-navigation.js';
 import '@api-components/api-request/xhr-simple-request.js';
-import '@polymer/paper-toast/paper-toast.js';
 import '@anypoint-web-components/anypoint-styles/colors.js';
 import '@anypoint-web-components/anypoint-styles/typography.js';
-import '@advanced-rest-client/oauth-authorization/oauth2-authorization.js';
-import '@advanced-rest-client/oauth-authorization/oauth1-authorization.js';
+import '@advanced-rest-client/authorization/oauth2-authorization.js';
+import '@advanced-rest-client/authorization/oauth1-authorization.js';
 import '../api-documentation.js';
 
 class ComponentDemo extends ApiDemoPage {
@@ -60,7 +59,6 @@ class ComponentDemo extends ApiDemoPage {
 
   _apiListTemplate() {
     const result = [];
-
     [
       ['google-drive-api', 'Google Drive'],
       ['multi-server', 'Multiple servers'],
@@ -80,8 +78,7 @@ class ComponentDemo extends ApiDemoPage {
       ['async-api', 'async-api'],
     ].forEach(([file, label]) => {
       result[result.length] = html`
-      <anypoint-item data-src="${file}-compact.json">${label} - compact model</anypoint-item>
-      <anypoint-item data-src="${file}.json">${label}</anypoint-item>`;
+      <anypoint-item data-src="apis/${file}-compact.json">${label}</anypoint-item>`;
     });
 
     [
@@ -90,7 +87,7 @@ class ComponentDemo extends ApiDemoPage {
       ['partial-model/security', 'Partial model: Security'],
       ['partial-model/type', 'Partial model: Type'],
     ].forEach(([file, label]) => {
-      result[result.length] = html`<anypoint-item data-src="${file}.json">${label}</anypoint-item>`;
+      result[result.length] = html`<anypoint-item data-src="apis/${file}.json">${label}</anypoint-item>`;
     });
     return result;
   }

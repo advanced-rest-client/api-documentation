@@ -94,7 +94,6 @@ class ComponentPage extends AmfDemoBase {
 
   _apiListTemplate() {
     const result = [];
-
     [
       ['demo-api', 'Demo API'],
       ['api-keys', 'API key (OAS)'],
@@ -105,8 +104,7 @@ class ComponentPage extends AmfDemoBase {
       ['secured-api', 'Secured API'],
     ].forEach(([file, label]) => {
       result[result.length] = html`
-      <anypoint-item data-src="${file}-compact.json">${label} - compact model</anypoint-item>
-      <anypoint-item data-src="${file}.json">${label}</anypoint-item>`;
+      <anypoint-item data-src="apis/${file}-compact.json">${label} - compact model</anypoint-item>`;
     });
     return result;
   }

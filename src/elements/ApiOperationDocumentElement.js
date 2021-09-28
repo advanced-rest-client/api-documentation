@@ -14,6 +14,7 @@ import {
   paramsSectionTemplate,
   descriptionTemplate,
   serializerValue,
+  customDomainPropertiesTemplate,
 } from './ApiDocumentationBase.js';
 import { tablePropertyTemplate } from './SchemaCommonTemplates.js';
 import schemaStyles from './styles/SchemaCommon.js';
@@ -379,6 +380,7 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
     ${this[deprecatedTemplate]()}
     ${this[descriptionTemplate](this[operationValue].description)}
     ${this[metaDataTemplate]()}
+    ${this[customDomainPropertiesTemplate](this[operationValue].customDomainProperties)}
     ${this[urlTemplate]()}
     ${this[requestTemplate]()}
     ${this[callbacksTemplate]()}

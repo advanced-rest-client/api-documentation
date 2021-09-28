@@ -84,7 +84,7 @@ const complexTypes = [
 ];
 
 export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
-  static get styles() {
+  get styles() {
     return [commonStyles, schemaStyles, elementStyles, MarkdownStyles];
   }
 
@@ -390,6 +390,7 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
       return html``;
     }
     return html`
+    <style>${this.styles}</style>
     ${this[titleTemplate]()}
     ${this[descriptionTemplate](schema.description)}
     ${this[examplesTemplate]()}

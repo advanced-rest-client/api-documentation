@@ -19,8 +19,8 @@ export const settingsValue = Symbol('settingsValue');
 export const mergeSettings = Symbol('mergeSettings');
 
 export default class ApiParametrizedSecuritySchemeElement extends ApiSecurityDocumentElement {
-  static get styles() {
-    return [...ApiSecurityDocumentElement.styles, elementStyles];
+  get styles() {
+    return [...super.styles, elementStyles];
   }
 
   /** 

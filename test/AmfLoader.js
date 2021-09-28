@@ -33,7 +33,7 @@ export class AmfLoader extends AmfHelperMixin(Object) {
   async getGraph(compact=false, fileName='demo-api') {
     const suffix = compact ? '-compact' : '';
     const file = `${fileName}${suffix}.json`;
-    const url = `${window.location.protocol}//${window.location.host}/demo/${file}`;
+    const url = `${window.location.protocol}//${window.location.host}/demo/apis/${file}`;
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error('Unable to download API data model');
@@ -205,11 +205,12 @@ export class AmfLoader extends AmfHelperMixin(Object) {
    * @returns {Shape}
    */
   lookupShape(model, name) {
-    this.amf = model;
-    const webApi = this._hasType(model, this.ns.aml.vocabularies.document.Document) ?
-      this._computeApi(model) :
-      model;
-    const declares = this._computeDeclares(webApi) || [];
+    let amf = model;
+    if (Array.isArray(amf)) {
+      [amf] = amf;
+    }
+    this.amf = amf;
+    const declares = (this._computeDeclares(amf) || []);
     let shape = declares.find((item) => {
       if (Array.isArray(item)) {
         [item] = item;

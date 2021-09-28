@@ -20,7 +20,7 @@ export const setModel = Symbol('setModel');
  * the AMF graph model.
  */
 export default class ApiDocumentationDocumentElement extends ApiDocumentationBase {
-  static get styles() {
+  get styles() {
     return [elementStyles, commonStyles, HttpStyles.default, MarkdownStyles];
   }
 
@@ -75,6 +75,7 @@ export default class ApiDocumentationDocumentElement extends ApiDocumentationBas
       return html``;
     }
     return html`
+    <style>${this.styles}</style>
     ${this[titleTemplate]()}
     ${this[descriptionTemplate](this[documentationValue].description)}
     `;

@@ -40,7 +40,7 @@ export const mediaTypeSelectHandler = Symbol('mediaTypeSelectHandler');
  * A web component that renders the documentation page for an API response object.
  */
 export default class ApiResponseDocumentElement extends ApiDocumentationBase {
-  static get styles() {
+  get styles() {
     return [commonStyles, elementStyles, MarkdownStyles];
   }
 
@@ -163,6 +163,7 @@ export default class ApiResponseDocumentElement extends ApiDocumentationBase {
       return html``;
     }
     return html`
+    <style>${this.styles}</style>
     ${this[descriptionTemplate](this[responseValue].description)}
     ${this[headersTemplate]()}
     ${this[payloadTemplate]()}

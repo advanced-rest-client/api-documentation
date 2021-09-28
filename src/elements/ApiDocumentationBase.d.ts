@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import { LitElement, TemplateResult } from 'lit-element';
-import { AmfHelperMixin, AmfSerializer, DomainElement, ApiParameter } from '@api-components/amf-helper-mixin';
+import { AmfHelperMixin, AmfSerializer, DomainElement, ApiParameter, ApiCustomDomainProperty } from '@api-components/amf-helper-mixin';
 
 export declare const sectionToggleClickHandler: unique symbol;
 export declare const queryDebounce: unique symbol;
@@ -12,6 +12,7 @@ export declare const sectionToggleTemplate: unique symbol;
 export declare const paramsSectionTemplate: unique symbol;
 export declare const schemaItemTemplate: unique symbol;
 export declare const descriptionTemplate: unique symbol;
+export declare const customDomainPropertiesTemplate: unique symbol;
 
 /**
  * A base class for the documentation components with common templates and functions.
@@ -81,4 +82,9 @@ export class ApiDocumentationBase extends AmfHelperMixin(LitElement) {
    * @returns The template for the markdown description.
    */
   [descriptionTemplate](description: string): TemplateResult|string;
+  /**
+   * @param customDomainProperties
+   * @returns The template for the custom domain properties
+   */
+  [customDomainPropertiesTemplate](customDomainProperties: ApiCustomDomainProperty[]): TemplateResult|string;
 }

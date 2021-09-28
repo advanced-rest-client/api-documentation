@@ -38,5 +38,8 @@ config.set('SE-12959/SE-12959.json', { type: "OAS 2.0", mime: 'application/json'
 config.set('SE-12752/SE-12752.raml', { type: "RAML 1.0" });
 config.set('oas-callbacks/oas-callbacks.yaml', { type: "OAS 3.0", mime: 'application/yaml' });
 config.set('documented-api/documented-api.raml', { type: "RAML 1.0" });
+config.set('annotated-api/annotated-api.raml', { type: "RAML 1.0" });
 
-generator.generate(config);
+generator.generate(config, {
+  dest: 'demo/apis/'
+});

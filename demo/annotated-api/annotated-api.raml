@@ -1,0 +1,82 @@
+#%RAML 1.0
+title: Illustrating annotations
+mediaType: application/json
+
+annotationTypes:
+  annotationTest: nil
+  deprecated: string
+  experimental: nil | string
+  feedbackRequested: string?
+  testHarness:
+    type: string # This line can be omitted as it's the default type
+  badge:         # This annotation type allows string values, too
+  clearanceLevel:
+    properties:
+      level:
+        enum: [ low, medium, high ]
+        required: true
+      signature:
+        pattern: "\\d{3}-\\w{12}"
+        required: true
+types:
+  nilAnnotationType:
+    (annotationTest):
+    type: object
+    properties:
+      test: boolean
+  ErrorResource:
+    (deprecated): This resource type is deprecated and will be removed in the next version.
+    description: A response that is errored
+    type: object
+    properties:
+      error:
+        type: boolean
+        required: true
+        example: true
+        default: true
+        description: Indicate that the response is errored.
+      message:
+        type: string
+        description: The error message associated with the error.
+        example: <<example>>
+        required: true
+  notRequiredRepeatable:
+    (annotationTest):
+    type: object
+    properties:
+      test: boolean
+  ComplexAnnotations:
+    (clearanceLevel):
+      level: high
+      signature: 230-ghtwvfrs1itr
+    type: object
+    properties:
+      test: string
+  ComboType:
+    (annotationTest):
+    (deprecated): This is deprecated annotation
+    (clearanceLevel):
+      level: low
+      signature: OtherSignature
+    type: object
+    properties:
+      test: string
+  NoAnnotations:
+    type: object
+    properties:
+      test: string
+/groups:
+  (experimental):
+  (feedbackRequested):
+/users:
+  (testHarness): usersTest
+  (badge): tested.gif
+  (clearanceLevel):
+    level: high
+    signature: 230-ghtwvfrs1itr
+  get:
+    (deprecated): This is deprecated annotation
+    (experimental):
+    (feedbackRequested): Feedback committed!
+    responses:
+      200:

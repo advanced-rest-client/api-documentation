@@ -59,7 +59,6 @@ coverage
 demo/vendor.js
 
 # AMF models
-/demo/*.json
-!demo/apis.json
+demo/apis/
 
 .idea/

@@ -1,3 +1,4 @@
+/* eslint-disable lit-a11y/click-events-have-key-events */
 /* eslint-disable class-methods-use-this */
 import { LitElement, html } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map.js';
@@ -5,11 +6,13 @@ import { AmfHelperMixin, AmfSerializer } from '@api-components/amf-helper-mixin'
 import '@anypoint-web-components/anypoint-button/anypoint-button.js';
 import '@anypoint-web-components/anypoint-collapse/anypoint-collapse.js';
 import '@advanced-rest-client/arc-icons/arc-icon.js';
+import '../../api-annotation-document.js';
 
 /** @typedef {import('lit-element').TemplateResult} TemplateResult */
 /** @typedef {import('@api-components/amf-helper-mixin').AmfDocument} AmfDocument */
 /** @typedef {import('@api-components/amf-helper-mixin').DomainElement} DomainElement */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiParameter} ApiParameter */
+/** @typedef {import('@api-components/amf-helper-mixin').ApiCustomDomainProperty} ApiCustomDomainProperty */
 
 export const sectionToggleClickHandler = Symbol('sectionToggleClickHandler');
 export const processDebounce = Symbol('queryDebounce');
@@ -22,6 +25,7 @@ export const descriptionTemplate = Symbol('descriptionTemplate');
 export const sectionToggleTemplate = Symbol('sectionToggleTemplate');
 export const paramsSectionTemplate = Symbol('paramsSectionTemplate');
 export const schemaItemTemplate = Symbol('schemaItemTemplate');
+export const customDomainPropertiesTemplate = Symbol('customDomainPropertiesTemplate');
 /**
  * A base class for the documentation components with common templates and functions.
  */
@@ -170,16 +174,8 @@ export class ApiDocumentationBase extends AmfHelperMixin(LitElement) {
    */
   [sectionToggleTemplate](ctrlProperty) {
     const label = this[ctrlProperty] ? 'Hide' : 'Show';
-    const classes = {
-      'section-toggle': true,
-      opened: this[ctrlProperty],
-    };
     return html`
-    <anypoint-button 
-      data-ctrl-property="${ctrlProperty}" 
-      class="${classMap(classes)}"
-      @click="${this[sectionToggleClickHandler]}"
-    >
+    <anypoint-button class="section-toggle">
       ${label} <arc-icon icon="keyboardArrowDown" class="toggle-icon"></arc-icon>
     </anypoint-button>
     `;
@@ -193,9 +189,17 @@ export class ApiDocumentationBase extends AmfHelperMixin(LitElement) {
    */
   [paramsSectionTemplate](label, openedProperty, content) {
     const opened = this[openedProperty];
+    const classes = {
+      'params-title': true,
+      opened,
+    };
     return html`
     <div class="params-section">
-      <div class="params-title">
+      <div 
+        class="${classMap(classes)}"
+        data-ctrl-property="${openedProperty}" 
+        @click="${this[sectionToggleClickHandler]}"
+      >
         <span class="label">${label}</span>
         ${this[sectionToggleTemplate](openedProperty)}
       </div>
@@ -234,5 +238,20 @@ export class ApiDocumentationBase extends AmfHelperMixin(LitElement) {
         <div slot="markdown-html" class="markdown-body"></div>
       </arc-marked>
     </div>`;
+  }
+
+  /**
+   * @param {ApiCustomDomainProperty[]} customDomainProperties
+   * @returns {TemplateResult|string} The template for the custom domain properties
+   */
+  [customDomainPropertiesTemplate](customDomainProperties=[]) {
+    if (!customDomainProperties.length) {
+      return '';
+    }
+    return html`
+    <api-annotation-document
+      .customProperties="${customDomainProperties}"
+    ></api-annotation-document>
+    `;
   }
 }

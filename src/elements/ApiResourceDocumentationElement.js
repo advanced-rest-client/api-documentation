@@ -9,6 +9,7 @@ import {
   schemaItemTemplate,
   descriptionTemplate,
   serializerValue,
+  customDomainPropertiesTemplate,
 } from './ApiDocumentationBase.js';
 import '../../api-operation-document.js'
 import '../../api-parameter-document.js';
@@ -44,7 +45,7 @@ export const processServerSelection = Symbol('processServerSelection');
  * @fires tryit
  */
 export default class ApiResourceDocumentationElement extends ApiDocumentationBase {
-  static get styles() {
+  get styles() {
     return [elementStyles, commonStyles, MarkdownStyles];
   }
   
@@ -311,8 +312,10 @@ export default class ApiResourceDocumentationElement extends ApiDocumentationBas
       return html``;
     }
     return html`
+    <style>${this.styles}</style>
     ${this[titleTemplate]()}
     ${this[descriptionTemplate](this[endpointValue].description)}
+    ${this[customDomainPropertiesTemplate](this[endpointValue].customDomainProperties)}
     ${this[urlTemplate]()}
     ${this[parametersTemplate]()}
     ${this[operationsTemplate]()}

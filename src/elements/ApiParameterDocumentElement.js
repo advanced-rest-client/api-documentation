@@ -27,7 +27,7 @@ export const typeLabelValue = Symbol('typeLabelValue');
  * A web component that renders the documentation for a single request / response parameter.
  */
 export default class ApiParameterDocumentElement extends ApiDocumentationBase {
-  static get styles() {
+  get styles() {
     return [MarkdownStyles, commonStyles, schemaStyles, elementStyles];
   }
 
@@ -103,6 +103,7 @@ export default class ApiParameterDocumentElement extends ApiDocumentationBase {
     const type = this[typeLabelValue];
     const schema = this[schemaValue];
     return html`
+    <style>${this.styles}</style>
     <div class="property-container simple">
       <div class="name-column">
         ${paramNameTemplate(name, required)}
