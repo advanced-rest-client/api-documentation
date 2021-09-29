@@ -26,4 +26,8 @@ export default css`
   margin-left: 8px;
   font-size: var(--schema-title-type-name-size, 22px);
 }
+
+.schema-title.low-emphasis .type-name {
+  font-size: var(--schema-title-type-name-low-emphasis-size, 1.05rem);
+}
 `;
