@@ -12,7 +12,7 @@ import { chevronRight } from '@advanced-rest-client/arc-icons';
 import commonStyles from './styles/Common.js';
 import elementStyles from './styles/ApiSchema.js';
 import schemaStyles from './styles/SchemaCommon.js';
-import { readPropertyTypeLabel } from '../lib/Utils.js';
+import { readPropertyTypeLabel, isScalarUnion, isScalarType, schemaToType } from '../lib/Utils.js';
 import { 
   detailsTemplate, 
   paramNameTemplate, 
@@ -58,7 +58,7 @@ export const anyOfSelectedHandler = Symbol('anyOfSelectedHandler');
 export const schemaContentTemplate = Symbol('schemaContentTemplate');
 export const scalarShapeTemplate = Symbol('scalarSchemaTemplate');
 export const nodeShapeTemplate = Symbol('nodeShapeTemplate');
-export const unionShapeTemplate = Symbol('unionSchemaTemplate');
+export const unionShapeTemplate = Symbol('unionShapeTemplate');
 export const fileShapeTemplate = Symbol('fileShapeTemplate');
 export const schemaShapeTemplate = Symbol('schemaShapeTemplate');
 export const arrayShapeTemplate = Symbol('arrayShapeTemplate');
@@ -84,6 +84,7 @@ const complexTypes = [
   ns.aml.vocabularies.shapes.UnionShape,
   ns.aml.vocabularies.shapes.ArrayShape,
   ns.aml.vocabularies.shapes.TupleShape,
+  ns.aml.vocabularies.shapes.AnyShape,
 ];
 
 export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
@@ -224,6 +225,11 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
   [processSchema]() {
     const type = /** @type ApiShapeUnion */ (this[schemaValue]);
     if (!type) {
+      this[examplesValue] = undefined;
+      return;
+    }
+    if (isScalarType(type.types)) {
+      // we don't want to render examples for a scalar types.
       this[examplesValue] = undefined;
       return;
     }
@@ -510,11 +516,11 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
     if (types.includes(ns.aml.vocabularies.shapes.SchemaShape)) {
       return this[schemaShapeTemplate](/** @type ApiSchemaShape */ (schema));
     }
-    if (types.includes(ns.aml.vocabularies.shapes.ArrayShape) || types.includes(ns.aml.vocabularies.shapes.MatrixShape)) {
-      return this[arrayShapeTemplate](/** @type ApiArrayShape */ (schema));
-    }
     if (types.includes(ns.aml.vocabularies.shapes.TupleShape)) {
       return this[tupleShapeTemplate](/** @type ApiTupleShape */ (schema));
+    }
+    if (types.includes(ns.aml.vocabularies.shapes.ArrayShape) || types.includes(ns.aml.vocabularies.shapes.MatrixShape)) {
+      return this[arrayShapeTemplate](/** @type ApiArrayShape */ (schema));
     }
     return this[anyShapeTemplate](/** @type ApiAnyShape */ (schema));
   }
@@ -527,7 +533,14 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
     if (schema.readOnly && this.noReadOnly) {
       return '';
     }
-    return scalarDetailsTemplate(schema, true);
+    const type = typeValueTemplate(readPropertyTypeLabel(schema));
+    return html`
+    <div class="scalar-property">
+      ${type}
+      ${scalarDetailsTemplate(schema, true)}
+    </div>
+    `;
+    // return scalarDetailsTemplate(schema, true);
   }
 
   /**
@@ -587,9 +600,20 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
    */
   [unionShapeTemplate](schema) {
     const unionTemplate = unionDetailsTemplate(schema);
-    const { anyOf, or, and } = schema;
+    const allScalar = isScalarUnion(schema);
+    if (allScalar) {
+      return unionTemplate;
+    }
+    const { anyOf, or, and, xone } = schema;
     if (Array.isArray(anyOf) && anyOf.length) {
       const schemaContent = this[anyOfUnionTemplate](schema.id, anyOf);
+      return html`
+      ${unionTemplate}
+      ${schemaContent}
+      `;
+    }
+    if (Array.isArray(xone) && xone.length) {
+      const schemaContent = this[anyOfUnionTemplate](schema.id, xone);
       return html`
       ${unionTemplate}
       ${schemaContent}
@@ -655,7 +679,14 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
       selected = renderedItem.id;
     }
     const options = items.map((item, index) => {
-      const label = item.name || item.displayName || `Option #${index + 1}`;
+      let label = item.name || item.displayName;
+      if (!label && item.types.includes(ns.aml.vocabularies.shapes.ScalarShape)) {
+        const { dataType } = /** @type ApiScalarShape */ (item);
+        label = `${schemaToType(dataType)} (#${index + 1})`;
+      }
+      if (!label) {
+        label = `Option #${index + 1}`;
+      }
       return {
         label,
         id: item.id,
@@ -735,8 +766,18 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
     if (!items) {
       return html`<div class="empty-info">Items are not defined for this array.</div>`;
     }
+    let labelTemplate;
+    if (schema === this[schemaValue]) {
+      const label = readPropertyTypeLabel(schema, true);
+      labelTemplate = html`
+      <div class="schema-property-item">
+        <div class="schema-property-label">${label}</div>
+      </div>
+      `;
+    }
     return html`
     <div class="params-section">
+      ${labelTemplate||''}
       ${this[schemaContentTemplate](items)}
     </div>
     `;
@@ -766,11 +807,11 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
    * @returns {TemplateResult|string} The template for the Any shape.
    */
   [anyShapeTemplate](schema) {
-    const { and, or, readOnly } = schema;
+    const { and=[], or=[], readOnly, xone=[] } = schema;
     if (readOnly && this.noReadOnly) {
       return '';
     }
-    if (and.length || or.length) {
+    if (and.length || or.length || xone.length) {
       return this[unionShapeTemplate](/** @type ApiUnionShape */ (schema));
     }
     return html`<p class="any-info">Any schema is accepted as the value here.</p>`;
@@ -796,12 +837,13 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
     const type = readPropertyTypeLabel(range);
     const label = schema.name || displayName || range.name;
     const [domainType] = range.types;
-    
     let isComplex = complexTypes.includes(domainType);
     if (isComplex) {
       if (range.types.includes(ns.aml.vocabularies.shapes.ArrayShape)) {
         const { items } = /** @type ApiArrayShape */ (range);
         isComplex = complexTypes.includes(items.types[0]);
+      } else if (range.types.includes(ns.aml.vocabularies.shapes.UnionShape)) {
+        isComplex = !isScalarUnion(/** @type ApiUnionShape */ (range));
       }
     }
     const allExpanded = this[expandedValue];

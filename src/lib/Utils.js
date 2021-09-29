@@ -10,6 +10,16 @@ import { ns } from '@api-components/amf-helper-mixin';
 /** @typedef {import('../types').OperationParameter} OperationParameter */
 
 /**
+ * @param {string[]} types Shape's types
+ */
+export function isScalarType(types=[]) {
+  const { shapes } = ns.aml.vocabularies;
+  return types.includes(shapes.ScalarShape) || 
+    types.includes(shapes.NilShape) ||
+    types.includes(shapes.FileShape);
+}
+
+/**
  * @param {string} value The value from the graph model to use to read the value from
  */
 export function schemaToType(value) {
@@ -45,7 +55,10 @@ export function readPropertyTypeLabel(schema, isArray=false) {
     if (!array.items) {
       return undefined;
     }
-    const label = readPropertyTypeLabel(array.items, true);
+    let label = readPropertyTypeLabel(array.items, true);
+    if (label === 'items' && !isScalarType(array.items.types)) {
+      label = 'objects';
+    }
     return `List of ${label}`;
   }
   if (types.includes(ns.w3.shacl.NodeShape)) {
@@ -71,5 +84,34 @@ export function readPropertyTypeLabel(schema, isArray=false) {
   if (types.includes(ns.aml.vocabularies.shapes.FileShape)) {
     return 'File';
   }
-  return 'Unknown';
+  return schema.name || 'Unknown';
+}
+
+/**
+ * @param {ApiShapeUnion[]} shapes
+ * @returns {boolean} true when all of passed shapes are scalar.
+ */
+function isAllScalar(shapes=[]) {
+  return !shapes.some(i => !isScalarType(i.types));
+}
+
+/**
+ * @param {ApiUnionShape} shape
+ * @returns {boolean} true when the passed union type consists of scalar values only. Nil counts as scalar.
+ */
+export function isScalarUnion(shape) {
+  const { anyOf=[], or=[], and=[], xone=[] } = shape;
+  if (anyOf.length) {
+    return isAllScalar(anyOf);
+  }
+  if (or.length) {
+    return isAllScalar(or);
+  }
+  if (and.length) {
+    return isAllScalar(and);
+  }
+  if (xone.length) {
+    return isAllScalar(xone);
+  }
+  return true;
 }

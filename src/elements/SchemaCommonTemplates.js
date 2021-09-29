@@ -123,7 +123,6 @@ export function tablePropertyTemplate(label, value) {
   `;
 }
 
-
 export function detailSectionTemplate(items) {
   return html`
   <details class="property-details">
