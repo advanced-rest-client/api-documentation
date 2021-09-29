@@ -1,6 +1,7 @@
 import { html } from "lit-element";
 import { ns } from '@api-components/amf-helper-mixin';
 import { classMap } from "lit-html/directives/class-map";
+import '../../api-annotation-document.js';
 
 /** @typedef {import('lit-element').TemplateResult} TemplateResult */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiShapeUnion} ApiShapeUnion */
@@ -140,7 +141,7 @@ export function detailSectionTemplate(items) {
  * @return {TemplateResult|string} The template for the details of the scalar schema
  */
 export function scalarDetailsTemplate(schema, noDetail) {
-  const { examples=[], values=[], defaultValueStr, format, maxLength, maximum, minLength, minimum, multipleOf, pattern, readOnly, writeOnly, deprecated } = schema;
+  const { examples=[], values=[], defaultValueStr, format, maxLength, maximum, minLength, minimum, multipleOf, pattern, readOnly, writeOnly, deprecated, customDomainProperties } = schema;
   const result = [];
   const pills = [];
   if (defaultValueStr) {
@@ -169,20 +170,12 @@ export function scalarDetailsTemplate(schema, noDetail) {
   }
   if (readOnly) {
     pills.push(pillTemplate('Read only', 'This property is read only.'));
-    // result.push(tablePropertyTemplate('Read only', 'yes'));
   }
   if (writeOnly) {
     pills.push(pillTemplate('Write only', 'This property is write only.'));
-    // result.push(tablePropertyTemplate('Write only', 'yes'));
   }
   if (deprecated) {
     pills.push(pillTemplate('Deprecated', 'This property is marked as deprecated.', ['warning']));
-    // result.push(html`
-    // <div class="schema-property-item">
-    //   <div class="schema-property-label">Deprecated:</div>
-    //   <div class="schema-property-value">This property is deprecated</div>
-    // </div>
-    // `)
   }
   if (values.length) {
     result[result.length] = html`
@@ -203,6 +196,9 @@ export function scalarDetailsTemplate(schema, noDetail) {
       </ul>
     </div>
     `;
+  }
+  if (Array.isArray(customDomainProperties) && customDomainProperties.length) {
+    result[result.length] = html`<api-annotation-document .customProperties="${customDomainProperties}"></api-annotation-document>`;
   }
   if (noDetail && result.length) {
     return pillsAndTable(pills, result);
@@ -227,7 +223,7 @@ export function scalarDetailsTemplate(schema, noDetail) {
  * @return {TemplateResult|string} The template for the details of the Node schema
  */
 function nodeDetailsTemplate(schema) {
-  const { examples, maxProperties, minProperties, readOnly, writeOnly, deprecated } = schema;
+  const { maxProperties, minProperties, readOnly, writeOnly, deprecated, customDomainProperties } = schema;
   const result = [];
   const pills = [];
   if (typeof minProperties === 'number') {
@@ -238,24 +234,25 @@ function nodeDetailsTemplate(schema) {
   }
   if (readOnly) {
     pills.push(pillTemplate('Read only', 'This property is read only.'));
-    // result.push(tablePropertyTemplate('Read only', 'yes'));
   }
   if (writeOnly) {
     pills.push(pillTemplate('Write only', 'This property is write only.'));
-    // result.push(tablePropertyTemplate('Write only', 'yes'));
   }
   if (deprecated) {
     pills.push(pillTemplate('Deprecated', 'This property is marked as deprecated.', ['warning']));
   }
-  if (examples.length) {
-    result[result.length] = html`
-    <div class="schema-property-item">
-      <div class="schema-property-label example">Examples:</div>
-      <ul class="example-items">
-        ${examples.map((item) => html`<li>${item.value}</li>`)}
-      </ul>
-    </div>
-    `;
+  // if (examples.length) {
+  //   result[result.length] = html`
+  //   <div class="schema-property-item">
+  //     <div class="schema-property-label example">Examples:</div>
+  //     <ul class="example-items">
+  //       ${examples.map((item) => html`<li>${item.value}</li>`)}
+  //     </ul>
+  //   </div>
+  //   `;
+  // }
+  if (Array.isArray(customDomainProperties) && customDomainProperties.length) {
+    result[result.length] = html`<api-annotation-document .customProperties="${customDomainProperties}"></api-annotation-document>`;
   }
   if (result.length && result.length < 3) {
     return pillsAndTable(pills, result);
@@ -276,7 +273,7 @@ function nodeDetailsTemplate(schema) {
  * @return {TemplateResult|string} The template for the details of the Array schema
  */
 function arrayDetailsTemplate(schema) {
-  const { examples, readOnly, writeOnly, uniqueItems, defaultValueStr, deprecated } = schema;
+  const { readOnly, writeOnly, uniqueItems, defaultValueStr, deprecated, customDomainProperties } = schema;
   const result = [];
   const pills = [];
   if (defaultValueStr) {
@@ -287,24 +284,25 @@ function arrayDetailsTemplate(schema) {
   }
   if (readOnly) {
     pills.push(pillTemplate('Read only', 'This property is read only.'));
-    // result.push(tablePropertyTemplate('Read only', 'yes'));
   }
   if (writeOnly) {
     pills.push(pillTemplate('Write only', 'This property is write only.'));
-    // result.push(tablePropertyTemplate('Write only', 'yes'));
   }
   if (deprecated) {
     pills.push(pillTemplate('Deprecated', 'This property is marked as deprecated.', ['warning']));
   }
-  if (examples.length) {
-    result[result.length] = html`
-    <div class="schema-property-item">
-      <div class="schema-property-label example">Examples:</div>
-      <ul class="example-items">
-        ${examples.map((item) => html`<li>${item.value}</li>`)}
-      </ul>
-    </div>
-    `;
+  // if (examples.length) {
+  //   result[result.length] = html`
+  //   <div class="schema-property-item">
+  //     <div class="schema-property-label example">Examples:</div>
+  //     <ul class="example-items">
+  //       ${examples.map((item) => html`<li>${item.value}</li>`)}
+  //     </ul>
+  //   </div>
+  //   `;
+  // }
+  if (Array.isArray(customDomainProperties) && customDomainProperties.length) {
+    result[result.length] = html`<api-annotation-document .customProperties="${customDomainProperties}"></api-annotation-document>`;
   }
   if (result.length && result.length < 3) {
     return pillsAndTable(pills, result);
@@ -325,7 +323,7 @@ function arrayDetailsTemplate(schema) {
  * @return {TemplateResult|string} The template for the details of the Union schema
  */
 export function unionDetailsTemplate(schema) {
-  const { examples, readOnly, writeOnly, defaultValueStr, deprecated } = schema;
+  const { readOnly, writeOnly, defaultValueStr, deprecated, customDomainProperties } = schema;
   const result = [];
   const pills = [];
   if (defaultValueStr) {
@@ -333,24 +331,25 @@ export function unionDetailsTemplate(schema) {
   }
   if (readOnly) {
     pills.push(pillTemplate('Read only', 'This property is read only.'));
-    // result.push(tablePropertyTemplate('Read only', 'yes'));
   }
   if (writeOnly) {
     pills.push(pillTemplate('Write only', 'This property is write only.'));
-    // result.push(tablePropertyTemplate('Write only', 'yes'));
   }
   if (deprecated) {
     pills.push(pillTemplate('Deprecated', 'This property is marked as deprecated.', ['warning']));
   }
-  if (examples.length) {
-    result[result.length] = html`
-    <div class="schema-property-item">
-      <div class="schema-property-label example">Examples:</div>
-      <ul class="example-items">
-        ${examples.map((item) => html`<li>${item.value}</li>`)}
-      </ul>
-    </div>
-    `;
+  // if (examples.length) {
+  //   result[result.length] = html`
+  //   <div class="schema-property-item">
+  //     <div class="schema-property-label example">Examples:</div>
+  //     <ul class="example-items">
+  //       ${examples.map((item) => html`<li>${item.value}</li>`)}
+  //     </ul>
+  //   </div>
+  //   `;
+  // }
+  if (Array.isArray(customDomainProperties) && customDomainProperties.length) {
+    result[result.length] = html`<api-annotation-document .customProperties="${customDomainProperties}"></api-annotation-document>`;
   }
   if (result.length && result.length < 3) {
     return pillsAndTable(pills, result);
@@ -371,7 +370,7 @@ export function unionDetailsTemplate(schema) {
  * @return {TemplateResult|string} The template for the details of the File schema
  */
 export function fileDetailsTemplate(schema) {
-  const { examples=[], values=[], defaultValueStr, format, maxLength, maximum, minLength, minimum, multipleOf, pattern, readOnly, writeOnly, fileTypes, deprecated } = schema;
+  const { customDomainProperties=[], values=[], defaultValueStr, format, maxLength, maximum, minLength, minimum, multipleOf, pattern, readOnly, writeOnly, fileTypes, deprecated } = schema;
   const result = [];
   const pills = [];
   if (defaultValueStr) {
@@ -382,11 +381,9 @@ export function fileDetailsTemplate(schema) {
   }
   if (readOnly) {
     pills.push(pillTemplate('Read only', 'This property is read only.'));
-    // result.push(tablePropertyTemplate('Read only', 'yes'));
   }
   if (writeOnly) {
     pills.push(pillTemplate('Write only', 'This property is write only.'));
-    // result.push(tablePropertyTemplate('Write only', 'yes'));
   }
   if (deprecated) {
     pills.push(pillTemplate('Deprecated', 'This property is marked as deprecated.', ['warning']));
@@ -422,15 +419,18 @@ export function fileDetailsTemplate(schema) {
     </div>
     `;
   }
-  if (examples.length) {
-    result[result.length] = html`
-    <div class="schema-property-item">
-      <div class="schema-property-label example">Examples:</div>
-      <ul class="example-items">
-        ${examples.map((item) => html`<li>${item.value}</li>`)}
-      </ul>
-    </div>
-    `;
+  // if (examples.length) {
+  //   result[result.length] = html`
+  //   <div class="schema-property-item">
+  //     <div class="schema-property-label example">Examples:</div>
+  //     <ul class="example-items">
+  //       ${examples.map((item) => html`<li>${item.value}</li>`)}
+  //     </ul>
+  //   </div>
+  //   `;
+  // }
+  if (Array.isArray(customDomainProperties) && customDomainProperties.length) {
+    result[result.length] = html`<api-annotation-document .customProperties="${customDomainProperties}"></api-annotation-document>`;
   }
   if (result.length && result.length < 3) {
     return pillsAndTable(pills, result);

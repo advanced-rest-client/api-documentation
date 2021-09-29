@@ -1,0 +1,32 @@
+{	
+	"banks": [{
+		"id": "BANKAMYKL",
+		"name": "Bank A",
+		"status": "A",
+		"urlList": [				
+			{
+				"urlType": "RET",
+				"urlValue": "https://www.bank-a.com.my/retail/checkout/info",
+				"applicationId": "com.merchanta.app"
+			},
+			{
+				"urlType": "CORP",
+				"urlValue": "https://www.bank-a.com.my/corp/checkout/info",
+				"applicationId": "com.merchanta.app"
+			}			
+		]
+	},
+	{
+		"id": "MERAMYKL",
+		"name": "Merchant Buffet",
+		"status": "A",
+		"urlList": [				
+			{
+				"urlType": "RET",
+				"urlValue": "https://www.buffetnotarealurl.com.my/checkout/info",
+				"applicationId": "com.buffet.app"
+			}
+		]
+		
+	}]
+}

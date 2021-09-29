@@ -1,0 +1,21 @@
+openapi: '3.0.2'
+info:
+  title: 'SE-17897'
+  version: 1.0.0
+
+paths:
+  /default:
+    post:
+      parameters:
+        - in: query
+          name: conversationId
+          required: false
+          description: >
+            The ConversationId uniquely identifies the message sent from the sender to the receiver.
+          schema:
+            type: string
+            format: uuid
+          example: '242ab55c-de2b-4822-a411-945e85882b60'
+      responses:
+        '201':
+          description: Created

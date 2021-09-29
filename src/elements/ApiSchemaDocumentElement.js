@@ -75,6 +75,9 @@ export const propertyDescriptionEditor = Symbol('propertyDescriptionEditor');
 export const checkSchemaPropertyUpdate = Symbol('checkSchemaPropertyUpdate');
 export const propertyDecoratorTemplate = Symbol('propertyDecoratorTemplate');
 export const toggleExpandedProperty = Symbol('toggleExpandedProperty');
+export const andUnionItemTemplate = Symbol('andUnionItemTemplate');
+export const orderUnion = Symbol('orderUnion');
+export const inheritanceNameTemplate = Symbol('inheritanceNameTemplate');
 
 const complexTypes = [
   ns.w3.shacl.NodeShape,
@@ -99,12 +102,10 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
     }
     this[mimeTypeValue] = value;
     this.requestUpdate('mimeType', old);
-    if (value) {
-      setTimeout(() => {
-        this[processSchema]();
-        this.requestUpdate();
-      });
-    }
+    setTimeout(() => {
+      this[processSchema]();
+      this.requestUpdate();
+    });
   }
 
   /**
@@ -146,6 +147,11 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
        * When set it renders the title with lower emphasis and adding `schema` prefix.
        */
       schemaTitle: { type: Boolean, reflect: true },
+      /** 
+       * When set it does not render read only items.
+       * Read only property is a feature of OAS.
+       */
+      noReadOnly: { type: Boolean },
     };
   }
 
@@ -181,6 +187,8 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
     this.editProperties = undefined;
     /** @type boolean */
     this.schemaTitle = undefined;
+    /** @type boolean */
+    this.noReadOnly = undefined;
     /** @type Shape */
     this.domainModel = undefined;
   }
@@ -214,7 +222,7 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
    * This processes examples for the schema.
    */
   [processSchema]() {
-    const type = this[schemaValue];
+    const type = /** @type ApiShapeUnion */ (this[schemaValue]);
     if (!type) {
       this[examplesValue] = undefined;
       return;
@@ -248,6 +256,8 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
         });
         const result = ApiSchemaGenerator.asExample(type, mimeType, {
           selectedUnions,
+          renderExamples: true,
+          renderOptional: true,
         });
         if (result) {
           this[examplesValue] = [result];
@@ -384,6 +394,22 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
     this.requestUpdate();
   }
 
+  /**
+   * Orders union items so the first is the one that has properties defined inline.
+   * @param {ApiShapeUnion[]} shapes
+   * @return {ApiShapeUnion[]} 
+   */
+  [orderUnion](shapes) {
+    return [...shapes].sort((a, b) => {
+      const aHasName = !!a.name && !a.name.startsWith('item');
+      const bHasName = !!b.name && !b.name.startsWith('item');
+      if (aHasName === bHasName) {
+        return 0;
+      }
+      return aHasName ? 1 : -1;
+    });
+  }
+
   render() {
     const schema = this[schemaValue];
     if (!schema) {
@@ -464,6 +490,10 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
    * @returns {TemplateResult|string} The template for the schema properties depending on the type
    */
   [schemaContentTemplate](schema) {
+    const { noReadOnly } = this;
+    if (schema.readOnly && noReadOnly) {
+      return '';
+    }
     const { types } = schema;
     if (types.includes(ns.aml.vocabularies.shapes.ScalarShape)) {
       return this[scalarShapeTemplate](/** @type ApiScalarShape */ (schema));
@@ -494,15 +524,21 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
    * @returns {TemplateResult|string} The template for the scalar shape.
    */
   [scalarShapeTemplate](schema) {
+    if (schema.readOnly && this.noReadOnly) {
+      return '';
+    }
     return scalarDetailsTemplate(schema, true);
   }
 
   /**
    * @param {ApiNodeShape} schema
-   * @returns {TemplateResult} The template for the node shape.
+   * @returns {TemplateResult|string} The template for the node shape.
    */
   [nodeShapeTemplate](schema) {
-    const { properties, inherits } = schema;
+    const { properties, inherits, readOnly } = schema;
+    if (readOnly && this.noReadOnly) {
+      return '';
+    }
     let items = [...(properties || [])];
     if (Array.isArray(inherits) && inherits.length) {
       inherits.forEach((item) => {
@@ -567,11 +603,7 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
       `;
     }
     if (Array.isArray(and) && and.length) {
-      const items = and.map((item) => html`
-      <div class="and-union-item">
-        ${this[schemaContentTemplate](item)}
-      </div>
-      `);
+      const items = this[orderUnion](and).map((item) => this[andUnionItemTemplate](item));
       return html`
       <div class="combined-union">
         ${items}
@@ -579,6 +611,32 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
       `;
     }
     return unionTemplate;
+  }
+
+  /**
+   * @param {ApiShapeUnion} shape
+   */
+  [andUnionItemTemplate](shape) {
+    return html`
+    <div class="and-union-item">
+      ${this[inheritanceNameTemplate](shape)}
+      ${this[schemaContentTemplate](shape)}
+    </div>
+    `;
+  }
+
+  /**
+   * @param {ApiShapeUnion} shape
+   * @returns {TemplateResult|string} The template for the "and" union item's title, if inherited from another type.
+   */
+  [inheritanceNameTemplate](shape) {
+    const { name='' } = shape;
+    const hasName = !!name && !name.startsWith('item');
+    if (hasName) {
+      return html`<p class="inheritance-label">Properties inherited from <b>${name}</b>.</p>`;
+    }
+    return '';
+    // return html`<p class="inheritance-label">Properties defined inline.</p>`;
   }
 
   /**
@@ -638,15 +696,21 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
    * @returns {TemplateResult|string} The template for the file shape.
    */
   [fileShapeTemplate](schema) {
+    if (schema.readOnly && this.noReadOnly) {
+      return '';
+    }
     return fileDetailsTemplate(schema);
   }
 
   /**
    * @param {ApiSchemaShape} schema
-   * @returns {TemplateResult} The template for the schema shape.
+   * @returns {TemplateResult|string} The template for the schema shape.
    */
   [schemaShapeTemplate](schema) {
-    const { raw } = schema;
+    const { raw, readOnly } = schema;
+    if (readOnly && this.noReadOnly) {
+      return '';
+    }
     if (!raw) {
       return html`
       <div class="empty-info">Schema is not defined for this message.</div>
@@ -661,10 +725,13 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
 
   /**
    * @param {ApiArrayShape} schema
-   * @returns {TemplateResult} The template for the array shape.
+   * @returns {TemplateResult|string} The template for the array shape.
    */
   [arrayShapeTemplate](schema) {
-    const { items } = schema;
+    const { items, readOnly } = schema;
+    if (readOnly && this.noReadOnly) {
+      return '';
+    }
     if (!items) {
       return html`<div class="empty-info">Items are not defined for this array.</div>`;
     }
@@ -677,10 +744,13 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
 
   /**
    * @param {ApiTupleShape} schema
-   * @returns {TemplateResult} The template for the tuple shape.
+   * @returns {TemplateResult|string} The template for the tuple shape.
    */
   [tupleShapeTemplate](schema) {
-    const { items } = schema;
+    const { items, readOnly } = schema;
+    if (readOnly && this.noReadOnly) {
+      return '';
+    }
     if (!items) {
       return html`<div class="empty-info">Items are not defined for this array.</div>`;
     }
@@ -696,7 +766,10 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
    * @returns {TemplateResult|string} The template for the Any shape.
    */
   [anyShapeTemplate](schema) {
-    const { and, or } = schema;
+    const { and, or, readOnly } = schema;
+    if (readOnly && this.noReadOnly) {
+      return '';
+    }
     if (and.length || or.length) {
       return this[unionShapeTemplate](/** @type ApiUnionShape */ (schema));
     }
@@ -705,14 +778,20 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
 
   /**
    * @param {ApiPropertyShape} schema
-   * @returns {TemplateResult} The template for the schema property item.
+   * @returns {TemplateResult|string} The template for the schema property item.
    */
   [shapePropertyTemplate](schema) {
-    const { range, minCount } = schema;
+    const { range, minCount, readOnly } = schema;
+    if (readOnly && this.noReadOnly) {
+      return '';
+    }
     if (!range) {
       return this[shapePropertyWithoutRangeTemplate](schema);
     }
     const { displayName, deprecated } = range;
+    if (range.readOnly && this.noReadOnly) {
+      return '';
+    }
     const required = minCount > 0;
     const type = readPropertyTypeLabel(range);
     const label = schema.name || displayName || range.name;

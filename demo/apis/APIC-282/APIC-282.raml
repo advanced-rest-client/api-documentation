@@ -1,0 +1,57 @@
+#%RAML 1.0
+title: APIC-282
+version: v1
+baseUri: http://api.domain.com/
+mediaType: [ application/json ]
+
+annotationTypes:
+  deprecated: string
+  annotationTest: nil
+types:
+  Arrays:
+    type: object
+    properties:
+      testRepeatable:
+        (deprecated): Test parameter will be removed in next version of the API.
+        required: true
+        type: string[]
+        example: [value1, value2]
+        description: A string array with an example and annotation.
+        minItems: 1
+        maxItems: 10
+      numericRepeatable:
+        required: true
+        type: integer[]
+        examples:
+          Some-test-example: [123, 456]
+          Other-example: [1011, 1213]
+      notRequiredRepeatable:
+        (annotationTest):
+        type: array
+        items: date-only
+        required: false
+      multiArray:
+        type: array
+        items: boolean | string
+
+/endpoint:
+  post:
+    body:
+      type: object
+      properties:
+        testRepeatable:
+          (deprecated): Test parameter will be removed in next version of the API.
+          required: true
+          type: string[]
+          example: [value1, value2]
+        numericRepeatable:
+          required: true
+          type: integer[]
+          examples:
+            Some-test-example: [123, 456]
+            Other-example: [1011, 1213]
+        notRequiredRepeatable:
+          (annotationTest):
+          type: array
+          items: date-only
+          required: false

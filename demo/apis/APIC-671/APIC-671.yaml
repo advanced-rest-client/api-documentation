@@ -1,0 +1,387 @@
+openapi: 3.0.1
+info:
+  title: Subscriptions
+  description: "Manage a customer's subscription and retrieve their subscription history and information.\n
+  
+  Use the provided API to enroll an end-user into a subscription plan, manage their payment method and subscription lifecycle.\n
+  
+  **Onboarding**\n
+  
+  If you wish to enroll an end-user into an existing subscrtipion program, there is no additional onboarding needed; simply start using these APIs.\n
+  
+  If you wish to enroll an end-user into a new subscription program outside of Price Match (BPme US), Coffee Club (BPme UK) or Daily Coffee (ampm), please contact the subscritpion team. At the moment consumers are not able to self-service to create new subscription plans.\n
+  
+  **Right to be forgotten & refunds**\n
+  
+  Administrative features are currently only accessible by the subscription team. For requests such as to carry out a user's right to be forgotten or issuing refunds, please contact the subscription team.\n
+  
+  
+  **Payment method & integration with the user's stored wallet**\n
+  
+  The subscritpion service _is not integrated_ with bp wallet at this time. Consumers will need to integrate directly with Braintree to capture the card used for the subscription payments.\n
+  
+  _Note: Consumers web interfaces may need to be PCI compliant_ \n
+  
+  **Interacting with API**\n
+  
+  _User_\n
+  
+  For retrieving information about a user's subscribscriptions - both current and past.\n
+  
+  _Subscriptions_\n
+  
+  For enrolling a user in a subsription plan, canceling an existing subscrption, or retrieve a user's payment method information and update a user's payment method.\n
+  
+  
+  **Contact information**\n
+  
+  Product owner: Eric Doornbos (eric.doornbos@bp.com)\n
+  
+  Architect: Protik Majumdar (protik.majumdar@bp.com)\n
+  
+  For developer support, reach the team via our slack channel: [#global-subscriptions-devs](https://bp-dcm-b2c.slack.com/archives/C01738X00PN)\n
+  
+  For feature requests or onboarding a new subscription program, please reach out to Eric.\n
+  
+  "
+  contact:
+    name: "the subscription team"
+    email: this-dl-does-not-exist@bp.com
+  version: 1.0.0
+externalDocs:
+  description: Find out more about subscriptions
+  url: https://bp-vsts.visualstudio.com/BPme/_wiki/wikis/BPme.wiki/31322/Global-Subscriptions
+servers:
+- url: http://localhost:8080
+- url: https://dev-subscriptions.bpglobal.com
+- url: https://qa-subscriptions.bpglobal.com
+security:
+  - UserJWT: []
+tags:
+- name: user
+  description: Subscription information by user
+  externalDocs:
+    description: Find out more
+    url: http://swagger.io
+- name: subscriptions
+  description: Enroll or manage subscription details
+paths:
+  /user/subscriptions:
+    get:
+      tags:
+        - "user"
+      summary: "Get all subscription for the user"
+      description: "Returns the list of subscriptions, past and present, for that user. Only subscriptions under the provided loyalty program will be returned."
+      parameters:
+        - name: "x-loyalty-program"
+          in: header
+          schema:
+            $ref: "#/components/schemas/LoyaltyProgram"
+      responses:
+        '200':
+          description: "Successfully retrieved the subscriber's past subscriptions"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Subscription'
+        '404':
+          description: "The user was never a subscriber and has no subscriptions"
+          content: {}
+        '400':
+          description: "The request contains invalid parameters. Please ensure that the loyalty program plan name is correct."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error description
+                    example: "X-LOYALTY-PROGRAM: my-fake-program is not a valid program"
+        '401':
+          description: "The request is missing authorization details. Please check to see if the end user JWT is provided in the header."
+          content: {}
+        '403':
+          description: "The request has a malformed or expired end user JWT."
+          content: {}
+  /subscriptions:
+    post:
+      summary: "Enroll the user to a subscription plan"
+      description: "Note:\n
+      
+      Only credit and debit cards are valid payment methods for a subscription. Prepaid cards, Apple Pay and Google Wallet are not currently accepted.\n
+      
+      Payment methods are not integrated with BP Wallet; consumers must generate the nonce (one-time use tokens) through Braintree."
+      tags:
+        - subscriptions
+      parameters:
+        - name: "x-loyalty-program"
+          in: header
+          schema:
+            $ref: "#/components/schemas/LoyaltyProgram"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                selectedPlan:
+                  type: string
+                  description: The plan to enroll in. For UK Coffee Club subscriptions, please use 'HotDrinks'
+                  enum:
+                    - PriceMatch
+                    - CoffeeSubscription
+                    - HotDrinks
+                nonce:
+                  type: string
+                  description: The one time use token issued by Braintree for the payment method.
+                  example: "fake-valid-nonce"
+      responses:
+        '201':
+          description: "Subscriber successfully enrolled"
+        '400':
+          description: "The requests is invalid due to missing or incorrect inputs."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error description
+              examples:
+                Bad loyalty program:
+                  value: { error: "X-LOYALTY-PROGRAM: my-unicorn-program is not a valid program" }
+                Bad subscription plan:
+                  value: { error: "Selected Plan: my-unicorn-plan is not a valid plan" }
+        '403':
+          description: "Attempted to complete an action that is not allowed.\n 
+          
+          Please check to see if the the supplied end-user JWT is valid, or if the the enrolled subscription plan is under the specified loyalty program."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error description
+              examples:
+                Invalid JWT:
+                  value: {}
+                Mismatch between selected plan and loyalty program:
+                  value: { error: "Selected Plan: CoffeeSubscription is not part of the users loyalty program" }
+                User already enrolled to another program:
+                  value: { error: "User already has an active subscription in the specified loyalty program" }
+        '409':
+          description: "There was a conflict enrolling the user; the user is already enrolled to the selected plan"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error description
+                    example: "User is already enrolled in the requested subscription"
+  /subscriptions/{subscriptionId}/payment:
+    parameters:
+      - name: subscriptionId
+        in: path
+        description: Subscription id to retrieve payment information fo
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: "x-loyalty-program"
+        in: header
+        schema:
+          $ref: "#/components/schemas/LoyaltyProgram"
+    get:
+      summary: "Retrieve the payment details for a subscription"
+      description: "Returns the card information for the subscription."
+      tags:
+        - subscriptions
+      responses:
+        '200': 
+          description: "Successfully retrieved the payment detail"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cardType:
+                    type: string
+                    description: "The credit card type"
+                    example: Visa
+                  expirationDate:
+                    type: string
+                    example: 07/21
+                    description: "The expiration date of the credit card"
+                  lastFourDigits:
+                    type: string
+                    example: "1134"
+                    description: "The last 4 digits on the credit card"
+        '404':
+          description: "The subscription cannot be found"
+        '401':
+          description: "The request is missing the authorization key"
+          content: {}
+        '403':
+          description: "The request has a malformed or expired authorization key"
+          content: {}
+        '500':
+          description: "An unknown exception has occured; consumer should contact the subscription team to resolve this."
+    put:
+      summary: "Update the card to use subscription recurring charges."
+      description: "New payment method will be effective immediately. \n
+      
+      If a user's account is past due, it will be charged immediately. Otherwise, the card will be charged on the next billing date. Only the payment methods types allowed during enrollment is allowed when updating payment methods."
+      tags:
+        - subscriptions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nonce:
+                  type: string
+                  description: The one time use token issued by Braintree for the new payment method
+            examples:
+              With a valid token:
+                value:
+                  nonce: "fake-valid-nonce"
+              With a bad token:
+                value:
+                  nonce: "fake-processor-declined-visa-nonce"
+      responses:
+        '200': 
+          description: "Successfully updated payment method for subcription"
+          content: {}
+        '400':
+          description: "The supplied nonce for the payment method is invalid"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    description: "List of error descriptions"
+                    type: array
+                    items:
+                      type: string
+                      example: "Payment method failed to be verified."
+        '404':
+          description: "The subscription cannot be found"
+        '401':
+          description: "The request is missing the authorization key"
+          content: {}
+        '403':
+          description: "The request has a malformed or expired authorization key"
+          content: {}
+        '500':
+          description: "An unknown exception has occured; consumer should contact the subscription team to resolve this."
+components:
+  schemas:
+    Subscription:
+      type: object
+      properties:
+        cardNumber:
+          type: string
+          example: "1123"
+          description: The last 4 digits of credit card used for the recurring payment
+        expirationDate:
+          type: string
+          example: "07/2021"
+          description: The expiration month and year of the card used for the curring payment
+        renewalDate:
+          type: string
+          format: date
+          description: The next date for which the subscription will be renewed/charged its monthly fee.
+        billingPeriodStartDate:
+          type: string
+          format: date | "Invalid date"
+          example: "2021-05-08"
+          description: The charge date in the current subscription billing cycle. If the subscription has never been charged (i.e. within its trial period), then the value will be "Invalid date".
+        planName:
+          type: string
+          description: The name of the subscription plan
+          enum:
+            - Price Match
+            - Coffee
+            - Hot Drinks
+        planPrice:
+          type: string
+          format: money
+          description: The fee charged on the recurring schedule
+          example: "0.99"
+        createdAt:
+          type: string
+          format: date-time
+          example: "2021-05-08T20:29:03.919Z"
+        subscriptionId:
+          type: string
+          format: uuid
+          description: The id for the subscription
+        state:
+          oneOf:
+            - type: object
+              description: "An active subscription"
+              properties:
+                status:
+                  type: "string"
+                  example: "active"
+            - type: object
+              description: "A past due subscription. The subscription failed to be renewed but is still within the 3 day grace period (inclusive of the renewal date) where there will be daily attempts to charge for the subscription fee."
+              properties:
+                status:
+                  type: "string"
+                  example: "pastdue"
+            - type: object
+              description: "A canceled subscription. The subscription has gone past the last paid through date."
+              properties:
+                status:
+                  type: "string"
+                  example: "canceled"
+                cancellationReason:
+                  description: "MEMBER_INITIATED: if the member initiated the cancellation voluntarily. PAYMENT_FAILURE: if all attempts at charging the subscription for renewal failed and the subscription is automatically canceled as a result."
+                  type: string
+                  enum:
+                    - "MEMBER_INITIATED"
+                    - "PAYMENT_FAILURE"
+                endDate:
+                  type: string
+                  format: date
+                  description: "The last date for which the subscription has been paid through."
+                  example: "2021-08-01"
+            - type: object
+              description: "A subscription that has been canceled, but still within its paid through period. Only subscriptions canceled by the subscriber voluntarily will be in residual states."
+              properties:
+                status:
+                  type: "string"
+                  example: "residual"
+                cancellationReason:
+                  type: string
+                  enum:
+                    - "MEMBER_INITIATED"
+                endDate:
+                  type: string
+                  format: date
+                  description: "The last date for which the subscription has been paid through; the member will continue to receive the paid for services until, and including, this date."
+                  example: "2021-08-01"
+    LoyaltyProgram:
+      description: "The loyalty program the subscription is under"
+      type: string
+      enum:
+        - bpme-us
+        - bpme-uk
+        - ampm
+  securitySchemes:
+    UserJWT:
+      description: "The end user JWT issued by Salesforce for the user session."
+      type: apiKey
+      in: header
+      name: x-user-authorization

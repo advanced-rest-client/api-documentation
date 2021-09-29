@@ -1,0 +1,7 @@
+{
+  "application": {
+    "name": "some-application-system",
+    "version": "2019.8.1",
+    "stage": "deve"
+  }
+}

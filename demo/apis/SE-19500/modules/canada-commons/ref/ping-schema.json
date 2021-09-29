@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "title": "Describes a /ping response that provides meta information of the application in place.",
+  "required": [
+    "application"
+  ],
+  "properties": {
+    "application": {
+      "type": "object",
+      "description": "The application object holds some basic information concerning self.",
+      "required": [
+        "name",
+        "version",
+        "stage"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the application. Corresponds to the Maven 'artifactId'.",
+          "examples": [
+            "some-application-system"
+          ]
+        },
+        "version": {
+          "type": "string",
+          "description": "The version of the deployed application.",
+          "examples": [
+            "2019.8.1", "2020.1.2-SNAPSHOT"
+          ]
+        },
+        "stage": {
+          "type": "string",
+          "description": "The stage (environment) the application is currently running.",
+          "enum": [
+				    "local",
+				    "deve",
+				    "apps",
+				    "ints",
+				    "prod",
+				    "trai",
+				    "pref",
+				    "phot"
+			]
+        }
+      }
+    }
+  }
+}

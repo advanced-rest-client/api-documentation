@@ -1,0 +1,95 @@
+#%RAML 1.0
+title: canda-mule4-example
+documentation:
+ - title: Home
+   content: !include docs/home.md
+version: api
+baseUri: https://mule-worker-internal-canda-mule4-example-deve.de-c1.cloudhub.io:33443/api
+
+uses:
+  candaCommons: modules/canada-commons/canda-commons.raml
+  myTypes: modules/canda-mule4-example-data-types/api.raml
+
+securedBy: [candaCommons.basicAuth]
+
+types:
+  Companies: !include ref/companies-schema.json
+
+/greetings:
+  description: The greetings resource contains only a simple message. The message text might be customized by passing a query parameter.
+  is: [ candaCommons.client-id-required ]
+  get:
+    description: Answers a collection of three simple greetings.
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include modules/canda-mule4-example-data-types/examples/greetings-example.json
+            type: myTypes.greetings
+      204:
+        description: The response does not contain any content.
+  put:
+    description: Creates a representation of a simple greeting message. This is a pseudo operation, the API does not store the representation in any way.
+    body:
+      application/json:
+        examples:
+          example1: !include modules/canda-mule4-example-data-types/examples/greeting-example.json
+        type: myTypes.greeting
+    responses:
+      201:
+        body:
+          application/json:
+            example: !include modules/canda-mule4-example-data-types/examples/greeting-example.json
+            type: myTypes.greeting
+  /{name}:
+    description: Responds with a greeting a for the given 'name'.
+    is: [ candaCommons.client-id-required ]
+    uriParameters:
+      name:
+        type: string
+        example: "mike"
+    get:
+      description: Answers a greeting representation for the given 'name'.
+      queryParameters:
+        message:
+          displayName: message
+          type: string
+          description: Pass a message which should be used by the response.
+          required: false
+          example: "Hi, Dude"
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include modules/canda-mule4-example-data-types/examples/greeting-example.json
+              type: myTypes.greeting
+/companies:
+  description: The companies resource is probably the most simple representation of a C&A company.
+  is: [ candaCommons.client-id-required ]
+  get:
+    description: Answers a collection (1..n) of all available Companies with their basic attributes.
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include ref/companies-example.json
+            type: !include ref/companies-schema.json
+      204:
+        description: The response does not contain any content.
+  post:
+    description: Add a new company
+    body:
+      application/json:
+        examples:
+          example1: !include ref/companies-example.json
+        type: Companies
+    responses:
+      201:
+        description: Created
+
+/logLevels/{loggerName}:
+  type: candaCommons.logLevel
+  is: [ candaCommons.client-id-required ]
+/ping:
+  type: candaCommons.ping
+  is: [ candaCommons.client-id-required ]

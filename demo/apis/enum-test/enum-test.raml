@@ -1,0 +1,64 @@
+#%RAML 1.0
+title: Australian Trade Mark Search API
+description: 'Australian Trade Mark Search API.'
+version: v1
+
+types:
+  TrademarkApiAdvancedSearch:
+    type: object
+    properties:
+      Working1?:
+        type: TrademarkPierreWorking1Type
+      Working2?:
+        type: TrademarkPierreWorking2Type
+      Working3?:
+        type: TrademarkPierreWorking3Type
+      NotWorking?:
+        type: TrademarkPierreNotWorkingType
+  TrademarkPierreWorking1Type:
+    type: object
+    properties:
+      foo1:
+        type: string
+        enum:
+          - NON_USE
+          - INTERNATIONAL_REGISTRATION
+          - REGULATED
+          - SERIES
+  TrademarkPierreWorking2Type:
+    type: array
+    items:
+      type: object
+      properties: 
+        foo2:
+          type: string
+          enum:
+            - NON_USE
+            - INTERNATIONAL_REGISTRATION
+            - REGULATED
+            - SERIES
+  TrademarkPierreWorking3Type:
+    type: string
+    enum:
+      - NON_USE
+      - INTERNATIONAL_REGISTRATION
+      - REGULATED
+      - SERIES
+  TrademarkPierreNotWorkingType:
+    type: array
+    items:
+      type: string
+      enum:
+        - NON_USE
+        - INTERNATIONAL_REGISTRATION
+        - REGULATED
+        - SERIES
+
+/testEndpoint:
+  post:
+    displayName: Paged Advanced Search
+    description: Returns a pageable list of Trade Marks with their details.
+    body:
+      application/json:
+        description: Trade Mark Advanced Search payload
+        type: TrademarkApiAdvancedSearch

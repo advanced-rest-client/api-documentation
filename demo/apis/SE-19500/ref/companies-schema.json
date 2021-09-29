@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Describes the probably most simple representation of a CANDA company.",
+  "additionalProperties": true,
+  "definitions": {},
+  "properties": {
+    "companies": {
+      "items": {
+        "additionalProperties": true,
+        "properties": {
+          "code": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 99,
+            "description": "The code of the given company is the unique identifier of the entity."
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 50,
+            "description": "The legal name of the given company."
+          },
+          "companyType": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 10,
+                "description": "The legal name of the given company.",
+                "enum": [
+                  "EU"
+                ]
+              },
+              {
+                "type": "string",
+                "description": "Any future added type",
+                "maxLength": 10
+              }
+            ]
+          }
+        },
+        "required": [
+          "code",
+          "name"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "companyType": {
+      "anyOf": [
+        {
+          "type": "string",
+          "maxLength": 10,
+          "description": "The legal name of the given company.",
+          "enum": [
+            "EU"
+          ]
+        },
+        {
+          "type": "string",
+          "description": "Any future added type",
+          "maxLength": 10
+        }
+      ]
+    }
+  },
+  "required": [
+    "companies"
+  ],
+  "type": "object"
+}

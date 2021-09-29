@@ -1,0 +1,26 @@
+#%RAML 1.0
+title: AAP-1698
+
+/working:
+  post:
+    body:
+      application/json:
+        type: object
+        properties:
+          userType:
+            type:
+              enum: [Admin, User, System]
+            required: false
+
+/not-working:
+  post:
+    body:
+      application/json:
+        type: object
+        properties:
+          mappers:
+            description: optional set of mapper types to use for handling the request.
+            type: array
+            items:
+              enum: [ "lookup","ml","fasttext"]
+            required: false

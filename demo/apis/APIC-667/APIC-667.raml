@@ -1,0 +1,30 @@
+#%RAML 1.0
+title: RamlLibraryTypeShowsMediaType
+
+version: v1
+mediaType: [ application/json, application/xml ]
+
+types:
+  aNumberType:
+    description: a description
+    type: number
+
+/{uriparam}:
+  description: Example for 00293053
+  uriParameters:
+    uriparam:
+      type: aNumberType
+      example: 123
+      required: true
+  get:
+    description: a method Description
+    queryParameters:
+      qp:
+        type: string
+        description: a query param Description
+        example: atextexample
+        required: false
+    responses:
+      200:
+        body:
+          application/json:

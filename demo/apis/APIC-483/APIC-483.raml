@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: Retrieve List of Bank
+description: |
+  Bank Paynet API
+mediaType:
+  - application/json
+baseUri: api/bank/prc/{version}
+version: v1
+
+/banks:
+  post:
+    displayName: Retrieve Bank Paynet
+    body:
+      application/json:
+        type: !include schema/response-retrieve-list-bank.json
+        example: !include example/list-of-bank-succ.json

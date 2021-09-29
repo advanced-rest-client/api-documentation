@@ -39,6 +39,24 @@ config.set('SE-12752/SE-12752.raml', { type: "RAML 1.0" });
 config.set('oas-callbacks/oas-callbacks.yaml', { type: "OAS 3.0", mime: 'application/yaml' });
 config.set('documented-api/documented-api.raml', { type: "RAML 1.0" });
 config.set('annotated-api/annotated-api.raml', { type: "RAML 1.0" });
+config.set('aap-1698/aap-1698.raml', { type: "RAML 1.0" });
+config.set('apic-83/apic-83.raml', { type: "RAML 1.0" });
+config.set('examples-api/examples-api.raml', { type: "RAML 1.0" });
+config.set('SE-11155/SE-11155.raml', { type: "RAML 1.0" });
+config.set('APIC-282/APIC-282.raml', { type: "RAML 1.0" });
+config.set('APIC-483/APIC-483.raml', { type: "RAML 1.0" });
+config.set('APIC-631/APIC-631.raml', { type: "RAML 1.0" });
+config.set('SE-19500/SE-19500.raml', { type: "RAML 1.0" });
+config.set('enum-test/enum-test.raml', { type: "RAML 1.0" });
+config.set('APIC-667/APIC-667.raml', { type: "RAML 1.0" });
+config.set('oas-api/Petstore-v2.yaml', { type: "OAS 2.0", mime: 'application/yaml' });
+config.set('APIC-289/APIC-289.yaml', { type: "OAS 2.0", mime: 'application/yaml' });
+config.set('APIC-429/APIC-429.yaml', { type: "OAS 3.0", mime: 'application/yaml' });
+config.set('SE-17897/SE-17897.yaml', { type: "OAS 3.0", mime: 'application/yaml' });
+config.set('new-oas3-types/new-oas3-types.yaml', { type: "OAS 3.0", mime: 'application/yaml' });
+config.set('oas-api/read-only-properties.yaml', { type: "OAS 3.0", mime: 'application/yaml' });
+config.set('APIC-649/APIC-649.yaml', { type: "OAS 3.0", mime: 'application/yaml' });
+config.set('APIC-671/APIC-671.yaml', { type: "OAS 3.0", mime: 'application/yaml' });
 
 generator.generate(config, {
   dest: 'demo/models/',

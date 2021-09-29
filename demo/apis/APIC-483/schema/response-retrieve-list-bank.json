@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "banks": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description":"Bank/Merchant Id (BIC code)",
+              "maxLength":35
+            },
+            "name": {
+              "type": "string",
+              "description":"Bank/Merchant Name",
+              "maxLength":35
+            },
+            "status": {
+              "type": "string",
+              "description":"Bank/Merchant Active/Inactive Status. Can have one of the values 'A'=Active, or 'I'=Inactive)",
+              "maxLength":35
+            },
+            "urlList": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "urlType": {
+                      "type": "string",
+                      "description":"URL Type. Used where participant may have more than one Redirect URL. Example Corporate and Retail redirect URL 1)RET= Retail 2)COR= Corporate",
+                      "maxLength":3
+                    },
+                    "urlValue": {
+                      "type": "string",
+                      "description":"URL Value",
+                      "maxLength":140
+                    },
+                    "applicationId": {
+                    "type": "string",
+                    "description":"Bank Application Id",
+                    "maxLength":140
+                    }
+                  },
+                  "required": [
+                    "urlType",
+                    "urlValue"
+                  ]
+                }
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "name",
+            "urlList"
+          ]
+        }
+      ]
+    }
+  },
+  "required": [
+    "banks"
+  ]
+}
