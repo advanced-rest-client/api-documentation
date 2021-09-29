@@ -11,6 +11,8 @@ import '../../api-annotation-document.js';
 /** @typedef {import('@api-components/amf-helper-mixin').ApiNodeShape} ApiNodeShape */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiUnionShape} ApiUnionShape */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiFileShape} ApiFileShape */
+/** @typedef {import('@api-components/amf-helper-mixin').ApiDataNodeUnion} ApiDataNodeUnion */
+/** @typedef {import('@api-components/amf-helper-mixin').ApiRecursiveShape} ApiRecursiveShape */
 
 /**
  * @param {string} label The label to render.
@@ -58,12 +60,28 @@ function pillsAndTable(pills, items) {
 }
 
 /**
+ * @param {ApiDataNodeUnion[]} values
+ * @returns {TemplateResult}
+ */
+function enumValuesTemplate(values) {
+  return html`
+  <div class="schema-property-item">
+  <div class="schema-property-label">Enum:</div>
+    <ul class="enum-items">
+      ${values.map((item) => html`<li class="code-value inline">${/** @type ApiScalarNode */ (item).value}</li>`)}
+    </ul>
+  </div>
+  `;
+}
+
+/**
  * @param {string} name The name of the parameter
  * @param {boolean=} required Whether the parameter is required
  * @param {boolean=} deprecated Whether the parameter is deprecated
+ * @param {string=} paramName When set it renders the parameter name. Should be used when `name` is a `display name`.
  * @return {TemplateResult} The template for the property name value. 
  */
-export function paramNameTemplate(name, required=false, deprecated=false) {
+export function paramNameTemplate(name, required=false, deprecated=false, paramName) {
   const label = String(name||'');
   const classes = {
     'param-name': true,
@@ -72,8 +90,9 @@ export function paramNameTemplate(name, required=false, deprecated=false) {
   };
   return html`
   <div class="${classMap(classes)}">
-    ${label}
+    <span class="param-label">${label}</span>
   </div>
+  ${paramName ? html`<span class="param-name-secondary" title="Schema property name">${paramName}</span>` : ''}
   `;
 }
 
@@ -177,14 +196,7 @@ export function scalarDetailsTemplate(schema, noDetail) {
     pills.push(pillTemplate('Deprecated', 'This property is marked as deprecated.', ['warning']));
   }
   if (values.length) {
-    result[result.length] = html`
-    <div class="schema-property-item">
-    <div class="schema-property-label">Enum:</div>
-      <ul class="enum-items">
-        ${values.map((item) => html`<li class="code-value inline">${/** @type ApiScalarNode */ (item).value}</li>`)}
-      </ul>
-    </div>
-    `;
+    result[result.length] = enumValuesTemplate(values);
   }
   if (examples.length) {
     result[result.length] = html`
@@ -272,22 +284,46 @@ function nodeDetailsTemplate(schema) {
  * @return {TemplateResult|string} The template for the details of the Array schema
  */
 function arrayDetailsTemplate(schema) {
-  const { readOnly, writeOnly, uniqueItems, defaultValueStr, deprecated, customDomainProperties } = schema;
+  const { readOnly, writeOnly, uniqueItems, defaultValueStr, deprecated, customDomainProperties, items } = schema;
   const result = [];
   const pills = [];
   if (defaultValueStr) {
     result.push(tablePropertyTemplate('Default value', defaultValueStr));
+  } else if (items && items.defaultValueStr) {
+    result.push(tablePropertyTemplate('Default value', items.defaultValueStr));
   }
   if (uniqueItems) {
     result.push(tablePropertyTemplate('Unique items', 'true'));
   }
-  if (readOnly) {
+  if (items && items.types && items.types.includes(ns.aml.vocabularies.shapes.ScalarShape)) {
+    const scalar = /** @type ApiScalarShape */ (schema);
+    if (scalar.format) {
+      result.push(tablePropertyTemplate('Format', scalar.format));
+    }
+    if (scalar.pattern) {
+      result.push(tablePropertyTemplate('Pattern', scalar.pattern));
+    }
+    if (typeof scalar.minimum === 'number') {
+      result.push(tablePropertyTemplate('Minimum', String(scalar.minimum)));
+    }
+    if (typeof scalar.maximum === 'number') {
+      result.push(tablePropertyTemplate('Maximum', String(scalar.maximum)));
+    }
+    if (typeof scalar.minLength === 'number') {
+      result.push(tablePropertyTemplate('Minimum length', String(scalar.minLength)));
+    }
+    if (typeof scalar.maxLength === 'number') {
+      result.push(tablePropertyTemplate('Maximum length', String(scalar.maxLength)));
+    }
+  }
+  
+  if (readOnly || (items && items.readOnly)) {
     pills.push(pillTemplate('Read only', 'This property is read only.'));
   }
-  if (writeOnly) {
+  if (writeOnly || (items && items.writeOnly)) {
     pills.push(pillTemplate('Write only', 'This property is write only.'));
   }
-  if (deprecated) {
+  if (deprecated || (items && items.deprecated)) {
     pills.push(pillTemplate('Deprecated', 'This property is marked as deprecated.', ['warning']));
   }
   // if (examples.length) {
@@ -300,6 +336,48 @@ function arrayDetailsTemplate(schema) {
   //   </div>
   //   `;
   // }
+  if (items && items.values.length) {
+    result[result.length] = enumValuesTemplate(items.values);
+  }
+  if (Array.isArray(customDomainProperties) && customDomainProperties.length) {
+    result[result.length] = html`<api-annotation-document .customProperties="${customDomainProperties}"></api-annotation-document>`;
+  }
+  if (result.length && result.length < 3) {
+    return pillsAndTable(pills, result);
+    // return html`${result}`;
+  }
+  if (result.length) {
+    return html`
+    ${pillsLine(pills)}
+    ${detailSectionTemplate(result)}
+    `;
+    // return detailSectionTemplate(result);
+  } 
+  return pillsLine(pills);
+}
+
+/**
+ * @param {ApiRecursiveShape} schema
+ * @return {TemplateResult|string} The template for the recursive shape.
+ */
+function recursiveDetailsTemplate(schema) {
+  const { readOnly, writeOnly, defaultValueStr, deprecated, customDomainProperties, } = schema;
+  const result = [];
+  const pills = [];
+  pills.push(pillTemplate('Recursive', 'This property is is recursive.', ['warning']));
+  if (defaultValueStr) {
+    result.push(tablePropertyTemplate('Default value', defaultValueStr));
+  }
+  if (readOnly) {
+    pills.push(pillTemplate('Read only', 'This property is read only.'));
+  }
+  if (writeOnly) {
+    pills.push(pillTemplate('Write only', 'This property is write only.'));
+  }
+  if (deprecated) {
+    pills.push(pillTemplate('Deprecated', 'This property is marked as deprecated.', ['warning']));
+  }
+  
   if (Array.isArray(customDomainProperties) && customDomainProperties.length) {
     result[result.length] = html`<api-annotation-document .customProperties="${customDomainProperties}"></api-annotation-document>`;
   }
@@ -366,9 +444,10 @@ export function unionDetailsTemplate(schema) {
 
 /**
  * @param {ApiFileShape} schema
+ * @param {boolean=} noDetail When true it always render all properties, without the detail element.
  * @return {TemplateResult|string} The template for the details of the File schema
  */
-export function fileDetailsTemplate(schema) {
+export function fileDetailsTemplate(schema, noDetail) {
   const { customDomainProperties=[], values=[], defaultValueStr, format, maxLength, maximum, minLength, minimum, multipleOf, pattern, readOnly, writeOnly, fileTypes, deprecated } = schema;
   const result = [];
   const pills = [];
@@ -409,14 +488,7 @@ export function fileDetailsTemplate(schema) {
     result.push(tablePropertyTemplate('Multiple of', String(multipleOf)));
   }
   if (values.length) {
-    result[result.length] = html`
-    <div class="schema-property-item">
-    <div class="schema-property-label">Enum:</div>
-      <ul class="enum-items">
-        ${values.map((item) => html`<li class="code-value inline">${/** @type ApiScalarNode */ (item).value}</li>`)}
-      </ul>
-    </div>
-    `;
+    result[result.length] = enumValuesTemplate(values);
   }
   // if (examples.length) {
   //   result[result.length] = html`
@@ -431,9 +503,11 @@ export function fileDetailsTemplate(schema) {
   if (Array.isArray(customDomainProperties) && customDomainProperties.length) {
     result[result.length] = html`<api-annotation-document .customProperties="${customDomainProperties}"></api-annotation-document>`;
   }
+  if (noDetail && result.length) {
+    return pillsAndTable(pills, result);
+  }
   if (result.length && result.length < 3) {
     return pillsAndTable(pills, result);
-    // return html`${result}`;
   }
   if (result.length) {
     return html`
@@ -468,6 +542,9 @@ export function detailsTemplate(schema) {
   }
   if (types.includes(ns.aml.vocabularies.shapes.FileShape)) {
     return fileDetailsTemplate(/** @type ApiFileShape */ (schema));
+  }
+  if (types.includes(ns.aml.vocabularies.shapes.RecursiveShape)) {
+    return recursiveDetailsTemplate(/** @type ApiRecursiveShape */ (schema));
   }
   return ''
 }

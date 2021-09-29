@@ -8,6 +8,7 @@ import { ns } from '@api-components/amf-helper-mixin';
 /** @typedef {import('@api-components/amf-helper-mixin').ApiParameter} ApiParameter */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiPropertyShape} ApiPropertyShape */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiNodeShape} ApiNodeShape */
+/** @typedef {import('@api-components/amf-helper-mixin').ApiAnyShape} ApiAnyShape */
 /** @typedef {import('../types').OperationParameter} OperationParameter */
 
 /**
@@ -47,6 +48,9 @@ export function readPropertyTypeLabel(schema, isArray=false) {
     return undefined;
   }
   const { types } = schema;
+  if (types.includes(ns.aml.vocabularies.shapes.NilShape)) {
+    return 'Nil';
+  }
   if (types.includes(ns.aml.vocabularies.shapes.ScalarShape)) {
     const scalar = /** @type ApiScalarShape */ (schema);
     return schemaToType(scalar.dataType || '');

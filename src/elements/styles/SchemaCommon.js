@@ -156,9 +156,13 @@ export default css`
   }
 
   .param-name {
-    font-weight: 500;
-    font-size: 1.2rem;
     word-break: break-all;
+  }
+
+  .param-name .param-label {
+    font-weight: var(--property-name-font-weight, var(--api-type-document-property-name-font-weight, 500));
+    color: var(--property-name-color, var(--api-type-document-property-color, inherit));
+    font-size: var(--property-name-font-size, var(--api-type-document-property-name-font-size, 1.2rem));
   }
 
   .param-name.required::after {
@@ -170,6 +174,10 @@ export default css`
     text-decoration: line-through;
   }
 
+  .param-name-secondary {
+    margin-left: 8px;
+  }
+
   .headline-separator {
     display: inline-block;
     width: 1px;
@@ -179,7 +187,7 @@ export default css`
   }
 
   .param-type {
-    margin: 12px 0;
+    margin: 12px 12px 12px 0;
   }
 
   .schema-property-item {
@@ -189,7 +197,7 @@ export default css`
   }
 
   .schema-property-label {
-    font-weight: 500;
+    font-weight: var(--property-schema-property-label-font-weight, var(--api-type-document-property-range-attribute-label-font-weight, 500));
     margin-right: 8px;
   }
 
@@ -288,10 +296,11 @@ export default css`
   }
 
   .pill {
-    padding: 2px 12px;
-    background-color: var(--pill-background-color, #e5e5e5);
-    color: var(--pill-color, var(--primary-text-color, #000));
-    border-radius: 12px;
+    background-color: var(--pill-background-color, var(--api-type-document-trait-background-color, #e5e5e5));
+    color: var(--pill-color, var(--api-type-document-trait-color, var(--primary-text-color, #000)));
+    border-radius: var(--pill-border-radius, var(--api-type-document-trait-border-radius, 12px));
+    font-size: var(--pill-font-size, var(--api-type-document-trait-font-size, inherit));
+    padding: var(--pill-padding, var(--api-type-document-trait-padding, 2px 12px));
     margin: 4px;
   }
 

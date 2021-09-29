@@ -114,6 +114,14 @@ export class ApiDocumentationBase extends AmfHelperMixin(LitElement) {
     }
   }
 
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    if (this[debounceValue]) {
+      clearTimeout(this[debounceValue]);
+      this[debounceValue] = undefined;
+    }
+  }
+
   /**
    * Calls the `queryGraph()` function in a debouncer.
    */

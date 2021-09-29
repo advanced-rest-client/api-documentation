@@ -194,6 +194,8 @@ class ComponentPage extends AmfDemoBase {
       ['APIC-282', 'APIC-282'],
       ['new-oas3-types', 'New OAS 3 types API'],
       ['APIC-483', 'APIC 483'],
+      ['APIC-631', 'APIC-631: Arrays'],
+      ['aap-1698', 'aap-1698'],
     ].forEach(([file, label]) => {
       result[result.length] = html`
       <anypoint-item data-src="models/${file}-compact.json">${label}</anypoint-item>

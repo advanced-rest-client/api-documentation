@@ -21,4 +21,9 @@ export default css`
   font-size: var(--schema-title-low-emphasis-size, 1.1rem);
   font-weight: var(--schema-title-low-emphasis-weight, 400);
 }
+
+.schema-title .type-name {
+  margin-left: 8px;
+  font-size: var(--schema-title-type-name-size, 22px);
+}
 `;

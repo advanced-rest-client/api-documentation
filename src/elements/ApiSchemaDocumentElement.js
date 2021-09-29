@@ -12,23 +12,26 @@ import { chevronRight } from '@advanced-rest-client/arc-icons';
 import commonStyles from './styles/Common.js';
 import elementStyles from './styles/ApiSchema.js';
 import schemaStyles from './styles/SchemaCommon.js';
-import { readPropertyTypeLabel, isScalarUnion, isScalarType, schemaToType } from '../lib/Utils.js';
+import { readPropertyTypeLabel, isScalarUnion, isScalarType } from '../lib/Utils.js';
 import { 
   detailsTemplate, 
   paramNameTemplate, 
   typeValueTemplate, 
-  fileDetailsTemplate, 
+  fileDetailsTemplate,
   scalarDetailsTemplate,
   unionDetailsTemplate,
+  pillTemplate,
 } from './SchemaCommonTemplates.js';
 import { 
   ApiDocumentationBase,
   serializerValue,
   descriptionTemplate,
+  customDomainPropertiesTemplate,
 } from './ApiDocumentationBase.js';
 
 /** @typedef {import('lit-element').TemplateResult} TemplateResult */
 /** @typedef {import('@api-components/amf-helper-mixin').Shape} Shape */
+/** @typedef {import('@api-components/amf-helper-mixin').ApiShape} ApiShape */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiShapeUnion} ApiShapeUnion */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiExample} ApiExample */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiScalarShape} ApiScalarShape */
@@ -78,6 +81,7 @@ export const toggleExpandedProperty = Symbol('toggleExpandedProperty');
 export const andUnionItemTemplate = Symbol('andUnionItemTemplate');
 export const orderUnion = Symbol('orderUnion');
 export const inheritanceNameTemplate = Symbol('inheritanceNameTemplate');
+export const nilShapeTemplate = Symbol('nilShapeTemplate');
 
 const complexTypes = [
   ns.w3.shacl.NodeShape,
@@ -286,8 +290,13 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
    */
   [evaluateExample](example) {
     const { mimeType } = this;
-    const generator = new ApiExampleGenerator();
-    const value = generator.read(example, mimeType);
+    let value;
+    if (mimeType) {
+      const generator = new ApiExampleGenerator();
+      value = generator.read(example, mimeType);
+    } else {
+      value = example.value || '';
+    }
     const { name, displayName } = example;
     const label = displayName || name;
     const result = /** @type SchemaExample */ ({
@@ -425,6 +434,7 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
     <style>${this.styles}</style>
     ${this[titleTemplate]()}
     ${this[descriptionTemplate](schema.description)}
+    ${this[customDomainPropertiesTemplate](schema.customDomainProperties)}
     ${this[examplesTemplate]()}
     ${this[schemaContentTemplate](schema)}
     `;
@@ -440,6 +450,7 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
     if (label === 'schema') {
       return '';
     }
+    const typeName = name && label !== name && name !== 'schema' ? name : undefined;
     const { schemaTitle } = this;
     const headerCss = {
       'schema-title': true,
@@ -450,6 +461,7 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
     <div class="schema-header">
       <div class="${classMap(headerCss)}">
         <span class="label">${prefix}${label}</span>
+        ${typeName ? html`<span class="type-name" title="Schema name">(${typeName})</span>` : ''}
       </div>
     </div>
     `;
@@ -521,6 +533,9 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
     }
     if (types.includes(ns.aml.vocabularies.shapes.ArrayShape) || types.includes(ns.aml.vocabularies.shapes.MatrixShape)) {
       return this[arrayShapeTemplate](/** @type ApiArrayShape */ (schema));
+    }
+    if (types.includes(ns.aml.vocabularies.shapes.NilShape)) {
+      return this[nilShapeTemplate](/** @type ApiShape */ (schema));
     }
     return this[anyShapeTemplate](/** @type ApiAnyShape */ (schema));
   }
@@ -642,7 +657,7 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
    */
   [andUnionItemTemplate](shape) {
     return html`
-    <div class="and-union-item">
+    <div class="and-union-member">
       ${this[inheritanceNameTemplate](shape)}
       ${this[schemaContentTemplate](shape)}
     </div>
@@ -678,15 +693,16 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
       [renderedItem] = items;
       selected = renderedItem.id;
     }
-    const options = items.map((item, index) => {
-      let label = item.name || item.displayName;
-      if (!label && item.types.includes(ns.aml.vocabularies.shapes.ScalarShape)) {
-        const { dataType } = /** @type ApiScalarShape */ (item);
-        label = `${schemaToType(dataType)} (#${index + 1})`;
-      }
-      if (!label) {
-        label = `Option #${index + 1}`;
-      }
+    const options = items.map((item) => {
+      const label = readPropertyTypeLabel(item);
+      // let label = item.name || item.displayName;
+      // if (!label && item.types.includes(ns.aml.vocabularies.shapes.ScalarShape)) {
+      //   const { dataType } = /** @type ApiScalarShape */ (item);
+      //   label = `${schemaToType(dataType)} (#${index + 1})`;
+      // }
+      // if (!label) {
+      //   label = `Option #${index + 1}`;
+      // }
       return {
         label,
         id: item.id,
@@ -716,7 +732,8 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
         .selected="${selected}"
         data-schema="${schemaId}"
       >
-        ${options.map((item) => html`<anypoint-radio-button name="unionValue" data-value="${item.id}">${item.label}</anypoint-radio-button>`)}
+        ${options.map((item) => 
+          html`<anypoint-radio-button class="union-toggle" name="unionValue" data-value="${item.id}" data-member="${item.label}">${item.label}</anypoint-radio-button>`)}
       </anypoint-radio-group>
     </div>
     `;
@@ -730,7 +747,11 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
     if (schema.readOnly && this.noReadOnly) {
       return '';
     }
-    return fileDetailsTemplate(schema);
+    let noDetail = false;
+    if (schema === this[schemaValue]) {
+      noDetail = true;
+    }
+    return fileDetailsTemplate(schema, noDetail);
   }
 
   /**
@@ -818,6 +839,17 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
   }
 
   /**
+   * @param {ApiShape} schema
+   * @returns {TemplateResult|string} The template for the Any shape.
+   */
+  [nilShapeTemplate](schema) {
+    if (schema.readOnly && this.noReadOnly) {
+      return '';
+    }
+    return html`<p class="nil-info">The value of this property is <b>nil</b>.</p>`;
+  }
+
+  /**
    * @param {ApiPropertyShape} schema
    * @returns {TemplateResult|string} The template for the schema property item.
    */
@@ -835,7 +867,8 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
     }
     const required = minCount > 0;
     const type = readPropertyTypeLabel(range);
-    const label = schema.name || displayName || range.name;
+    const label = displayName || schema.name || range.name;
+    const paramLabel = displayName ? schema.name || range.name : undefined;
     const [domainType] = range.types;
     let isComplex = complexTypes.includes(domainType);
     if (isComplex) {
@@ -851,15 +884,21 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
     }
     const allExpanded = this[expandedValue];
     const expanded = isComplex && allExpanded.includes(schema.id);
+    const containerClasses = {
+      'property-container': true,
+      complex: isComplex,
+      expanded,
+    };
     return html`
-    <div class="property-container">
+    <div class="${classMap(containerClasses)}" data-name="${schema.name || range.name}">
       <div class="property-border"></div>
       <div class="property-value">
         <div class="property-headline">
           ${this[propertyDecoratorTemplate](isComplex, expanded, schema.id)}
-          ${paramNameTemplate(label, required, deprecated)}
+          ${paramNameTemplate(label, required, deprecated, paramLabel)}
           <span class="headline-separator"></span>
           ${typeValueTemplate(type)}
+          ${required ? pillTemplate('Required', 'This property is required.') : ''}
         </div>
         <div class="description-column">
           ${this[propertyDescriptionTemplate](schema)}
