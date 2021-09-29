@@ -839,7 +839,10 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
     const [domainType] = range.types;
     let isComplex = complexTypes.includes(domainType);
     if (isComplex) {
-      if (range.types.includes(ns.aml.vocabularies.shapes.ArrayShape)) {
+      if (range.types.includes(ns.aml.vocabularies.shapes.TupleShape)) {
+        const { items=[] } = /** @type ApiTupleShape */ (range);
+        isComplex = complexTypes.includes(items[0].types[0]);
+      } else if (range.types.includes(ns.aml.vocabularies.shapes.ArrayShape)) {
         const { items } = /** @type ApiArrayShape */ (range);
         isComplex = complexTypes.includes(items.types[0]);
       } else if (range.types.includes(ns.aml.vocabularies.shapes.UnionShape)) {

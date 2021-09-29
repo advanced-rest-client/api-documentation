@@ -3,6 +3,7 @@ import { ns } from '@api-components/amf-helper-mixin';
 /** @typedef {import('@api-components/amf-helper-mixin').ApiShapeUnion} ApiShapeUnion */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiScalarShape} ApiScalarShape */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiArrayShape} ApiArrayShape */
+/** @typedef {import('@api-components/amf-helper-mixin').ApiTupleShape} ApiTupleShape */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiUnionShape} ApiUnionShape */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiParameter} ApiParameter */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiPropertyShape} ApiPropertyShape */
@@ -49,6 +50,14 @@ export function readPropertyTypeLabel(schema, isArray=false) {
   if (types.includes(ns.aml.vocabularies.shapes.ScalarShape)) {
     const scalar = /** @type ApiScalarShape */ (schema);
     return schemaToType(scalar.dataType || '');
+  }
+  if (types.includes(ns.aml.vocabularies.shapes.TupleShape)) {
+    const array = /** @type ApiTupleShape */ (schema);
+    if (!array.items || !array.items.length) {
+      return undefined;
+    }
+    const label = readPropertyTypeLabel(array.items[0], true);
+    return `List of ${label}`;
   }
   if (types.includes(ns.aml.vocabularies.shapes.ArrayShape)) {
     const array = /** @type ApiArrayShape */ (schema);
