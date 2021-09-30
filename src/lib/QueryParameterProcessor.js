@@ -29,7 +29,12 @@ export class QueryParameterProcessor {
       const params = this.nodeShapeOperationParameter(/** @type ApiNodeShape */ (schema), binding, source);
       result = result.concat(params);
     } else if (types.includes(ns.aml.vocabularies.shapes.ArrayShape)) {
-      result.push(this.arrayShapeOperationParameter(/** @type ApiArrayShape */ (schema), binding, source));
+      const arrResult = this.arrayShapeOperationParameter(/** @type ApiArrayShape */ (schema), binding, source);
+      if (Array.isArray(arrResult)) {
+        result = result.concat(arrResult);
+      } else if (arrResult) {
+        result.push(arrResult);
+      }
     } else if (types.includes(ns.aml.vocabularies.shapes.UnionShape)) {
       const params = this.unionShapeOperationParameter(/** @type ApiUnionShape */ (schema), binding, source);
       if (params) {
@@ -118,10 +123,15 @@ export class QueryParameterProcessor {
    * @param {ApiArrayShape} shape
    * @param {string} binding The parameter binding.
    * @param {string=} source Optional parameter source.
-   * @returns {OperationParameter}
+   * @returns {OperationParameter|OperationParameter[]}
    */
   arrayShapeOperationParameter(shape, binding, source) {
-    const { id, name,  } = shape;
+    const target = shape.items || shape;
+    if (target.types.includes(ns.w3.shacl.NodeShape)) {
+      const typed = /** @type ApiNodeShape */ (shape.items);
+      return this.collectOperationParameters(typed, binding, source);
+    }
+    const { id, name,  } = target;
     const constructed = /** @type ApiParameter */ ({
       id,
       binding,
@@ -150,7 +160,17 @@ export class QueryParameterProcessor {
    */
   unionShapeOperationParameter(shape, binding, source) {
     const { anyOf=[], or=[], and=[], xone=[] } = shape;
-    const info = anyOf[0] || or[0] || and[0] || xone[0];
+    if (and.length) {
+      let result = [];
+      and.forEach((item) => {
+        const itemResult = this.collectOperationParameters(item, binding, source);
+        if (itemResult) {
+          result = result.concat(itemResult);
+        }
+      });
+      return result;
+    }
+    const info = anyOf[0] || or[0] || xone[0];
     if (!info) {
       return undefined;
     }
