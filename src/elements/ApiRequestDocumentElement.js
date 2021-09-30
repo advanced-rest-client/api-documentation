@@ -1,8 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import { html } from 'lit-element';
-import '@anypoint-web-components/anypoint-dropdown-menu/anypoint-dropdown-menu.js';
-import '@anypoint-web-components/anypoint-listbox/anypoint-listbox.js';
-import '@anypoint-web-components/anypoint-item/anypoint-item.js';
+import '@anypoint-web-components/anypoint-radio-button/anypoint-radio-button.js';
+import '@anypoint-web-components/anypoint-radio-button/anypoint-radio-group.js';
 import commonStyles from './styles/Common.js';
 import elementStyles from './styles/ApiRequest.js';
 import { 
@@ -11,6 +10,7 @@ import {
   schemaItemTemplate,
   descriptionTemplate,
   serializerValue,
+  customDomainPropertiesTemplate,
 } from './ApiDocumentationBase.js';
 import { QueryParameterProcessor } from '../lib/QueryParameterProcessor.js';
 import '../../api-payload-document.js';
@@ -20,9 +20,9 @@ import '../../api-parameter-document.js';
 /** @typedef {import('@api-components/amf-helper-mixin').ApiRequest} ApiRequest */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiPayload} ApiPayload */
 /** @typedef {import('@api-components/amf-helper-mixin').Request} Request */
-/** @typedef {import('@anypoint-web-components/anypoint-listbox').AnypointListbox} AnypointListbox */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiNodeShape} ApiNodeShape */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiArrayShape} ApiArrayShape */
+/** @typedef {import('@anypoint-web-components/anypoint-radio-button/index').AnypointRadioGroupElement} AnypointRadioGroupElement */
 /** @typedef {import('../types').OperationParameter} OperationParameter */
 
 export const queryRequest = Symbol('queryRequest');
@@ -233,8 +233,12 @@ export default class ApiRequestDocumentElement extends ApiDocumentationBase {
    * @param {Event} e
    */
   [mediaTypeSelectHandler](e) {
-    const select = /** @type AnypointListbox */ (e.target);
-    const mime = String(select.selected);
+    const group = /** @type AnypointRadioGroupElement */ (e.target);
+    const { selectedItem } = group;
+    if (!selectedItem) {
+      return;
+    }
+    const mime = selectedItem.dataset.value;
     this.mimeType = mime;
   }
 
@@ -245,6 +249,7 @@ export default class ApiRequestDocumentElement extends ApiDocumentationBase {
     }
     return html`
     <style>${this.styles}</style>
+    ${this[customDomainPropertiesTemplate](request.customDomainProperties)}
     ${this[descriptionTemplate](request.description)}
     ${this[queryParamsTemplate]()}
     ${this[queryStringTemplate]()}
@@ -327,7 +332,7 @@ export default class ApiRequestDocumentElement extends ApiDocumentationBase {
     if (!Array.isArray(payloads) || payloads.length < 2) {
       return '';
     }
-    const mime = [];
+    const mime = /** @type string[] */ ([]);
     payloads.forEach((item) => {
       if (item.mediaType) {
         mime.push(item.mediaType);
@@ -339,19 +344,15 @@ export default class ApiRequestDocumentElement extends ApiDocumentationBase {
     const mimeType = this.mimeType || mime[0];
     return html`
     <div class="media-type-selector">
-      <anypoint-dropdown-menu
-        class="amf-media-types"
+      <label>Body content type</label>
+      <anypoint-radio-group 
+        @select="${this[mediaTypeSelectHandler]}" 
+        attrForSelected="data-value" 
+        .selected="${mimeType}"
       >
-        <label slot="label">Body content type</label>
-        <anypoint-listbox
-          slot="dropdown-content"
-          attrforselected="data-value"
-          .selected="${mimeType}"
-          @selected-changed="${this[mediaTypeSelectHandler]}"
-        >
-          ${mime.map((type) => html`<anypoint-item data-value="${type}">${type}</anypoint-item>`)}
-        </anypoint-listbox>
-      </anypoint-dropdown-menu>
+        ${mime.map((item) => 
+          html`<anypoint-radio-button class="response-toggle" name="responseMime" data-value="${item}">${item}</anypoint-radio-button>`)}
+      </anypoint-radio-group>
     </div>
     `;
   }

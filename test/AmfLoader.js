@@ -16,6 +16,7 @@ import { AmfHelperMixin, AmfSerializer } from '@api-components/amf-helper-mixin'
 /** @typedef {import('@api-components/amf-helper-mixin').CreativeWork} CreativeWork */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiDocumentation} ApiDocumentation */
 /** @typedef {import('@api-components/amf-helper-mixin').WebApi} WebApi */
+/** @typedef {import('@api-components/amf-helper-mixin').Response} Response */
 
 /**
  * @typedef EndpointOperation
@@ -296,5 +297,16 @@ export class AmfLoader extends AmfHelperMixin(Object) {
       [result] = result;
     }
     return result;
+  }
+
+  /**
+   * @param {AmfDocument} model
+   * @param {string} endpoint
+   * @param {string} operation
+   * @return {Response[]}
+   */
+  lookupResponses(model, endpoint, operation) {
+    const method = this.lookupOperation(model, endpoint, operation);
+    return this._computeReturns(method);
   }
 }

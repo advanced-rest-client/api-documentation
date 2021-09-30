@@ -285,6 +285,12 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
     if (!Array.isArray(responses) || !responses.length) {
       return;
     }
+    responses.sort((a, b) => {
+      if (a.statusCode === b.statusCode) {
+        return 0;
+      }
+      return Number(a.statusCode) > Number(b.statusCode) ? 1 : -1;
+    });
     const { selectedStatus } = this;
     if (!selectedStatus) {
       this.selectedStatus = responses[0].statusCode;
@@ -610,7 +616,13 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
       return html`<div class="empty-info">Select a response to render the documentation.</div>`;
     }
     return html`
-    <api-response-document .amf="${this.amf}" .response="${response}" headersOpened payloadOpened></api-response-document>
+    <api-response-document 
+      .amf="${this.amf}" 
+      .response="${response}" 
+      headersOpened 
+      payloadOpened
+      class="method-response"
+    ></api-response-document>
     `;
   }
 

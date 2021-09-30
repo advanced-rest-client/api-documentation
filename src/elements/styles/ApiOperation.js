@@ -47,4 +47,13 @@ export default css`
   font-style: italic;
   margin: 12px 0;
 }
+
+.method-response {
+  padding-left: var(--api-operation-documentation-responses-padding-left, var(--api-responses-method-padding-left, 20px));
+  padding-right: var(--api-operation-documentation-responses-padding-right, var(--api-responses-method-padding-right, 20px));
+}
+
+.codes-selector-divider {
+  border-bottom: 1px var(--api-operation-documentation-response-codes-selector-divider-border-bottom-color, var(--api-responses-document-codes-selector-divider-border-bottom-color, #e5e5e5)) solid;
+}
 `;

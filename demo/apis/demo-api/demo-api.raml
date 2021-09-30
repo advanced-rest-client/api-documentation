@@ -259,6 +259,18 @@ resourceTypes:
               displayName: Invalid request
               type: !include schemas/error-response.xsd
               example: !include examples/e400.xml
+    put:
+      responses:
+        400:
+          description: The error response when one of the parameters is invalid and can't be parsed. Nothing can be done at the time except correcting the request to send valid data.
+          body:
+            application/json:
+              displayName: Invalid request
+              type: ErrorResource
+            application/xml:
+              displayName: Invalid request
+              type: !include schemas/error-response.xsd
+              example: !include examples/e400.xml
 traits:
   Paginated: !include traits/pagination.raml
   Adminable: !include traits/adminable.raml
@@ -467,6 +479,7 @@ documentation:
       description: To test enum values in the URI parameters for global type declaration.
 /people:
   displayName: People
+  type: RequestErrorResponse
   get:
     (annotationTest):
     displayName: List people
@@ -502,6 +515,7 @@ documentation:
         type: !include schemas/person.xsd
         example: !include examples/person.xml
     responses:
+      204:
       200:
         (deprecated): This response type is deprecated and soon will be replaced.
         description: |
@@ -747,6 +761,23 @@ documentation:
         description: |
           This demonstrates a body as an Array
         type: AppPerson[]
+/schemaBody:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+              "status":"success"
+              }
+/no-desc:
+  get:
+    responses:
+      200:
+      405:
+      201:
+
 /multipleTypeInheritance:
   get:
     description: |

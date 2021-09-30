@@ -5,9 +5,8 @@ import '@advanced-rest-client/highlight/arc-marked.js';
 import '@anypoint-web-components/anypoint-button/anypoint-button.js';
 import '@anypoint-web-components/anypoint-collapse/anypoint-collapse.js';
 import '@advanced-rest-client/arc-icons/arc-icon.js';
-import '@anypoint-web-components/anypoint-dropdown-menu/anypoint-dropdown-menu.js';
-import '@anypoint-web-components/anypoint-listbox/anypoint-listbox.js';
-import '@anypoint-web-components/anypoint-item/anypoint-item.js';
+import '@anypoint-web-components/anypoint-radio-button/anypoint-radio-button.js';
+import '@anypoint-web-components/anypoint-radio-button/anypoint-radio-group.js';
 import commonStyles from './styles/Common.js';
 import elementStyles from './styles/ApiResponse.js';
 import '../../api-payload-document.js';
@@ -18,13 +17,16 @@ import {
   schemaItemTemplate,
   descriptionTemplate,
   serializerValue,
+  customDomainPropertiesTemplate,
 } from './ApiDocumentationBase.js';
 
 /** @typedef {import('lit-element').TemplateResult} TemplateResult */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiResponse} ApiResponse */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiPayload} ApiPayload */
 /** @typedef {import('@api-components/amf-helper-mixin').Response} Response */
-/** @typedef {import('@anypoint-web-components/anypoint-listbox').AnypointListbox} AnypointListbox */
+/** @typedef {import('@api-components/amf-helper-mixin').ApiTemplatedLink} ApiTemplatedLink */
+/** @typedef {import('@api-components/amf-helper-mixin').ApiIriTemplateMapping} ApiIriTemplateMapping */
+/** @typedef {import('@anypoint-web-components/anypoint-radio-button/index').AnypointRadioGroupElement} AnypointRadioGroupElement */
 
 export const queryResponse = Symbol('queryResponse');
 export const responseValue = Symbol('responseValue');
@@ -34,6 +36,11 @@ export const payloadValue = Symbol('payloadValue');
 export const headersTemplate = Symbol('headersTemplate');
 export const payloadTemplate = Symbol('payloadTemplate');
 export const payloadSelectorTemplate = Symbol('payloadSelectorTemplate');
+export const linksTemplate = Symbol('linksTemplate');
+export const linkTemplate = Symbol('linkTemplate');
+export const linkOperationTemplate = Symbol('linkOperationTemplate');
+export const linkMappingsTemplate = Symbol('mappingsTemplate');
+export const linkMappingTemplate = Symbol('linkMappingTemplate');
 export const mediaTypeSelectHandler = Symbol('mediaTypeSelectHandler');
 
 /**
@@ -70,23 +77,6 @@ export default class ApiResponseDocumentElement extends ApiDocumentationBase {
     return payloads.find((item) => item.mediaType === mimeType);
   }
 
-  static get properties() {
-    return {
-      /** 
-       * When set it opens the headers section
-       */
-      headersOpened: { type: Boolean, reflect: true },
-      /** 
-       * When set it opens the payload section
-       */
-      payloadOpened: { type: Boolean, reflect: true },
-      /** 
-       * The currently selected media type for the payloads.
-       */
-      mimeType: { type: String, reflect: true },
-    };
-  }
-
   /**
    * @returns {ApiResponse}
    */
@@ -104,6 +94,23 @@ export default class ApiResponseDocumentElement extends ApiDocumentationBase {
     }
     this[responseValue] = value;
     this.processGraph();
+  }
+
+  static get properties() {
+    return {
+      /** 
+       * When set it opens the headers section
+       */
+      headersOpened: { type: Boolean, reflect: true },
+      /** 
+       * When set it opens the payload section
+       */
+      payloadOpened: { type: Boolean, reflect: true },
+      /** 
+       * The currently selected media type for the payloads.
+       */
+      mimeType: { type: String, reflect: true },
+    };
   }
 
   constructor() {
@@ -153,8 +160,12 @@ export default class ApiResponseDocumentElement extends ApiDocumentationBase {
    * @param {Event} e
    */
   [mediaTypeSelectHandler](e) {
-    const select = /** @type AnypointListbox */ (e.target);
-    const mime = String(select.selected);
+    const group = /** @type AnypointRadioGroupElement */ (e.target);
+    const { selectedItem } = group;
+    if (!selectedItem) {
+      return;
+    }
+    const mime = selectedItem.dataset.value;
     this.mimeType = mime;
   }
 
@@ -164,14 +175,16 @@ export default class ApiResponseDocumentElement extends ApiDocumentationBase {
     }
     return html`
     <style>${this.styles}</style>
+    ${this[customDomainPropertiesTemplate](this[responseValue].customDomainProperties)}
     ${this[descriptionTemplate](this[responseValue].description)}
     ${this[headersTemplate]()}
+    ${this[linksTemplate]()}
     ${this[payloadTemplate]()}
     `;
   }
 
   /**
-   * @return {TemplateResult|string} The template for the headers
+   * @returns {TemplateResult|string} The template for the headers
    */
   [headersTemplate]() {
     if (!this.hasHeaders) {
@@ -183,7 +196,7 @@ export default class ApiResponseDocumentElement extends ApiDocumentationBase {
   }
 
   /**
-   * @return {TemplateResult|string} The template for the payload section
+   * @returns {TemplateResult|string} The template for the payload section
    */
   [payloadTemplate]() {
     const payload = this[payloadValue];
@@ -198,14 +211,14 @@ export default class ApiResponseDocumentElement extends ApiDocumentationBase {
   }
 
   /**
-   * @return {TemplateResult|string} The template for the payload media type selector.
+   * @returns {TemplateResult|string} The template for the payload media type selector.
    */
   [payloadSelectorTemplate]() {
     const payloads = this[payloadsValue];
     if (!Array.isArray(payloads) || payloads.length < 2) {
       return '';
     }
-    const mime = [];
+    const mime = /** @type string[] */ ([]);
     payloads.forEach((item) => {
       if (item.mediaType) {
         mime.push(item.mediaType);
@@ -217,20 +230,98 @@ export default class ApiResponseDocumentElement extends ApiDocumentationBase {
     const mimeType = this.mimeType || mime[0];
     return html`
     <div class="media-type-selector">
-      <anypoint-dropdown-menu
-        class="amf-media-types"
+      <label>Body content type</label>
+      <anypoint-radio-group 
+        @select="${this[mediaTypeSelectHandler]}" 
+        attrForSelected="data-value" 
+        .selected="${mimeType}"
       >
-        <label slot="label">Body content type</label>
-        <anypoint-listbox
-          slot="dropdown-content"
-          attrforselected="data-value"
-          .selected="${mimeType}"
-          @selected-changed="${this[mediaTypeSelectHandler]}"
-        >
-          ${mime.map((type) => html`<anypoint-item data-value="${type}">${type}</anypoint-item>`)}
-        </anypoint-listbox>
-      </anypoint-dropdown-menu>
+        ${mime.map((item) => 
+          html`<anypoint-radio-button class="response-toggle" name="responseMime" data-value="${item}">${item}</anypoint-radio-button>`)}
+      </anypoint-radio-group>
     </div>
+    `;
+  }
+
+  /**
+   * @returns {TemplateResult|string} The template for the response links
+   */
+  [linksTemplate]() {
+    const { response } = this;
+    if (!response) {
+      return '';
+    }
+    const { links=[] } = response;
+    if (!Array.isArray(links) || !links.length) {
+      return '';
+    }
+    return html`
+    <div class="links-header">Links</div>
+    ${links.map((link) => this[linkTemplate](link))}
+    `;
+  }
+
+  /**
+   * @param {ApiTemplatedLink} link
+   * @returns {TemplateResult} A template for the link
+   */
+  [linkTemplate](link) {
+    const { name, mapping, operationId, } = link;
+    return html`
+    <div class="link-header">${name}</div>
+    ${this[linkOperationTemplate](operationId)}
+    <div slot="markdown-html">
+      ${this[linkMappingsTemplate](mapping)}
+    </div>
+    `;
+  }
+
+  /**
+   * @param {string} operationId
+   * @returns {TemplateResult|string} The template for the link's operation
+   */
+  [linkOperationTemplate](operationId) {
+    if (!operationId) {
+      return '';
+    }
+    return html`
+    <div class="operation-id">
+      <span class="label">Operation ID:</span>
+      <span class="operation-name">${operationId}</span>
+    </div>
+    `;
+  }
+
+  /**
+   * @param {ApiIriTemplateMapping[]} mappings
+   * @returns {TemplateResult|string} The template for the link's operation
+   */
+  [linkMappingsTemplate](mappings) {
+    if (!mappings) {
+      return '';
+    }
+    return html`
+    <table class="mapping-table">
+      <tr>
+        <th>Variable</th>
+        <th>Expression</th>
+      </tr>
+      ${mappings.map(item => this[linkMappingTemplate](item))}
+    </table>
+    `;
+  }
+
+  /**
+   * @param {ApiIriTemplateMapping} mapping
+   * @returns {TemplateResult} The template for the link's operation
+   */
+  [linkMappingTemplate](mapping) {
+    const { linkExpression, templateVariable } = mapping;
+    return html`
+    <tr>
+      <td>${templateVariable}</td>
+      <td>${linkExpression}</td>
+    </tr>
     `;
   }
 }
