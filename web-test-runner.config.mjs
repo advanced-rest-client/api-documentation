@@ -1,5 +1,6 @@
 export default {
-  files: 'test/**/*.test.js',
+  // files: 'test/**/*.test.js',
+  files: 'test/elements/ApiResponseDocumentElement.test.js',
   nodeResolve: true,
   middleware: [
     function rewriteBase(context, next) {

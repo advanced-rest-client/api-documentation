@@ -8,9 +8,9 @@ import {
   ApiDocumentationBase, 
   paramsSectionTemplate, 
   schemaItemTemplate,
-  descriptionTemplate,
+  // descriptionTemplate,
+  // customDomainPropertiesTemplate,
   serializerValue,
-  customDomainPropertiesTemplate,
 } from './ApiDocumentationBase.js';
 import { QueryParameterProcessor } from '../lib/QueryParameterProcessor.js';
 import '../../api-payload-document.js';
@@ -247,10 +247,12 @@ export default class ApiRequestDocumentElement extends ApiDocumentationBase {
     if (!request) {
       return html``;
     }
+    // these looks like are going to "schema" rendering and there's no way to define CDPs or 
+    // a description on a request.
+    // ${this[customDomainPropertiesTemplate](request.customDomainProperties)}
+    // ${this[descriptionTemplate](request.description)}
     return html`
     <style>${this.styles}</style>
-    ${this[customDomainPropertiesTemplate](request.customDomainProperties)}
-    ${this[descriptionTemplate](request.description)}
     ${this[queryParamsTemplate]()}
     ${this[queryStringTemplate]()}
     ${this[headersTemplate]()}
@@ -269,7 +271,7 @@ export default class ApiRequestDocumentElement extends ApiDocumentationBase {
     const { request } = this;
     const { queryParameters=[], uriParameters=[] } = request;
     const all = uriParameters.concat(queryParameters);
-    const content = all.map((param) => this[schemaItemTemplate](param));
+    const content = all.map((param) => this[schemaItemTemplate](param, 'query'));
     return this[paramsSectionTemplate]('Parameters', 'parametersOpened', content);
   }
 
@@ -281,7 +283,7 @@ export default class ApiRequestDocumentElement extends ApiDocumentationBase {
       return '';
     }
     const params = this[queryParametersValue];
-    const content = params.map((param) => this[schemaItemTemplate](param.parameter));
+    const content = params.map((param) => this[schemaItemTemplate](param.parameter, 'query-string'));
     return this[paramsSectionTemplate]('Parameters', 'parametersOpened', content);
   }
 
@@ -293,7 +295,7 @@ export default class ApiRequestDocumentElement extends ApiDocumentationBase {
       return '';
     }
     const { request } = this;
-    const content = request.headers.map((id) => this[schemaItemTemplate](id));
+    const content = request.headers.map((param) => this[schemaItemTemplate](param, 'header'));
     return this[paramsSectionTemplate]('Headers', 'headersOpened', content);
   }
 
@@ -305,7 +307,7 @@ export default class ApiRequestDocumentElement extends ApiDocumentationBase {
       return '';
     }
     const { request } = this;
-    const content = request.cookieParameters.map((id) => this[schemaItemTemplate](id));
+    const content = request.cookieParameters.map((param) => this[schemaItemTemplate](param, 'cookie'));
     return this[paramsSectionTemplate]('Cookies', 'cookiesOpened', content);
   }
 

@@ -17,6 +17,7 @@ import { AmfHelperMixin, AmfSerializer } from '@api-components/amf-helper-mixin'
 /** @typedef {import('@api-components/amf-helper-mixin').ApiDocumentation} ApiDocumentation */
 /** @typedef {import('@api-components/amf-helper-mixin').WebApi} WebApi */
 /** @typedef {import('@api-components/amf-helper-mixin').Response} Response */
+/** @typedef {import('@api-components/amf-helper-mixin').Request} Request */
 
 /**
  * @typedef EndpointOperation
@@ -53,7 +54,7 @@ export class AmfLoader extends AmfHelperMixin(Object) {
    */
   lookupEndpoint(model, path) {
     this.amf = model;
-    const webApi = this._computeWebApi(model);
+    const webApi = this._computeApi(model);
     return this._computeEndpointByPath(webApi, path);
   }
 
@@ -308,5 +309,74 @@ export class AmfLoader extends AmfHelperMixin(Object) {
   lookupResponses(model, endpoint, operation) {
     const method = this.lookupOperation(model, endpoint, operation);
     return this._computeReturns(method);
+  }
+
+  /**
+   * @param {AmfDocument} model 
+   * @param {string} path The endpoint path
+   * @param {string} operation The operation path
+   * @param {string} code The response's status code
+   * @returns {Response} 
+   */
+  lookupResponse(model, path, operation, code) {
+    const responses = this.lookupResponses(model, path, operation);
+    if (!Array.isArray(responses) || !responses.length) {
+      throw new Error(`No responses for path ${path} and operation ${operation}`);
+    }
+    const response = responses.find((item) => {
+      if (this._getValue(item, this.ns.aml.vocabularies.apiContract.statusCode) === String(code)) {
+        return true;
+      }
+      return false;
+    });
+    if (!response) {
+      throw new Error(`No responses the status code ${code}`);
+    }
+    return response;
+  }
+
+  /**
+   * @param {AmfDocument} model
+   * @param {string} endpoint
+   * @param {string} operation
+   * @return {Request}
+   */
+  lookupRequest(model, endpoint, operation) {
+    const method = this.lookupOperation(model, endpoint, operation);
+    let requests = method[this._getAmfKey(this.ns.aml.vocabularies.apiContract.expects)];
+    if (Array.isArray(requests)) {
+      [requests] = requests;
+    }
+    if (!requests) {
+      throw new Error(`No request found in operation ${operation} and path ${endpoint}`);
+    }
+    return requests;
+  }
+
+  /**
+   * @param {AmfDocument} model 
+   * @param {string} path The endpoint path
+   * @param {string} operation The operation path
+   * @param {string} code The response's status code
+   * @returns {Payload[]} 
+   */
+  lookupResponsePayloads(model, path, operation, code) {
+    const response = this.lookupResponse(model, path, operation, code);
+    const pKey = this._getAmfKey(this.ns.aml.vocabularies.apiContract.payload);
+    const payloads = response[pKey];
+    return this._ensureArray(payloads);
+  }
+
+  /**
+   * @param {AmfDocument} model 
+   * @param {string} path The endpoint path
+   * @param {string} operation The operation path
+   * @param {string} code The response's status code
+   * @returns {ApiPayload[]} 
+   */
+  getResponsePayloads(model, path, operation, code) {
+    const payloads = this.lookupResponsePayloads(model, path, operation, code);
+    const serializer = new AmfSerializer(model);
+    return payloads.map(p => serializer.payload(p));
   }
 }

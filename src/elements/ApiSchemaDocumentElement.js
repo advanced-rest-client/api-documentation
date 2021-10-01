@@ -4,7 +4,7 @@ import { html } from 'lit-element';
 import { classMap } from "lit-html/directives/class-map";
 import { ns } from '@api-components/amf-helper-mixin';
 import { MarkdownStyles } from '@advanced-rest-client/highlight';
-import { ApiExampleGenerator, ApiSchemaGenerator } from '@api-components/api-schema';
+import { ApiSchemaGenerator } from '@api-components/api-schema';
 import '@advanced-rest-client/highlight/arc-marked.js';
 import '@anypoint-web-components/anypoint-radio-button/anypoint-radio-button.js';
 import '@anypoint-web-components/anypoint-radio-button/anypoint-radio-group.js';
@@ -27,6 +27,9 @@ import {
   serializerValue,
   descriptionTemplate,
   customDomainPropertiesTemplate,
+  evaluateExamples,
+  examplesTemplate,
+  examplesValue,
 } from './ApiDocumentationBase.js';
 
 /** @typedef {import('lit-element').TemplateResult} TemplateResult */
@@ -47,9 +50,6 @@ import {
 
 export const mimeTypeValue = Symbol('mimeTypeValue');
 export const querySchema = Symbol('querySchema');
-export const examplesValue = Symbol('examplesValue');
-export const evaluateExamples = Symbol('evaluateExamples');
-export const evaluateExample = Symbol('evaluateExample');
 export const schemaValue = Symbol('schemaValue');
 export const expandedValue = Symbol('expandedValue');
 export const selectedUnionsValue = Symbol('unionsValue');
@@ -71,8 +71,6 @@ export const shapePropertyTemplate = Symbol('shapePropertyTemplate');
 export const shapePropertyWithoutRangeTemplate = Symbol('shapePropertyWithoutRangeTemplate');
 export const anyOfUnionTemplate = Symbol('anyOfUnionTemplate');
 export const anyOfOptionsTemplate = Symbol('anyOfOptionsTemplate');
-export const examplesTemplate = Symbol('examplesTemplate');
-export const exampleTemplate = Symbol('exampleTemplate');
 export const propertyDescriptionTemplate = Symbol('propertyDescriptionTemplate');
 export const propertyDescriptionEditor = Symbol('propertyDescriptionEditor');
 export const checkSchemaPropertyUpdate = Symbol('checkSchemaPropertyUpdate');
@@ -167,10 +165,6 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
      */
     this[schemaValue] = undefined;
     /**
-     * @type {SchemaExample[]}
-     */
-    this[examplesValue] = undefined;
-    /**
      * @type {string[]}
      */
     this[expandedValue] = undefined;
@@ -252,7 +246,8 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
       examplesCopy = examplesCopy.filter((i) => !!i.value || !!i.structuredValue);
     }
     if (Array.isArray(examplesCopy) && examplesCopy.length) {
-      this[examplesValue] = this[evaluateExamples](examplesCopy);
+      const { mimeType='' } = this;
+      this[examplesValue] = this[evaluateExamples](examplesCopy, mimeType);
     } else {
       const { mimeType, forceExamples } = this;
       this[examplesValue] = undefined;
@@ -274,39 +269,6 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
         }
       }
     }
-  }
-
-  /**
-   * @param {ApiExample[]} examples The list of examples to evaluate
-   * @returns {SchemaExample[]}
-   */
-  [evaluateExamples](examples) {
-    return examples.map((example) => this[evaluateExample](example))
-  }
-
-  /**
-   * @param {ApiExample} example The example to evaluate
-   * @returns {SchemaExample}
-   */
-  [evaluateExample](example) {
-    const { mimeType } = this;
-    let value;
-    if (mimeType) {
-      const generator = new ApiExampleGenerator();
-      value = generator.read(example, mimeType);
-    } else {
-      value = example.value || '';
-    }
-    const { name, displayName } = example;
-    const label = displayName || name;
-    const result = /** @type SchemaExample */ ({
-      ...example,
-      renderValue: value,
-    });
-    if (label && !label.startsWith('example_')) {
-      result.label = label;
-    }
-    return result;
   }
 
   /**
@@ -447,7 +409,7 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
     const schema = this[schemaValue];
     const { name, displayName } = schema;
     const label = displayName || name;
-    if (label === 'schema') {
+    if (['schema', 'default'].includes(label)) {
       return '';
     }
     const typeName = name && label !== name && name !== 'schema' ? name : undefined;
@@ -464,42 +426,6 @@ export default class ApiSchemaDocumentElement extends ApiDocumentationBase {
         ${typeName ? html`<span class="type-name" title="Schema name">(${typeName})</span>` : ''}
       </div>
     </div>
-    `;
-  }
-
-  /**
-   * @returns {TemplateResult|string} The template for the examples section.
-   */
-  [examplesTemplate]() {
-    const examples = this[examplesValue];
-    if (!Array.isArray(examples)) {
-      return '';
-    }
-    const filtered = examples.filter((item) => !!item.renderValue);
-    if (!filtered.length) {
-      return '';
-    }
-    return html`
-    <div class="examples">
-    ${filtered.map((item) => this[exampleTemplate](item))}
-    </div>
-    `;
-  }
-
-  /**
-   * @param {SchemaExample} item
-   * @returns {TemplateResult|string} The template for a single example
-   */
-  [exampleTemplate](item) {
-    const { description, renderValue, label } = item;
-    return html`
-    <details class="schema-example">
-      <summary>Example${label ? `: ${label}` : ''}</summary>
-      <div class="example-content">
-        ${description ? html`<div class="example-description">${description}</div>` : ''}
-        <pre class="code-value"><code>${renderValue}</code></pre>
-      </div>
-    </details>
     `;
   }
 

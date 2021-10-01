@@ -5,6 +5,9 @@ import elementStyles from './styles/ApiPayload.js';
 import { 
   ApiDocumentationBase,
   serializerValue,
+  evaluateExamples,
+  examplesTemplate,
+  examplesValue,
 } from './ApiDocumentationBase.js';
 import '../../api-schema-document.js';
 
@@ -13,11 +16,11 @@ import '../../api-schema-document.js';
 /** @typedef {import('@api-components/amf-helper-mixin').Payload} Payload */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiShapeUnion} ApiShapeUnion */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiExample} ApiExample */
+/** @typedef {import('@api-components/api-schema').SchemaExample} SchemaExample */
 
 export const queryPayload = Symbol('queryPayload');
 export const queryExamples = Symbol('queryExamples');
 export const payloadValue = Symbol('payloadValue');
-export const examplesValue = Symbol('examplesValue');
 export const processPayload = Symbol('processPayload');
 export const mediaTypeTemplate = Symbol('mediaTypeTemplate');
 export const nameTemplate = Symbol('nameTemplate');
@@ -53,10 +56,6 @@ export default class ApiPayloadDocumentElement extends ApiDocumentationBase {
      * @type {ApiPayload}
      */
     this[payloadValue] = undefined;
-    /**
-     * @type {ApiExample[]}
-     */
-    this[examplesValue] = undefined;
     /** @type Payload */
     this.domainModel = undefined;
   }
@@ -75,14 +74,15 @@ export default class ApiPayloadDocumentElement extends ApiDocumentationBase {
   }
 
   async [processPayload]() {
+    this[examplesValue] = undefined;
     const { payload } = this;
     if (!payload) {
-      this[examplesValue] = undefined;
       return;
     }
+    const { mediaType='' } = payload;
     const { examples } = payload;
     if (Array.isArray(examples) && examples.length) {
-      this[examplesValue] = examples;
+      this[examplesValue] = this[evaluateExamples](examples, mediaType);
     }
   }
 
@@ -91,11 +91,11 @@ export default class ApiPayloadDocumentElement extends ApiDocumentationBase {
     if (!payload) {
       return html``;
     }
-    // todo: render examples for the payload.
     return html`
     <style>${this.styles}</style>
     ${this[nameTemplate]()}
     ${this[mediaTypeTemplate]()}
+    ${this[examplesTemplate]()}
     ${this[schemaTemplate]()}
     `;
   }

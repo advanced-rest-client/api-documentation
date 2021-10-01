@@ -2,7 +2,9 @@
 /* eslint-disable class-methods-use-this */
 import { LitElement, html } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map.js';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { AmfHelperMixin, AmfSerializer } from '@api-components/amf-helper-mixin';
+import { ApiExampleGenerator } from '@api-components/api-schema';
 import '@anypoint-web-components/anypoint-button/anypoint-button.js';
 import '@anypoint-web-components/anypoint-collapse/anypoint-collapse.js';
 import '@advanced-rest-client/arc-icons/arc-icon.js';
@@ -13,6 +15,8 @@ import '../../api-annotation-document.js';
 /** @typedef {import('@api-components/amf-helper-mixin').DomainElement} DomainElement */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiParameter} ApiParameter */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiCustomDomainProperty} ApiCustomDomainProperty */
+/** @typedef {import('@api-components/amf-helper-mixin').ApiExample} ApiExample */
+/** @typedef {import('@api-components/api-schema').SchemaExample} SchemaExample */
 
 export const sectionToggleClickHandler = Symbol('sectionToggleClickHandler');
 export const processDebounce = Symbol('queryDebounce');
@@ -26,6 +30,12 @@ export const sectionToggleTemplate = Symbol('sectionToggleTemplate');
 export const paramsSectionTemplate = Symbol('paramsSectionTemplate');
 export const schemaItemTemplate = Symbol('schemaItemTemplate');
 export const customDomainPropertiesTemplate = Symbol('customDomainPropertiesTemplate');
+export const examplesTemplate = Symbol('examplesTemplate');
+export const exampleTemplate = Symbol('exampleTemplate');
+export const examplesValue = Symbol('examplesValue');
+export const evaluateExamples = Symbol('evaluateExamples');
+export const evaluateExample = Symbol('evaluateExample');
+
 /**
  * A base class for the documentation components with common templates and functions.
  */
@@ -96,6 +106,10 @@ export class ApiDocumentationBase extends AmfHelperMixin(LitElement) {
     this.queryDebouncerTimeout = 2;
     /** @type {boolean} */
     this.anypoint = undefined;
+    /**
+     * @type {SchemaExample[]}
+     */
+    this[examplesValue] = undefined;
     this[serializerValue] = new AmfSerializer();
   }
 
@@ -177,6 +191,40 @@ export class ApiDocumentationBase extends AmfHelperMixin(LitElement) {
   }
 
   /**
+   * @param {ApiExample[]} examples The list of examples to evaluate
+   * @param {string} mediaType The media type to use with examples processing.
+   * @returns {SchemaExample[]}
+   */
+  [evaluateExamples](examples, mediaType) {
+    return examples.map((example) => this[evaluateExample](example, mediaType))
+  }
+
+  /**
+   * @param {ApiExample} example The example to evaluate
+   * @param {string} mediaType The media type to use with examples processing.
+   * @returns {SchemaExample}
+   */
+  [evaluateExample](example, mediaType) {
+    let value;
+    if (mediaType) {
+      const generator = new ApiExampleGenerator();
+      value = generator.read(example, mediaType);
+    } else {
+      value = example.value || '';
+    }
+    const { name, displayName } = example;
+    const label = displayName || name;
+    const result = /** @type SchemaExample */ ({
+      ...example,
+      renderValue: value,
+    });
+    if (label && !label.startsWith('example_')) {
+      result.label = label;
+    }
+    return result;
+  }
+
+  /**
    * @param {string} ctrlProperty
    * @return {TemplateResult|string} The template for the section toggle button
    */
@@ -202,7 +250,7 @@ export class ApiDocumentationBase extends AmfHelperMixin(LitElement) {
       opened,
     };
     return html`
-    <div class="params-section">
+    <div class="params-section" data-controlled-by="${openedProperty}">
       <div 
         class="${classMap(classes)}"
         data-ctrl-property="${openedProperty}" 
@@ -220,11 +268,17 @@ export class ApiDocumentationBase extends AmfHelperMixin(LitElement) {
 
   /**
    * @param {ApiParameter} model The parameter to render.
+   * @param {string=} dataName Optional data-name for this parameter
    * @return {TemplateResult} The template for the schema item document
    */
-  [schemaItemTemplate](model) {
+  [schemaItemTemplate](model, dataName) {
     return html`
-    <api-parameter-document .amf="${this.amf}" .parameter="${model}" class="property-item"></api-parameter-document>
+    <api-parameter-document 
+      .amf="${this.amf}" 
+      .parameter="${model}" 
+      class="property-item"
+      data-name="${ifDefined(dataName)}"
+    ></api-parameter-document>
     `;
   }
 
@@ -260,6 +314,42 @@ export class ApiDocumentationBase extends AmfHelperMixin(LitElement) {
     <api-annotation-document
       .customProperties="${customDomainProperties}"
     ></api-annotation-document>
+    `;
+  }
+
+  /**
+   * @returns {TemplateResult|string} The template for the examples section.
+   */
+  [examplesTemplate]() {
+    const examples = this[examplesValue];
+    if (!Array.isArray(examples)) {
+      return '';
+    }
+    const filtered = examples.filter((item) => !!item.renderValue);
+    if (!filtered.length) {
+      return '';
+    }
+    return html`
+    <div class="examples">
+    ${filtered.map((item) => this[exampleTemplate](item))}
+    </div>
+    `;
+  }
+
+  /**
+   * @param {SchemaExample} item
+   * @returns {TemplateResult|string} The template for a single example
+   */
+  [exampleTemplate](item) {
+    const { description, renderValue, label } = item;
+    return html`
+    <details class="schema-example">
+      <summary>Example${label ? `: ${label}` : ''}</summary>
+      <div class="example-content">
+        ${description ? html`<div class="example-description">${description}</div>` : ''}
+        <pre class="code-value"><code>${renderValue}</code></pre>
+      </div>
+    </details>
     `;
   }
 }

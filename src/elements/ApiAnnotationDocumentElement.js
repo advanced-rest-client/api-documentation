@@ -172,13 +172,13 @@ export default class ApiAnnotationDocumentElement extends AmfHelperMixin(LitElem
    * @returns {TemplateResult|string} The template for the custom property.
    */
   [propertyTemplate](property) {
-    const { types, extensionName } = property;
-    const unknown = /** @type unknown */ (property);
+    const { name, extension } = property;
+    const { types } = extension;
     if (types.includes(ns.aml.vocabularies.data.Scalar)) {
-      return this[scalarTemplate](extensionName, /** @type ApiScalarNode */ (unknown));
+      return this[scalarTemplate](name, /** @type ApiScalarNode */ (extension));
     } 
     if (types.includes(ns.aml.vocabularies.data.Object)) {
-      return this[objectTemplate](extensionName, /** @type ApiObjectNode */ (unknown));
+      return this[objectTemplate](name, /** @type ApiObjectNode */ (extension));
     }
     return '';
   }

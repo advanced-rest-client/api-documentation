@@ -1,0 +1,13 @@
+#%RAML 1.0
+title: missing-body
+/test:
+  post:
+    description: Upload a dataset[.txt,.csv] or config[.conf] file. Maximum file size is 2 GB.
+    body:
+      binary/octet-stream:
+      multipart/form-data:
+        properties:
+          file:
+            description: The file to upload.
+            required: true
+            type: file

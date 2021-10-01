@@ -271,5 +271,22 @@ describe('ApiResponseDocumentElement', () => {
         assert.equal(cols[1].innerText.trim(), '$response.body#/subscriberId', 'expression is rendered');
       });
     });
+
+    describe('Inline type name (stevetest)', () => {
+      /** @type AmfDocument */
+      let model;
+      before(async () => {
+        model = await loader.getGraph(compact, 'stevetest');
+      });
+
+      it('does not render type name when it is "default"', async () => {
+        const data = loader.lookupResponse(model, '/legal/termsConditionsAcceptReset', 'delete', '400');
+        const element = await basicFixture(model, data);
+        
+        const doc = element.shadowRoot.querySelector('api-payload-document');
+        const schema = doc.shadowRoot.querySelector('api-schema-document');
+        assert.notExists(schema.shadowRoot.querySelector('.schema-title'));
+      });
+    });
   });
 });

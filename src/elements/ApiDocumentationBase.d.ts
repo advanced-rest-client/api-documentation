@@ -1,6 +1,6 @@
-/* eslint-disable class-methods-use-this */
 import { LitElement, TemplateResult } from 'lit-element';
-import { AmfHelperMixin, AmfSerializer, DomainElement, ApiParameter, ApiCustomDomainProperty } from '@api-components/amf-helper-mixin';
+import { AmfHelperMixin, AmfSerializer, DomainElement, ApiParameter, ApiCustomDomainProperty, ApiExample } from '@api-components/amf-helper-mixin';
+import { SchemaExample } from '@api-components/api-schema';
 
 export declare const sectionToggleClickHandler: unique symbol;
 export declare const queryDebounce: unique symbol;
@@ -13,6 +13,11 @@ export declare const paramsSectionTemplate: unique symbol;
 export declare const schemaItemTemplate: unique symbol;
 export declare const descriptionTemplate: unique symbol;
 export declare const customDomainPropertiesTemplate: unique symbol;
+export declare const examplesTemplate: unique symbol;
+export declare const exampleTemplate: unique symbol;
+export declare const examplesValue: unique symbol;
+export declare const evaluateExamples: unique symbol;
+export declare const evaluateExample: unique symbol;
 
 /**
  * A base class for the documentation components with common templates and functions.
@@ -41,6 +46,8 @@ export class ApiDocumentationBase extends AmfHelperMixin(LitElement) {
   domainModel: DomainElement|undefined;
   [domainModelValue]: DomainElement|undefined;
 
+  [examplesValue]: SchemaExample[];
+
   constructor();
 
   connectedCallback(): void;
@@ -62,6 +69,18 @@ export class ApiDocumentationBase extends AmfHelperMixin(LitElement) {
   [sectionToggleClickHandler](e: Event): void;
 
   /**
+   * @param examples The list of examples to evaluate
+   * @param mediaType The media type to use with examples processing.
+   */
+  [evaluateExamples](examples: ApiExample[], mediaType: string): SchemaExample[];
+
+  /**
+   * @param example The example to evaluate
+   * @param mediaType The media type to use with examples processing.
+   */
+  [evaluateExample](example: ApiExample, mediaType: string): SchemaExample;
+
+  /**
    * @return The template for the section toggle button
    */
   [sectionToggleTemplate](ctrlProperty: string): TemplateResult;
@@ -74,9 +93,10 @@ export class ApiDocumentationBase extends AmfHelperMixin(LitElement) {
   [paramsSectionTemplate](label: string, openedProperty: string, content: TemplateResult | TemplateResult[]): TemplateResult;
   /**
    * @param model The parameter to render.
+   * @param dataName Optional data-name for this parameter
    * @return The template for the schema item document
    */
-  [schemaItemTemplate](model: ApiParameter): TemplateResult;
+  [schemaItemTemplate](model: ApiParameter, dataName?: string): TemplateResult;
   /**
    * @param description The description to render.
    * @returns The template for the markdown description.
@@ -87,4 +107,13 @@ export class ApiDocumentationBase extends AmfHelperMixin(LitElement) {
    * @returns The template for the custom domain properties
    */
   [customDomainPropertiesTemplate](customDomainProperties: ApiCustomDomainProperty[]): TemplateResult|string;
+  /**
+   * @returns The template for the examples section.
+   */
+  [examplesTemplate](): TemplateResult|string;
+
+  /**
+   * @returns The template for a single example
+   */
+  [exampleTemplate](item: SchemaExample): TemplateResult|string;
 }

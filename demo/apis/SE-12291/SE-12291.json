@@ -1,0 +1,357 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "v1",
+    "title": "Example"
+  },
+  "host": "sample",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/api/investment-administration/capital-system/v1/portfolios": {
+      "get": {
+        "tags": [
+          "Portfolio"
+        ],
+        "summary": "Returns the portfolios",
+        "operationId": "Portfolio_GetPortfolios",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "portfolioUids",
+            "in": "query",
+            "description": "Filters the portfolios to this set of portfolio ids",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "investmentPortfolioType",
+            "in": "query",
+            "description": "Filters the portfolio by portfolio type (not valid for portfolio category of index or composite)",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "AA",
+              "MR",
+              "RP",
+              "MX",
+              "GP",
+              "SG",
+              "ID",
+              "AD",
+              "AM",
+              "AR",
+              "AX",
+              "GA",
+              "GM",
+              "GR",
+              "GX",
+              "RM",
+              "SM",
+              "SR",
+              "SX",
+              "XM",
+              "FL",
+              "AT",
+              "CP",
+              "MG",
+              "IDM"
+            ]
+          },
+          {
+            "name": "portfolioCategory",
+            "in": "query",
+            "description": "Category of the portfolios",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "Investment",
+              "Index",
+              "Composite"
+            ]
+          },
+          {
+            "name": "containsValue",
+            "in": "query",
+            "description": "Find portfolios that contain a specific value.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "containsValueFields",
+            "in": "query",
+            "description": "Defaults to 1/PortfolioName. Choose which fields to find a contained value. 1 = PortfolioName, 2 = InvestmentPortfolioName, 3 = either",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "resultCount",
+            "in": "query",
+            "description": "Limit Results to a certain amount",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "investmentPortfolioProperty.name",
+            "in": "query",
+            "description": "The name of the property to filter by",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "investmentPortfolioProperty.value",
+            "in": "query",
+            "description": "[Requires Property Name, Cannot be Filtered Alone] The value of the property must be equal to",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "clientId",
+            "in": "header",
+            "description": "HTTP Header Parameter - Client system name that invoked this api",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "CG-CorrelationId",
+            "in": "header",
+            "description": "HTTP Header Parameter - GUID to uniquely identify requests and correlate request & response, end-to-end",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "metaData",
+            "in": "header",
+            "description": "HTTP Header Parameter -  Comma separated name-value pairs of key elements of request",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/PortfoliosResponse"
+            }
+          },
+          "204": {
+            "description": "NoContent"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "PortfoliosResponse": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ApiResponse"
+        },
+        {
+          "required": [
+            "portfolios"
+          ],
+          "type": "object",
+          "properties": {
+            "portfolios": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Portfolio"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "Error": {
+      "description": "Represents a generic custom error (this is not a replacement for the HTTP errors)",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ApiResponse"
+        },
+        {
+          "required": [
+            "errors"
+          ],
+          "type": "object",
+          "properties": {
+            "errors": {
+              "description": "Details of why the error occurred",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ErrorMessage"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ApiResponse": {
+      "description": "Abstract representation of a success/error response",
+      "required": [
+        "responseMetaData"
+      ],
+      "type": "object",
+      "properties": {
+        "responseMetaData": {
+          "$ref": "#/definitions/ApiResponseMetaData",
+          "description": "The meta data associated with a response"
+        }
+      }
+    },
+    "ApiResponseMetaData": {
+      "description": "Meta data describing the response to a request",
+      "required": [
+        "apiVersion",
+        "timestamp"
+      ],
+      "type": "object",
+      "properties": {
+        "apiVersion": {
+          "description": "The version number of the API",
+          "type": "string"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "description": "Timestamp the response was created",
+          "type": "string"
+        }
+      }
+    },
+    "ErrorMessage": {
+      "description": "The detailed contents of an error",
+      "required": [
+        "id",
+        "code",
+        "message",
+        "createdDate"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Unique identifier of the error message",
+          "type": "string"
+        },
+        "code": {
+          "description": "Mnemonic identifier",
+          "type": "string"
+        },
+        "message": {
+          "description": "Detailed message of the error",
+          "type": "string"
+        },
+        "createdDate": {
+          "format": "date-time",
+          "description": "Timestamp the error was created",
+          "type": "string"
+        }
+      }
+    },
+    "Portfolio": {
+      "description": "Definition of a generic portfolio",
+      "required": [
+        "portfolioUid",
+        "name",
+        "category"
+      ],
+      "type": "object",
+      "properties": {
+        "portfolioUid": {
+          "format": "int64",
+          "description": "Identifiers of a Portfolio",
+          "type": "integer"
+        },
+        "name": {
+          "description": "PortfolioName of a Portfolio",
+          "type": "string"
+        },
+        "category": {
+          "description": "Category of a Portfolio",
+          "enum": [
+            "Investment",
+            "Index",
+            "Composite"
+          ],
+          "type": "string"
+        },
+        "investmentPortfolioTypeUid": {
+          "format": "int32",
+          "description": "InvestmentPortfolioType of a Portfolio",
+          "type": "integer",
+          "readOnly": true
+        },
+        "investmentPortfolioTypeCode": {
+          "description": "InvestmentPortfolioTypeCode of a Portfolio",
+          "enum": [
+            "AA",
+            "MR",
+            "RP",
+            "MX",
+            "GP",
+            "SG",
+            "ID",
+            "AD",
+            "AM",
+            "AR",
+            "AX",
+            "GA",
+            "GM",
+            "GR",
+            "GX",
+            "RM",
+            "SM",
+            "SR",
+            "SX",
+            "XM",
+            "FL",
+            "AT",
+            "CP",
+            "MG",
+            "IDM"
+          ],
+          "type": "string"
+        },
+        "investmentPortfolioNumber": {
+          "description": "InvestmentPortfolioNumber of a Portfolio",
+          "type": "string"
+        },
+        "investmentPortfolioName": {
+          "description": "InvestmentPortfolioName of a Portfolio",
+          "type": "string"
+        },
+        "portfolioAliasName": {
+          "description": "PortfolioAliasName of a Portfolio",
+          "type": "string"
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "basicAuth": {
+      "type": "basic",
+      "description": "Basic HTTP Authentication"
+    }
+  }
+}
