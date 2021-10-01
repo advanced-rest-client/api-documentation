@@ -137,6 +137,7 @@ class ComponentPage extends AmfDemoBase {
       ['secured-api', 'Secured API'],
       ['oas-callbacks', 'OAS 3 callbacks'],
       ['APIC-15', 'APIC-15'],
+      ['APIC-332', 'APIC-332'],
       ['APIC-463', 'APIC-463'],
       ['APIC-553', 'APIC-553'],
       ['APIC-560', 'APIC-560'],

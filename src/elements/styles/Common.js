@@ -117,4 +117,8 @@ export default css`
   margin-left: 24px;
   padding: 12px 0;
 }
+
+.example-description {
+  margin: 12px 0;
+}
 `;

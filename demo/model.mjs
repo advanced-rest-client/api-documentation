@@ -13,6 +13,7 @@ config.set('APIC-15/APIC-15.raml', { type: "RAML 1.0" });
 config.set('apic-83/apic-83.raml', { type: "RAML 1.0" });
 config.set('APIC-282/APIC-282.raml', { type: "RAML 1.0" });
 config.set('APIC-289/APIC-289.yaml', { type: "OAS 2.0", mime: 'application/yaml' });
+config.set('APIC-332/APIC-332.raml', { type: 'RAML 1.0' });
 config.set('APIC-390/APIC-390.raml', { type: "RAML 1.0" });
 config.set('APIC-429/APIC-429.yaml', { type: "OAS 3.0", mime: 'application/yaml' });
 config.set('APIC-483/APIC-483.raml', { type: "RAML 1.0" });

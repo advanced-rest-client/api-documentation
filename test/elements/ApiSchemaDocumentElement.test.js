@@ -923,6 +923,27 @@ describe('ApiSchemaDocumentElement', () => {
           assert.deepEqual(data.mappers, ["lookup"]);
         });
       });
+
+      describe('APIC-332', () => {
+        /** @type AmfDocument */
+        let model;
+        before(async () => {
+          model = await loader.getGraph(compact, 'APIC-332');
+        });
+
+        /** @type ApiSchemaDocumentElement */
+        let element;
+        beforeEach(async () => {
+          const [payload] = loader.getPayloads(model, '/organization', 'post');
+          const { schema } = payload;
+          element = await schemaFixture(model, schema, JsonType);
+        });
+
+        it('renders description for an example', () => {
+          const description = /** @type HTMLElement */ (element.shadowRoot.querySelector('.example-description'));
+          assert.equal(description.innerText, 'This description for the example is never shown');
+        });
+      });
     });
   });
 });
