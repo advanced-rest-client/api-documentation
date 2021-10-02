@@ -2,7 +2,6 @@
 import { html } from 'lit-element';
 import { Styles as HttpStyles } from '@api-components/http-method-label';
 import { MarkdownStyles } from '@advanced-rest-client/highlight';
-import '@advanced-rest-client/highlight/arc-marked.js';
 import elementStyles from './styles/ApiDocumentationDocument.js';
 import commonStyles from './styles/Common.js';
 import { ApiDocumentationBase, descriptionTemplate, serializerValue } from './ApiDocumentationBase.js';

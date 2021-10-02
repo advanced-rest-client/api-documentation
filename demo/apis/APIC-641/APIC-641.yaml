@@ -1,0 +1,26 @@
+openapi: '3.0.2'
+info:
+  title: 'profiles'
+  description: >
+    Provides `profiles` domain services of the **Client Data Platform**.
+  version: '2.0.1'
+  contact:
+    name: Client Data Platform Platform & Support
+    email: CDP_Services_Support@capgroup.com
+    url: https://cg-itg.slack.com/archives/C018M7FCSMS/p1602588312007200
+servers:
+  - url: https://api.aws-west-prd.capgroup.com/cdp-proxy/profiles
+    description: MuleSoft PROD
+  - url: https://api.aws-west-snp.capgroup.com/cdp-proxy-e2e/profiles
+    description: MuleSoft UAT (for enterprise consumers)
+  - url: https://api.aws-west-oz.capgroup.com/cdp-proxy-ite2/profiles
+    description: MuleSoft QA (for enterprise consumers)
+  - url: https://api.aws-west-oz.capgroup.com/cdp-proxy-dev2/profiles
+paths:
+  /parties/v1/{partyId}:
+    summary: Represents a client of Capital Group
+    description: >
+      Provides details about Capital Group clients including name, address and other information
+    get:
+      operationId: getPartyById
+      summary: Gets the specific parties in the system.

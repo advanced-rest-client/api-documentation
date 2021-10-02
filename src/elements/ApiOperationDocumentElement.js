@@ -3,6 +3,7 @@ import { html } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map.js';
 import { Styles as HttpStyles } from '@api-components/http-method-label';
 import { MarkdownStyles } from '@advanced-rest-client/highlight';
+import { UrlLib } from '@api-components/api-request';
 import '@advanced-rest-client/highlight/arc-marked.js';
 import '@anypoint-web-components/anypoint-tabs/anypoint-tab.js';
 import '@anypoint-web-components/anypoint-tabs/anypoint-tabs.js';
@@ -41,6 +42,7 @@ export const serverIdValue = Symbol('serverIdValue');
 export const urlValue = Symbol('urlValue');
 export const responsesValue = Symbol('responsesValue');
 export const computeUrlValue = Symbol('computeUrlValue');
+export const baseUriValue = Symbol('baseUriValue');
 export const preselectResponse = Symbol('preselectResponse');
 export const titleTemplate = Symbol('titleTemplate');
 export const traitsTemplate = Symbol('extendsTemplate');
@@ -128,8 +130,33 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
     this.requestUpdate();
   }
 
+  /**
+   * @returns {string|undefined}
+   */
+  get baseUri() {
+    return this[baseUriValue];
+  }
+
+  /**
+   * @param {string} value
+   */
+  set baseUri(value) {
+    const old = this[baseUriValue];
+    if (old === value) {
+      return;
+    }
+    this[baseUriValue] = value;
+    this[computeUrlValue]();
+    this.requestUpdate();
+  }
+
   static get properties() {
     return {
+      /**
+       * A property to set to override AMF's model base URI information.
+       * When this property is set, the `endpointUri` property is recalculated.
+       */
+      baseUri: { type: String },
       /** 
        * The id of the currently selected server to use to construct the URL.
        * If not set a first server in the API servers array is used.
@@ -313,7 +340,6 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
     const servers = this[serversValue];
     const endpoint = this[endpointValue];
     const serverId = this[serverIdValue];
-    let result = '';
     let server;
     if (Array.isArray(servers) && servers.length) {
       if (serverId) {
@@ -322,23 +348,11 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
         [server] = servers;
       }
     }
-    if (server) {
-      result += server.url;
-      if (result.endsWith('/')) {
-        result = result.substr(0, result.length - 1);
-      }
-    }
-    if (endpoint) {
-      let { path='' } = endpoint;
-      if (path[0] !== '/') {
-        path = `/${path}`;
-      }
-      result += path;
-    }
-    if (!result) {
-      result = '(unknown path)';
-    }
-    this[urlValue] = result;
+    const { baseUri } = this;
+    const wa = this._computeWebApi(this.amf);
+    const protocols = /** @type string[] */ (this._getValueArray(wa, this.ns.aml.vocabularies.apiContract.scheme));
+    const url = UrlLib.computeEndpointUri({ baseUri, server, endpoint, protocols, });
+    this[urlValue] = url;
   }
 
   /**

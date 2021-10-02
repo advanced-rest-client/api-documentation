@@ -8,6 +8,7 @@ import { ApiExampleGenerator } from '@api-components/api-schema';
 import '@anypoint-web-components/anypoint-button/anypoint-button.js';
 import '@anypoint-web-components/anypoint-collapse/anypoint-collapse.js';
 import '@advanced-rest-client/arc-icons/arc-icon.js';
+import '@advanced-rest-client/highlight/arc-marked.js';
 import '../../api-annotation-document.js';
 
 /** @typedef {import('lit-element').TemplateResult} TemplateResult */
@@ -170,6 +171,11 @@ export class ApiDocumentationBase extends AmfHelperMixin(LitElement) {
     // target.href is always absolute, need attribute value to test for
     // relative links.
     const href = node.getAttribute('href');
+    if (!href) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
     const ch0 = href[0];
     if (['.', '/'].indexOf(ch0) !== -1) {
       e.preventDefault();

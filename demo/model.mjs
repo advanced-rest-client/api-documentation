@@ -22,6 +22,7 @@ config.set('APIC-553/APIC-553.raml', { type: "RAML 1.0" });
 config.set('APIC-560/APIC-560.yaml', { type: "ASYNC 2.0" });
 config.set('APIC-582/APIC-582.yaml', { type: "ASYNC 2.0" });
 config.set('APIC-631/APIC-631.raml', { type: "RAML 1.0" });
+config.set('APIC-641/APIC-641.yaml', { type: "OAS 3.0", mime: 'application/yaml' });
 config.set('APIC-649/APIC-649.yaml', { type: "OAS 3.0", mime: 'application/yaml' });
 config.set('APIC-650/APIC-650.yaml', { type: "OAS 3.0" });
 config.set('APIC-667/APIC-667.raml', { type: "RAML 1.0" });
@@ -63,6 +64,11 @@ config.set('new-oas3-types/new-oas3-types.yaml', { type: "OAS 3.0", mime: 'appli
 config.set('oas-api/read-only-properties.yaml', { type: "OAS 3.0", mime: 'application/yaml' });
 config.set('anyOf/anyOf.yaml', { type: 'ASYNC 2.0' });
 config.set('steveTest-1/stevetest.json', { type: 'OAS 2.0' });
+config.set('mocking-service/mocking-service.raml', { type: 'RAML 1.0' });
+config.set('no-endpoints/no-endpoints.raml', { type: 'RAML 1.0' });
+config.set('no-server/no-server.raml', { type: 'RAML 1.0' });
+config.set('prevent-xss/prevent-xss.json', { type: 'OAS 2.0', mime: 'application/json' });
+config.set('loan-ms/loan-microservice.json', { type: 'OAS 2.0', mime: 'application/json' });
 
 generator.generate(config, {
   dest: 'demo/models/',

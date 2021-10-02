@@ -12,16 +12,16 @@ export default css`
 }
 
 .endpoint-url {
-  margin: 20px 0;
-  padding: 16px 12px;
-  background-color: var(--api-endpoint-url-background-color, #2D2D2D);
-  color: var(--api-endpoint-url-color, #fff);
+  margin: var(--api-endpoint-url-margin, var(--api-method-documentation-url-margin, 20px 0));
+  padding: var(--api-endpoint-url-padding, var(--api-method-documentation-url-padding, 16px 12px));
+  background-color: var(--api-endpoint-url-background-color, var(--api-method-documentation-url-background-color, #f5f7f9));
+  color: var(--api-endpoint-url-color, var( --api-method-documentation-url-font-color, #000));
   display: flex;
   align-items: center;
   flex-direction: row;
   font-family: var(--code-font-family);
-  font-size: var(--api-endpoint-url-font-size, 1.07rem);
-  border-radius: var(--api-endpoint-url-border-radius, 4px);
+  font-size: var(--api-endpoint-url-font-size, var(--api-method-documentation-url-font-size, 1.07rem));
+  border-radius: var(--api-endpoint-url-border-radius, var(--api-method-documentation-url-border-radius, 4px));
 }
 
 .endpoint-url .method-label {

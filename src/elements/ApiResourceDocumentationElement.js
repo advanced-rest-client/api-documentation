@@ -1,6 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import { html } from 'lit-element';
 import { MarkdownStyles } from '@advanced-rest-client/highlight';
+import { UrlLib } from '@api-components/api-request';
 import elementStyles from './styles/ApiResource.js';
 import commonStyles from './styles/Common.js';
 import { 
@@ -28,6 +29,7 @@ export const serversValue = Symbol('serversValue');
 export const serverValue = Symbol('serverValue');
 export const serverIdValue = Symbol('serverIdValue');
 export const urlValue = Symbol('urlValue');
+export const baseUriValue = Symbol('baseUriValue');
 export const computeUrlValue = Symbol('computeUrlValue');
 export const titleTemplate = Symbol('titleTemplate');
 export const urlTemplate = Symbol('urlTemplate');
@@ -137,8 +139,33 @@ export default class ApiResourceDocumentationElement extends ApiDocumentationBas
     return protocol;
   }
 
+  /**
+   * @returns {string|undefined}
+   */
+  get baseUri() {
+    return this[baseUriValue];
+  }
+
+  /**
+   * @param {string} value
+   */
+  set baseUri(value) {
+    const old = this[baseUriValue];
+    if (old === value) {
+      return;
+    }
+    this[baseUriValue] = value;
+    this[computeUrlValue]();
+    this.requestUpdate();
+  }
+
   static get properties() {
     return {
+      /**
+       * A property to set to override AMF's model base URI information.
+       * When this property is set, the `endpointUri` property is recalculated.
+       */
+      baseUri: { type: String },
       /** 
        * The id of the currently selected server to use to construct the URL.
        * If not set a first server in the API servers array is used.
@@ -286,25 +313,11 @@ export default class ApiResourceDocumentationElement extends ApiDocumentationBas
    */
   [computeUrlValue]() {
     const endpoint = this[endpointValue];
-    let result = '';
-    const { server } = this;
-    if (server) {
-      result += server.url;
-      if (result.endsWith('/')) {
-        result = result.substr(0, result.length - 1);
-      }
-    }
-    if (endpoint) {
-      let { path='' } = endpoint;
-      if (path[0] !== '/') {
-        path = `/${path}`;
-      }
-      result += path;
-    }
-    if (!result) {
-      result = '(unknown path)';
-    }
-    this[urlValue] = result;
+    const { baseUri, server } = this;
+    const wa = this._computeWebApi(this.amf);
+    const protocols = /** @type string[] */ (this._getValueArray(wa, this.ns.aml.vocabularies.apiContract.scheme));
+    const url = UrlLib.computeEndpointUri({ baseUri, server, endpoint, protocols, });
+    this[urlValue] = url;
   }
 
   render() {
@@ -373,11 +386,12 @@ export default class ApiResourceDocumentationElement extends ApiDocumentationBas
    * @returns {TemplateResult} The template for the API operation.
    */
   [operationTemplate](operation) {
-    const { serverId } = this;
+    const { serverId, baseUri } = this;
     return html`<api-operation-document 
       .amf="${this.amf}"
       .domainId="${operation.id}"
       .serverId="${serverId}" 
+      .baseUri="${baseUri}" 
       data-domain-id="${operation.id}"
       ?tryIt="${this.tryIt}"
       responsesOpened

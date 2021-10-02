@@ -8,4 +8,5 @@ export { default as ApiSchemaDocumentElement } from './src/elements/ApiSchemaDoc
 export { default as ApiDocumentationDocumentElement } from './src/elements/ApiDocumentationDocumentElement';
 export { default as ApiChannelDocumentationElement } from './src/elements/ApiChannelDocumentationElement';
 export { default as ApiAnnotationDocumentElement } from './src/elements/ApiAnnotationDocumentElement';
+export { default as ApiSummaryElement } from './src/elements/ApiSummaryElement';
 export * as Utils from './src/lib/Utils';

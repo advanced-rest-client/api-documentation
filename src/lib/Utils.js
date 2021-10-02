@@ -1,4 +1,5 @@
 import { ns } from '@api-components/amf-helper-mixin';
+import sanitizer from 'dompurify';
 
 /** @typedef {import('@api-components/amf-helper-mixin').ApiShapeUnion} ApiShapeUnion */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiScalarShape} ApiScalarShape */
@@ -9,6 +10,7 @@ import { ns } from '@api-components/amf-helper-mixin';
 /** @typedef {import('@api-components/amf-helper-mixin').ApiPropertyShape} ApiPropertyShape */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiNodeShape} ApiNodeShape */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiAnyShape} ApiAnyShape */
+/** @typedef {import('@api-components/amf-helper-mixin').ApiServer} ApiServer */
 /** @typedef {import('../types').OperationParameter} OperationParameter */
 
 /**
@@ -127,4 +129,23 @@ export function isScalarUnion(shape) {
     return isAllScalar(xone);
   }
   return true;
+}
+
+/**
+ * @param {string} HTML 
+ * @returns {string}
+ */
+export function sanitizeHTML(HTML) {
+  const result = sanitizer.sanitize(HTML, { 
+    ADD_ATTR: ['target', 'href'],
+    ALLOWED_TAGS: ['a'],
+    USE_PROFILES: {html: true},
+  });
+
+  if (typeof result === 'string') {
+    return result;
+  }
+
+  // @ts-ignore
+  return result.toString();
 }
