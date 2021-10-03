@@ -150,7 +150,6 @@ export default class ApiSecurityDocumentElement extends ApiDocumentationBase {
       return;
     }
     if (!domainId || !amf) {
-      this[setModel]();
       return;
     }
     const declares = this._computeDeclares(amf);

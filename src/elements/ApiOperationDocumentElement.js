@@ -89,6 +89,24 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
     }
     this[serverIdValue] = value;
     this[computeUrlValue]();
+    this.requestUpdate();
+  }
+
+  /**
+   * @returns {ApiServer|undefined} The current server in use.
+   */
+  get server() {
+    const servers = this[serversValue];
+    const serverId = this[serverIdValue];
+    let server;
+    if (Array.isArray(servers) && servers.length) {
+      if (serverId) {
+        server = servers.find((item) => item.id === serverId);
+      } else {
+        [server] = servers;
+      }
+    }
+    return server;
   }
 
   /**
@@ -337,21 +355,12 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
     if (this.asyncApi) {
       return;
     }
-    const servers = this[serversValue];
     const endpoint = this[endpointValue];
-    const serverId = this[serverIdValue];
-    let server;
-    if (Array.isArray(servers) && servers.length) {
-      if (serverId) {
-        server = servers.find((item) => item.id === serverId);
-      } else {
-        [server] = servers;
-      }
-    }
-    const { baseUri } = this;
+    const version = this._computeApiVersion(this.amf);
+    const { baseUri, server } = this;
     const wa = this._computeWebApi(this.amf);
     const protocols = /** @type string[] */ (this._getValueArray(wa, this.ns.aml.vocabularies.apiContract.scheme));
-    const url = UrlLib.computeEndpointUri({ baseUri, server, endpoint, protocols, });
+    const url = UrlLib.computeEndpointUri({ baseUri, server, endpoint, protocols, version, });
     this[urlValue] = url;
   }
 
@@ -395,13 +404,13 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
     return html`
     <style>${this.styles}</style>
     ${this[titleTemplate]()}
-    ${this[traitsTemplate]()}
     ${this[summaryTemplate]()}
+    ${this[urlTemplate]()}
+    ${this[traitsTemplate]()}
     ${this[deprecatedTemplate]()}
     ${this[descriptionTemplate](this[operationValue].description)}
     ${this[metaDataTemplate]()}
     ${this[customDomainPropertiesTemplate](this[operationValue].customDomainProperties)}
-    ${this[urlTemplate]()}
     ${this[requestTemplate]()}
     ${this[callbacksTemplate]()}
     ${this[responseTemplate]()}
@@ -531,13 +540,16 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
    */
   [requestTemplate]() {
     const operation = this[operationValue];
-    if (!operation || !operation.request) {
+    if (!operation) {
       return '';
     }
+    const { server, endpoint } = this;
     return html`
     <api-request-document 
       .amf="${this.amf}"
       .request="${operation.request}" 
+      .server=${server} 
+      .endpoint=${endpoint}
       payloadOpened 
       headersOpened 
       parametersOpened
@@ -577,6 +589,7 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
         .domainId="${operation.id}"
         .operation="${operation}"
         .serverId="${this.serverId}" 
+        .endpoint="${endpoint}"
         data-domain-id="${operation.id}"
         class="operation"
         ?anypoint="${this.anypoint}"
@@ -648,7 +661,7 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
     if (!operation || !Array.isArray(operation.security) || !operation.security.length) {
       return '';
     }
-    const content = operation.security.map((model) => html`<api-security-requirement-document .amf="${this.amf}" .securityRequirement="${model}"></api-security-requirement-document>`);
+    const content = operation.security.map((model) => html`<api-security-requirement-document .amf="${this.amf}" .domainId="${model.id}"></api-security-requirement-document>`);
     return this[paramsSectionTemplate]('Security', 'securityOpened', content);
   }
 

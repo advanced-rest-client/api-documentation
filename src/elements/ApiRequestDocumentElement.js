@@ -22,6 +22,9 @@ import '../../api-parameter-document.js';
 /** @typedef {import('@api-components/amf-helper-mixin').Request} Request */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiNodeShape} ApiNodeShape */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiArrayShape} ApiArrayShape */
+/** @typedef {import('@api-components/amf-helper-mixin').ApiServer} ApiServer */
+/** @typedef {import('@api-components/amf-helper-mixin').ApiEndPoint} ApiEndPoint */
+/** @typedef {import('@api-components/amf-helper-mixin').ApiParameter} ApiParameter */
 /** @typedef {import('@anypoint-web-components/anypoint-radio-button/index').AnypointRadioGroupElement} AnypointRadioGroupElement */
 /** @typedef {import('../types').OperationParameter} OperationParameter */
 
@@ -82,14 +85,22 @@ export default class ApiRequestDocumentElement extends ApiDocumentationBase {
   }
 
   /**
-   * @returns {boolean} true when has URI parameters definition
+   * @returns {ApiParameter[]} The combined list of path parameters in the server, endpoint, and the request.
    */
-  get hasUriParameters() {
-    const request = this[requestValue];
-    if (!request) {
-      return false;
+  get uriParameters() {
+    const request = /** @type ApiRequest */ (this[requestValue]);
+    const { server, endpoint } = this;
+    let result = /** @type ApiParameter[] */ ([]);
+    if (server && Array.isArray(server.variables) && server.variables.length) {
+      result = result.concat(server.variables);
     }
-    return Array.isArray(request.uriParameters) && !!request.uriParameters.length;
+    if (endpoint && Array.isArray(endpoint.parameters) && endpoint.parameters.length) {
+      result = result.concat(endpoint.parameters);
+    }
+    if (request && Array.isArray(request.uriParameters) && request.uriParameters.length) {
+      result = result.concat(request.uriParameters);
+    }
+    return result;
   }
 
   /**
@@ -159,6 +170,16 @@ export default class ApiRequestDocumentElement extends ApiDocumentationBase {
        * The currently selected media type for the payloads.
        */
       mimeType: { type: String, reflect: true },
+      /** 
+       * The current server in use.
+       * It adds path parameters defined for the server.
+       */
+      server: { type: Object },
+      /** 
+       * The parent endpoint of this request.
+       * It adds path parameters defined for the endpoint.
+       */
+      endpoint: { type: Object },
     };
   }
 
@@ -182,9 +203,13 @@ export default class ApiRequestDocumentElement extends ApiDocumentationBase {
     this.cookiesOpened = undefined;
     /** @type {boolean} */
     this.parametersOpened = undefined;
-    /** @type Request */
+    /** @type {Request} */
     this.domainModel = undefined;
-    /** @type OperationParameter[] */
+    /** @type {ApiServer} */
+    this.server = undefined;
+    /** @type {ApiEndPoint} */
+    this.endpoint = undefined;
+    /** @type {OperationParameter[]} */
     this[queryParametersValue] = undefined;
   }
 
@@ -243,14 +268,10 @@ export default class ApiRequestDocumentElement extends ApiDocumentationBase {
   }
 
   render() {
-    const { request } = this;
-    if (!request) {
+    const { request, server, endpoint } = this;
+    if (!request && !server && !endpoint) {
       return html``;
     }
-    // these looks like are going to "schema" rendering and there's no way to define CDPs or 
-    // a description on a request.
-    // ${this[customDomainPropertiesTemplate](request.customDomainProperties)}
-    // ${this[descriptionTemplate](request.description)}
     return html`
     <style>${this.styles}</style>
     ${this[queryParamsTemplate]()}
@@ -265,11 +286,15 @@ export default class ApiRequestDocumentElement extends ApiDocumentationBase {
    * @return {TemplateResult|string} The template for the query parameters
    */
   [queryParamsTemplate]() {
-    if (!this.hasQueryParameters && !this.hasUriParameters) {
+    const { uriParameters, hasQueryParameters } = this;
+    if (!hasQueryParameters && !uriParameters.length) {
       return '';
     }
     const { request } = this;
-    const { queryParameters=[], uriParameters=[] } = request;
+    let queryParameters = [];
+    if (request && Array.isArray(request.queryParameters)) {
+      queryParameters = request.queryParameters;
+    }
     const all = uriParameters.concat(queryParameters);
     const content = all.map((param) => this[schemaItemTemplate](param, 'query'));
     return this[paramsSectionTemplate]('Parameters', 'parametersOpened', content);

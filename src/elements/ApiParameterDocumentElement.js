@@ -6,7 +6,7 @@ import commonStyles from './styles/Common.js';
 import elementStyles from './styles/ApiParameter.js';
 import schemaStyles from './styles/SchemaCommon.js';
 import { readPropertyTypeLabel } from '../lib/Utils.js';
-import { paramNameTemplate, typeValueTemplate, detailsTemplate } from './SchemaCommonTemplates.js';
+import { paramNameTemplate, typeValueTemplate, detailsTemplate, pillTemplate } from './SchemaCommonTemplates.js';
 import { ApiDocumentationBase, descriptionTemplate } from './ApiDocumentationBase.js';
 
 /** @typedef {import('lit-element').TemplateResult} TemplateResult */
@@ -109,6 +109,7 @@ export default class ApiParameterDocumentElement extends ApiDocumentationBase {
         ${paramNameTemplate(name, required)}
         <span class="headline-separator"></span>
         ${typeValueTemplate(type)}
+        ${required ? pillTemplate('Required', 'This property is required.') : ''}
       </div>
       <div class="description-column">
         ${this[descriptionTemplate]()}

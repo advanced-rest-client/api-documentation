@@ -6,6 +6,7 @@ import '@anypoint-web-components/anypoint-dialog/anypoint-dialog-scrollable.js';
 import '@api-components/api-request/api-request-panel.js';
 import '@api-components/api-request/xhr-simple-request.js';
 import '@advanced-rest-client/authorization/oauth2-authorization.js';
+import '@api-components/api-server-selector/api-server-selector.js';
 import { AmfDemoBase } from './lib/AmfDemoBase.js';
 import '../api-operation-document.js';
 
@@ -13,12 +14,17 @@ class ComponentPage extends AmfDemoBase {
   constructor() {
     super();
     this.initObservableProperties([ 
-      'selectedId', 'selectedType', 'tryIt',
+      'selectedId', 'selectedType', 'tryIt', 'parentEndpoint',
       'editorOpened', 'editorOperation',
       'overrideBaseUri',
+      'serverType', 'serverValue',
     ]);
+    /** @type string */
     this.selectedId = undefined;
+    /** @type string */
     this.selectedType = undefined;
+    /** @type string */
+    this.endpointId = undefined;
     this.tryIt = true;
     this.overrideBaseUri = false;
     this.compatibility = false;
@@ -26,20 +32,58 @@ class ComponentPage extends AmfDemoBase {
     this.redirectUri = `${window.location.origin}/node_modules/@advanced-rest-client/oauth-authorization/oauth-popup.html`;
   }
 
+  get baseUri() {
+    const { serverValue, serverType } = this;
+    if (['custom', 'uri'].includes(serverType)) {
+      return serverValue;
+    }
+    return undefined;
+  }
+
+  get serverId() {
+    const { serverValue, serverType, endpointId, selectedId } = this;
+    if (!serverValue || ['custom', 'uri'].includes(serverType)) {
+      return undefined;
+    }
+    const servers = this._getServers({ endpointId, methodId: selectedId });
+    if (!Array.isArray(servers)) {
+      return undefined;
+    }
+    const srv = servers.find((item) => {
+      const url = /** @type string */ (this._getValue(item, this.ns.aml.vocabularies.core.urlTemplate));
+      return url === serverValue;
+    });
+    if (srv) {
+      return srv['@id'];
+    }
+    return undefined;
+  }
+
+  /**
+   * @param {CustomEvent} e
+   */
+  _serverHandler(e) {
+    const { value, type } = e.detail;
+    this.serverType = type;
+    this.serverValue = value;
+  }
+
   /**
    * @param {CustomEvent} e
    */
   _navChanged(e) {
-    const { selected, type, passive } = e.detail;
+    const { selected, type, passive, endpointId } = e.detail;
     if (passive) {
       return;
     }
     if (type === 'method') {
       this.selectedId = selected;
       this.selectedType = type;
+      this.parentEndpoint = endpointId;
     } else {
       this.selectedId = undefined;
       this.selectedType = undefined;
+      this.endpointId = undefined;
     }
   }
 
@@ -74,7 +118,7 @@ class ComponentPage extends AmfDemoBase {
       <p>
         This demo lets you preview the API Operation document with various configuration options.
       </p>
-
+      ${this.serverSelectorTemplate()}
       <div class="api-demo-content">
         ${!loaded ? html`<p>Load an API model first.</p>` : this.loadedTemplate()}
       </div>
@@ -90,9 +134,15 @@ class ComponentPage extends AmfDemoBase {
   }
 
   componentTemplate() {
-    const { demoStates, darkThemeActive, selectedId, amf, tryIt, overrideBaseUri } = this;
+    const { demoStates, darkThemeActive, selectedId, amf, tryIt, overrideBaseUri, baseUri, serverId } = this;
     if (!selectedId) {
       return html`<p>Select API operation in the navigation</p>`;
+    }
+    let finalBaseUri;
+    if (baseUri) {
+      finalBaseUri = baseUri;
+    } else if (overrideBaseUri) {
+      finalBaseUri = 'https://custom.api.com';
     }
     return html`
     <arc-interactive-demo
@@ -103,7 +153,8 @@ class ComponentPage extends AmfDemoBase {
       <api-operation-document
         .amf="${amf}"
         .domainId="${selectedId}"
-        .baseUri="${overrideBaseUri ? 'https://custom.api.com' : undefined}"
+        .baseUri="${finalBaseUri}"
+        .serverId="${serverId}"
         slot="content"
         ?tryIt="${tryIt}"
         @tryit="${this.tryitHandler}"
@@ -192,6 +243,28 @@ class ComponentPage extends AmfDemoBase {
       </div>
     </anypoint-dialog>
     `;
+  }
+
+  /**
+   * @return {object} A template for the server selector
+   */
+  serverSelectorTemplate() {
+    const {
+      amf,
+      serverType,
+      serverValue,
+      compatibility,
+    } = this;
+    return html`
+    <api-server-selector
+      .amf="${amf}"
+      .value="${serverValue}"
+      .type="${serverType}"
+      autoSelect
+      allowCustom
+      ?compatibility="${compatibility}"
+      @apiserverchanged="${this._serverHandler}"
+    ></api-server-selector>`;
   }
 }
 const instance = new ComponentPage();

@@ -10,4 +10,9 @@ export default {
       return next();
     }
   ],
+  testFramework: {
+    config: {
+      timeout: 10000,
+    },
+  },
 };

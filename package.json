@@ -10,10 +10,15 @@
     "api-console",
     "api-documentation"
   ],
-  "authors": [
-    "Pawel Psztyc"
-  ],
+  "author": {
+    "name": "Pawel Uchida-Psztyc",
+    "email": "pawel.psztyc@mulesoft.com"
+  },
   "contributors": [
+    "Carolina Wright",
+    "Francisco Di Giandomenico",
+    "Leandro Bauret",
+    "Yury",
     "Your name can be here!"
   ],
   "repository": {
@@ -37,7 +42,7 @@
     "@anypoint-web-components/anypoint-radio-button": "^0.1.9",
     "@anypoint-web-components/anypoint-tabs": "^0.1.19",
     "@api-components/amf-helper-mixin": "^4.5.14",
-    "@api-components/api-request": "^0.3.0-beta.5",
+    "@api-components/api-request": "^0.3.0-beta.6",
     "@api-components/api-schema": "^0.1.4",
     "@api-components/api-server-selector": "^0.7.1",
     "@api-components/http-method-label": "^3.1.4",

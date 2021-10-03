@@ -10,11 +10,14 @@ import { ns } from '@api-components/amf-helper-mixin';
 /** @typedef {import('@api-components/amf-helper-mixin').ApiPropertyShape} ApiPropertyShape */
 /** @typedef {import('../types').OperationParameter} OperationParameter */
 
+/**
+ * A library to create a list of ApiParameters from a query string value.
+ */
 export class QueryParameterProcessor {
   /**
    * @param {ApiShapeUnion} schema
    * @param {string} binding The parameter binding.
-  * @param {string=} source Optional parameter source.
+   * @param {string=} source Optional parameter source.
    * @returns {OperationParameter[]}
    */
   collectOperationParameters(schema, binding, source) {
