@@ -205,7 +205,7 @@ export default class ApiResponseDocumentElement extends ApiDocumentationBase {
     }
     const content = html`
     ${this[payloadSelectorTemplate]()}
-    <api-payload-document .amf="${this.amf}" .payload="${payload}"></api-payload-document>
+    <api-payload-document .amf="${this.amf}" .payload="${payload}" ?anypoint="${this.anypoint}"></api-payload-document>
     `;
     return this[paramsSectionTemplate]('Response body', 'payloadOpened', content);
   }
@@ -270,7 +270,7 @@ export default class ApiResponseDocumentElement extends ApiDocumentationBase {
     return html`
     <div class="link-header">${name}</div>
     ${this[linkOperationTemplate](operationId)}
-    <div slot="markdown-html">
+    <div slot="markdown-html" class="link-table">
       ${this[linkMappingsTemplate](mapping)}
     </div>
     `;

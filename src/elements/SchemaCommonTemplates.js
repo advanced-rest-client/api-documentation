@@ -1,6 +1,7 @@
 import { html } from "lit-element";
 import { ns } from '@api-components/amf-helper-mixin';
 import { classMap } from "lit-html/directives/class-map";
+import { ifDefined } from "lit-html/directives/if-defined";
 import '../../api-annotation-document.js';
 
 /** @typedef {import('lit-element').TemplateResult} TemplateResult */
@@ -129,13 +130,14 @@ export function descriptionValueTemplate(description) {
 }
 
 /**
- * @param {string} label
- * @param {string} value
+ * @param {string} label The label to render
+ * @param {string} value The value to render
+ * @param {string=} name Optional data-name attribute value.
  * @return {TemplateResult}
  */
-export function tablePropertyTemplate(label, value) {
+export function tablePropertyTemplate(label, value, name) {
   return html`
-  <div class="schema-property-item">
+  <div class="schema-property-item" data-name="${ifDefined(name)}">
     <div class="schema-property-label">${label}:</div>
     <div class="schema-property-value code-value inline">${value}</div>
   </div>

@@ -1,8 +1,10 @@
+/* eslint-disable class-methods-use-this */
 import { html } from 'lit-element';
 import { 
   ApiDocumentationBase,
   serializerValue,
 } from './ApiDocumentationBase.js';
+import elementStyles from './styles/ApiSecurityRequirement.js';
 import '../../api-parametrized-security-scheme.js';
 
 /** @typedef {import('@api-components/amf-helper-mixin').ApiSecurityRequirement} ApiSecurityRequirement */
@@ -13,6 +15,10 @@ export const findSecurity = Symbol('findSecurity');
 export const findOperationSecurity = Symbol('findOperationSecurity');
 
 export default class ApiSecurityRequirementDocumentElement extends ApiDocumentationBase {
+  get styles() {
+    return [elementStyles];
+  }
+
   constructor() {
     super();
     /** @type {ApiSecurityRequirement} */
@@ -134,13 +140,16 @@ export default class ApiSecurityRequirementDocumentElement extends ApiDocumentat
       return html``;
     }
     return html`
+    <style>${this.styles}</style>
     <div class="security-requirements">
       ${scheme.schemes.map((item) => html`
         <api-parametrized-security-scheme 
           .amf="${this.amf}"
           .securityScheme="${item.scheme}" 
           .settings="${item.settings}"
-          settingsOpened></api-parametrized-security-scheme>`)}
+          ?anypoint="${this.anypoint}"
+          settingsOpened
+        ></api-parametrized-security-scheme>`)}
     </div>
     `;
   }

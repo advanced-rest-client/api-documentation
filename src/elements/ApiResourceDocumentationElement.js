@@ -392,6 +392,7 @@ export default class ApiResourceDocumentationElement extends ApiDocumentationBas
       .domainId="${operation.id}"
       .serverId="${serverId}" 
       .baseUri="${baseUri}" 
+      ?anypoint="${this.anypoint}"
       data-domain-id="${operation.id}"
       ?tryIt="${this.tryIt}"
       responsesOpened

@@ -141,7 +141,7 @@ export default class ApiPayloadDocumentElement extends ApiDocumentationBase {
       return html`<div class="empty-info">Schema is not defined for this payload.</div>`;
     }
     return html`
-    <api-schema-document class="schema-renderer" .amf="${this.amf}" .schema="${schema}" .mimeType="${mediaType}" forceExamples schemaTitle></api-schema-document>
+    <api-schema-document class="schema-renderer" .amf="${this.amf}" .schema="${schema}" .mimeType="${mediaType}" ?anypoint="${this.anypoint}" forceExamples schemaTitle></api-schema-document>
     `;
   }
 }

@@ -165,6 +165,7 @@ class ComponentPage extends AmfDemoBase {
         ?tryIt="${tryIt}"
         ?renderCodeSnippets="${renderCodeSnippets}"
         ?renderSecurity="${renderSecurity}"
+        ?anypoint="${this.compatibility}"
         @tryit="${this.tryitHandler}"
       >
       </api-operation-document>
@@ -217,7 +218,8 @@ class ComponentPage extends AmfDemoBase {
       ['multi-server', 'Multiple servers'],
       ['nexmo-sms-api', 'Nexmo SMS API'],
       ['appian-api', 'Applian API'],
-      ['async-api', 'async-api'],
+      ['async-api', 'Async API'],
+      ['Petstore-v2', 'Petstore OAS API'],
       ['api-keys', 'API key (OAS)'],
       ['oauth-flows', 'OAuth 2 flows'],
       ['oas-bearer', 'Bearer token'],

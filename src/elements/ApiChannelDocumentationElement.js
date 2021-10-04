@@ -86,6 +86,7 @@ export default class ApiChannelDocumentationElement extends ApiResourceDocumenta
       data-domain-id="${operation.id}"
       responsesOpened
       asyncApi
+      ?anypoint="${this.anypoint}"
       class="operation"></api-operation-document>`;
   }
 }

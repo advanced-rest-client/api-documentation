@@ -356,8 +356,9 @@ export default class ApiSecurityDocumentElement extends ApiDocumentationBase {
         .selected="${selectedStatus}"
         attrForSelected="data-status"
         @selected="${this[statusCodeHandler]}"
+        ?compatibility="${this.anypoint}"
       >
-        ${filtered.map((item) => html`<anypoint-tab data-status="${item.statusCode}">${item.statusCode}</anypoint-tab>`)}
+        ${filtered.map((item) => html`<anypoint-tab data-status="${item.statusCode}" ?compatibility="${this.anypoint}">${item.statusCode}</anypoint-tab>`)}
       </anypoint-tabs>
       <div class="codes-selector-divider"></div>
     </div>
@@ -375,7 +376,7 @@ export default class ApiSecurityDocumentElement extends ApiDocumentationBase {
       return html`<div class="empty-info">Select a response to render the documentation.</div>`;
     }
     return html`
-    <api-response-document .amf="${this.amf}" .response="${response}" headersOpened payloadOpened></api-response-document>
+    <api-response-document .amf="${this.amf}" .response="${response}" ?anypoint="${this.anypoint}" headersOpened payloadOpened></api-response-document>
     `;
   }
 

@@ -38,6 +38,7 @@ import '../../api-security-requirement-document.js';
 /** @typedef {import('@api-components/amf-helper-mixin').ApiAnyShape} ApiAnyShape */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiParameter} ApiParameter */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiScalarShape} ApiScalarShape */
+/** @typedef {import('@api-components/amf-helper-mixin').ApiSecurityRequirement} ApiSecurityRequirement */
 /** @typedef {import('@anypoint-web-components/anypoint-tabs').AnypointTabs} AnypointTabs */
 /** @typedef {import('./ApiRequestDocumentElement').default} ApiRequestDocumentElement */
 
@@ -59,6 +60,7 @@ export const snippetsPayloadValue = Symbol('snippetsPayloadValue');
 export const snippetsHeadersValue = Symbol('snippetsHeadersValue');
 export const baseUriValue = Symbol('baseUriValue');
 export const preselectResponse = Symbol('preselectResponse');
+export const preselectSecurity = Symbol('preselectSecurity');
 export const requestMimeChangeHandler = Symbol('requestMimeChangeHandler');
 export const titleTemplate = Symbol('titleTemplate');
 export const traitsTemplate = Symbol('extendsTemplate');
@@ -70,6 +72,7 @@ export const responseTabsTemplate = Symbol('responseTabsTemplate');
 export const responseContentTemplate = Symbol('responseContentTemplate');
 export const statusCodeHandler = Symbol('statusCodeHandler');
 export const securitySectionTemplate = Symbol('securitySectionTemplate');
+export const securityTemplate = Symbol('securityTemplate');
 export const deprecatedTemplate = Symbol('deprecatedTemplate');
 export const metaDataTemplate = Symbol('metaDataTemplate');
 export const tryItTemplate = Symbol('tryItTemplate');
@@ -77,6 +80,9 @@ export const tryItHandler = Symbol('tryItHandler');
 export const callbacksTemplate = Symbol('callbacksTemplate');
 export const callbackTemplate = Symbol('callbackTemplate');
 export const snippetsTemplate = Symbol('snippetsTemplate');
+export const securitySelectorTemplate = Symbol('securitySelectorTemplate');
+export const securitySelectionHandler = Symbol('securitySelectionHandler');
+export const securityTabTemplate = Symbol('securityTabTemplate');
 
 /**
  * A web component that renders the documentation page for an API operation built from 
@@ -108,6 +114,13 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
     this[computeUrlValue]();
     this[computeParametersValue]();
     this.requestUpdate();
+  }
+
+  /**
+   * @returns {ApiServer[]|undefined} The computed list of servers.
+   */
+  get servers() {
+    return this[serversValue];
   }
 
   /**
@@ -189,12 +202,26 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
   }
 
   /**
+   * @returns {string|undefined} The computed URI for the endpoint.
+   */
+  get endpointUri() {
+    return this[urlValue];
+  }
+
+  /**
    * @returns {string}
    */
   get snippetsUri() {
     const base = this[urlValue] || '';
     const query = this[snippetsParametersValue] || '';
     return `${base}${query}`
+  }
+
+  /**
+   * @returns {ApiResponse[]|undefined} The computed list of responses for this operation.
+   */
+  get responses() {
+    return this[responsesValue];
   }
 
   static get properties() {
@@ -209,6 +236,11 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
        * If not set a first server in the API servers array is used.
        */
       serverId: { type: String, reflect: true },
+      /** 
+       * The domain id of the currently selected security to render.
+       * This is only used when a multiple security schemes are applied to the operation.
+       */
+      securityId: { type: String, reflect: true },
       /** 
        * When set it opens the response section
        */
@@ -300,6 +332,8 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
     this[snippetsPayloadValue] = undefined;
     /** @type {string} */
     this[snippetsHeadersValue] = undefined;
+    /** @type {string} */
+    this.securityId = undefined;
   }
 
   /**
@@ -322,6 +356,7 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
     await this[queryServers]();
     await this[queryResponses]();
     this[preselectResponse]();
+    this[preselectSecurity]();
     this[computeUrlValue]();
     this[computeParametersValue]();
     this[computeSnippetsPayload]();
@@ -407,6 +442,26 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
       return;
     }
     this.selectedStatus = responses[0].statusCode;
+  }
+
+  /**
+   * Updates the `securityId` if not selected or the current selection doesn't 
+   * exists in the current list of security.
+   */
+  [preselectSecurity]() {
+    const { operation, renderSecurity, securityId } = this;
+    if (!renderSecurity || !operation || !Array.isArray(operation.security) || !operation.security.length) {
+      return;
+    }
+    if (!securityId) {
+      this.securityId = operation.security[0].id;
+      return;
+    }
+    const selected = operation.security.find((item) => item.id === securityId);
+    if (selected) {
+      return;
+    }
+    this.securityId = operation.security[0].id;
   }
 
   /**
@@ -588,6 +643,15 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
   }
 
   /**
+   * A handler for the status code tab selection.
+   * @param {Event} e
+   */
+  [securitySelectionHandler](e) {
+    const tabs = /** @type AnypointTabs */ (e.target);
+    this.securityId = String(tabs.selected);
+  }
+
+  /**
    * A handler for the try it button click.
    * It dispatches the `tryit` custom event.
    */
@@ -716,9 +780,8 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
     const { operationId, } = operation;
     const result = [];
     if (operationId) {
-      result.push(tablePropertyTemplate('Operation ID', operationId));
+      result.push(tablePropertyTemplate('Operation ID', operationId, 'operation-id'));
     }
-
     if (result.length) {
       return result;
     }
@@ -780,6 +843,7 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
       payloadOpened 
       headersOpened 
       parametersOpened
+      ?anypoint="${this.anypoint}"
       @mimechange="${this[requestMimeChangeHandler]}"
     ></api-request-document>
     `;
@@ -843,7 +907,7 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
    * @returns {TemplateResult} The template for the responses selector.
    */
   [responseTabsTemplate](responses) {
-    const { selectedStatus } = this;
+    const { selectedStatus, anypoint } = this;
     const filtered = responses.filter((item) => !!item.statusCode);
     return html`
     <div class="status-codes-selector">
@@ -852,8 +916,9 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
         .selected="${selectedStatus}"
         attrForSelected="data-status"
         @selected="${this[statusCodeHandler]}"
+        ?compatibility="${anypoint}"
       >
-        ${filtered.map((item) => html`<anypoint-tab data-status="${item.statusCode}">${item.statusCode}</anypoint-tab>`)}
+        ${filtered.map((item) => html`<anypoint-tab data-status="${item.statusCode}" ?compatibility="${anypoint}">${item.statusCode}</anypoint-tab>`)}
       </anypoint-tabs>
       <div class="codes-selector-divider"></div>
     </div>
@@ -876,6 +941,7 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
       .response="${response}" 
       headersOpened 
       payloadOpened
+      ?anypoint="${this.anypoint}"
       class="method-response"
     ></api-response-document>
     `;
@@ -885,12 +951,75 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
    * @returns {TemplateResult|string} The template for the security list section.
    */
   [securitySectionTemplate]() {
-    const { operation, renderSecurity } = this;
+    const { operation, renderSecurity, securityId } = this;
     if (!renderSecurity || !operation || !Array.isArray(operation.security) || !operation.security.length) {
       return '';
     }
-    const content = operation.security.map((model) => html`<api-security-requirement-document .amf="${this.amf}" .domainId="${model.id}"></api-security-requirement-document>`);
+    const { security } = operation;
+    const content = [];
+    if (security.length === 1) {
+      content.push(this[securityTemplate](security[0]));
+    } else if (securityId) {
+      content.push(this[securitySelectorTemplate]());
+      const item = security.find(i => i.id === securityId);
+      if (item) {
+        content.push(this[securityTemplate](item));
+      }
+      // security.forEach((model) => content.push(this[securityTemplate](model)));
+    }
     return this[paramsSectionTemplate]('Security', 'securityOpened', content);
+  }
+
+  /**
+   * @param {ApiSecurityRequirement} security
+   * @returns {TemplateResult} 
+   */
+  [securityTemplate](security) {
+    return html`<api-security-requirement-document 
+      .amf="${this.amf}" 
+      .domainId="${security.id}" 
+      ?anypoint="${this.anypoint}"
+    ></api-security-requirement-document>`
+  }
+
+  /**
+   * @returns {TemplateResult} 
+   */
+  [securitySelectorTemplate]() {
+    const { operation, securityId, anypoint } = this;
+    const { security } = operation;
+    return html`
+    <div class="security-selector">
+      <anypoint-tabs
+        scrollable
+        .selected="${securityId}"
+        attrForSelected="data-id"
+        @selected="${this[securitySelectionHandler]}"
+        ?compatibility="${anypoint}"
+      >
+        ${security.map((item) => this[securityTabTemplate](item))}
+      </anypoint-tabs>
+      <div class="codes-selector-divider"></div>
+    </div>
+    `;
+  }
+
+  /**
+   * @param {ApiSecurityRequirement} security
+   * @returns {TemplateResult} 
+   */
+  [securityTabTemplate](security) {
+    const { name, schemes=[], id } = security;
+    let label = 'unknown';
+    if (name) {
+      label = name;
+    } else if (schemes.length) {
+      const parts = schemes.map(i => i.name).filter(i => !!i);
+      if (parts.length) {
+        label = parts.join('/');
+      }
+    }
+    return  html`<anypoint-tab data-id="${id}" ?compatibility="${this.anypoint}">${label}</anypoint-tab>`;
   }
 
   /**

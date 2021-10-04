@@ -237,7 +237,7 @@ export class ApiDocumentationBase extends AmfHelperMixin(LitElement) {
   [sectionToggleTemplate](ctrlProperty) {
     const label = this[ctrlProperty] ? 'Hide' : 'Show';
     return html`
-    <anypoint-button class="section-toggle">
+    <anypoint-button class="section-toggle" ?compatibility="${this.anypoint}">
       ${label} <arc-icon icon="keyboardArrowDown" class="toggle-icon"></arc-icon>
     </anypoint-button>
     `;
@@ -284,6 +284,7 @@ export class ApiDocumentationBase extends AmfHelperMixin(LitElement) {
       .parameter="${model}" 
       class="property-item"
       data-name="${ifDefined(dataName)}"
+      ?anypoint="${this.anypoint}"
     ></api-parameter-document>
     `;
   }
