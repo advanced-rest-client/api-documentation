@@ -5,6 +5,7 @@
     "contentinfo",
     "dompurify",
     "fasttext",
+    "mimechange",
     "monostate",
     "Nexmo",
     "notryit",

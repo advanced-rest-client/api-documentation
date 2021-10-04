@@ -33,6 +33,8 @@ export const requestValue = Symbol('requestValue');
 export const queryPayloads = Symbol('queryPayloads');
 export const payloadsValue = Symbol('payloadsValue');
 export const payloadValue = Symbol('payloadValue');
+export const notifyMime = Symbol('notifyMime');
+export const preselectMime = Symbol('preselectMime');
 export const queryParamsTemplate = Symbol('queryParamsTemplate');
 export const headersTemplate = Symbol('headersTemplate');
 export const cookiesTemplate = Symbol('cookiesTemplate');
@@ -224,6 +226,7 @@ export default class ApiRequestDocumentElement extends ApiDocumentationBase {
     this.mimeType = undefined;
     await this[queryPayloads]();
     await this[processQueryParameters]();
+    await this[preselectMime]();
     await this.requestUpdate();
   }
 
@@ -255,6 +258,37 @@ export default class ApiRequestDocumentElement extends ApiDocumentationBase {
   }
 
   /**
+   * Pre-selects when needed the mime type for the current payload.
+   */
+  [preselectMime]() {
+    const { mimeType } = this;
+    const payloads = this[payloadsValue];
+    if (!Array.isArray(payloads) || !payloads.length) {
+      return;
+    }
+    const mime = /** @type string[] */ ([]);
+    let hasCurrent = false;
+    payloads.forEach((item) => {
+      if (item.mediaType) {
+        mime.push(item.mediaType);
+        if (!hasCurrent && item.mediaType === mimeType) {
+          hasCurrent = true;
+        }
+      }
+    });
+    // do not change the selection when already exist.
+    if (hasCurrent) {
+      return;
+    }
+    if (!mime.length) {
+      return;
+    }
+    const [first] = mime;
+    this.mimeType = first;
+    this[notifyMime]();
+  }
+
+  /**
    * @param {Event} e
    */
   [mediaTypeSelectHandler](e) {
@@ -265,6 +299,14 @@ export default class ApiRequestDocumentElement extends ApiDocumentationBase {
     }
     const mime = selectedItem.dataset.value;
     this.mimeType = mime;
+    this[notifyMime]();
+  }
+
+  /**
+   * Dispatches the `mimechange` event.
+   */
+  [notifyMime]() {
+    this.dispatchEvent(new Event('mimechange'));
   }
 
   render() {

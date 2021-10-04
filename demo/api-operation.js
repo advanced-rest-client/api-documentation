@@ -18,6 +18,7 @@ class ComponentPage extends AmfDemoBase {
       'editorOpened', 'editorOperation',
       'overrideBaseUri',
       'serverType', 'serverValue',
+      'renderSecurity', 'renderCodeSnippets'
     ]);
     /** @type string */
     this.selectedId = undefined;
@@ -27,6 +28,8 @@ class ComponentPage extends AmfDemoBase {
     this.endpointId = undefined;
     this.tryIt = true;
     this.overrideBaseUri = false;
+    this.renderSecurity = true;
+    this.renderCodeSnippets = true;
     this.compatibility = false;
     this.componentName = 'api-operation-document';
     this.redirectUri = `${window.location.origin}/node_modules/@advanced-rest-client/oauth-authorization/oauth-popup.html`;
@@ -134,7 +137,10 @@ class ComponentPage extends AmfDemoBase {
   }
 
   componentTemplate() {
-    const { demoStates, darkThemeActive, selectedId, amf, tryIt, overrideBaseUri, baseUri, serverId } = this;
+    const { 
+        demoStates, darkThemeActive, selectedId, amf, tryIt, overrideBaseUri, baseUri, serverId,
+        renderSecurity, renderCodeSnippets,
+    } = this;
     if (!selectedId) {
       return html`<p>Select API operation in the navigation</p>`;
     }
@@ -157,6 +163,8 @@ class ComponentPage extends AmfDemoBase {
         .serverId="${serverId}"
         slot="content"
         ?tryIt="${tryIt}"
+        ?renderCodeSnippets="${renderCodeSnippets}"
+        ?renderSecurity="${renderSecurity}"
         @tryit="${this.tryitHandler}"
       >
       </api-operation-document>
@@ -178,6 +186,24 @@ class ComponentPage extends AmfDemoBase {
         @change="${this._toggleMainOption}"
       >
         Custom base URI
+      </anypoint-checkbox>
+      <anypoint-checkbox
+        aria-describedby="mainOptionsLabel"
+        slot="options"
+        name="renderSecurity"
+        .checked="${renderSecurity}"
+        @change="${this._toggleMainOption}"
+      >
+        Render security
+      </anypoint-checkbox>
+      <anypoint-checkbox
+        aria-describedby="mainOptionsLabel"
+        slot="options"
+        name="renderCodeSnippets"
+        .checked="${renderCodeSnippets}"
+        @change="${this._toggleMainOption}"
+      >
+        Render code snippets
       </anypoint-checkbox>
     </arc-interactive-demo>
     `;

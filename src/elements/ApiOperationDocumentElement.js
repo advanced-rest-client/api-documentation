@@ -1,13 +1,17 @@
 /* eslint-disable class-methods-use-this */
 import { html } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map.js';
+import { ns } from "@api-components/amf-helper-mixin";
 import { Styles as HttpStyles } from '@api-components/http-method-label';
 import { MarkdownStyles } from '@advanced-rest-client/highlight';
 import { UrlLib } from '@api-components/api-request';
+import { ApiSchemaValues, ApiSchemaGenerator } from '@api-components/api-schema';
 import '@advanced-rest-client/highlight/arc-marked.js';
 import '@anypoint-web-components/anypoint-tabs/anypoint-tab.js';
 import '@anypoint-web-components/anypoint-tabs/anypoint-tabs.js';
 import '@advanced-rest-client/arc-icons/arc-icon.js';
+import '@advanced-rest-client/http-code-snippets/http-code-snippets.js';
+import { QueryParameterProcessor } from '../lib/QueryParameterProcessor.js';
 import elementStyles from './styles/ApiOperation.js';
 import commonStyles from './styles/Common.js';
 import { 
@@ -16,6 +20,7 @@ import {
   descriptionTemplate,
   serializerValue,
   customDomainPropertiesTemplate,
+  evaluateExample,
 } from './ApiDocumentationBase.js';
 import { tablePropertyTemplate } from './SchemaCommonTemplates.js';
 import schemaStyles from './styles/SchemaCommon.js';
@@ -30,7 +35,11 @@ import '../../api-security-requirement-document.js';
 /** @typedef {import('@api-components/amf-helper-mixin').Operation} Operation */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiResponse} ApiResponse */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiCallback} ApiCallback */
+/** @typedef {import('@api-components/amf-helper-mixin').ApiAnyShape} ApiAnyShape */
+/** @typedef {import('@api-components/amf-helper-mixin').ApiParameter} ApiParameter */
+/** @typedef {import('@api-components/amf-helper-mixin').ApiScalarShape} ApiScalarShape */
 /** @typedef {import('@anypoint-web-components/anypoint-tabs').AnypointTabs} AnypointTabs */
+/** @typedef {import('./ApiRequestDocumentElement').default} ApiRequestDocumentElement */
 
 export const queryEndpoint = Symbol('queryEndpoint');
 export const queryServers = Symbol('queryServers');
@@ -42,8 +51,15 @@ export const serverIdValue = Symbol('serverIdValue');
 export const urlValue = Symbol('urlValue');
 export const responsesValue = Symbol('responsesValue');
 export const computeUrlValue = Symbol('computeUrlValue');
+export const computeParametersValue = Symbol('computeParametersValue');
+export const snippetsParametersValue = Symbol('snippetsParametersValue');
+export const computeSnippetsPayload = Symbol('computeSnippetsPayload');
+export const computeSnippetsHeaders = Symbol('computeSnippetsHeaders');
+export const snippetsPayloadValue = Symbol('snippetsPayloadValue');
+export const snippetsHeadersValue = Symbol('snippetsHeadersValue');
 export const baseUriValue = Symbol('baseUriValue');
 export const preselectResponse = Symbol('preselectResponse');
+export const requestMimeChangeHandler = Symbol('requestMimeChangeHandler');
 export const titleTemplate = Symbol('titleTemplate');
 export const traitsTemplate = Symbol('extendsTemplate');
 export const summaryTemplate = Symbol('summaryTemplate');
@@ -60,6 +76,7 @@ export const tryItTemplate = Symbol('tryItTemplate');
 export const tryItHandler = Symbol('tryItHandler');
 export const callbacksTemplate = Symbol('callbacksTemplate');
 export const callbackTemplate = Symbol('callbackTemplate');
+export const snippetsTemplate = Symbol('snippetsTemplate');
 
 /**
  * A web component that renders the documentation page for an API operation built from 
@@ -89,6 +106,7 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
     }
     this[serverIdValue] = value;
     this[computeUrlValue]();
+    this[computeParametersValue]();
     this.requestUpdate();
   }
 
@@ -145,6 +163,7 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
     }
     this[endpointValue] = value;
     this[computeUrlValue]();
+    this[computeParametersValue]();
     this.requestUpdate();
   }
 
@@ -165,7 +184,17 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
     }
     this[baseUriValue] = value;
     this[computeUrlValue]();
+    this[computeParametersValue]();
     this.requestUpdate();
+  }
+
+  /**
+   * @returns {string}
+   */
+  get snippetsUri() {
+    const base = this[urlValue] || '';
+    const query = this[snippetsParametersValue] || '';
+    return `${base}${query}`
   }
 
   static get properties() {
@@ -189,6 +218,10 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
        */
       securityOpened: { type: Boolean, reflect: true },
       /** 
+       * When set it opens the code snippets section
+       */
+      snippetsOpened: { type: Boolean, reflect: true },
+      /** 
        * The selected status code in the responses section.
        */
       selectedStatus: { type: String },
@@ -204,6 +237,18 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
        * When set it renders the view optimised for asynchronous API operation.
        */
       asyncApi: { type: Boolean, reflect: true },
+      /**
+       * When set it renders code examples section is the documentation
+       */
+      renderCodeSnippets: { type: Boolean },
+      /**
+       * When set it renders security documentation when applicable
+       */
+      renderSecurity: { type: Boolean },
+      /** 
+       * The currently rendered request panel mime type.
+       */
+      requestMimeType: { type: String },
     };
   }
 
@@ -238,11 +283,23 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
     /** @type {boolean} */
     this.securityOpened = undefined;
     /** @type {boolean} */
+    this.snippetsOpened = undefined;
+    /** @type {boolean} */
     this.tryIt = undefined;
     /** @type {boolean} */
     this.asyncApi = undefined;
+    /** @type {boolean} */
+    this.renderCodeSnippets = undefined;
+    /** @type {boolean} */
+    this.renderSecurity = undefined;
     /** @type {Operation} */
     this.domainModel = undefined;
+    /** @type {string} */
+    this.requestMimeType = undefined;
+    /** @type {string} */
+    this[snippetsPayloadValue] = undefined;
+    /** @type {string} */
+    this[snippetsHeadersValue] = undefined;
   }
 
   /**
@@ -266,6 +323,9 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
     await this[queryResponses]();
     this[preselectResponse]();
     this[computeUrlValue]();
+    this[computeParametersValue]();
+    this[computeSnippetsPayload]();
+    this[computeSnippetsHeaders]();
     await this.requestUpdate();
   }
 
@@ -365,6 +425,156 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
   }
 
   /**
+   * Computes query parameters for the code snippets.
+   */
+  [computeParametersValue]() {
+    this[snippetsParametersValue] = undefined;
+    const { operation } = this;
+    if (!operation) {
+      return;
+    }
+    const { request } = operation;
+    if (!request) {
+      return;
+    }
+    const { queryParameters, queryString } = request;
+    /** @type ApiParameter[] */
+    let params;
+    if (Array.isArray(queryParameters) && queryParameters.length) {
+      params = queryParameters;
+    } else if (queryString) {
+      const factory = new QueryParameterProcessor();
+      const items = factory.collectOperationParameters(request.queryString, 'query');
+      if (Array.isArray(items) && items.length) {
+        params = items.map(i => i.parameter);
+      }
+    }
+    if (!params || !params.length) {
+      return;
+    }
+    const qp = /** @type {Record<string, any>} */ ({});
+    params.forEach((param) => {
+      const { required, schema, paramName, name } = param;
+      if (!required) {
+        return;
+      }
+      const parameterName = paramName || name;
+      const anySchema = /** @type ApiAnyShape */ (schema);
+      const { defaultValueStr, examples=[] } = anySchema;
+      if (defaultValueStr) {
+        qp[parameterName] = defaultValueStr;
+      } else if (examples.length) {
+        const exp = examples.find(e => e.value);
+        if (exp) {
+          qp[parameterName] = exp.value;
+        }
+      } else {
+        const v = ApiSchemaValues.generateDefaultValue(/** @type ApiScalarShape */ (schema));
+        if (typeof v === 'undefined') {
+          qp[parameterName] = '';
+        } else {
+          qp[parameterName] = v;
+        }
+      }
+    });
+    const value = UrlLib.applyUrlParameters('', qp, true);
+    this[snippetsParametersValue] = value;
+  }
+
+  /**
+   * Computes payload value for the code snippets.
+   */
+  [computeSnippetsPayload]() {
+    this[snippetsPayloadValue] = undefined
+    if (this.asyncApi) {
+      return;
+    }
+    const { operation, requestMimeType } = this;
+    if (!operation || !requestMimeType) {
+      return;
+    }
+    const { request } = operation;
+    if (!request) {
+      return;
+    }
+    const { payloads=[] } = request;
+    if (!payloads.length) {
+      return;
+    }
+    const payload = payloads.find(p => p.mediaType === requestMimeType);
+    if (!payload) {
+      return;
+    }
+    const { examples=[], schema } = payload;
+    let examplesCopy = [...examples];
+    const anySchema = /** @type ApiAnyShape */ (schema);
+    if (Array.isArray(anySchema.examples) && anySchema.examples.length) {
+      examplesCopy = examplesCopy.concat(anySchema.examples);
+    }
+    examplesCopy = examplesCopy.filter((i) => !!i.value || !!i.structuredValue);
+    let payloadValue;
+    if (examplesCopy.length) {
+      const example = examplesCopy.find(e => !!e.value);
+      if (example) {
+        payloadValue = this[evaluateExample](example, requestMimeType);
+      }
+    }
+    if (!payloadValue) {
+      payloadValue = ApiSchemaGenerator.asExample(schema, requestMimeType, {
+        renderExamples: true,
+        renderOptional: true,
+      });
+    }
+    if (payloadValue && payloadValue.renderValue) {
+      this[snippetsPayloadValue] = payloadValue.renderValue;
+    }
+  }
+
+  /**
+   * Computes headers value for the code snippets.
+   */
+  [computeSnippetsHeaders]() {
+    this[snippetsHeadersValue] = undefined;
+    if (this.asyncApi) {
+      return;
+    }
+    const { operation, requestMimeType } = this;
+    if (!operation) {
+      return;
+    }
+    const { request, method } = operation;
+    if (!request) {
+      return;
+    }
+    const { headers=[] } = request;
+    const parts = [];
+    let hasMime = false;
+    headers.forEach((param) => {
+      const { paramName, name, schema } = param;
+      if (!schema || !schema.types.includes(ns.aml.vocabularies.shapes.ScalarShape)) {
+        return;
+      }
+      const typedScalar = /** @type ApiScalarShape */ (schema);
+      let value = ApiSchemaValues.readInputValue(param, typedScalar, { fromExamples: true });
+      if (Array.isArray(value)) {
+        value = value.join(',');
+      }
+      if (typeof value !== 'undefined') {
+        const headerName = paramName || name || '';
+        if (headerName.toLowerCase() === 'content-type') {
+          hasMime = true;
+        }
+        const header = `${paramName || name}: ${value}`;
+        parts.push(header);
+      }
+    });
+    if (!hasMime && requestMimeType && method !== 'get') {
+      parts.push(`content-type: ${requestMimeType}`);
+    }
+    this[snippetsHeadersValue] = parts.join('\n');
+  }
+
+  /**
    * A handler for the status code tab selection.
    * @param {Event} e
    */
@@ -397,6 +607,18 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
     });
   }
 
+  /**
+   * A handler for the request panel mime type change.
+   * @param {Event} e
+   */
+  [requestMimeChangeHandler](e) {
+    const panel = /** @type ApiRequestDocumentElement */ (e.target);
+    this.requestMimeType = panel.mimeType;
+    this[computeSnippetsPayload]();
+    this[computeSnippetsHeaders]();
+    this.requestUpdate();
+  }
+
   render() {
     if (!this[operationValue]) {
       return html``;
@@ -413,6 +635,7 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
     ${this[customDomainPropertiesTemplate](this[operationValue].customDomainProperties)}
     ${this[requestTemplate]()}
     ${this[callbacksTemplate]()}
+    ${this[snippetsTemplate]()}
     ${this[responseTemplate]()}
     ${this[securitySectionTemplate]()}
     `;
@@ -553,6 +776,7 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
       payloadOpened 
       headersOpened 
       parametersOpened
+      @mimechange="${this[requestMimeChangeHandler]}"
     ></api-request-document>
     `;
   }
@@ -657,8 +881,8 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
    * @returns {TemplateResult|string} The template for the security list section.
    */
   [securitySectionTemplate]() {
-    const { operation } = this;
-    if (!operation || !Array.isArray(operation.security) || !operation.security.length) {
+    const { operation, renderSecurity } = this;
+    if (!renderSecurity || !operation || !Array.isArray(operation.security) || !operation.security.length) {
       return '';
     }
     const content = operation.security.map((model) => html`<api-security-requirement-document .amf="${this.amf}" .domainId="${model.id}"></api-security-requirement-document>`);
@@ -680,5 +904,26 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
       ?compatibility="${this.anypoint}"
     >Try it</anypoint-button>
     `;
+  }
+
+  /**
+   * @returns {TemplateResult|string} The template for the code snippets.
+   */
+  [snippetsTemplate]() {
+    if (!this.renderCodeSnippets || this.asyncApi) {
+      return '';
+    }
+    const { operation } = this;
+    const content = html`
+    <http-code-snippets
+      scrollable
+      ?compatibility="${this.anypoint}"
+      .url="${this.snippetsUri}"
+      .method="${(operation.method || '').toUpperCase()}"
+      .payload="${this[snippetsPayloadValue]}"
+      .headers="${this[snippetsHeadersValue]}"
+    ></http-code-snippets>
+    `;
+    return this[paramsSectionTemplate]('Code snippets', 'snippetsOpened', content);
   }
 }

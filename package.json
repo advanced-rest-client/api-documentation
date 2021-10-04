@@ -34,6 +34,7 @@
     "@advanced-rest-client/arc-icons": "^3.3.4",
     "@advanced-rest-client/events-target-mixin": "^3.2.4",
     "@advanced-rest-client/highlight": "^1.1.1",
+    "@advanced-rest-client/http-code-snippets": "^3.2.2",
     "@anypoint-web-components/anypoint-button": "^1.2.3",
     "@anypoint-web-components/anypoint-collapse": "^0.1.2",
     "@anypoint-web-components/anypoint-dropdown-menu": "^0.1.21",
