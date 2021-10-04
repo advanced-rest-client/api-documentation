@@ -237,7 +237,8 @@ class ComponentPage extends AmfDemoBase {
       ['SE-11508', 'SE-11508'],
       ['SE-12957', 'SE-12957: OAS query parameters documentation'],
       ['SE-11415', 'SE-11415'],
-      ['SE-12752', 'SE-12752: Query string (SE-12752)'],
+      ['SE-12752', 'SE-12752: Query string'],
+      ['SE-12957', 'SE-12957'],
       ['SE-12959', 'SE-12959: OAS summary field'],
     ].forEach(([file, label]) => {
       result[result.length] = html`

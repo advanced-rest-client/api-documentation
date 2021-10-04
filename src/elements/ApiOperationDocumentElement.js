@@ -333,16 +333,17 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
    * Queries for the API operation's endpoint data.
    */
   async [queryEndpoint]() {
-    const { domainId, amf } = this;
+    const { domainId, amf, operation } = this;
     this[endpointValue] = undefined;
-    if (!domainId || !amf) {
+    const id = domainId || operation && operation.id;
+    if (!id || !amf) {
       return;
     }
     const wa = this._computeApi(amf);
     if (!wa) {
       return;
     }
-    const model = this._computeMethodEndpoint(wa, domainId);
+    const model = this._computeMethodEndpoint(wa, id);
     if (!model) {
       return;
     }
@@ -469,12 +470,15 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
           qp[parameterName] = exp.value;
         }
       } else {
-        const v = ApiSchemaValues.generateDefaultValue(/** @type ApiScalarShape */ (schema));
-        if (typeof v === 'undefined') {
-          qp[parameterName] = '';
-        } else {
-          qp[parameterName] = v;
+        const value = ApiSchemaValues.generateDefaultValue(/** @type ApiScalarShape */ (schema));
+        if (value || value === false || value === 0 || value === null) {
+          qp[parameterName] = value;
         }
+        // if (typeof value === 'undefined') {
+        //   qp[parameterName] = '';
+        // } else {
+        //   qp[parameterName] = value;
+        // }
       }
     });
     const value = UrlLib.applyUrlParameters('', qp, true);

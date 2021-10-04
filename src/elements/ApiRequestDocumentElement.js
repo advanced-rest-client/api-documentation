@@ -43,7 +43,6 @@ export const payloadSelectorTemplate = Symbol('payloadSelectorTemplate');
 export const mediaTypeSelectHandler = Symbol('mediaTypeSelectHandler');
 export const processQueryParameters = Symbol('processQueryParameters');
 export const queryParametersValue = Symbol('queryParametersValue');
-export const queryStringTemplate = Symbol('queryStringTemplate');
 
 /**
  * A web component that renders the documentation page for an API request object.
@@ -317,7 +316,6 @@ export default class ApiRequestDocumentElement extends ApiDocumentationBase {
     return html`
     <style>${this.styles}</style>
     ${this[queryParamsTemplate]()}
-    ${this[queryStringTemplate]()}
     ${this[headersTemplate]()}
     ${this[cookiesTemplate]()}
     ${this[payloadTemplate]()}
@@ -337,20 +335,12 @@ export default class ApiRequestDocumentElement extends ApiDocumentationBase {
     if (request && Array.isArray(request.queryParameters)) {
       queryParameters = request.queryParameters;
     }
-    const all = uriParameters.concat(queryParameters);
-    const content = all.map((param) => this[schemaItemTemplate](param, 'query'));
-    return this[paramsSectionTemplate]('Parameters', 'parametersOpened', content);
-  }
-
-  /**
-   * @return {TemplateResult|string} The template for the query parameters built form the query string.
-   */
-  [queryStringTemplate]() {
-    if (!this.hasQueryString || this.hasQueryParameters) {
-      return '';
+    if (!queryParameters.length && this[queryParametersValue] && this[queryParametersValue].length) {
+      queryParameters = this[queryParametersValue].map(i => i.parameter);
     }
-    const params = this[queryParametersValue];
-    const content = params.map((param) => this[schemaItemTemplate](param.parameter, 'query-string'));
+    const content = [];
+    uriParameters.forEach(param => content.push(this[schemaItemTemplate](param, 'uri')));
+    queryParameters.forEach(param => content.push(this[schemaItemTemplate](param, 'query')));
     return this[paramsSectionTemplate]('Parameters', 'parametersOpened', content);
   }
 
