@@ -276,6 +276,7 @@ resourceTypes:
 traits:
   Paginated: !include traits/pagination.raml
   Adminable: !include traits/adminable.raml
+  RateLimited: !include traits/rate-limited.raml
 securitySchemes:
   basic: !include securitySchemes/basic.raml
   oauth_2_0: !include securitySchemes/oauth_2_0.raml
@@ -482,6 +483,7 @@ documentation:
 /people:
   displayName: People
   type: RequestErrorResponse
+  is: [RateLimited]
   get:
     (annotationTest):
     displayName: List people
@@ -606,6 +608,7 @@ documentation:
 /products:
   displayName: Products
   description: The API is to be used to access data about the products.
+  type: RequestErrorResponse
   post:
     displayName: Create product
     description: |
@@ -650,6 +653,7 @@ documentation:
         description: The request has been rejected. Probably the product already exists in the datastore.
 /orgs:
   /{orgId}:
+    is: [RateLimited]
     get:
       displayName: Get organization
       description: Returns an organization info.

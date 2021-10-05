@@ -3,12 +3,11 @@
 
 - ~~Add "try it" button~~
 - ~~Sync the Operation template~~
-- Sync the Endpoint template
+- ~~Sync the Endpoint template~~
 - ~~Sync the Schema template~~
 - ~~Sync the Response template~~
 - ~~Sync the Payload template~~
-- Render the request editor side-by-side
-- Render multiple security schemes applied to a single method with tabs/drop-down selector
+- ~~Render the request editor side-by-side~~
 - ~~Fix the `(unknown path)` in the operation~~
 - Rendering of fragments and the partial model
 - main `api-documentation` element

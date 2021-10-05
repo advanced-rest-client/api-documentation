@@ -1,7 +1,9 @@
 /* eslint-disable class-methods-use-this */
 import { html } from 'lit-element';
+import { classMap } from 'lit-html/directives/class-map.js';
 import { MarkdownStyles } from '@advanced-rest-client/highlight';
 import { UrlLib } from '@api-components/api-request';
+import '@api-components/api-request/api-request-panel.js';
 import elementStyles from './styles/ApiResource.js';
 import commonStyles from './styles/Common.js';
 import { 
@@ -12,6 +14,7 @@ import {
   serializerValue,
   customDomainPropertiesTemplate,
 } from './ApiDocumentationBase.js';
+import { joinTraitNames } from '../lib/Utils.js';
 import '../../api-operation-document.js'
 import '../../api-parameter-document.js';
 
@@ -20,6 +23,11 @@ import '../../api-parameter-document.js';
 /** @typedef {import('@api-components/amf-helper-mixin').EndPoint} EndPoint */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiServer} ApiServer */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiOperation} ApiOperation */
+/** @typedef {import('@api-components/amf-helper-mixin').ApiAnyShape} ApiAnyShape */
+/** @typedef {import('@api-components/amf-helper-mixin').ApiScalarShape} ApiScalarShape */
+/** @typedef {import('@api-components/api-server-selector').ServerType} ServerType */
+/** @typedef {import('@api-components/api-request').ApiRequestPanelElement} ApiRequestPanelElement */
+/** @typedef {import('@api-components/api-request/src/types').ApiConsoleRequest} ApiConsoleRequest */
 
 export const operationIdValue = Symbol('operationIdValue');
 export const queryEndpoint = Symbol('queryEndpoint');
@@ -39,6 +47,13 @@ export const parametersTemplate = Symbol('parametersTemplate');
 export const operationIdChanged = Symbol('operationIdChanged');
 export const selectServer = Symbol('selectServer');
 export const processServerSelection = Symbol('processServerSelection');
+export const extensionsTemplate = Symbol('extensionsTemplate');
+export const tryItColumnTemplate = Symbol('tryItColumnTemplate');
+export const tryItPanelTemplate = Symbol('tryItPanelTemplate');
+export const codeSnippetsPanelTemplate = Symbol('codeSnippetsPanelTemplate');
+export const requestChangeHandler = Symbol('requestChangeHandler');
+export const requestValues = Symbol('requestValues');
+export const collectCodeSnippets = Symbol('collectCodeSnippets');
 
 /**
  * A web component that renders the resource documentation page for an API resource built from 
@@ -99,21 +114,23 @@ export default class ApiResourceDocumentationElement extends ApiDocumentationBas
     }
     this[serverIdValue] = value;
     this[selectServer]();
+    this[processServerSelection]();
+    this.requestUpdate();
   }
 
   /** @returns {ApiServer|undefined} */
   get server() {
     if (this[serverValue]) {
-      return this[serversValue];
+      return this[serverValue];
     }
     const servers = this[serversValue];
     if (Array.isArray(servers) && servers.length) {
       const [server] = servers;
       if (server) {
-        this[serversValue] = server;
+        this[serverValue] = server;
       }
     }
-    return this[serversValue];
+    return this[serverValue];
   }
 
   /** @param {ApiServer} value */
@@ -124,7 +141,7 @@ export default class ApiResourceDocumentationElement extends ApiDocumentationBas
     }
     this[serverValue] = value;
     this[processServerSelection]();
-    this[computeUrlValue]();
+    this.requestUpdate();
   }
 
   /**
@@ -183,7 +200,72 @@ export default class ApiResourceDocumentationElement extends ApiDocumentationBas
       /** 
        * When set it renders the "try it" button that dispatches the `tryit` event.
        */
-      tryIt: { type: Boolean, reflect: true },
+      tryItButton: { type: Boolean, reflect: true },
+      /** 
+       * When set it renders the "try it" panel next to the operation documentation.
+       * Setting this automatically disables the `tryItButton` property.
+       * 
+       * Note, use this only when there's enough space on the screen to render 2 panels side-by-side.
+       */
+      tryItPanel: { type: Boolean, reflect: true },
+      /** 
+       * When set it renders the URL input above the URL parameters in the HTTP editor.
+       */
+      httpUrlEditor: { type: Boolean, reflect: true },
+      /** 
+       * When set it applies the authorization values to the request dispatched
+       * with the API request event.
+       * If possible, it applies the authorization values to query parameter or headers
+       * depending on the configuration.
+       * 
+       * When the values arr applied to the request the authorization config is kept in the
+       * request object, but its `enabled` state is always `false`, meaning other potential
+       * processors should ignore this values.
+       * 
+       * If this property is not set then the application hosting this component should
+       * process the authorization data and apply them to the request.
+       */
+      httpApplyAuthorization: { type: Boolean, reflect: true },
+      /**
+       * List of credentials source passed to the HTTP editor
+       */
+      httpCredentialsSource: { type: Array },
+      /**
+       * OAuth2 redirect URI.
+       * This value **must** be set in order for OAuth 1/2 to work properly.
+       * This is only required in inline mode (`inlineMethods`).
+       */
+      redirectUri: { type: String },
+      /**
+       * Optional property to set on the request editor. 
+       * When true, the server selector is not rendered
+       */
+      httpNoServerSelector: { type: Boolean },
+      /**
+       * When set it renders "add custom" item button in the HTTP request editor.
+       * If the element is to be used without AMF model this should always
+       * be enabled. Otherwise users won't be able to add a parameter.
+       */
+      httpAllowCustom: { type: Boolean },
+      /**
+       * Optional property to set on the request editor. 
+       * If true, the server selector custom base URI option is rendered
+       */
+      httpAllowCustomBaseUri: { type: Boolean },
+      /** 
+       * When set it renders the view optimised for asynchronous API operation.
+       */
+      asyncApi: { type: Boolean, reflect: true },
+      /**
+       * Holds the value of the currently selected server
+       * Data type: URI
+       */
+      serverValue: { type: String },
+      /**
+       * Holds the type of the currently selected server
+       * Values: `server` | `uri` | `custom`
+       */
+      serverType: { type: String },
     };
   }
 
@@ -218,9 +300,32 @@ export default class ApiResourceDocumentationElement extends ApiDocumentationBas
     /** @type {EndPoint} */
     this.domainModel = undefined;
     /** @type {boolean} */
-    this.tryIt = undefined;
+    this.tryItButton = undefined;
+    /** @type {boolean} */
+    this.tryItPanel = undefined;
+    /** @type {boolean} */
+    this.httpUrlEditor = undefined;
+    /** @type {boolean} */
+    this.httpNoServerSelector = undefined;
+    /** @type {boolean} */
+    this.httpAllowCustomBaseUri = undefined;
+    /** @type {boolean} */
+    this.httpAllowCustom = undefined;
+    /** @type {boolean} */
+    this.asyncApi = undefined;
+    /** @type {string} */
+    this.redirectUri = undefined;
+    /** @type {ServerType} */
+    this.serverType = undefined;
+    /** @type {string} */
+    this.serverValue = undefined;
+    /** @type {boolean} */
+    this.httpApplyAuthorization = undefined;
+    this.httpCredentialsSource = undefined;
     /** @type ApiServer */
     this[serverValue] = undefined;
+    /** @type {Record<string, ApiConsoleRequest>} */
+    this[requestValues] = {};
   }
 
   /**
@@ -228,13 +333,16 @@ export default class ApiResourceDocumentationElement extends ApiDocumentationBas
    */
   async processGraph() {
     const { domainModel, domainId, amf } = this;
+    this[requestValues] = /** @type {Record<string, ApiConsoleRequest>} */ ({});
     if (domainModel) {
       this[endpointValue] = this[serializerValue].endPoint(domainModel);
     } else if (domainId && amf) {
-      const webApi = this._computeApi(amf);
-      const model = this._computeEndpointModel(webApi, domainId);
-      if (model) {
-        this[endpointValue] = this[serializerValue].endPoint(model);
+      if (!this[endpointValue] || this[endpointValue].id !== domainId) {
+        const webApi = this._computeApi(amf);
+        const model = this._computeEndpointModel(webApi, domainId);
+        if (model) {
+          this[endpointValue] = this[serializerValue].endPoint(model);
+        }
       }
     }
     await this[queryServers]();
@@ -243,6 +351,7 @@ export default class ApiResourceDocumentationElement extends ApiDocumentationBas
     if (this.operationId) {
       // this timeout gives few milliseconds for the operations to render.
       setTimeout(() => {
+        this[collectCodeSnippets]();
         // Todo: operations should inform the parent that the view is rendered
         // and after that this function should be called.
         this.scrollToOperation(this.operationId);
@@ -304,7 +413,12 @@ export default class ApiResourceDocumentationElement extends ApiDocumentationBas
       return;
     }
     this[serverValue] = servers.find(s => s.id === serverId);
-    this[processServerSelection]();
+  }
+  
+  /**
+   * Performs actions after a server is selected.
+   */
+  [processServerSelection]() {
     this[computeUrlValue]();
   }
 
@@ -320,16 +434,48 @@ export default class ApiResourceDocumentationElement extends ApiDocumentationBas
     this[urlValue] = url;
   }
 
+  /**
+   * Runs over each request editor and collects request values for code snippets generators.
+   */
+  [collectCodeSnippets]() {
+    const panels = this.shadowRoot.querySelectorAll('api-request-panel');
+    Array.from(panels).forEach((panel) => {
+      const { requestId } = panel.dataset;
+      if (!requestId) {
+        return;
+      }
+      const request = panel.serialize();
+      this[requestValues][requestId] = request;
+    });
+    this.requestUpdate();
+  }
+
+  /**
+   * @param {Event} e
+   */
+  [requestChangeHandler](e) {
+    const panel = /** @type ApiRequestPanelElement */ (e.target);
+    const { requestId } = panel.dataset;
+    if (!requestId) {
+      return;
+    }
+    const request = panel.serialize();
+    this[requestValues][requestId] = request;
+    this.requestUpdate();
+  }
+
   render() {
-    if (!this[endpointValue]) {
+    const { endpoint } = this;
+    if (!endpoint) {
       return html``;
     }
     return html`
     <style>${this.styles}</style>
     ${this[titleTemplate]()}
-    ${this[descriptionTemplate](this[endpointValue].description)}
-    ${this[customDomainPropertiesTemplate](this[endpointValue].customDomainProperties)}
     ${this[urlTemplate]()}
+    ${this[extensionsTemplate]()}
+    ${this[descriptionTemplate](endpoint.description)}
+    ${this[customDomainPropertiesTemplate](endpoint.customDomainProperties)}
     ${this[parametersTemplate]()}
     ${this[operationsTemplate]()}
     `;
@@ -339,8 +485,8 @@ export default class ApiResourceDocumentationElement extends ApiDocumentationBas
    * @returns {TemplateResult|string} The template for the Operation title.
    */
   [titleTemplate]() {
-    const endPoint = this[endpointValue];
-    const { name, path } = endPoint;
+    const { endpoint} = this;
+    const { name, path } = endpoint;
     const label = name || path;
     if (!label) {
       return '';
@@ -371,8 +517,8 @@ export default class ApiResourceDocumentationElement extends ApiDocumentationBas
    * @returns {TemplateResult|string} The template for the list of operations.
    */
   [operationsTemplate]() {
-    const endPoint = /** @type ApiEndPoint */ (this[endpointValue]);
-    const { operations } = endPoint;
+    const { endpoint } = this;
+    const { operations } = endpoint;
     if (!operations.length) {
       return '';
     }
@@ -382,33 +528,144 @@ export default class ApiResourceDocumentationElement extends ApiDocumentationBas
   }
 
   /**
-   * @param {ApiOperation} operation The graph id of the operation.
+   * @param {ApiOperation} operation The operation to render.
    * @returns {TemplateResult} The template for the API operation.
    */
   [operationTemplate](operation) {
-    const { serverId, baseUri } = this;
-    return html`<api-operation-document 
+    const { serverId, baseUri, tryItPanel, tryItButton } = this;
+    const renderTryIt = !tryItPanel && !!tryItButton;
+    const classes = {
+      'operation-container': true,
+      tryit: tryItPanel,
+    };
+    return html`
+    <div class="${classMap(classes)}">
+      <api-operation-document 
+        .amf="${this.amf}"
+        .domainId="${operation.id}"
+        .serverId="${serverId}" 
+        .baseUri="${baseUri}" 
+        ?anypoint="${this.anypoint}"
+        data-domain-id="${operation.id}"
+        ?tryIt="${renderTryIt}"
+        responsesOpened
+        renderSecurity
+        ?renderCodeSnippets="${!tryItPanel}"
+        class="operation"
+      ></api-operation-document>
+      ${tryItPanel ? this[tryItColumnTemplate](operation) : ''}
+    </div>
+    `;
+  }
+
+  /**
+   * @param {ApiOperation} operation The operation to render.
+   * @returns {TemplateResult} The template for the try it column panel rendered next to the operation documentation/
+   */
+  [tryItColumnTemplate](operation) {
+    return html`
+    <div class="try-it-column">
+      <!-- <div class="sticky-content"> -->
+        ${this[tryItPanelTemplate](operation)}
+        ${this[codeSnippetsPanelTemplate](operation)}
+      <!-- </div> -->
+    </div>
+    `;
+  }
+
+  /**
+   * @param {ApiOperation} operation The operation to render.
+   * @returns {TemplateResult} The template for the request editor.
+   */
+  [tryItPanelTemplate](operation) {
+    const content = html`
+    <api-request-panel
       .amf="${this.amf}"
-      .domainId="${operation.id}"
-      .serverId="${serverId}" 
-      .baseUri="${baseUri}" 
-      ?anypoint="${this.anypoint}"
-      data-domain-id="${operation.id}"
-      ?tryIt="${this.tryIt}"
-      responsesOpened
-      class="operation"></api-operation-document>`;
+      .selected="${operation.id}"
+      .serverValue="${this.serverValue}"
+      .serverType="${this.serverType}"
+      .baseUri="${this.baseUri}"
+      .redirectUri="${this.redirectUri}"
+      .credentialsSource="${this.httpCredentialsSource}"
+      ?compatibility="${this.anypoint}"
+      ?urlEditor="${this.httpUrlEditor}"
+      ?urlLabel="${!this.httpUrlEditor}"
+      ?noServerSelector="${this.httpNoServerSelector}"
+      ?applyAuthorization="${this.httpApplyAuthorization}"
+      ?allowCustomBaseUri="${this.httpAllowCustomBaseUri}"
+      ?allowCustom="${this.httpAllowCustom}"
+      allowHideOptional
+      globalCache
+      data-request-id="${operation.id}"
+      @change="${this[requestChangeHandler]}"
+    ></api-request-panel>
+    `;
+
+    return content;
+  }
+
+  /**
+   * @param {ApiOperation} operation The operation to render.
+   * @returns {TemplateResult|string} The template for the request's code snippets.
+   */
+  [codeSnippetsPanelTemplate](operation) {
+    const values = this[requestValues][operation.id];
+    if (!values) {
+      return '';
+    }
+    let { payload } = values
+    if (payload && typeof payload !== 'string') {
+      payload = '';
+    }
+    return html`
+    <section class="snippets">
+      <http-code-snippets
+        scrollable
+        .url="${values.url}"
+        .method="${values.method}"
+        .headers="${values.headers}"
+        .payload="${/** @type string */ (payload)}"
+      ></http-code-snippets>
+    </section>
+    `;
   }
 
   /**
    * @return {TemplateResult|string} The template for the endpoint's URI params.
    */
   [parametersTemplate]() {
-    const endPoint = /** @type ApiEndPoint */ (this[endpointValue]);
-    const { parameters } = endPoint;
+    const { endpoint } = this;
+    const { parameters } = endpoint;
     if (!parameters.length) {
       return '';
     }
     const content = parameters.map((param) => this[schemaItemTemplate](param));
     return this[paramsSectionTemplate]('URI parameters', 'parametersOpened', content);
+  }
+
+  /**
+   * @return {TemplateResult|string} The template for the endpoint's extensions.
+   */
+  [extensionsTemplate]() {
+    const { endpoint, ns } = this;
+    const { extends: extensions } = endpoint;
+
+    if (!extensions || !extensions.length) {
+      return '';
+    }
+
+    const type = extensions.find(e => e.types.includes(ns.aml.vocabularies.apiContract.ParametrizedResourceType));
+    const traits = extensions.filter(e => e.types.includes(ns.aml.vocabularies.apiContract.ParametrizedTrait));
+    const traitsLabel = joinTraitNames(traits);
+    const typeLabel = type && type.name;
+    if (!traitsLabel && !typeLabel) {
+      return '';
+    }
+    return html`
+    <section class="extensions">
+      ${typeLabel ? html`<span>Implements </span><span class="resource-type-name" title="Resource type applied to this endpoint">${typeLabel}</span>.` : ''}
+      ${traitsLabel ? html`<span>Mixes in </span><span class="trait-name">${traitsLabel}</span>.` : ''}
+    </section>
+    `;
   }
 }

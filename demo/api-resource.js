@@ -6,6 +6,7 @@ import '@anypoint-web-components/anypoint-dialog/anypoint-dialog-scrollable.js';
 import '@api-components/api-request/api-request-panel.js';
 import '@api-components/api-request/xhr-simple-request.js';
 import '@advanced-rest-client/authorization/oauth2-authorization.js';
+import '@api-components/api-server-selector/api-server-selector.js';
 import { AmfDemoBase } from './lib/AmfDemoBase.js';
 import '../api-resource-document.js';
 
@@ -13,8 +14,9 @@ class ComponentPage extends AmfDemoBase {
   constructor() {
     super();
     this.initObservableProperties([ 
-      'selectedId', 'selectedType', 'selectedOperation', 'tryIt',
+      'selectedId', 'selectedType', 'selectedOperation', 'tryItButton', 'tryItPanel',
       'editorOpened', 'editorOperation', 'overrideBaseUri',
+      'serverType', 'serverValue',
     ]);
     this.compatibility = false;
     this.editorOpened = false;
@@ -22,10 +24,47 @@ class ComponentPage extends AmfDemoBase {
     this.selectedId = undefined;
     this.selectedType = undefined;
     this.selectedOperation = undefined;
-    this.tryIt = true;
+    this.tryItButton = true;
+    this.tryItPanel = true;
     this.overrideBaseUri = false;
     this.componentName = 'api-endpoint-document';
     this.redirectUri = `${window.location.origin}/node_modules/@advanced-rest-client/oauth-authorization/oauth-popup.html`;
+  }
+
+  get baseUri() {
+    const { serverValue, serverType } = this;
+    if (['custom', 'uri'].includes(serverType)) {
+      return serverValue;
+    }
+    return undefined;
+  }
+
+  get serverId() {
+    const { serverValue, serverType, selectedId } = this;
+    if (!serverValue || ['custom', 'uri'].includes(serverType)) {
+      return undefined;
+    }
+    const servers = this._getServers({ endpointId: selectedId });
+    if (!Array.isArray(servers)) {
+      return undefined;
+    }
+    const srv = servers.find((item) => {
+      const url = /** @type string */ (this._getValue(item, this.ns.aml.vocabularies.core.urlTemplate));
+      return url === serverValue;
+    });
+    if (srv) {
+      return srv['@id'];
+    }
+    return undefined;
+  }
+
+  /**
+   * @param {CustomEvent} e
+   */
+  _serverHandler(e) {
+    const { value, type } = e.detail;
+    this.serverType = type;
+    this.serverValue = value;
   }
 
   /**
@@ -83,6 +122,7 @@ class ComponentPage extends AmfDemoBase {
         This demo lets you preview the API endpoint document with various configuration options.
       </p>
 
+      ${this.serverSelectorTemplate()}
       <div class="api-demo-content">
         ${!loaded ? html`<p>Load an API model first.</p>` : this.loadedTemplate()}
       </div>
@@ -98,10 +138,17 @@ class ComponentPage extends AmfDemoBase {
   }
 
   componentTemplate() {
-    const { demoStates, darkThemeActive, selectedId, selectedOperation, amf, tryIt, overrideBaseUri } = this;
+    const { demoStates, darkThemeActive, selectedId, selectedOperation, amf, tryItButton, tryItPanel, overrideBaseUri, baseUri, serverId } = this;
     if (!selectedId) {
       return html`<p>Select API operation in the navigation</p>`;
     }
+    let finalBaseUri;
+    if (baseUri) {
+      finalBaseUri = baseUri;
+    } else if (overrideBaseUri) {
+      finalBaseUri = 'https://custom.api.com';
+    }
+    console.log(finalBaseUri);
     return html`
     <arc-interactive-demo
       .states="${demoStates}"
@@ -112,8 +159,13 @@ class ComponentPage extends AmfDemoBase {
         .amf="${amf}"
         .domainId="${selectedId}"
         .operationId="${selectedOperation}"
-        ?tryIt="${tryIt}"
-        .baseUri="${overrideBaseUri ? 'https://custom.api.com' : undefined}"
+        .serverId="${serverId}"
+        .redirectUri="${this.redirectUri}"
+        .serverType="${this.serverType}"
+        .serverValue="${this.serverValue}"
+        ?tryItButton="${tryItButton}"
+        ?tryItPanel="${tryItPanel}"
+        .baseUri="${finalBaseUri}"
         slot="content"
         @tryit="${this.tryitHandler}"
       >
@@ -123,11 +175,20 @@ class ComponentPage extends AmfDemoBase {
       <anypoint-checkbox
         aria-describedby="mainOptionsLabel"
         slot="options"
-        name="tryIt"
-        .checked="${tryIt}"
+        name="tryItButton"
+        .checked="${tryItButton}"
         @change="${this._toggleMainOption}"
       >
         Render try it
+      </anypoint-checkbox>
+      <anypoint-checkbox
+        aria-describedby="mainOptionsLabel"
+        slot="options"
+        name="tryItPanel"
+        .checked="${tryItPanel}"
+        @change="${this._toggleMainOption}"
+      >
+        Render HTTP editor
       </anypoint-checkbox>
       <anypoint-checkbox
         aria-describedby="mainOptionsLabel"
@@ -196,6 +257,28 @@ class ComponentPage extends AmfDemoBase {
       </div>
     </anypoint-dialog>
     `;
+  }
+
+  /**
+   * @return {object} A template for the server selector
+   */
+  serverSelectorTemplate() {
+    const {
+      amf,
+      serverType,
+      serverValue,
+      compatibility,
+    } = this;
+    return html`
+    <api-server-selector
+      .amf="${amf}"
+      .value="${serverValue}"
+      .type="${serverType}"
+      autoSelect
+      allowCustom
+      ?compatibility="${compatibility}"
+      @apiserverchanged="${this._serverHandler}"
+    ></api-server-selector>`;
   }
 }
 const instance = new ComponentPage();

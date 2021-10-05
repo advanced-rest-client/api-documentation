@@ -1,0 +1,9 @@
+#%RAML 1.0 Trait
+
+displayName: RateLimited
+usage: TO be used when the API has a rate limit on the API gateway.
+headers:
+  x-rate-client-id:
+    description: he client ID to use for the rate limit.
+    example: 5757gh76
+    required: true

@@ -22,6 +22,7 @@ import {
   customDomainPropertiesTemplate,
   evaluateExample,
 } from './ApiDocumentationBase.js';
+import { joinTraitNames } from '../lib/Utils.js';
 import { tablePropertyTemplate } from './SchemaCommonTemplates.js';
 import schemaStyles from './styles/SchemaCommon.js';
 import '../../api-request-document.js';
@@ -63,7 +64,7 @@ export const preselectResponse = Symbol('preselectResponse');
 export const preselectSecurity = Symbol('preselectSecurity');
 export const requestMimeChangeHandler = Symbol('requestMimeChangeHandler');
 export const titleTemplate = Symbol('titleTemplate');
-export const traitsTemplate = Symbol('extendsTemplate');
+export const traitsTemplate = Symbol('traitsTemplate');
 export const summaryTemplate = Symbol('summaryTemplate');
 export const urlTemplate = Symbol('urlTemplate');
 export const requestTemplate = Symbol('requestTemplate');
@@ -737,21 +738,11 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
    */
   [traitsTemplate]() {
     const operation = /** @type ApiOperation */ (this[operationValue]);
-    const { traits } = operation;
+    const { extends: traits } = operation;
     if (!traits || !traits.length) {
       return '';
     }
-    const names = traits.map(trait => trait.name).filter(i => !!i);
-    let value = '';
-    if (names.length === 2) {
-      value = names.join(' and ');
-    } else if (value.length > 2) {
-      const last = names.pop();
-      value = names.join(', ');
-      value += `, and ${last}`;
-    } else {
-      value = names.join(', ');
-    }
+    const value = joinTraitNames(traits);
     return html`
     <section class="extensions">
       <p>Mixes in <span class="trait-name">${value}</span>.</p>

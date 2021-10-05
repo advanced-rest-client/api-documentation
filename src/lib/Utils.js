@@ -11,6 +11,7 @@ import sanitizer from 'dompurify';
 /** @typedef {import('@api-components/amf-helper-mixin').ApiNodeShape} ApiNodeShape */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiAnyShape} ApiAnyShape */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiServer} ApiServer */
+/** @typedef {import('@api-components/amf-helper-mixin').ApiParametrizedDeclaration} ApiParametrizedDeclaration */
 /** @typedef {import('../types').OperationParameter} OperationParameter */
 
 /**
@@ -148,4 +149,22 @@ export function sanitizeHTML(HTML) {
 
   // @ts-ignore
   return result.toString();
+}
+
+/**
+ * @param {ApiParametrizedDeclaration[]} traits
+ */
+export function joinTraitNames(traits) {
+  const names = traits.map(trait => trait.name).filter(i => !!i);
+  let value = '';
+  if (names.length === 2) {
+    value = names.join(' and ');
+  } else if (value.length > 2) {
+    const last = names.pop();
+    value = names.join(', ');
+    value += `, and ${last}`;
+  } else {
+    value = names.join(', ');
+  }
+  return value;
 }
