@@ -162,7 +162,7 @@ class ComponentPage extends AmfDemoBase {
         .baseUri="${finalBaseUri}"
         .serverId="${serverId}"
         slot="content"
-        ?tryIt="${tryIt}"
+        ?tryItButton="${tryIt}"
         ?renderCodeSnippets="${renderCodeSnippets}"
         ?renderSecurity="${renderSecurity}"
         ?anypoint="${this.compatibility}"

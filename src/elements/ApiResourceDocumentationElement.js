@@ -46,11 +46,14 @@ export const selectServer = Symbol('selectServer');
 export const processServerSelection = Symbol('processServerSelection');
 export const extensionsTemplate = Symbol('extensionsTemplate');
 export const tryItColumnTemplate = Symbol('tryItColumnTemplate');
-export const tryItPanelTemplate = Symbol('tryItPanelTemplate');
+export const httpRequestTemplate = Symbol('tryItPanelTemplate');
 export const codeSnippetsPanelTemplate = Symbol('codeSnippetsPanelTemplate');
 export const requestChangeHandler = Symbol('requestChangeHandler');
 export const requestValues = Symbol('requestValues');
 export const collectCodeSnippets = Symbol('collectCodeSnippets');
+export const processSelectionTimeout = Symbol('processSelectionTimeout');
+export const extendsTemplate = Symbol('extendsTemplate');
+export const traitsTemplate = Symbol('traitsTemplate');
 
 /**
  * A web component that renders the resource documentation page for an API resource built from 
@@ -142,6 +145,13 @@ export default class ApiResourceDocumentationElement extends ApiDocumentationBas
   }
 
   /**
+   * @returns {ApiServer[]} The list of the servers read from the API and the endpoint.
+   */
+  get servers() {
+    return this[serversValue];
+  }
+
+  /**
    * @returns {string|undefined} The list of protocols to render.
    */
   get protocol() {
@@ -171,6 +181,13 @@ export default class ApiResourceDocumentationElement extends ApiDocumentationBas
     this[baseUriValue] = value;
     this[computeUrlValue]();
     this.requestUpdate();
+  }
+
+  /**
+   * @returns {string|undefined} The computed URI for the endpoint.
+   */
+  get endpointUri() {
+    return this[urlValue];
   }
 
   static get properties() {
@@ -325,6 +342,26 @@ export default class ApiResourceDocumentationElement extends ApiDocumentationBas
     this[requestValues] = {};
   }
 
+  disconnectedCallback() {
+    if (this[processSelectionTimeout]) {
+      clearTimeout(this[processSelectionTimeout]);
+      this[processSelectionTimeout] = undefined;
+    }
+    super.disconnectedCallback();
+  }
+
+  /**
+   * Scrolls the view to the operation, when present in the DOM.
+   * @param {string} id The operation domain id to scroll into.
+   */
+  scrollToOperation(id) {
+    const elm = this.shadowRoot.querySelector(`api-operation-document[data-domain-id="${id}"]`);
+    if (!elm) {
+      return;
+    }
+    elm.scrollIntoView({block: 'start', inline: 'nearest', behavior: 'smooth'});
+  }
+
   /**
    * @returns {Promise<void>}
    */
@@ -345,27 +382,18 @@ export default class ApiResourceDocumentationElement extends ApiDocumentationBas
     await this[queryServers]();
     this[computeUrlValue]();
     await this.requestUpdate();
-    if (this.operationId) {
-      // this timeout gives few milliseconds for the operations to render.
-      setTimeout(() => {
-        this[collectCodeSnippets]();
-        // Todo: operations should inform the parent that the view is rendered
-        // and after that this function should be called.
+    if (this[processSelectionTimeout]) {
+      clearTimeout(this[processSelectionTimeout]);
+      this[processSelectionTimeout] = undefined;
+    }
+    // this timeout gives few milliseconds for operations to render.
+    this[processSelectionTimeout] = setTimeout(() => {
+      this[processSelectionTimeout] = undefined;
+      this[collectCodeSnippets]();
+      if (this.operationId) {
         this.scrollToOperation(this.operationId);
-      }, 200);
-    }
-  }
-
-  /**
-   * Scrolls the view to the operation, when present in the DOM.
-   * @param {string} id The operation domain id to scroll into.
-   */
-  scrollToOperation(id) {
-    const elm = this.shadowRoot.querySelector(`api-operation-document[data-domain-id="${id}"]`);
-    if (!elm) {
-      return;
-    }
-    elm.scrollIntoView({block: 'start', inline: 'nearest', behavior: 'smooth'});
+      }
+    }, 200);
   }
 
   /**
@@ -436,6 +464,9 @@ export default class ApiResourceDocumentationElement extends ApiDocumentationBas
    */
   [collectCodeSnippets]() {
     const panels = this.shadowRoot.querySelectorAll('api-request-panel');
+    if (!panels.length) {
+      return;
+    }
     Array.from(panels).forEach((panel) => {
       const { requestId } = panel.dataset;
       if (!requestId) {
@@ -544,7 +575,7 @@ export default class ApiResourceDocumentationElement extends ApiDocumentationBas
         .baseUri="${baseUri}" 
         ?anypoint="${this.anypoint}"
         data-domain-id="${operation.id}"
-        ?tryIt="${renderTryIt}"
+        ?tryItButton="${renderTryIt}"
         responsesOpened
         renderSecurity
         ?renderCodeSnippets="${!tryItPanel}"
@@ -567,7 +598,7 @@ export default class ApiResourceDocumentationElement extends ApiDocumentationBas
     return html`
     <div class="try-it-column">
       <!-- <div class="sticky-content"> -->
-        ${this[tryItPanelTemplate](operation)}
+        ${this[httpRequestTemplate](operation)}
         ${this[codeSnippetsPanelTemplate](operation)}
       <!-- </div> -->
     </div>
@@ -578,7 +609,7 @@ export default class ApiResourceDocumentationElement extends ApiDocumentationBas
    * @param {ApiOperation} operation The operation to render.
    * @returns {TemplateResult} The template for the request editor.
    */
-  [tryItPanelTemplate](operation) {
+  [httpRequestTemplate](operation) {
     const content = html`
     <api-request-panel
       .amf="${this.amf}"
@@ -651,9 +682,30 @@ export default class ApiResourceDocumentationElement extends ApiDocumentationBas
     }
     return html`
     <section class="extensions">
-      ${typeLabel ? html`<span>Implements </span><span class="resource-type-name" title="Resource type applied to this endpoint">${typeLabel}</span>.` : ''}
-      ${traitsLabel ? html`<span>Mixes in </span><span class="trait-name">${traitsLabel}</span>.` : ''}
+      ${this[extendsTemplate](typeLabel)} ${this[traitsTemplate](traitsLabel)}
     </section>
     `;
+  }
+
+  /**
+   * @param {string} label
+   * @returns {TemplateResult|string} The template for the parent resource type.
+   */
+  [extendsTemplate](label) {
+    if (!label) {
+      return '';
+    }
+    return html`<span>Implements </span><span class="resource-type-name" title="Resource type applied to this endpoint">${label}</span>.`;
+  }
+
+  /**
+   * @param {string} label
+   * @returns {TemplateResult|string} The template for the traits applied to the resource.
+   */
+  [traitsTemplate](label) {
+    if (!label) {
+      return '';
+    }
+    return html`<span>Mixes in </span><span class="trait-name">${label}</span>.`;
   }
 }

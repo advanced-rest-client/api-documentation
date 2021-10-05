@@ -67,7 +67,7 @@ body.demo.styled {
   --anypoint-tabs-selection-bar-color: var(--primary-color);
 }
 
-body.demo.styled.dark {
+body.demo.styled.api.dark {
   --primary-color: #ffcc80;
   --primary-text-color: #fff;
   --accent-color: #E040FB;
@@ -75,6 +75,7 @@ body.demo.styled.dark {
   --primary-background-color: #212121;
   --secondary-background-color: #313131;
   --error-color: #ff9090;
+  --error-message-color: var(--error-color);
   --link-color: #8bc34a;
   --input-background-color: var(--primary-background-color);
   --active-background-color: #616161;
@@ -88,6 +89,16 @@ body.demo.styled.dark {
   --anypoint-input-legacy-focus-background-color: #3a3b3c;
   --anypoint-input-legacy-focus-border-color: #178bea;
   --anypoint-input-info-message-color: var(--primary-text-color);
+
+  --anypoint-dropdown-menu-background-color: #494949;
+  --anypoint-dropdown-menu-label-background-color: var(--primary-background-color);
+  --anypoint-listbox-background-color: #494949;
+  --anypoint-dropdown-menu-focus-background-color: #9E9E9E;
+  --anypoint-dropdown-menu-label-color: #fff;
+  --anypoint-dropdown-menu-info-message-color: #fff;
+  --anypoint-item-hover-background-color: #9E9E9E;
+  --anypoint-item-focused-background-color: var(--primary-background-color);
+  --anypoint-icon-button-emphasis-low-color: #fff;
 
   /* HTTP method colors */
   --http-get-color: #c6f68d;
@@ -113,4 +124,39 @@ body.demo.styled.dark {
   --http-method-label-head-color: var(--primary-text-color);
   --http-method-label-patch-background-color: var(--http-patch-color);
   --http-method-label-patch-color: #000;
+
+  --operation-params-title-color: var(--primary-text-color);
+  --operation-subheader-color: var(--secondary-text-color);
+  --operation-description-color: var(--secondary-text-color);
+
+  --resource-subheader-color: var(--secondary-text-color);
+  --security-subheader-color: var(--secondary-text-color);
+  --pill-color: #000;
+
+  --markdown-styles-code-text-shadow: none;
+  --markdown-styles-h6-color: var(--secondary-text-color);
+  --markdown-styles-table-row-background-color: var(--primary-background-color);
+  --markdown-styles-table-even-row-background-color: var(--secondary-background-color);
+
+  --code-color: var(--primary-text-color);
+  --code-background-color: #202020;
+  --code-punctuation-value-color: var(--code-color);
+
+  --api-annotation-document-color: var(--primary-text-color);
+  --api-annotation-background-color: var(--primary-background-color);
+  --api-body-document-description-color: var(--primary-text-color);
+
+  --api-endpoint-url-background-color: var(--primary-background-color);
+  --api-endpoint-url-color: var(--primary-text-color);
+
+  --http-code-snippet-code-text-shadow: var(--primary-text-color);
+  --http-code-snippet-container-background-color: var(--code-background-color);
+  --http-code-snippet-code-function-color: #82AAFF;
+  --http-code-snippet-code-keyword-color: #C792EA;
+  --http-code-snippet-code-cdata-color: #adb9c5;
+
+  --resource-tryit-background-color: var(--code-background-color);
+  --resource-tryit-panels-background-color: transparent;
+  --error-message-icon-color: #cccccc;
+  --error-message-code-color: var(--secondary-text-color); 
 }

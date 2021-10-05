@@ -15,6 +15,8 @@ class ComponentPage extends AmfDemoBase {
     this.loaded = false;
     this.selectedId = undefined;
     this.selectedType = undefined;
+    this.endpointsOpened = false;
+    this.docsOpened = true;
   }
 
   /**
@@ -80,6 +82,21 @@ class ComponentPage extends AmfDemoBase {
       ></api-documentation-document>
     </arc-interactive-demo>
     `;
+  }
+
+  _apiListTemplate() {
+    const result = [];
+    [
+      ['demo-api', 'Demo API'],
+      ['google-drive-api', 'Google Drive'],
+      ['async-api', 'Async API'],
+      ['Petstore-v2', 'Petstore OAS API'],
+    ].forEach(([file, label]) => {
+      result[result.length] = html`
+      <anypoint-item data-src="models/${file}-compact.json">${label}</anypoint-item>
+      `;
+    });
+    return result;
   }
 }
 const instance = new ComponentPage();

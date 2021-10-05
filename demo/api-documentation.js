@@ -255,8 +255,6 @@ class ComponentDemo extends ApiDemoPage {
     <xhr-simple-request></xhr-simple-request>
     <oauth2-authorization></oauth2-authorization>
     <oauth1-authorization></oauth1-authorization>
-    <paper-toast id="navToast"></paper-toast>
-    <paper-toast id="tryItToast" text="Try it panel requested"></paper-toast>
 
     <h2 class="centered main">API documentation</h2>
     ${this._demoTemplate()}

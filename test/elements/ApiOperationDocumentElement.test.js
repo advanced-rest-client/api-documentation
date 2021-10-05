@@ -40,7 +40,7 @@ describe('ApiOperationDocumentElement', () => {
       .queryDebouncerTimeout="${0}" 
       .amf="${amf}" 
       .domainModel="${shape}"
-      tryIt
+      tryItButton
     ></api-operation-document>`);
     await aTimeout(0);
     return /** @type ApiOperationDocumentElement */ (element);

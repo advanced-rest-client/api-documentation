@@ -265,7 +265,7 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
       /** 
        * When set it renders the "try it" button that dispatches the `tryit` event.
        */
-      tryIt: { type: Boolean, reflect: true },
+      tryItButton: { type: Boolean, reflect: true },
       /** 
        * When set it renders the view optimised for asynchronous API operation.
        */
@@ -318,7 +318,7 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
     /** @type {boolean} */
     this.snippetsOpened = undefined;
     /** @type {boolean} */
-    this.tryIt = undefined;
+    this.tryItButton = undefined;
     /** @type {boolean} */
     this.asyncApi = undefined;
     /** @type {boolean} */
@@ -1017,7 +1017,7 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
    * @returns {TemplateResult|string} The template for the "try it" button.
    */
   [tryItTemplate]() {
-    if (!this.tryIt) {
+    if (!this.tryItButton) {
       return '';
     }
     return html`

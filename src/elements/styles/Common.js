@@ -102,7 +102,7 @@ export default css`
   margin: 12px 0;
   padding: 12px 8px;
   background-color: var(--deprecated-message-background-color, #ffc107);
-  color: var(--deprecated-message-color, var(--primary-text-color, #000));
+  color: var(--deprecated-message-color, #000);
   display: flex;
   align-items: center;
   border-radius: 4px;

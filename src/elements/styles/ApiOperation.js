@@ -33,14 +33,14 @@ export default css`
 }
 
 .summary {
-  color: var(--api-operation-documentation-description-color, var(--api-method-documentation-description-color, rgba(0, 0, 0, 0.74)));
+  color: var(--operation-description-color, var(--api-method-documentation-description-color, rgba(0, 0, 0, 0.74)));
   font-size: 1.1rem;
 }
 
 .callback-section {
   margin: 12px 0;
   padding: 8px;
-  background-color: var(--api-operation-callback-background-color, var(--api-method-documentation-callback-background-color, #f7f7f7));
+  background-color: var(--operation-callback-background-color, var(--api-method-documentation-callback-background-color, #f7f7f7));
 }
 
 .extensions {
@@ -49,11 +49,11 @@ export default css`
 }
 
 .method-response {
-  padding-left: var(--api-operation-documentation-responses-padding-left, var(--api-responses-method-padding-left, 20px));
-  padding-right: var(--api-operation-documentation-responses-padding-right, var(--api-responses-method-padding-right, 20px));
+  padding-left: var(--operation-responses-padding-left, var(--api-responses-method-padding-left, 20px));
+  padding-right: var(--operation-responses-padding-right, var(--api-responses-method-padding-right, 20px));
 }
 
 .codes-selector-divider {
-  border-bottom: 1px var(--api-operation-documentation-response-codes-selector-divider-border-bottom-color, var(--api-responses-document-codes-selector-divider-border-bottom-color, #e5e5e5)) solid;
+  border-bottom: 1px var(--operation-response-codes-selector-divider-border-bottom-color, var(--api-responses-document-codes-selector-divider-border-bottom-color, #e5e5e5)) solid;
 }
 `;
