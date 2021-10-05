@@ -25,7 +25,7 @@ class ComponentPage extends AmfDemoBase {
     this.selectedType = undefined;
     this.selectedOperation = undefined;
     this.tryItButton = true;
-    this.tryItPanel = true;
+    this.tryItPanel = false;
     this.overrideBaseUri = false;
     this.componentName = 'api-endpoint-document';
     this.redirectUri = `${window.location.origin}/node_modules/@advanced-rest-client/oauth-authorization/oauth-popup.html`;
@@ -165,6 +165,7 @@ class ComponentPage extends AmfDemoBase {
         .serverValue="${this.serverValue}"
         ?tryItButton="${tryItButton}"
         ?tryItPanel="${tryItPanel}"
+        ?anypoint="${this.compatibility}"
         .baseUri="${finalBaseUri}"
         slot="content"
         @tryit="${this.tryitHandler}"
@@ -214,6 +215,7 @@ class ComponentPage extends AmfDemoBase {
       ['SE-10469', 'SE-10469'],
       ['SE-11415', 'SE-11415'],
       ['async-api', 'async-api'],
+      ['Petstore-v2', 'Petstore OAS API'],
       ['api-keys', 'API key (OAS)'],
       ['oauth-flows', 'OAuth 2 flows'],
       ['oas-bearer', 'Bearer token'],

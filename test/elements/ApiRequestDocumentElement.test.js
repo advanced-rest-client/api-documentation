@@ -45,11 +45,11 @@ describe('ApiRequestDocumentElement', () => {
         assert.ok(section, 'the section is rendered');
 
         const params = element.shadowRoot.querySelectorAll('api-parameter-document[data-name="header"]');
-        assert.lengthOf(params, 1, 'has all parameters document');
+        assert.lengthOf(params, 2, 'has all parameters document');
       });
 
       it('ignores headers section when no headers', async () => {
-        const data = loader.lookupRequest(model, '/people', 'put');
+        const data = loader.lookupRequest(model, '/messages', 'get');
         const element = await basicFixture(model, data);
 
         assert.isFalse(element.hasHeaders, 'hasHeaders is true');

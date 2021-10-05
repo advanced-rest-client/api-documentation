@@ -7,9 +7,7 @@ import '@api-components/api-request/api-request-panel.js';
 import elementStyles from './styles/ApiResource.js';
 import commonStyles from './styles/Common.js';
 import { 
-  ApiDocumentationBase, 
-  paramsSectionTemplate, 
-  schemaItemTemplate,
+  ApiDocumentationBase,
   descriptionTemplate,
   serializerValue,
   customDomainPropertiesTemplate,
@@ -43,7 +41,6 @@ export const titleTemplate = Symbol('titleTemplate');
 export const urlTemplate = Symbol('urlTemplate');
 export const operationsTemplate = Symbol('operationsTemplate');
 export const operationTemplate = Symbol('operationTemplate');
-export const parametersTemplate = Symbol('parametersTemplate');
 export const operationIdChanged = Symbol('operationIdChanged');
 export const selectServer = Symbol('selectServer');
 export const processServerSelection = Symbol('processServerSelection');
@@ -476,7 +473,6 @@ export default class ApiResourceDocumentationElement extends ApiDocumentationBas
     ${this[extensionsTemplate]()}
     ${this[descriptionTemplate](endpoint.description)}
     ${this[customDomainPropertiesTemplate](endpoint.customDomainProperties)}
-    ${this[parametersTemplate]()}
     ${this[operationsTemplate]()}
     `;
   }
@@ -491,12 +487,13 @@ export default class ApiResourceDocumentationElement extends ApiDocumentationBas
     if (!label) {
       return '';
     }
+    const subLabel = this.asyncApi ? 'API channel' : 'API endpoint';
     return html`
     <div class="endpoint-header">
       <div class="endpoint-title">
         <span class="label">${label}</span>
       </div>
-      <p class="sub-header">API endpoint</p>
+      <p class="sub-header">${subLabel}</p>
     </div>
     `;
   }
@@ -551,6 +548,7 @@ export default class ApiResourceDocumentationElement extends ApiDocumentationBas
         responsesOpened
         renderSecurity
         ?renderCodeSnippets="${!tryItPanel}"
+        ?asyncApi="${this.asyncApi}"
         class="operation"
       ></api-operation-document>
       ${tryItPanel ? this[tryItColumnTemplate](operation) : ''}
@@ -560,9 +558,12 @@ export default class ApiResourceDocumentationElement extends ApiDocumentationBas
 
   /**
    * @param {ApiOperation} operation The operation to render.
-   * @returns {TemplateResult} The template for the try it column panel rendered next to the operation documentation/
+   * @returns {TemplateResult|string} The template for the try it column panel rendered next to the operation documentation/
    */
   [tryItColumnTemplate](operation) {
+    if (this.asyncApi) {
+      return '';
+    }
     return html`
     <div class="try-it-column">
       <!-- <div class="sticky-content"> -->
@@ -628,19 +629,6 @@ export default class ApiResourceDocumentationElement extends ApiDocumentationBas
       ></http-code-snippets>
     </section>
     `;
-  }
-
-  /**
-   * @return {TemplateResult|string} The template for the endpoint's URI params.
-   */
-  [parametersTemplate]() {
-    const { endpoint } = this;
-    const { parameters } = endpoint;
-    if (!parameters.length) {
-      return '';
-    }
-    const content = parameters.map((param) => this[schemaItemTemplate](param));
-    return this[paramsSectionTemplate]('URI parameters', 'parametersOpened', content);
   }
 
   /**
