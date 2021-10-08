@@ -1,7 +1,7 @@
-import { ApiDocumentationElement } from './src/ApiDocumentationElement';
+import Element from './src/elements/ApiDocumentationElement';
 
 declare global {
   interface HTMLElementTagNameMap {
-    "api-documentation": ApiDocumentationElement;
+    "api-documentation": Element;
   }
 }

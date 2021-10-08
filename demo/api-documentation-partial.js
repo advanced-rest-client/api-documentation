@@ -8,7 +8,19 @@ import '@api-components/api-request/xhr-simple-request.js';
 import '@advanced-rest-client/authorization/oauth2-authorization.js';
 import '@api-components/api-server-selector/api-server-selector.js';
 import { AmfDemoBase } from './lib/AmfDemoBase.js';
+import { AmfPartialGraphStore } from './lib/AmfPartialGraphStore.js';
 import '../api-documentation.js';
+
+/** @typedef {import('lit-html').TemplateResult} TemplateResult */
+
+/**
+ * @param {Event} e
+ */
+function cancelEvent(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  e.stopImmediatePropagation();
+}
 
 class ComponentDemo extends AmfDemoBase {
   constructor() {
@@ -21,7 +33,9 @@ class ComponentDemo extends AmfDemoBase {
       'serverType', 'serverValue', 
       'noServerSelector', 'allowCustomBaseUri',
       'renderCustomServer',
+      'summaryModel', 'partialModelDocs'
     ]);
+    this.store = new AmfPartialGraphStore();
     this.componentName = 'api-documentation';
     this.compatibility = false;
     this.editorOpened = false;
@@ -38,6 +52,32 @@ class ComponentDemo extends AmfDemoBase {
     this.noServerSelector = false;
     this.allowCustomBaseUri = false;
     this.demoStates = ['Material', 'Anypoint'];
+    this.summaryModel = undefined;
+    this.partialModelDocs = undefined;
+    this.context = undefined;
+  }
+
+  /** @param {string} file */
+  async _loadFile(file) {
+    this.domainId = 'summary';
+    this.domainType = 'summary';
+    await super._loadFile(file);
+    let { amf } = this;
+    if (Array.isArray(amf)) {
+      [amf] = amf;
+    }
+    this.store.amf = amf;
+    this.context = amf['@context'];
+    await this.loadSummary();
+  }
+  
+  async loadSummary() {
+    // debugger
+    const model = this.store.summary();
+    this.summaryModel = model;
+    this.partialModelDocs = model;
+    console.log(model);
+    this.render();
   }
 
   /**
@@ -48,14 +88,49 @@ class ComponentDemo extends AmfDemoBase {
     if (passive === true) {
       return;
     }
-    this.domainType = type;
-    if (type === 'method') {
-      this.operationId = selected;
-      this.domainId = endpointId;  
-    } else {
-      this.operationId = undefined;
+    this.operationId = undefined;
+    if (type === 'type') {
+      this.partialModelDocs = this.store.schema(selected, this.context);
       this.domainId = selected;
+      this.domainType = type;
+      return;
     }
+    if (type === 'security') {
+      this.partialModelDocs = this.store.securityRequirement(selected, this.context);
+      this.domainId = selected;
+      this.domainType = type;
+      return;
+    }
+    if (type === 'endpoint') {
+      this.partialModelDocs = this.store.endpoint(selected, this.context);
+      this.domainId = selected;
+      this.domainType = type;
+      return
+    }
+    if (type === 'method') {
+      if (!this.partialModelDocs || this.partialModelDocs['@id'] !== endpointId) {
+        this.partialModelDocs = this.store.endpoint(endpointId, this.context);
+      }
+      this.domainId = endpointId;
+      this.operationId = selected;
+      this.domainType = type;
+      return
+    }
+    if (type === 'summary') {
+      this.partialModelDocs = this.summaryModel;
+      this.domainId = selected;
+      this.domainType = type;
+      return;
+    }
+    console.log(selected, type, endpointId, passive);
+    // this.domainType = type;
+    // if (type === 'method') {
+    //   this.operationId = selected;
+    //   this.domainId = endpointId;  
+    // } else {
+    //   this.operationId = undefined;
+    //   this.domainId = selected;
+    // }
   }
 
   /**
@@ -76,7 +151,7 @@ class ComponentDemo extends AmfDemoBase {
     return html`
       <oauth2-authorization></oauth2-authorization>
       <xhr-simple-request></xhr-simple-request>
-      <h2>API documentation</h2>
+      <h2>API documentation with partial model</h2>
       ${this.demoTemplate()}
     `;
   }
@@ -104,7 +179,7 @@ class ComponentDemo extends AmfDemoBase {
   }
 
   componentTemplate() {
-    const { demoStates, darkThemeActive, amf, } = this;
+    const { demoStates, darkThemeActive, } = this;
     let finalBaseUri;
     if (this.overrideBaseUri) {
       finalBaseUri = 'https://custom.api.com';
@@ -117,7 +192,7 @@ class ComponentDemo extends AmfDemoBase {
     >
       <api-documentation
         slot="content"
-        .amf="${amf}"
+        .amf="${this.partialModelDocs}"
         .domainId="${this.domainId}"
         .operationId="${this.operationId}"
         .domainType="${this.domainType}"
@@ -238,7 +313,7 @@ class ComponentDemo extends AmfDemoBase {
       <h2>API request</h2>
       <anypoint-dialog-scrollable>
         <api-request-panel
-          .amf="${this.amf}"
+          .amf="${this.summaryModel}"
           .selected="${this.editorOperation}"
           ?compatibility="${this.compatibility}"
           urlLabel
@@ -246,6 +321,9 @@ class ComponentDemo extends AmfDemoBase {
           globalCache
           allowHideOptional
           .redirectUri="${this.redirectUri}"
+          @closed="${cancelEvent}"
+          @overlay-closed="${cancelEvent}"
+          @iron-overlay-closed="${cancelEvent}"
         >
         </api-request-panel>
       </anypoint-dialog-scrollable>
@@ -254,6 +332,18 @@ class ComponentDemo extends AmfDemoBase {
       </div>
     </anypoint-dialog>
     `;
+  }
+
+  /**
+   * @return {TemplateResult|string} Template for API navigation element
+   */
+  _apiNavigationTemplate() {
+    return html`
+    <api-navigation
+      summary
+      .amf="${this.summaryModel}"
+      endpointsOpened
+    ></api-navigation>`;
   }
 }
 const instance = new ComponentDemo();

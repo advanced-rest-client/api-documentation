@@ -3,6 +3,7 @@ import { AmfHelperMixin, AmfSerializer, DomainElement, ApiParameter, ApiCustomDo
 import { SchemaExample } from '@api-components/api-schema';
 
 export declare const sectionToggleClickHandler: unique symbol;
+export declare const processDebounce: unique symbol;
 export declare const queryDebounce: unique symbol;
 export declare const debounceValue: unique symbol;
 export declare const domainIdValue: unique symbol;
@@ -51,6 +52,11 @@ export class ApiDocumentationBase extends AmfHelperMixin(LitElement) {
   constructor();
 
   connectedCallback(): void;
+
+  /**
+   * Calls the `queryGraph()` function in a debouncer.
+   */
+  [processDebounce](): void;
 
   /**
    * Calls the `queryGraph()` function in a debouncer.

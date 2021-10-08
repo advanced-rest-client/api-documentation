@@ -1,5 +1,6 @@
 import { ApiDemoPage } from '@advanced-rest-client/arc-demo-helper';
 import { MonacoLoader } from '@advanced-rest-client/monaco-support';
+import '@anypoint-web-components/anypoint-item/anypoint-item.js';
 
 export class AmfDemoBase extends ApiDemoPage {
   constructor() {

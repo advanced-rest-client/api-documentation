@@ -33,6 +33,7 @@ import '../../api-security-requirement-document.js';
 /** @typedef {import('@api-components/amf-helper-mixin').ApiEndPoint} ApiEndPoint */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiServer} ApiServer */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiOperation} ApiOperation */
+/** @typedef {import('@api-components/amf-helper-mixin').EndPoint} EndPoint */
 /** @typedef {import('@api-components/amf-helper-mixin').Operation} Operation */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiResponse} ApiResponse */
 /** @typedef {import('@api-components/amf-helper-mixin').ApiCallback} ApiCallback */
@@ -84,6 +85,7 @@ export const snippetsTemplate = Symbol('snippetsTemplate');
 export const securitySelectorTemplate = Symbol('securitySelectorTemplate');
 export const securitySelectionHandler = Symbol('securitySelectionHandler');
 export const securityTabTemplate = Symbol('securityTabTemplate');
+export const computeOperationModel = Symbol('computeOperationModel');
 
 /**
  * A web component that renders the documentation page for an API operation built from 
@@ -341,16 +343,14 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
    * @returns {Promise<void>}
    */
   async processGraph() {
-    const { domainModel, domainId, amf } = this;
+    const { domainModel, domainId } = this;
+    this[operationValue] = undefined;
     if (domainModel) {
       this[operationValue] = this[serializerValue].operation(domainModel);
-    } else if (domainId && amf) {
-      if (!this[operationValue] || this[operationValue].id !== domainId) {
-        const webApi = this._computeApi(amf);
-        const model = this._computeMethodModel(webApi, domainId);
-        if (model) {
-          this[operationValue] = this[serializerValue].operation(model);
-        }
+    } else if (domainId) {
+      const model = this[computeOperationModel](domainId);
+      if (model) {
+        this[operationValue] = model;
       }
     }
     await this[queryEndpoint]();
@@ -366,13 +366,49 @@ export default class ApiOperationDocumentElement extends ApiDocumentationBase {
   }
 
   /**
+   * Computes an AMF model for the operation from the current AMF model.
+   * THe `amf` can be a partial model which has the operations list directly.
+   * @param {string} domainId The domain id of the operation.
+   * @returns {ApiOperation|undefined} 
+   */
+  [computeOperationModel](domainId) {
+    const { amf } = this;
+    if (!amf) {
+      return undefined;
+    }
+    const type = this[serializerValue].readTypes(amf['@type']);
+    /** @type Operation */
+    let model;
+    if (type.includes(this.ns.aml.vocabularies.apiContract.EndPoint)) {
+      // partial model for an endpoint.
+      const ops = /** @type Operation[] */ (this._computePropertyArray(amf, this.ns.aml.vocabularies.apiContract.supportedOperation));
+      model = ops.find((op) => op['@id'] === domainId);
+    } else {
+      const webApi = this._computeApi(amf);
+      model = this._computeMethodModel(webApi, domainId);
+    }
+    if (model) {
+      return this[serializerValue].operation(model);
+    }
+    return undefined;
+  }
+
+  /**
    * Queries for the API operation's endpoint data.
    */
   async [queryEndpoint]() {
     const { domainId, amf, operation } = this;
     this[endpointValue] = undefined;
+    if (!amf) {
+      return;
+    }
+    const type = this[serializerValue].readTypes(amf['@type']);
+    if (type.includes(this.ns.aml.vocabularies.apiContract.EndPoint)) {
+      this[endpointValue] = this[serializerValue].endPoint(amf);
+      return;
+    }
     const id = domainId || operation && operation.id;
-    if (!id || !amf) {
+    if (!id) {
       return;
     }
     const wa = this._computeApi(amf);
