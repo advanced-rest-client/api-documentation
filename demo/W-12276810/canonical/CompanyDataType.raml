@@ -1,0 +1,32 @@
+#%RAML 1.0 Library
+usage: Property and Asset related Types
+uses:
+  common: CommonDataType.raml
+types:
+  CompanyType:
+    properties:
+      masterId:
+        type: string
+        required: false
+        description: Record Master Id
+        example: 123EE45
+      name:
+        required: false
+        description: First Name
+        type: string
+      phone:
+        required: false
+        description: Phone
+        type: string
+      email:
+        required: false
+        description: Email
+        type: common.EmailType
+      createdDateTime: 
+        type: datetime
+        required: false
+        description: original system created date
+      modifiedDateTime: 
+        type: datetime
+        required: false
+        description: original system modified date

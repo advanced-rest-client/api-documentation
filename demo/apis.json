@@ -17,5 +17,6 @@
   "google-drive-api/google-drive-api.raml": "RAML 1.0",
   "multi-server/multi-server.yaml": { "type": "OAS 3.0", "mime": "application/yaml" },
   "async-api/async-api.yaml": "ASYNC 2.0",
-  "APIC-711/APIC-711.raml": "RAML 1.0"
+  "APIC-711/APIC-711.raml": "RAML 1.0",
+  "W-12276810/W-12276810.raml": "RAML 1.0"
 }

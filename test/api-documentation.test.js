@@ -49,6 +49,7 @@ describe('ApiDocumentationElement', () => {
   const demoApi = 'demo-api';
   const multiServerApi = 'multi-server';
   const libraryFragment = 'lib-fragment';
+  const libraryUsesFragment = 'W-12276810';
   const securityFragment = 'oauth2-fragment';
 
   describe('Initialization', () => {
@@ -1124,6 +1125,25 @@ describe('ApiDocumentationElement', () => {
 
       const actual = element._computeApiMediaTypes(model);
       assert.deepEqual(actual, expected);
+    });
+  });
+
+  describe('API library processing defined in uses node', () => {
+    let amf;
+    before(async () => {
+      amf = await AmfLoader.load(libraryUsesFragment, false);
+    });
+
+    it('renders a type from a library', async () => {
+      const type = AmfLoader.lookupType(amf, 'PropertyType');
+      const element = await modelFixture(amf, 'type', type['@id']);
+      await aTimeout(0);
+
+      const node = element.shadowRoot.querySelector('api-type-documentation');
+      assert.ok(node, 'library is rendered');
+      assert.typeOf(node.amf, 'array', 'amf is set');
+      assert.isTrue(node.type === type, 'type model is set');
+      assert.isDefined(element._docsModel);
     });
   });
 });
