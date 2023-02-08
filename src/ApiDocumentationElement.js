@@ -619,14 +619,23 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
   _computeTypeLibraryModel(model, selected) {
     let declModel = this._computeDeclById(model, selected)
     if (!declModel) {
-      const references = this._computeReferences(model);
-      if (references) {
-        // @ts-ignore
-        const declarationsInRef = references.map((r) => this._computeDeclares(r)).flat();
-        declModel = this._findById(declarationsInRef, selected);
-      }
+      declModel = this._computeRefById(model, selected);
     }
     return declModel;
+  }
+
+  /**
+   * Computes model of a shape defined in `references` list
+   * @param model AMF model
+   * @param selected Current selection
+   */
+  _computeRefById(model, selected) {
+    const references = this._computeReferences(model);
+    if (!references) {
+      return undefined;
+    }
+    const declarationsInRef = references.map((r) => this._computeDeclares(r)).flat();
+    return this._findById(declarationsInRef, selected);
   }
 
   /**
