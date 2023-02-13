@@ -617,7 +617,25 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
    * @return {any|undefined} Model definition for a type.
    */
   _computeTypeLibraryModel(model, selected) {
-    return this._computeDeclById(model, selected);
+    let declModel = this._computeDeclById(model, selected)
+    if (!declModel) {
+      declModel = this._computeRefById(model, selected);
+    }
+    return declModel;
+  }
+
+  /**
+   * Computes model of a shape defined in `references` list
+   * @param model AMF model
+   * @param selected Current selection
+   */
+  _computeRefById(model, selected) {
+    const references = this._computeReferences(model);
+    if (!references) {
+      return undefined;
+    }
+    const declarationsInRef = references.map((r) => this._computeDeclares(r)).flat();
+    return this._findById(declarationsInRef, selected);
   }
 
   /**

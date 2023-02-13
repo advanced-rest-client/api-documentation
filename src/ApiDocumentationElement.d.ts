@@ -453,6 +453,13 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
    */
   _computeDeclById(model: any, selected: string): any|undefined;
 
+  /**
+   * Computes model of a shape defined in `references` list
+   * @param model AMF model
+   * @param selected Current selection
+   */
+  _computeRefById(model, selected): any|undefined;
+
   _isTypeFragment(model: any): boolean;
 
   _isTypePartialModel(model: any): boolean;

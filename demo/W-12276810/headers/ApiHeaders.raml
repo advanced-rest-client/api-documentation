@@ -1,0 +1,24 @@
+#%RAML 1.0 Library
+
+traits:
+  audit:
+    headers:
+      x-correlation-id?:
+        displayName: Audit unique Correlation ID
+        description: Correlation ID used for auditing purposes
+        type: string
+        example: "1111sass-wdeentcf4-gfd565jjvf-jvh45bmc"
+  transaction:
+    headers:
+      x-unique-transaction-id?:
+      displayName: transaction unique ID
+      description: transaction unique ID used for Marking Exported Record as per Scheduled Sync Pattern
+      type: string
+      example: "127475ass-56gHJcf4-gfdGHKer4%-jvh45bmc"
+  count:
+    headers:
+      x-count-only?:
+        displayName: count only
+        description: Used to request a Count Record based on the Query requested as per Scheduled Sync Pattern
+        type: boolean
+        example: true

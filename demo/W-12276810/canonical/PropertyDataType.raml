@@ -1,0 +1,71 @@
+#%RAML 1.0 Library
+usage: Property and Asset related Types
+uses:
+  common: CommonDataType.raml
+  individual: IndividualDataType.raml
+  company: CompanyDataType.raml
+types:
+  PropertyType:
+    properties:
+      masterId:
+        type: string
+        required: false
+        description: Record Master Id
+        example: C1000
+      name:
+        type: string
+        required: false
+        description: record name
+        example: C1000
+      office:
+        type: string
+        required: false
+        description: office relevant for the Property record
+        example: "132"
+      serviceType:
+        type: string
+        required: false
+        description: service Type relevant for the Property record
+        example: "200"
+      sizeUnit:
+        type: string
+        required: false
+        description: Eg, SQUARE-METERS
+        enum: [SQUARE-METERS]
+        default: SQUARE-METERS
+      size:
+        type: number
+        required: false
+        description: Size of the Property in the relevant Unit
+        example: 103
+      latitude:
+        type: common.LatitudeType
+        required: false
+        description: Property Latitude WGS84 DD (WGS84 established the datum, and DD states decimal degrees)
+        example: "51.509865"
+      longitude:
+        type: common.LongitudeType
+        required: false
+        description: Property Longitude WGS84 DD (WGS84 established the datum, and DD states decimal degrees)
+        example: "-0.118092"
+      address: 
+        type: common.AddressType
+        required: false
+      ownerIndividual:
+        type: individual.IndividualType
+        required: false
+      ownerCompany:
+        type: company.CompanyType
+        required: false
+      createdDateTime: 
+        type: datetime
+        required: false
+        description: original system created date
+      modifiedDateTime: 
+        type: datetime
+        required: false
+        description: original system modified date
+      endToEndModifiedDateTime: 
+        type: datetime
+        required: false
+        description: integrated modified date
