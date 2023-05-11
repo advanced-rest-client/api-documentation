@@ -90,7 +90,7 @@ describe('ApiDocumentationElement', () => {
           const [nodeName, type] = item;
           it(`renders ${nodeName} for ${type} type`, async () => {
             const element = await modelFixture(amf, type, 'test');
-            await aTimeout(20)
+            await aTimeout(0);
             const node = element.shadowRoot.querySelector(nodeName);
             assert.ok(node);
           });
@@ -120,28 +120,28 @@ describe('ApiDocumentationElement', () => {
         it('calls _processModelChange() when amf is set', async () => {
           const spy = sinon.spy(element, '_processModelChange');
           element.amf = amf;
-          await aTimeout(20)
+          await aTimeout(0);
           assert.isTrue(spy.called);
         });
 
         it('calls _processModelChange() when selected is set', async () => {
           const spy = sinon.spy(element, '_processModelChange');
           element.selected = 'test';
-          await aTimeout(20)
+          await aTimeout(0);
           assert.isTrue(spy.called);
         });
 
         it('calls _processModelChange() when selectedType is set', async () => {
           const spy = sinon.spy(element, '_processModelChange');
           element.selectedType = 'method';
-          await aTimeout(20)
+          await aTimeout(0);
           assert.isTrue(spy.called);
         });
 
         it('calls _processModelChange() when inlineMethods is set', async () => {
           const spy = sinon.spy(element, '_processModelChange');
           element.inlineMethods = true;
-          await aTimeout(20)
+          await aTimeout(0);
           assert.isTrue(spy.called);
         });
 
@@ -152,7 +152,7 @@ describe('ApiDocumentationElement', () => {
 
         it('Eventually resets __amfProcessingDebouncer', async () => {
           element.inlineMethods = true;
-          await aTimeout(20)
+          await aTimeout(0);
           assert.isFalse(element.__amfProcessingDebouncer);
         });
       });
@@ -166,7 +166,7 @@ describe('ApiDocumentationElement', () => {
         it('renders summary', async () => {
           const element = await modelFixture(amf, 'summary', 'summary');
           element.baseUri = 'https://test.com';
-          await aTimeout(20)
+          await aTimeout(0);
           const node = element.shadowRoot.querySelector('api-summary');
           assert.ok(node, 'summary is rendered');
           // @ts-ignore
@@ -179,7 +179,7 @@ describe('ApiDocumentationElement', () => {
           const security = AmfLoader.lookupSecurity(amf, 'basic');
           const element = await modelFixture(amf, 'security', security['@id']);
           element.narrow = true;
-          await aTimeout(20)
+          await aTimeout(0);
           const node = element.shadowRoot.querySelector('api-security-documentation');
           assert.ok(node, 'security is rendered');
           // @ts-ignore
@@ -195,7 +195,7 @@ describe('ApiDocumentationElement', () => {
           const element = await modelFixture(amf, 'type', type['@id']);
           element.narrow = true;
           element.compatibility = true;
-          await aTimeout(20)
+          await aTimeout(0);
           const node = element.shadowRoot.querySelector('api-type-documentation');
           assert.ok(node, 'type is rendered');
           assert.typeOf(node.amf, 'array', 'amf is set');
@@ -209,7 +209,7 @@ describe('ApiDocumentationElement', () => {
         it('renders documentation', async () => {
           const model = AmfLoader.lookupDocumentation(amf, 'Test doc');
           const element = await modelFixture(amf, 'documentation', model['@id']);
-          await aTimeout(20)
+          await aTimeout(0);
           const node = element.shadowRoot.querySelector('api-documentation-document');
           assert.ok(node, 'documentation is rendered');
           assert.typeOf(node.amf, 'array', 'amf is set');
@@ -223,7 +223,7 @@ describe('ApiDocumentationElement', () => {
           element.compatibility = true;
           element.baseUri = 'https://test.com';
           element.noBottomNavigation = true;
-          await aTimeout(20)
+          await aTimeout(0);
           const node = element.shadowRoot.querySelector('api-endpoint-documentation');
           assert.ok(node, 'endpoint is rendered');
           assert.typeOf(node.amf, 'array', 'amf is set');
@@ -248,7 +248,7 @@ describe('ApiDocumentationElement', () => {
           element.noTryIt = true;
           element.baseUri = 'https://test.com';
           element.noBottomNavigation = true;
-          await aTimeout(20)
+          await aTimeout(0);
           const node = /** @type any */ (element.shadowRoot.querySelector('api-method-documentation'));
           assert.ok(node, 'method is rendered');
           assert.typeOf(node.amf, 'array', 'amf is set');
@@ -275,7 +275,7 @@ describe('ApiDocumentationElement', () => {
           element.noUrlEditor = true;
           element.outlined = true;
           element.noBottomNavigation = true;
-          await aTimeout(40)
+          await aTimeout(0);
           const node = element.shadowRoot.querySelector('api-endpoint-documentation');
           assert.ok(node, 'endpoint is rendered');
           assert.typeOf(node.amf, 'array', 'amf is set');
@@ -307,7 +307,7 @@ describe('ApiDocumentationElement', () => {
           element.noUrlEditor = true;
           element.outlined = true;
           element.noBottomNavigation = true;
-          await aTimeout(20)
+          await aTimeout(0);
           const node = element.shadowRoot.querySelector('api-endpoint-documentation');
           assert.ok(node, 'endpoint is rendered');
           assert.typeOf(node.amf, 'array', 'amf is set');
@@ -338,7 +338,7 @@ describe('ApiDocumentationElement', () => {
           const element = await modelFixture(amf, 'type', type['@id']);
           element.narrow = true;
           element.compatibility = true;
-          await aTimeout(20)
+          await aTimeout(0);
           const node = element.shadowRoot.querySelector('api-type-documentation');
           assert.ok(node, 'security is rendered');
           assert.typeOf(node.amf, 'array', 'amf is set');
@@ -354,7 +354,7 @@ describe('ApiDocumentationElement', () => {
           const security = AmfLoader.lookupSecurity(amf, 'OAuth1');
           const element = await modelFixture(amf, 'security', security['@id']);
           element.narrow = true;
-          await aTimeout(20)
+          await aTimeout(0);
           const node = /** @type any */ (element.shadowRoot.querySelector('api-security-documentation'));
           assert.ok(node, 'security is rendered');
           assert.typeOf(node.amf, 'array', 'amf is set');
@@ -374,7 +374,7 @@ describe('ApiDocumentationElement', () => {
           const security = encodes[0];
           const element = await modelFixture(amf, 'security', security['@id']);
           element.narrow = true;
-          await aTimeout(20)
+          await aTimeout(0);
           const node = /** @type any */ (element.shadowRoot.querySelector('api-security-documentation'));
           assert.ok(node, 'security is rendered');
           assert.typeOf(node.amf, 'array', 'amf is set');
@@ -393,7 +393,7 @@ describe('ApiDocumentationElement', () => {
           const encodes = AmfLoader.lookupEncodes(amf);
           const model = encodes[0];
           const element = await modelFixture(amf, 'documentation', model['@id']);
-          await aTimeout(20)
+          await aTimeout(0);
           const node = element.shadowRoot.querySelector('api-documentation-document');
           assert.ok(node, 'documentation is rendered');
           assert.typeOf(node.amf, 'array', 'amf is set');
@@ -411,7 +411,7 @@ describe('ApiDocumentationElement', () => {
           const encodes = AmfLoader.lookupEncodes(amf);
           const model = encodes[0];
           const element = await modelFixture(amf, 'from', model['@id']);
-          await aTimeout(20)
+          await aTimeout(0);
           const node = element.shadowRoot.querySelector('api-type-documentation');
           assert.ok(node, 'type is rendered');
 
@@ -441,9 +441,9 @@ describe('ApiDocumentationElement', () => {
           element.selected = 'summary';
           element.selectedType = 'summary';
           const oldDocsModel = element._docsModel;
-          await aTimeout(20)
+          await aTimeout(10);
           element.amf = libraryAmf;
-          await aTimeout(20)
+          await aTimeout(10);
           assert.notEqual(element._docsModel, oldDocsModel);
         });
       });
@@ -458,7 +458,7 @@ describe('ApiDocumentationElement', () => {
 
     it('renders a documentation', async () => {
       const element = await partialFixture(amf);
-      await aTimeout(20)
+      await aTimeout(0);
       const node = element.shadowRoot.querySelector('api-documentation-document');
       assert.ok(node, 'documentation is rendered');
       assert.typeOf(node.amf, 'object', 'amf is set');
@@ -474,7 +474,7 @@ describe('ApiDocumentationElement', () => {
 
     it('renders a security', async () => {
       const element = await partialFixture(amf);
-      await aTimeout(20)
+      await aTimeout(0);
       const node = element.shadowRoot.querySelector('api-security-documentation');
       assert.ok(node, 'security is rendered');
       // @ts-ignore
@@ -492,7 +492,7 @@ describe('ApiDocumentationElement', () => {
 
     it('renders a type', async () => {
       const element = await partialFixture(amf);
-      await aTimeout(20)
+      await aTimeout(0);
       const node = element.shadowRoot.querySelector('api-type-documentation');
       assert.ok(node, 'type is rendered');
       assert.typeOf(node.amf, 'object', 'amf is set');
@@ -508,7 +508,7 @@ describe('ApiDocumentationElement', () => {
 
     it('renders an endpoint', async () => {
       const element = await partialFixture(amf);
-      await aTimeout(20)
+      await aTimeout(0);
       const node = element.shadowRoot.querySelector('api-endpoint-documentation');
       assert.ok(node, 'endpoint is rendered');
       assert.typeOf(node.amf, 'object', 'amf is set');
@@ -520,7 +520,7 @@ describe('ApiDocumentationElement', () => {
       const ops = element._ensureArray(amf[opKey]);
       element.selected = ops[0]['@id'];
       element.selectedType = 'method';
-      await aTimeout(20)
+      await aTimeout(0);
       const node = element.shadowRoot.querySelector('api-method-documentation');
       assert.ok(node, 'method is rendered');
       // @ts-ignore
@@ -537,7 +537,7 @@ describe('ApiDocumentationElement', () => {
     it('changes selection when event occurs', async () => {
       const element = await partialFixture(amf);
       element.handleNavigationEvents = true;
-      await aTimeout(20)
+      await aTimeout(0);
       assert.isTrue(element.handleNavigationEvents, 'getter returns the value');
       const op = AmfLoader.lookupOperation(amf, '/people', 'get');
       const e = new CustomEvent('api-navigation-selection-changed', {
@@ -550,7 +550,7 @@ describe('ApiDocumentationElement', () => {
       });
 
       document.body.dispatchEvent(e);
-      await aTimeout(20)
+      await aTimeout(0);
       const node = element.shadowRoot.querySelector('api-method-documentation');
       assert.ok(node, 'method is rendered');
     });
@@ -558,7 +558,7 @@ describe('ApiDocumentationElement', () => {
     it('ignores passive navigation', async () => {
       const element = await partialFixture(amf);
       element.handleNavigationEvents = true;
-      await aTimeout(20)
+      await aTimeout(0);
       const op = AmfLoader.lookupOperation(amf, '/people', 'get');
       const e = new CustomEvent('api-navigation-selection-changed', {
         bubbles: true,
@@ -570,7 +570,7 @@ describe('ApiDocumentationElement', () => {
       });
 
       document.body.dispatchEvent(e);
-      await aTimeout(20)
+      await aTimeout(0);
       const node = element.shadowRoot.querySelector('api-method-documentation');
       assert.notOk(node, 'method is not rendered');
     });
@@ -578,7 +578,7 @@ describe('ApiDocumentationElement', () => {
     it('removes listener when changing state', async () => {
       const element = await partialFixture(amf);
       element.handleNavigationEvents = true;
-      await aTimeout(20)
+      await aTimeout(0);
       element.handleNavigationEvents = false;
       const op = AmfLoader.lookupOperation(amf, '/people', 'get');
 
@@ -592,7 +592,7 @@ describe('ApiDocumentationElement', () => {
       });
 
       document.body.dispatchEvent(e);
-      await aTimeout(20)
+      await aTimeout(0);
       const node = element.shadowRoot.querySelector('api-method-documentation');
       assert.notOk(node, 'method is not rendered');
     });
@@ -1048,7 +1048,7 @@ describe('ApiDocumentationElement', () => {
         it('renders SiteId type defined in library', async () => {
           const type = AmfLoader.lookupType(amf, 'SiteId');
           const element = await modelFixture(amf, 'type', type['@id']);
-          await aTimeout(20)
+          await aTimeout();
           const node = element.shadowRoot.querySelector('api-type-documentation');
           assert.ok(node, 'type is rendered');
           assert.typeOf(node.amf, 'array', 'amf is set');
@@ -1058,7 +1058,7 @@ describe('ApiDocumentationElement', () => {
         it('renders Language type defined in uses node in library', async () => {
           const type = AmfLoader.lookupType(amf, 'LocaleCode');
           const element = await modelFixture(amf, 'type', type['@id']);
-          await aTimeout(20)
+          await aTimeout();
           const node = element.shadowRoot.querySelector('api-type-documentation');
           assert.ok(node, 'type is rendered');
           assert.typeOf(node.amf, 'array', 'amf is set');
@@ -1137,7 +1137,7 @@ describe('ApiDocumentationElement', () => {
     it('renders a type from a library', async () => {
       const type = AmfLoader.lookupType(amf, 'PropertyType');
       const element = await modelFixture(amf, 'type', type['@id']);
-      await aTimeout(20)
+      await aTimeout(0);
 
       const node = element.shadowRoot.querySelector('api-type-documentation');
       assert.ok(node, 'library is rendered');
