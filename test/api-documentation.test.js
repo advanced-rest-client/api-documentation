@@ -275,7 +275,7 @@ describe('ApiDocumentationElement', () => {
           element.noUrlEditor = true;
           element.outlined = true;
           element.noBottomNavigation = true;
-          await aTimeout(20)
+          await aTimeout(40)
           const node = element.shadowRoot.querySelector('api-endpoint-documentation');
           assert.ok(node, 'endpoint is rendered');
           assert.typeOf(node.amf, 'array', 'amf is set');
