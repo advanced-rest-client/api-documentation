@@ -277,7 +277,7 @@ describe('ApiDocumentationElement', () => {
             element.noUrlEditor = true;
             element.outlined = true;
             element.noBottomNavigation = true;
-          });
+          }).catch((e) => console.error(e));
 
            await aTimeout(100)
           // @ts-ignore
