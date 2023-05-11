@@ -263,37 +263,28 @@ describe('ApiDocumentationElement', () => {
           assert.isTrue(node.noNavigation, 'noNavigation is set');
         });
 
-        it.skip('renders inline method endpoint selection',  async() => {
+        it('renders inline method endpoint selection', async () => {
           const model = AmfLoader.lookupEndpoint(amf, '/people');
-          let element;
-          inlineFixture(amf, 'endpoint', model['@id']).then((elementReturned) => {
-            element = elementReturned;
-            element.narrow = true;
-            element.compatibility = true;
-            element.noTryIt = true;
-            element.baseUri = 'https://test.com';
-            element.redirectUri = 'https://auth.com';
-            element.scrollTarget = window;
-            element.noUrlEditor = true;
-            element.outlined = true;
-            element.noBottomNavigation = true;
-          }).catch((e) => console.error(e));
-
-           await aTimeout(100)
-          // @ts-ignore
-          const node = element?.shadowRoot.querySelector('api-endpoint-documentation');
+          const element = await inlineFixture(amf, 'endpoint', model['@id']);
+          element.narrow = true;
+          element.compatibility = true;
+          element.noTryIt = true;
+          element.baseUri = 'https://test.com';
+          element.redirectUri = 'https://auth.com';
+          element.scrollTarget = window;
+          element.noUrlEditor = true;
+          element.outlined = true;
+          element.noBottomNavigation = true;
+          await aTimeout(40)
+          const node = element.shadowRoot.querySelector('api-endpoint-documentation');
           assert.ok(node, 'endpoint is rendered');
           assert.typeOf(node.amf, 'array', 'amf is set');
           assert.equal(node.selected, model['@id'], 'selected is set');
           assert.equal(node.endpoint['@id'], model['@id'], 'endpoint model is set');
-          // @ts-ignore
-          assert.equal(node.narrow, element?.narrow, 'narrow is set');
-          // @ts-ignore
-          assert.equal(node.compatibility, element?.compatibility, 'compatibility is set');
-          // @ts-ignore
-          assert.equal(node.outlined, element?.outlined, 'outlined is set');
-          // @ts-ignore
-          assert.equal(node.baseUri, element?.baseUri, 'baseUri is set');
+          assert.equal(node.narrow, element.narrow, 'narrow is set');
+          assert.equal(node.compatibility, element.compatibility, 'compatibility is set');
+          assert.equal(node.outlined, element.outlined, 'outlined is set');
+          assert.equal(node.baseUri, element.baseUri, 'baseUri is set');
           assert.typeOf(node.next, 'object', 'next is set');
           assert.typeOf(node.previous, 'object', 'previous is set');
           assert.isTrue(node.noTryIt, 'noTryIt is set');
@@ -303,7 +294,7 @@ describe('ApiDocumentationElement', () => {
           assert.isTrue(node.noNavigation, 'noNavigation is set');
         });
 
-        it.skip('renders inline method for method selection', async () => {
+        it('renders inline method for method selection', async () => {
           const endpoint = AmfLoader.lookupEndpoint(amf, '/people');
           const model = AmfLoader.lookupOperation(amf, '/people', 'post');
           const element = await inlineFixture(amf, 'method', model['@id']);
@@ -316,7 +307,7 @@ describe('ApiDocumentationElement', () => {
           element.noUrlEditor = true;
           element.outlined = true;
           element.noBottomNavigation = true;
-          await aTimeout(100)
+          await aTimeout(20)
           const node = element.shadowRoot.querySelector('api-endpoint-documentation');
           assert.ok(node, 'endpoint is rendered');
           assert.typeOf(node.amf, 'array', 'amf is set');
