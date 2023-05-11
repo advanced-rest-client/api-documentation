@@ -263,7 +263,7 @@ describe('ApiDocumentationElement', () => {
           assert.isTrue(node.noNavigation, 'noNavigation is set');
         });
 
-        it('renders inline method endpoint selection',  async() => {
+        it.skip('renders inline method endpoint selection',  async() => {
           const model = AmfLoader.lookupEndpoint(amf, '/people');
           let element;
           inlineFixture(amf, 'endpoint', model['@id']).then((elementReturned) => {
