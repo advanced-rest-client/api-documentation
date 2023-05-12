@@ -174,7 +174,7 @@ describe('ApiDocumentationElement', () => {
           // @ts-ignore
           assert.equal(node.baseUri, element.baseUri, 'baseUri is set');
         });
-        
+
         it('renders security', async () => {
           const security = AmfLoader.lookupSecurity(amf, 'basic');
           const element = await modelFixture(amf, 'security', security['@id']);

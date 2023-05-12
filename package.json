@@ -1,7 +1,7 @@
 {
   "name": "@api-components/api-documentation",
   "description": "A main documentation view for AMF model",
-  "version": "6.1.1",
+  "version": "6.1.2",
   "license": "Apache-2.0",
   "main": "index.js",
   "module": "index.js",
@@ -29,7 +29,7 @@
     "@api-components/amf-helper-mixin": "^4.5.1",
     "@api-components/api-documentation-document": "^4.1.0",
     "@api-components/api-endpoint-documentation": "^6.1.0",
-    "@api-components/api-method-documentation": "^5.2.5",
+    "@api-components/api-method-documentation": "^5.2.14",
     "@api-components/api-security-documentation": "^4.1.1",
     "@api-components/api-server-selector": "^0.6.4",
     "@api-components/api-summary": "^4.6.0",
@@ -106,5 +106,8 @@
     "*.js": [
       "eslint --fix"
     ]
+  },
+  "overrides": {
+    "playwright": "1.25.2"
   }
 }
