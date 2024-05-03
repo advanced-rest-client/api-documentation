@@ -409,6 +409,8 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
     }
 
     const servers = this._getServers({ endpointId, methodId });
+    this._servers = this._ensureArray(servers)
+    
     if (!servers || !servers.length) {
       return null;
     }
@@ -1180,7 +1182,7 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
   }
 
   _methodTemplate() {
-    const { amf, _docsModel, narrow, compatibility, _endpoint, selected, noTryIt, graph, noBottomNavigation, server } = this;
+    const { amf, _docsModel, narrow, compatibility, _endpoint, selected, noTryIt, graph, noBottomNavigation, server, _servers } = this;
     const prev = this._computeMethodPrevious(amf, selected);
     const next = this._computeMethodNext(amf, selected);
 
@@ -1190,6 +1192,7 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
       .compatibility="${compatibility}"
       .endpoint="${_endpoint}"
       .server="${server}"
+      .servers="${_servers}"
       .method="${_docsModel}"
       .previous="${prev}"
       .next="${next}"
@@ -1208,7 +1211,7 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
   }
 
   _inlineEndpointTemplate() {
-    const { amf, _docsModel, narrow, compatibility, outlined, selected, scrollTarget, redirectUri, noUrlEditor, graph, noBottomNavigation, server } = this;
+    const { amf, _docsModel, narrow, compatibility, outlined, selected, scrollTarget, redirectUri, noUrlEditor, graph, noBottomNavigation, server, _servers } = this;
     const prev = this._computeEndpointPrevious(amf, selected, true);
     const next = this._computeEndpointNext(amf, selected, true);
 
@@ -1219,6 +1222,7 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
       .outlined="${outlined}"
       .selected="${selected}"
       .server="${server}"
+      .servers="${_servers}"
       .endpoint="${_docsModel}"
       .previous="${prev}"
       .next="${next}"
@@ -1233,7 +1237,7 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
   }
 
   _simpleEndpointTemplate() {
-    const { amf, _docsModel, narrow, compatibility, selected, graph, noBottomNavigation, server } = this;
+    const { amf, _docsModel, narrow, compatibility, selected, graph, noBottomNavigation, server, _servers } = this;
     const prev = this._computeEndpointPrevious(amf, selected);
     const next = this._computeEndpointNext(amf, selected);
 
@@ -1242,6 +1246,7 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
       .narrow="${narrow}"
       .compatibility="${compatibility}"
       .server="${server}"
+      .servers="${_servers}"
       .selected="${selected}"
       .endpoint="${_docsModel}"
       .previous="${prev}"
