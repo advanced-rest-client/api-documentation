@@ -393,6 +393,8 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
 
   get server() {
     const { serverValue, serverType, selectedType, endpointId: eid, selected: mid } = this;
+    const isAsyncApi = this._isAsyncAPI(this.amf)
+
     if (serverType && serverType !== 'server') {
       return null;
     }
@@ -403,19 +405,23 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
     let methodId;
     if (selectedType === 'method') {
       endpointId = eid;
+      if(isAsyncApi && !endpointId){
+        endpointId = this._endpoint['@id']
+      }
       methodId = mid;
     } else {
       endpointId = mid;
     }
 
-    const servers = this._getServers({ endpointId, methodId });
-    if (!servers || !servers.length) {
+    this._servers = this._getServers({ endpointId, methodId });
+
+    if (!this.servers || !this.servers.length) {
       return null;
     }
-    if (!serverValue && servers.length) {
-      return servers[0];
+    if (!serverValue && this.servers.length) {
+      return this.servers[0];
     }
-    return servers.find((server) => this._getServerUri(server) === serverValue);
+    return this.servers.find((server) => this._getServerUri(server) === serverValue);
   }
 
   /**
@@ -1190,6 +1196,7 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
       .compatibility="${compatibility}"
       .endpoint="${_endpoint}"
       .server="${server}"
+      .servers="${_servers}"
       .method="${_docsModel}"
       .previous="${prev}"
       .next="${next}"
@@ -1219,6 +1226,7 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
       .outlined="${outlined}"
       .selected="${selected}"
       .server="${server}"
+      .servers="${_servers}"
       .endpoint="${_docsModel}"
       .previous="${prev}"
       .next="${next}"
@@ -1242,6 +1250,7 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
       .narrow="${narrow}"
       .compatibility="${compatibility}"
       .server="${server}"
+      .servers="${_servers}"
       .selected="${selected}"
       .endpoint="${_docsModel}"
       .previous="${prev}"
