@@ -412,7 +412,7 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
     }
 
     const servers = this._getServers({ endpointId, methodId });
-    this._servers = []
+    this._servers = servers
     
     if (!servers || !servers.length) {
       return null;
