@@ -402,9 +402,9 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
     let endpointId;
     let methodId;
     if (selectedType === 'method') {
-      // endpointId = eid;
+      endpointId = eid;
       // if(this._isAsyncAPI(this.amf) && this._endpoint){
-        endpointId =  eid || this._endpoint['@id'];
+        // endpointId = this._endpoint['@id'];
       // }
       methodId = mid;
     } else {
