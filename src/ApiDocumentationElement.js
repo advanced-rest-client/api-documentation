@@ -392,8 +392,8 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
     }
   }
 
-  get server() {
-    const { serverValue, serverType, selectedType, endpointId: eid, selected: mid } = this;
+  computeServers(){
+    const { serverType, selectedType, endpointId: eid, selected: mid } = this;
     if (serverType && serverType !== 'server') {
       return null;
     }
@@ -412,8 +412,14 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
       endpointId = mid;
     }
 
-    const servers = this._getServers({ endpointId, methodId });
-    this._servers = servers
+    this._servers = this._getServers({ endpointId, methodId });
+    return this._servers
+  }
+
+  get server() {
+    const { serverValue } = this;
+    this.computeServers()
+    const servers = this._servers
     
     if (!servers || !servers.length) {
       return null;
@@ -489,6 +495,7 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
       default:
         return;
     }
+    this.computeServers()
     this._docsModel = result;
     this._viewType = selectedType;
   }
