@@ -412,7 +412,7 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
     }
 
     const servers = this._getServers({ endpointId, methodId });
-    // this._servers = this._ensureArray(servers)
+    this._servers = this._ensureArray(servers)
     
     if (!servers || !servers.length) {
       return null;
@@ -1195,6 +1195,7 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
       .compatibility="${compatibility}"
       .endpoint="${_endpoint}"
       .server="${server}"
+      .servers="${_servers}"
       .method="${_docsModel}"
       .previous="${prev}"
       .next="${next}"
@@ -1224,6 +1225,7 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
       .outlined="${outlined}"
       .selected="${selected}"
       .server="${server}"
+      .servers="${_servers}"
       .endpoint="${_docsModel}"
       .previous="${prev}"
       .next="${next}"
@@ -1247,6 +1249,7 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
       .narrow="${narrow}"
       .compatibility="${compatibility}"
       .server="${server}"
+      .servers="${_servers}"
       .selected="${selected}"
       .endpoint="${_docsModel}"
       .previous="${prev}"
