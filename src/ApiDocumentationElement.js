@@ -317,6 +317,7 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
     this.__amfProcessingDebouncer = false;
 
     let { amf } = this;
+    this._asyncAPI = this._isAsyncAPI(amf)
     if (!amf) {
       return;
     }
@@ -403,9 +404,9 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
     let methodId;
     if (selectedType === 'method') {
       endpointId = eid;
-      // if(this._isAsyncAPI(this.amf) && this._endpoint){
-      //   endpointId = this._endpoint['@id'];
-      // }
+      if(this._asyncAPI && this._endpoint){
+        endpointId = this._endpoint['@id'];
+      }
       methodId = mid;
     } else {
       endpointId = mid;
