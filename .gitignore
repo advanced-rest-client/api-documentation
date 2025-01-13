@@ -63,3 +63,4 @@ demo/vendor.js
 !demo/apis.json
 
 .idea/
+.codegenie
