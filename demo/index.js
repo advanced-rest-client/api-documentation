@@ -62,6 +62,7 @@ class ComponentDemo extends ApiDemoPage {
     const result = [];
 
     [
+      ['grpc-test', 'GRPC test'],
       ['google-drive-api', 'Google Drive'],
       ['multi-server', 'Multiple servers'],
       ['exchange-experience-api', 'Exchange xAPI'],
