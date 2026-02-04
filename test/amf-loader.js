@@ -135,3 +135,34 @@ AmfLoader.lookupEncodes = (model) => {
   const key = helper._getAmfKey(helper.ns.aml.vocabularies.document.encodes);
   return helper._ensureArray(model[key]);
 };
+
+// gRPC-specific helpers
+AmfLoader.lookupGrpcService = (model, serviceName) => {
+  helper.amf = model;
+  const webApi = helper._computeApi(model);
+  const eKey = helper._getAmfKey(helper.ns.aml.vocabularies.apiContract.endpoint);
+  const endpoints = helper._ensureArray(webApi[eKey]);
+  if (!endpoints) {
+    return undefined;
+  }
+  return endpoints.find((endpoint) => {
+    const name = helper._getValue(endpoint, helper.ns.aml.vocabularies.core.name);
+    return name === serviceName;
+  });
+};
+
+AmfLoader.lookupGrpcMethod = (model, serviceName, methodName) => {
+  const service = AmfLoader.lookupGrpcService(model, serviceName);
+  if (!service) {
+    return undefined;
+  }
+  const opKey = helper._getAmfKey(helper.ns.aml.vocabularies.apiContract.supportedOperation);
+  const ops = helper._ensureArray(service[opKey]);
+  if (!ops) {
+    return undefined;
+  }
+  return ops.find((op) => {
+    const name = helper._getValue(op, helper.ns.aml.vocabularies.core.name);
+    return name === methodName;
+  });
+};

@@ -240,6 +240,27 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
     return baseUri || serverValue;
   }
 
+  /**
+   * Computes whether the "Try It" button should be hidden.
+   * Returns true if noTryIt is explicitly set or if the current operation is gRPC.
+   * @returns {boolean}
+   */
+  get effectiveNoTryIt() {
+    const { noTryIt, _docsModel, selectedType } = this;
+    
+    // If noTryIt is explicitly set, respect that
+    if (noTryIt) {
+      return true;
+    }
+    
+    // If we're viewing a method and it's a gRPC operation, hide Try It
+    if (selectedType === 'method' && _docsModel) {
+      return this._isGrpcOperation(_docsModel);
+    }
+    
+    return false;
+  }
+
   get inlineMethods() {
     return this._inlineMethods;
   }
@@ -1181,7 +1202,7 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
   }
 
   _methodTemplate() {
-    const { amf, _docsModel, narrow, compatibility, _endpoint, selected, noTryIt, graph, noBottomNavigation, server } = this;
+    const { amf, _docsModel, narrow, compatibility, _endpoint, selected, graph, noBottomNavigation, server } = this;
     const prev = this._computeMethodPrevious(amf, selected);
     const next = this._computeMethodNext(amf, selected);
 
@@ -1195,7 +1216,7 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
       .previous="${prev}"
       .next="${next}"
       .baseUri="${this.effectiveBaseUri}"
-      ?noTryIt="${noTryIt}"
+      ?noTryIt="${this.effectiveNoTryIt}"
       ?graph="${graph}"
       ?noNavigation="${noBottomNavigation}"
       renderSecurity

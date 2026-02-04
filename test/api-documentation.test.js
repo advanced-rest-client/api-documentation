@@ -1146,4 +1146,98 @@ describe('ApiDocumentationElement', () => {
       assert.isDefined(element._docsModel);
     });
   });
+
+  [
+    ['Compact model', true],
+    ['Full model', false]
+  ].forEach(([label, compact]) => {
+    describe(`gRPC API - ${label}`, () => {
+      const grpcApi = 'grpc-test';
+      let amf;
+
+      before(async () => {
+        amf = await AmfLoader.load(grpcApi, Boolean(compact));
+      });
+
+      describe('effectiveNoTryIt getter', () => {
+        it('returns true for gRPC operations', async () => {
+          // Find gRPC service and method
+          const service = AmfLoader.lookupGrpcService(amf, 'Greeter');
+          const method = AmfLoader.lookupGrpcMethod(amf, 'Greeter', 'SayHello1');
+          
+          assert.ok(service, 'gRPC service should be found');
+          assert.ok(method, 'gRPC method should be found');
+          
+          const element = await modelFixture(amf, 'method', method['@id']);
+          element.endpointId = service['@id'];
+          await aTimeout(0);
+
+          // Verify effectiveNoTryIt returns true for gRPC operation
+          assert.isTrue(element.effectiveNoTryIt, 'effectiveNoTryIt should be true for gRPC operations');
+        });
+
+        it('respects explicit noTryIt property', async () => {
+          const service = AmfLoader.lookupGrpcService(amf, 'Greeter');
+          const method = AmfLoader.lookupGrpcMethod(amf, 'Greeter', 'SayHello1');
+          
+          const element = await modelFixture(amf, 'method', method['@id']);
+          element.endpointId = service['@id'];
+          element.noTryIt = true;
+          await aTimeout(0);
+
+          assert.isTrue(element.effectiveNoTryIt, 'effectiveNoTryIt should respect explicit noTryIt');
+        });
+      });
+
+      describe('renders gRPC method with noTryIt', () => {
+        it('hides Try It button for gRPC operations', async () => {
+          const service = AmfLoader.lookupGrpcService(amf, 'Greeter');
+          const method = AmfLoader.lookupGrpcMethod(amf, 'Greeter', 'SayHello1');
+          
+          assert.ok(service, 'gRPC service should be found');
+          assert.ok(method, 'gRPC method should be found');
+          
+          const element = await modelFixture(amf, 'method', method['@id']);
+          element.endpointId = service['@id'];
+          element.narrow = true;
+          element.compatibility = true;
+          await aTimeout(0);
+
+          const node = /** @type any */ (element.shadowRoot.querySelector('api-method-documentation'));
+          assert.ok(node, 'method is rendered');
+          assert.typeOf(node.amf, 'array', 'amf is set');
+          assert.equal(node.endpoint['@id'], service['@id'], 'endpoint model is set');
+          assert.equal(node.method['@id'], method['@id'], 'method model is set');
+          
+          // This is the critical assertion - noTryIt should be true for gRPC
+          assert.isTrue(node.noTryIt, 'noTryIt should be true for gRPC operations');
+          
+          // Additional verifications
+          assert.equal(node.narrow, element.narrow, 'narrow is set');
+          assert.equal(node.compatibility, element.compatibility, 'compatibility is set');
+        });
+
+        it('fails if Try It button is shown for gRPC operations', async () => {
+          const service = AmfLoader.lookupGrpcService(amf, 'Greeter');
+          const method = AmfLoader.lookupGrpcMethod(amf, 'Greeter', 'SayHello1');
+          
+          assert.ok(service, 'gRPC service should be found');
+          assert.ok(method, 'gRPC method should be found');
+          
+          const element = await modelFixture(amf, 'method', method['@id']);
+          element.endpointId = service['@id'];
+          await aTimeout(0);
+
+          const node = /** @type any */ (element.shadowRoot.querySelector('api-method-documentation'));
+          
+          // This test will fail if noTryIt is false (i.e., if the button is shown)
+          if (!node.noTryIt) {
+            throw new Error('FAIL: Try It button is shown for gRPC operation when it should be hidden');
+          }
+          
+          assert.isTrue(node.noTryIt, 'noTryIt must be true - Try It button should NOT be shown for gRPC');
+        });
+      });
+    });
+  });
 });
