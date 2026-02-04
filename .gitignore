@@ -61,6 +61,8 @@ demo/vendor.js
 # AMF models
 /demo/*.json
 !demo/apis.json
+!demo/grpc-test.json
+!demo/grpc-test-compact.json
 
 .idea/
 .codegenie
