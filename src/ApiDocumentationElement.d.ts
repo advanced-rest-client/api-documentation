@@ -156,6 +156,10 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
   // Currently rendered view type
   _viewType: string;
   /**
+   * Backing field for the `selectedType` accessor.
+   */
+  _selectedType: string;
+  /**
    * Computed value of the final model extracted from the `amf`, `selected`,
    * and `selectedType` properties.
    */
@@ -201,6 +205,21 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
   get showsSelector(): boolean;
 
   get effectiveBaseUri(): string;
+
+  /**
+   * Computes whether the "Try It" button should be hidden. True when `noTryIt`
+   * is set, when the selected operation is gRPC, or when it is an OAS 3.1/3.2
+   * top-level webhook.
+   */
+  get effectiveNoTryIt(): boolean;
+
+  /**
+   * Determines whether an operation belongs to the API's top-level webhooks
+   * collection (OAS 3.1/3.2).
+   * @param operation The selected operation model.
+   * @returns True when the operation is a top-level webhook operation.
+   */
+  _isWebhookOperation(operation: any): boolean;
 
   constructor();
 
