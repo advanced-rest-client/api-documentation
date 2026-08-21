@@ -80,6 +80,7 @@ class ComponentDemo extends ApiDemoPage {
       ['SE-11415', 'SE-11415'],
       ['async-api', 'async-api'],
       ['W-12276810', 'W-12276810'],
+      ['oas31-webhooks', 'OAS 3.1 webhooks'],
     ].forEach(([file, label]) => {
       result[result.length] = html`
       <anypoint-item data-src="${file}-compact.json">${label} - compact model</anypoint-item>
