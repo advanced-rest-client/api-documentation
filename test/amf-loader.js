@@ -12,6 +12,24 @@ window.customElements.define('helper-element', HelperElement);
 
 const helper = new HelperElement();
 
+/**
+ * amf-client-js 5.11.x emits models in flattened `@graph` form
+ * (`{"@graph":[...]}`), whereas 4.7 emitted a plain array (`[{...}]`). The
+ * `_compute*` helpers cannot navigate the raw `@graph` model — `_computeApi`
+ * returns `undefined`. The `amf` setter expands internally (via
+ * `AmfHelperMixin._expand`), so we expand here at load time and hand every
+ * consumer the navigable (expanded) model, restoring the 4.7 array shape.
+ * Re-feeding an already-expanded model to the element setter is idempotent
+ * (`isInExpandedForm` is a no-op without `@graph`), so the element keeps the
+ * same object graph and node identity (`node.type === lookupType(...)`) holds.
+ * @param {any} model Raw (possibly flattened `@graph`) API model.
+ * @return {any} Expanded model.
+ */
+const expand = (model) => {
+  helper.amf = model;
+  return helper.amf;
+};
+
 AmfLoader.load = async (fileName='demo-api', compact=false) => {
   const suffix = compact ? '-compact' : '';
   const file = `${fileName}${suffix}.json`;
@@ -20,7 +38,7 @@ AmfLoader.load = async (fileName='demo-api', compact=false) => {
   if (!response.ok) {
     throw new Error(`Unable to download API data model from ${url}`);
   }
-  return response.json();
+  return expand(await response.json());
 };
 
 AmfLoader.lookupEndpoint = (model, endpoint) => {
@@ -165,4 +183,34 @@ AmfLoader.lookupGrpcMethod = (model, serviceName, methodName) => {
     const name = helper._getValue(op, helper.ns.aml.vocabularies.core.name);
     return name === methodName;
   });
+};
+
+// OAS 3.1/3.2 top-level webhook helpers. A webhook compiles to an
+// `apiContract#EndPoint` node referenced by the WebAPI root via
+// `apiContract#webhooks` (not `apiContract#endpoint`).
+AmfLoader.lookupWebhook = (model, name) => {
+  helper.amf = model;
+  const webApi = helper._computeApi(model);
+  const webhooks = helper._computeWebhooks(webApi);
+  if (!webhooks) {
+    return undefined;
+  }
+  return webhooks.find((webhook) => {
+    const value = helper._getValue(webhook, helper.ns.aml.vocabularies.core.name)
+      || helper._getValue(webhook, helper.ns.aml.vocabularies.apiContract.path);
+    return value === name;
+  });
+};
+
+AmfLoader.lookupWebhookOperation = (model, name, method) => {
+  const webhook = AmfLoader.lookupWebhook(model, name);
+  if (!webhook) {
+    return undefined;
+  }
+  const opKey = helper._getAmfKey(helper.ns.aml.vocabularies.apiContract.supportedOperation);
+  const ops = helper._ensureArray(webhook[opKey]);
+  if (!ops) {
+    return undefined;
+  }
+  return ops.find((op) => helper._getValue(op, helper.ns.aml.vocabularies.apiContract.method) === method);
 };

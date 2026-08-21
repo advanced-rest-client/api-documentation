@@ -242,23 +242,66 @@ export class ApiDocumentationElement extends EventsTargetMixin(AmfHelperMixin(Li
 
   /**
    * Computes whether the "Try It" button should be hidden.
-   * Returns true if noTryIt is explicitly set or if the current operation is gRPC.
+   * Returns true if noTryIt is explicitly set, if the current operation is gRPC,
+   * or if the current operation is an OAS 3.1/3.2 top-level webhook.
    * @returns {boolean}
    */
   get effectiveNoTryIt() {
     const { noTryIt, _docsModel, selectedType } = this;
-    
+
     // If noTryIt is explicitly set, respect that
     if (noTryIt) {
       return true;
     }
-    
-    // If we're viewing a method and it's a gRPC operation, hide Try It
+
+    // If we're viewing a method, hide Try It when it's a gRPC operation or a
+    // top-level webhook. Suppression is per-operation: a webhook API may still
+    // expose invokable REST endpoints, which keep Try It.
     if (selectedType === 'method' && _docsModel) {
-      return this._isGrpcOperation(_docsModel);
+      return this._isGrpcOperation(_docsModel) || this._isWebhookOperation(_docsModel);
     }
-    
+
     return false;
+  }
+
+  /**
+   * Determines whether an operation belongs to the API's top-level webhooks
+   * collection (OAS 3.1/3.2). Webhooks compile to `apiContract#EndPoint` nodes
+   * that are byte-identical to regular endpoints; the only distinction is that
+   * the WebAPI root references them via `apiContract#webhooks` instead of
+   * `apiContract#endpoint`, so membership must be resolved from the model root.
+   * @param {any} operation The selected operation model.
+   * @returns {boolean} True when the operation is a top-level webhook operation.
+   */
+  _isWebhookOperation(operation) {
+    if (!operation) {
+      return false;
+    }
+    // Guard the mixin method at the package boundary: the shared
+    // amf-helper-mixin is versioned independently and `_computeWebhooks` only
+    // exists in webhook-aware builds. Mirrors the gRPC fork's guards in
+    // api-navigation (`typeof this._isGrpcApi === 'function'`).
+    if (typeof this._computeWebhooks !== 'function') {
+      return false;
+    }
+    let { amf } = this;
+    if (!amf) {
+      return false;
+    }
+    if (Array.isArray(amf)) {
+      [amf] = amf;
+    }
+    const webApi = this._computeApi(amf);
+    const webhooks = this._computeWebhooks(webApi);
+    if (!webhooks || !webhooks.length) {
+      return false;
+    }
+    const id = operation['@id'];
+    const opKey = this._getAmfKey(this.ns.aml.vocabularies.apiContract.supportedOperation);
+    return webhooks.some((webhook) => {
+      const operations = this._ensureArray(webhook[opKey]);
+      return operations && operations.some((op) => op['@id'] === id);
+    });
   }
 
   get inlineMethods() {
